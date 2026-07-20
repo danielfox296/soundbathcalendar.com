@@ -1413,7 +1413,7 @@ def render_city_page(rows, city, nav_prefix, now=None):
     out.append('    ' + render_digest_block(selected_city=slug))
 
     out.append('    <p class="cal-submit">Running a room we should know about? '
-               '<a href="https://thefirstwater.co/contact/">Send it our way.</a></p>')
+               '<a href="mailto:hello@soundbathcalendar.com?subject=A%20room%20for%20the%20calendar">Send it our way.</a></p>')
 
     out.append('  </div>')
     out.append('</section>')
