@@ -84,6 +84,15 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-jump a { color: var(--accent-on-light); text-decoration: none; font: 600 0.76rem var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; }
 .cal-jump a:hover { text-decoration: underline; }
 
+/* ---- filters (Track B B.5, progressive enhancement) — the bar is hidden
+        until filters.js reveals it, so no-JS visitors see every row. The
+        [hidden] rules override .cal-row's display:grid / .cal-band's block. */
+.cal-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem 1.6rem; margin: 0 0 2rem; padding: 0.85rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.cal-filters__field select { background: transparent; border: 1px solid rgba(10,11,13,0.25); padding: 0.4rem 0.7rem; font: 400 0.9rem var(--font-body); color: var(--ink); }
+.cal-filters__check { display: inline-flex; align-items: center; gap: 0.45rem; font: 600 0.86rem var(--font-body); color: var(--ink); cursor: pointer; }
+.cal-filters__check input { width: 1rem; height: 1rem; accent-color: var(--accent-on-light); }
+.cal-filters[hidden], .cal-row[hidden], .cal-band[hidden] { display: none; }
+
 /* ---- ICS subscribe / download (Track B B.4) ---- */
 .cal-ics { display: flex; flex-wrap: wrap; gap: 0.4rem 1.3rem; align-items: baseline; margin: 0 0 2rem; }
 .cal-ics a { text-decoration: none; }

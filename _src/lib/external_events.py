@@ -804,6 +804,16 @@ def _city_tag(row):
     return row['city']
 
 
+def _is_free_or_donation(row):
+    """True when a row is free OR donation/sliding/pay-what — drives the B.5
+    free/donation filter chip (data-free on each row). Uses the same price
+    reading as the schema so the chip and the JSON-LD never disagree."""
+    price = row.get('price', '') or ''
+    if _parse_price(price)[0] == 'free':
+        return True
+    return bool(_DONATION_RE.search(price))
+
+
 def _facil_venue_link(row):
     """The 'their own page' link beside the ticket link: the operator's own site
     when known, else the venue's. URLs are already scheme-scrubbed at row build.
@@ -818,7 +828,10 @@ def _facil_venue_link(row):
 def _render_row(row, show_date=True, nav_prefix=''):
     is_fw = row['kind'] == 'firstwater'
     cls = 'cal-row cal-row--firstwater' if is_fw else 'cal-row'
-    parts = [f'<article class="{cls}">']
+    # Filter hooks (B.5): area + free/donation, read by filters.js.
+    data = (f' data-city="{_esc(city_slug(row["city"]))}"'
+            f' data-free="{"1" if _is_free_or_donation(row) else "0"}"')
+    parts = [f'<article class="{cls}"{data}>']
     # Tear-off date rail: weekday over numeral over time. The Today/Tonight band
     # omits the date (its heading already says "today"); every other band spans
     # multiple days, so its rows carry day + numeral.
@@ -1016,12 +1029,46 @@ def _render_bands(rows, nav_prefix='', now=None):
     return '\n'.join(out)
 
 
+# Register-passable PLACEHOLDER no-results line (B.5 filters). Flagged for Daniel.
+NO_RESULTS = 'No sessions match those filters.'
+
+
+def render_filters(include_city=True):
+    """The progressive-enhancement filter bar (B.5): area (root only) +
+    free/donation. Hidden until filters.js reveals it, so no-JS visitors see
+    every row and the page is fully usable. PLACEHOLDER copy, flagged."""
+    out = ['<div class="cal-filters" data-cal-filters hidden>']
+    if include_city:
+        opts = ['<option value="">All areas</option>']
+        opts += [f'<option value="{_esc(city_slug(c))}">{_esc(c)}</option>'
+                 for c in CITIES]
+        out.append('  <label class="cal-filters__field">')
+        out.append('    <span class="visually-hidden">Filter by area</span>')
+        out.append('    <select data-filter-city>' + ''.join(opts) + '</select>')
+        out.append('  </label>')
+    out.append('  <label class="cal-filters__check">'
+               '<input type="checkbox" data-filter-free> '
+               '<span>Free / donation only</span></label>')
+    out.append('</div>')
+    return '\n'.join(out)
+
+
+def _render_noresults():
+    """The 'nothing matches your filters' line — hidden until filters.js shows it."""
+    return f'<p class="cal-empty" data-cal-noresults hidden>{_esc(NO_RESULTS)}</p>'
+
+
 def render_calendar_body(rows, nav_prefix='', now=None):
-    """The dynamic middle of the root: nav + bands + FAQ. Static scaffold (H1,
-    stamp, summary, digest, submission line) lives in the section file; this
-    returns everything that depends on the feed."""
+    """The dynamic middle of the root: filter bar + nav + bands + no-results +
+    FAQ. Static scaffold (H1, stamp, summary, digest, submission line) lives in
+    the section file; this returns everything that depends on the feed."""
     # FAQ — a GEO/AIO citation surface (FAQPage JSON-LD emitted by build.py).
-    return _render_bands(rows, nav_prefix, now) + '\n' + render_faq_html()
+    return '\n'.join([
+        render_filters(include_city=True),
+        _render_bands(rows, nav_prefix, now),
+        _render_noresults(),
+        render_faq_html(),
+    ])
 
 
 # ---------------------------------------------------------------------------
@@ -1359,7 +1406,10 @@ def render_city_page(rows, city, nav_prefix, now=None):
                f'{_esc(build_city_summary_sentence(rows, city, now))}</p>')
     out.append('    ' + render_ics_subscribe(f'{slug}.ics'))
 
+    # City is fixed here, so the bar carries only the free/donation chip.
+    out.append('    ' + render_filters(include_city=False))
     out.append('    ' + _render_bands(crows, nav_prefix, now))
+    out.append('    ' + _render_noresults())
     out.append('    ' + render_city_switcher(city, nav_prefix))
     out.append('    ' + _render_faq(city_faq(city)))
     out.append('    ' + render_digest_block(selected_city=slug, source=f'city-{slug}-digest'))

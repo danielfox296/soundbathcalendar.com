@@ -780,7 +780,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=bfd495d8">
+  <link rel="stylesheet" href="../styles.css?v=e6e2d763">
   
 </head>
 <body>
@@ -820,6 +820,9 @@
     <p class="cal-updated">Last updated July 20, 2026.</p>
     <p class="cal-summary" id="cal-summary">This week in Colorado Springs: 7 sound baths, priced free to $65.</p>
     <p class="cal-ics"><a class="cal-ics__sub" href="webcal://soundbathcalendar.com/colorado-springs.ics">Subscribe in your calendar</a> <a class="cal-ics__dl" href="https://soundbathcalendar.com/colorado-springs.ics">Download .ics</a></p>
+    <div class="cal-filters" data-cal-filters hidden>
+  <label class="cal-filters__check"><input type="checkbox" data-filter-free> <span>Free / donation only</span></label>
+</div>
     <nav class="cal-jump" aria-label="Jump to a time">
   <a href="#today">Tonight</a>
   <a href="#this-weekend">This weekend</a>
@@ -830,7 +833,7 @@
 <section class="cal-band" id="today">
   <h2 class="cal-band__h2">Tonight</h2>
   <div class="cal-rows">
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="1">
   <div class="cal-row__when">
     <span class="cal-row__time">6:00 PM</span>
   </div>
@@ -853,7 +856,7 @@
 <section class="cal-band" id="this-weekend">
   <h2 class="cal-band__h2">This weekend</h2>
   <div class="cal-rows">
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="0">
   <div class="cal-row__when">
     <span class="cal-row__dow">Fri</span>
     <span class="cal-row__dnum">24</span>
@@ -873,7 +876,7 @@
     </div>
   </div>
 </article>
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="0">
   <div class="cal-row__when">
     <span class="cal-row__dow">Sat</span>
     <span class="cal-row__dnum">25</span>
@@ -893,7 +896,7 @@
     </div>
   </div>
 </article>
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="0">
   <div class="cal-row__when">
     <span class="cal-row__dow">Sun</span>
     <span class="cal-row__dnum">26</span>
@@ -918,7 +921,7 @@
 <section class="cal-band" id="this-week">
   <h2 class="cal-band__h2">This week</h2>
   <div class="cal-rows">
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="0">
   <div class="cal-row__when">
     <span class="cal-row__dow">Tue</span>
     <span class="cal-row__dnum">21</span>
@@ -938,7 +941,7 @@
     </div>
   </div>
 </article>
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="1">
   <div class="cal-row__when">
     <span class="cal-row__dow">Wed</span>
     <span class="cal-row__dnum">22</span>
@@ -958,7 +961,7 @@
     </div>
   </div>
 </article>
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="0">
   <div class="cal-row__when">
     <span class="cal-row__dow">Wed</span>
     <span class="cal-row__dnum">22</span>
@@ -983,7 +986,7 @@
 <section class="cal-band" id="weeks-ahead">
   <h2 class="cal-band__h2">The weeks ahead</h2>
   <div class="cal-rows">
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="0">
   <div class="cal-row__when">
     <span class="cal-row__dow">Mon</span>
     <span class="cal-row__dnum">27</span>
@@ -1003,7 +1006,7 @@
     </div>
   </div>
 </article>
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="0">
   <div class="cal-row__when">
     <span class="cal-row__dow">Wed</span>
     <span class="cal-row__dnum">29</span>
@@ -1023,7 +1026,7 @@
     </div>
   </div>
 </article>
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="1">
   <div class="cal-row__when">
     <span class="cal-row__dow">Fri</span>
     <span class="cal-row__dnum">31</span>
@@ -1043,7 +1046,7 @@
     </div>
   </div>
 </article>
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="0">
   <div class="cal-row__when">
     <span class="cal-row__dow">Fri</span>
     <span class="cal-row__dnum">31</span>
@@ -1063,7 +1066,7 @@
     </div>
   </div>
 </article>
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="0">
   <div class="cal-row__when">
     <span class="cal-row__dow">Sun</span>
     <span class="cal-row__dnum">2</span>
@@ -1083,7 +1086,7 @@
     </div>
   </div>
 </article>
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="1">
   <div class="cal-row__when">
     <span class="cal-row__dow">Mon</span>
     <span class="cal-row__dnum">3</span>
@@ -1103,7 +1106,7 @@
     </div>
   </div>
 </article>
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="0">
   <div class="cal-row__when">
     <span class="cal-row__dow">Tue</span>
     <span class="cal-row__dnum">4</span>
@@ -1123,7 +1126,7 @@
     </div>
   </div>
 </article>
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="0">
   <div class="cal-row__when">
     <span class="cal-row__dow">Fri</span>
     <span class="cal-row__dnum">7</span>
@@ -1143,7 +1146,7 @@
     </div>
   </div>
 </article>
-<article class="cal-row">
+<article class="cal-row" data-city="colorado-springs" data-free="0">
   <div class="cal-row__when">
     <span class="cal-row__dow">Sat</span>
     <span class="cal-row__dnum">8</span>
@@ -1165,6 +1168,7 @@
 </article>
 </div>
 </section>
+    <p class="cal-empty" data-cal-noresults hidden>No sessions match those filters.</p>
     <nav class="cal-cities" aria-label="Other areas">
   <span class="cal-cities__label">Other areas</span>
   <a href="../denver/">Denver</a>
@@ -1223,5 +1227,9 @@
     <p class="footer-fine">Denver, Colorado.</p>
   </div>
 </footer>
+
+  <!-- Progressive-enhancement calendar filters (Track B B.5). The page is fully
+       usable without it — it only reveals and wires the filter bar. -->
+  <script defer src="../filters.js"></script>
 </body>
 </html>
