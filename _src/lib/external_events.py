@@ -1352,9 +1352,11 @@ def render_city_switcher(current_city, nav_prefix):
     return '\n'.join(out)
 
 
-def render_digest_block(selected_city='all', source='calendar-digest'):
-    """The Thursday-digest capture form (Formspree), with one area preselected.
-    Mirrors the root form in sections/01-content.html; same endpoint + fields."""
+def render_digest_block(selected_city='all'):
+    """The Thursday-digest capture form, with one area preselected. Posts to the
+    events service /digest/subscribe (Track C) — a plain form + 303 redirect back
+    to /thanks/; the service sets the list flag + area and source server-side.
+    Mirrors the root form in sections/01-content.html."""
     opts = [('all', 'Everywhere on the Front Range')]
     opts += [(city_slug(c), c) for c in CITIES]
     option_html = '\n'.join(
@@ -1365,12 +1367,8 @@ def render_digest_block(selected_city='all', source='calendar-digest'):
     return f'''<div class="digest-block" id="digest">
       <span class="eyebrow">The digest</span>
       <p class="form-note">The week's rooms, Thursday mornings.</p>
-      <form class="contact-form" action="https://formspree.io/f/xgopwepl" method="POST">
-        <input type="hidden" name="_subject" value="SOUNDBATHCALENDAR digest">
-        <input type="hidden" name="_next" value="https://soundbathcalendar.com/thanks/">
-        <input type="hidden" name="venture" value="soundbathcalendar">
-        <input type="hidden" name="list_join" value="yes">
-        <input type="hidden" name="source" value="{_esc(source)}">
+      <form class="contact-form" action="https://events.thefirstwater.co/digest/subscribe" method="POST">
+        <input type="hidden" name="next" value="https://soundbathcalendar.com/thanks/">
         <label class="form-field">
           <span>Email</span>
           <input type="email" name="email" autocomplete="email" required>
@@ -1412,7 +1410,7 @@ def render_city_page(rows, city, nav_prefix, now=None):
     out.append('    ' + _render_noresults())
     out.append('    ' + render_city_switcher(city, nav_prefix))
     out.append('    ' + _render_faq(city_faq(city)))
-    out.append('    ' + render_digest_block(selected_city=slug, source=f'city-{slug}-digest'))
+    out.append('    ' + render_digest_block(selected_city=slug))
 
     out.append('    <p class="cal-submit">Running a room we should know about? '
                '<a href="https://thefirstwater.co/contact/">Send it our way.</a></p>')

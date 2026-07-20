@@ -100,12 +100,8 @@
     </nav>
     <!-- Slim digest capture: inline form on wide screens, an anchor link down
          to the full form on small ones. Same Formspree seam as the main form. -->
-    <form class="masthead-digest" action="https://formspree.io/f/xgopwepl" method="POST">
-      <input type="hidden" name="_subject" value="SOUNDBATHCALENDAR digest">
-      <input type="hidden" name="_next" value="https://soundbathcalendar.com/thanks/">
-      <input type="hidden" name="venture" value="soundbathcalendar">
-      <input type="hidden" name="list_join" value="yes">
-      <input type="hidden" name="source" value="masthead-digest">
+    <form class="masthead-digest" action="https://events.thefirstwater.co/digest/subscribe" method="POST">
+      <input type="hidden" name="next" value="https://soundbathcalendar.com/thanks/">
       <label class="visually-hidden" for="mh-email">Email for the Thursday digest</label>
       <input id="mh-email" type="email" name="email" autocomplete="email"
              placeholder="Email for the Thursday digest" required>
