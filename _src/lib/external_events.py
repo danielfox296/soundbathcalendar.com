@@ -69,7 +69,7 @@ from _src.lib import ics as ics_lib
 from _src.lib import sessions_feed
 from _src.lib.sessions_feed import DENVER, parse_iso
 
-DEFAULT_FEED_URL = 'https://events.thefirstwater.co/feeds/calendar.json'
+DEFAULT_FEED_URL = 'https://admin.soundbathcalendar.com/feeds/calendar.json'
 CACHE_REL_PATH = os.path.join('data', 'external-events.json')
 FETCH_TIMEOUT_S = 10
 
@@ -1367,7 +1367,7 @@ def render_digest_block(selected_city='all'):
     return f'''<div class="digest-block" id="digest">
       <span class="eyebrow">The digest</span>
       <p class="form-note">The week's rooms, Thursday mornings.</p>
-      <form class="contact-form" action="https://events.thefirstwater.co/digest/subscribe" method="POST">
+      <form class="contact-form" action="https://admin.soundbathcalendar.com/digest/subscribe" method="POST">
         <input type="hidden" name="next" value="https://soundbathcalendar.com/thanks/">
         <label class="form-field">
           <span>Email</span>
