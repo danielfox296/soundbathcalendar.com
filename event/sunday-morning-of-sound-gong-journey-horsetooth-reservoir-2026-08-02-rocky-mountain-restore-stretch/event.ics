@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sunday Morning of Sound Gong Journey - Horsetooth Reservoir
+BEGIN:VEVENT
+UID:sunday-morning-of-sound-gong-journey-horsetooth-reservoir-2026-08-02-ro
+ cky-mountain-restore-stretch@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260802T160000Z
+DTEND:20260802T171500Z
+SUMMARY:Sunday Morning of Sound Gong Journey - Horsetooth Reservoir
+LOCATION:Rocky Mountain Restore & Stretch\, 3616 Soderburg Dr\, Fort Collin
+ s\, CO 80526
+DESCRIPTION:A morning gong journey at Horsetooth Reservoir near Fort Collin
+ s\, hosted by Rocky Mountain Restore & Stretch\, Sunday morning\; $41–46
+ .\n\nTickets: https://www.rockymountainrestoreandstretch.com/event-details
+ -registration/sunday-morning-of-sound-gong-journey-horsetooth-reservoir-1
+URL:https://soundbathcalendar.com/event/sunday-morning-of-sound-gong-journe
+ y-horsetooth-reservoir-2026-08-02-rocky-mountain-restore-stretch/
+END:VEVENT
+END:VCALENDAR

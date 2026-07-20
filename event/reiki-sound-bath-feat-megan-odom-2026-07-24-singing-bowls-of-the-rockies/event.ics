@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Reiki & Sound Bath feat. Megan Odom
+BEGIN:VEVENT
+UID:reiki-sound-bath-feat-megan-odom-2026-07-24-singing-bowls-of-the-rockie
+ s@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260725T003000Z
+DTEND:20260725T014500Z
+SUMMARY:Reiki & Sound Bath feat. Megan Odom
+LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
+ rado Springs\, CO 80903
+DESCRIPTION:A combined reiki and sound bath featuring Megan Odom at Singing
+  Bowls of the Rockies in Colorado Springs\, Friday evening\; $45.\n\nTicke
+ ts: https://www.eventbrite.com/e/reiki-sound-bath-feat-megan-odom-tickets-
+ 1990238643358
+URL:https://soundbathcalendar.com/event/reiki-sound-bath-feat-megan-odom-20
+ 26-07-24-singing-bowls-of-the-rockies/
+END:VEVENT
+END:VCALENDAR

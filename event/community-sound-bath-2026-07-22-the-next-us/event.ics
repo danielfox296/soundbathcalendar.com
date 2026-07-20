@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Community Sound Bath
+BEGIN:VEVENT
+UID:community-sound-bath-2026-07-22-the-next-us@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260723T000000Z
+DTEND:20260723T011500Z
+SUMMARY:Community Sound Bath
+LOCATION:The Next Us\, 525 N Cascade Ave\, Colorado Springs\, CO 80903
+DESCRIPTION:A community sound bath by Colorful Sound Vibrations at The Next
+  Us in Colorado Springs\, Wednesday evening\; free.\n\nTickets: https://ww
+ w.eventbrite.com/e/community-sound-bath-tickets-1993478398553
+URL:https://soundbathcalendar.com/event/community-sound-bath-2026-07-22-the
+ -next-us/
+END:VEVENT
+END:VCALENDAR

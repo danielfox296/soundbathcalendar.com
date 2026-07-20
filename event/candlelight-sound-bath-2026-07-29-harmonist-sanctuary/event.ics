@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Candlelight Sound Bath
+BEGIN:VEVENT
+UID:candlelight-sound-bath-2026-07-29-harmonist-sanctuary@soundbathcalendar
+ .com
+DTSTAMP:20260720T070414Z
+DTSTART:20260730T011500Z
+DTEND:20260730T023000Z
+SUMMARY:Candlelight Sound Bath
+LOCATION:Harmonist Sanctuary\, 4633 East Colfax Avenue\, Denver\, CO 80220
+DESCRIPTION:A candlelit sound bath with crystal singing bowls and chimes\, 
+ hosted by Liminal Lemonade at Harmonist Sanctuary on East Colfax\, Denver\
+ , Wednesday evening at 7:15pm.\n\nTickets: https://www.eventbrite.com/e/ca
+ ndlelight-sound-bath-tickets-1982925649998
+URL:https://soundbathcalendar.com/event/candlelight-sound-bath-2026-07-29-h
+ armonist-sanctuary/
+END:VEVENT
+END:VCALENDAR

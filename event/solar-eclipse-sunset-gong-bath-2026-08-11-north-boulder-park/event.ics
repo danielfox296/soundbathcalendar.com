@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Solar Eclipse Sunset Gong Bath
+BEGIN:VEVENT
+UID:solar-eclipse-sunset-gong-bath-2026-08-11-north-boulder-park@soundbathc
+ alendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260812T010000Z
+DTEND:20260812T021500Z
+SUMMARY:Solar Eclipse Sunset Gong Bath
+LOCATION:North Boulder Park\, 799 Balsam Avenue\, Boulder\, CO 80304
+DESCRIPTION:An outdoor sunset gong bath led by Pavanjeet at North Boulder P
+ ark in Boulder\, Tuesday evening.\n\nTickets: https://www.eventbrite.com/e
+ /solar-eclipse-sunset-gong-bath-tickets-1993167940966
+URL:https://soundbathcalendar.com/event/solar-eclipse-sunset-gong-bath-2026
+ -08-11-north-boulder-park/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Community Candle lit sound bath
+BEGIN:VEVENT
+UID:community-candle-lit-sound-bath-2026-07-31-the-next-us@soundbathcalenda
+ r.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260801T000000Z
+DTEND:20260801T011500Z
+SUMMARY:Community Candle lit sound bath
+LOCATION:The Next Us\, 525 N Cascade Ave\, Colorado Springs\, CO 80903
+DESCRIPTION:A community candlelit sound bath hosted by Think Positive Club 
+ at The Next Us in Colorado Springs\, Friday evening\; donation-based.\n\nT
+ ickets: https://www.eventbrite.com/e/community-candle-lit-sound-bath-ticke
+ ts-1993889907387
+URL:https://soundbathcalendar.com/event/community-candle-lit-sound-bath-202
+ 6-07-31-the-next-us/
+END:VEVENT
+END:VCALENDAR

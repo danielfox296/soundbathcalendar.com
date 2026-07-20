@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Buck Moon Sound Bath
+BEGIN:VEVENT
+UID:buck-moon-sound-bath-2026-07-26-the-denver-village@soundbathcalendar.co
+ m
+DTSTAMP:20260720T070414Z
+DTSTART:20260727T000000Z
+DTEND:20260727T011500Z
+SUMMARY:Buck Moon Sound Bath
+LOCATION:The Denver Village\, 2513 Elmira Street\, Aurora\, CO 80010
+DESCRIPTION:A Buck Moon sound bath led by Shelby Moor at The Denver Village
+ \, Sunday evening.\n\nTickets: https://www.eventbrite.com/e/buck-moon-soun
+ d-bath-tickets-1977297110886
+URL:https://soundbathcalendar.com/event/buck-moon-sound-bath-2026-07-26-the
+ -denver-village/
+END:VEVENT
+END:VCALENDAR

@@ -84,6 +84,13 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-jump a { color: var(--accent-on-light); text-decoration: none; font: 600 0.76rem var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; }
 .cal-jump a:hover { text-decoration: underline; }
 
+/* ---- ICS subscribe / download (Track B B.4) ---- */
+.cal-ics { display: flex; flex-wrap: wrap; gap: 0.4rem 1.3rem; align-items: baseline; margin: 0 0 2rem; }
+.cal-ics a { text-decoration: none; }
+.cal-ics a:hover { text-decoration: underline; }
+.cal-ics__sub { color: var(--accent-on-light); font: 600 0.86rem var(--font-body); }
+.cal-ics__dl { color: rgba(10,11,13,0.55); font: 600 0.82rem var(--font-body); }
+
 /* ---- temporal bands: the root's axis (Today · This weekend · This week ·
         The weeks ahead). Each renders only when it has rooms. ---- */
 .cal-band { margin-bottom: 3.4rem; scroll-margin-top: 90px; }

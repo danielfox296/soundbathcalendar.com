@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:NLP Soundbath Experience
+BEGIN:VEVENT
+UID:nlp-soundbath-experience-2026-07-21-sacred-society@soundbathcalendar.co
+ m
+DTSTAMP:20260720T070414Z
+DTSTART:20260721T163000Z
+DTEND:20260721T174500Z
+SUMMARY:NLP Soundbath Experience
+LOCATION:Sacred Society\, 3410 W 38th Ave\, Denver\, CO 80211
+DESCRIPTION:A sound bath paired with NLP-guided relaxation at Sacred Societ
+ y in Denver\, Tuesday morning.\n\nTickets: https://www.sacredsociety.com/o
+ fferings/sound-baths
+URL:https://soundbathcalendar.com/event/nlp-soundbath-experience-2026-07-21
+ -sacred-society/
+END:VEVENT
+END:VCALENDAR

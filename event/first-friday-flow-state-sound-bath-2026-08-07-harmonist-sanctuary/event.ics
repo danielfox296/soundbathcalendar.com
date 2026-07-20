@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:First Friday: Flow State Sound Bath
+BEGIN:VEVENT
+UID:first-friday-flow-state-sound-bath-2026-08-07-harmonist-sanctuary@sound
+ bathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260808T000000Z
+DTEND:20260808T011500Z
+SUMMARY:First Friday: Flow State Sound Bath
+LOCATION:Harmonist Sanctuary\, 4633 East Colfax Avenue\, Denver\, CO 80220
+DESCRIPTION:A First Friday sound bath presented by Liminal Lemonade at Harm
+ onist Sanctuary in Denver\, Friday evening.\n\nTickets: https://www.eventb
+ rite.com/e/first-friday-flow-state-sound-bath-tickets-1982939514467
+URL:https://soundbathcalendar.com/event/first-friday-flow-state-sound-bath-
+ 2026-08-07-harmonist-sanctuary/
+END:VEVENT
+END:VCALENDAR

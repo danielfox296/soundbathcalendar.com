@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Gong Journey
+BEGIN:VEVENT
+UID:gong-journey-2026-07-22-harmonist-sanctuary@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260723T010000Z
+DTEND:20260723T021500Z
+SUMMARY:Gong Journey
+LOCATION:Harmonist Sanctuary\, 4633 East Colfax Avenue\, Denver\, CO 80220
+DESCRIPTION:A gong journey presented by Sound Murals at Harmonist Sanctuary
+  in Denver\, Wednesday evening.\n\nTickets: https://www.eventbrite.com/e/g
+ ong-journey-tickets-1992588980279
+URL:https://soundbathcalendar.com/event/gong-journey-2026-07-22-harmonist-s
+ anctuary/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Harvesting Intentions: A Sound Journey into Gratitude
+BEGIN:VEVENT
+UID:harvesting-intentions-a-sound-journey-into-gratitude-2026-08-02-live-be
+ yond-limit@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260802T230000Z
+DTEND:20260803T001500Z
+SUMMARY:Harvesting Intentions: A Sound Journey into Gratitude
+LOCATION:Live Beyond Limit\, 353 W. Drake Road\, Suites 130-140\, Fort Coll
+ ins\, CO 80526
+DESCRIPTION:A sound journey with Annmarie of ResoundingWell at Live Beyond 
+ Limit in Fort Collins\, Sunday evening.\n\nTickets: https://www.eventbrite
+ .com/e/harvesting-intentions-a-sound-journey-into-gratitude-tickets-199395
+ 2865697
+URL:https://soundbathcalendar.com/event/harvesting-intentions-a-sound-journ
+ ey-into-gratitude-2026-08-02-live-beyond-limit/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Creative Poetry Sound Bath
+BEGIN:VEVENT
+UID:creative-poetry-sound-bath-2026-07-25-harmonist-sanctuary@soundbathcale
+ ndar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260725T230000Z
+DTEND:20260726T001500Z
+SUMMARY:Creative Poetry Sound Bath
+LOCATION:Harmonist Sanctuary\, 4633 East Colfax Avenue\, Denver\, CO 80220
+DESCRIPTION:A sound bath with aromatherapy and space for writing and group 
+ sharing\, hosted by All Things Serene at Harmonist Sanctuary on East Colfa
+ x\, Denver\, Saturday at 5pm.\n\nTickets: https://www.eventbrite.com/e/cre
+ ative-poetry-sound-bath-tickets-1992576932243
+URL:https://soundbathcalendar.com/event/creative-poetry-sound-bath-2026-07-
+ 25-harmonist-sanctuary/
+END:VEVENT
+END:VCALENDAR

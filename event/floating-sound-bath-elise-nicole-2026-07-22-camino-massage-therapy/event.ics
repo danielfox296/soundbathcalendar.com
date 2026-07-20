@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Floating Sound Bath - Elise Nicole
+BEGIN:VEVENT
+UID:floating-sound-bath-elise-nicole-2026-07-22-camino-massage-therapy@soun
+ dbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260723T003000Z
+DTEND:20260723T014500Z
+SUMMARY:Floating Sound Bath - Elise Nicole
+LOCATION:Camino Massage Therapy\, 123 Costilla Street\, Colorado Springs\, 
+ CO 80903
+DESCRIPTION:A floating sound bath led by Elise Nicole at Camino Massage The
+ rapy in Colorado Springs\, Wednesday evening\; $45.\n\nTickets: https://ww
+ w.eventbrite.com/e/floating-sound-bath-elise-nicole-tickets-1991992401897
+URL:https://soundbathcalendar.com/event/floating-sound-bath-elise-nicole-20
+ 26-07-22-camino-massage-therapy/
+END:VEVENT
+END:VCALENDAR

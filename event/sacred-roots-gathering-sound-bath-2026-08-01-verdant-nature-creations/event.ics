@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sacred Roots Gathering Sound Bath
+BEGIN:VEVENT
+UID:sacred-roots-gathering-sound-bath-2026-08-01-verdant-nature-creations@s
+ oundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260801T213000Z
+DTEND:20260801T224500Z
+SUMMARY:Sacred Roots Gathering Sound Bath
+LOCATION:Verdant Nature Creations\, 4113 West Eisenhower Boulevard\, Lovela
+ nd\, CO 80537
+DESCRIPTION:A sound bath led by Norabell Dechant at Verdant Nature Creation
+ s in Fort Collins\, Saturday afternoon.\n\nTickets: https://www.eventbrite
+ .com/e/sacred-roots-gathering-sound-bath-tickets-1992732656017
+URL:https://soundbathcalendar.com/event/sacred-roots-gathering-sound-bath-2
+ 026-08-01-verdant-nature-creations/
+END:VEVENT
+END:VCALENDAR

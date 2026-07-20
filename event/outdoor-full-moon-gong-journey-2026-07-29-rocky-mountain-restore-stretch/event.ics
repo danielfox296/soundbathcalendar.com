@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Outdoor Full Moon Gong Journey
+BEGIN:VEVENT
+UID:outdoor-full-moon-gong-journey-2026-07-29-rocky-mountain-restore-stretc
+ h@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260730T003000Z
+DTEND:20260730T014500Z
+SUMMARY:Outdoor Full Moon Gong Journey
+LOCATION:Rocky Mountain Restore & Stretch\, 3616 Soderburg Dr\, Fort Collin
+ s\, CO 80526
+DESCRIPTION:An outdoor full-moon gong journey by Rocky Mountain Restore & S
+ tretch in Fort Collins\, Wednesday evening\; $42–47.\n\nTickets: https:/
+ /www.rockymountainrestoreandstretch.com/event-details-registration/outdoor
+ -full-moon-gong-journey
+URL:https://soundbathcalendar.com/event/outdoor-full-moon-gong-journey-2026
+ -07-29-rocky-mountain-restore-stretch/
+END:VEVENT
+END:VCALENDAR

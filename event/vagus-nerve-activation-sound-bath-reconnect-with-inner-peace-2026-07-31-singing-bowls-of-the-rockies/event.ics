@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Vagus Nerve Activation Sound Bath - Reconnect with Inner Peace
+BEGIN:VEVENT
+UID:vagus-nerve-activation-sound-bath-reconnect-with-inner-peace-2026-07-31
+ -singing-bowls-of-the-rockies@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260801T010000Z
+DTEND:20260801T021500Z
+SUMMARY:Vagus Nerve Activation Sound Bath - Reconnect with Inner Peace
+LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
+ rado Springs\, CO 80903
+DESCRIPTION:A sound bath themed around vagus-nerve relaxation at Singing Bo
+ wls of the Rockies in Colorado Springs\, Friday evening\; $39.\n\nTickets:
+  https://www.eventbrite.com/e/vagus-nerve-activation-sound-bath-reconnect-
+ with-inner-peace-tickets-1992093067992
+URL:https://soundbathcalendar.com/event/vagus-nerve-activation-sound-bath-r
+ econnect-with-inner-peace-2026-07-31-singing-bowls-of-the-rockies/
+END:VEVENT
+END:VCALENDAR

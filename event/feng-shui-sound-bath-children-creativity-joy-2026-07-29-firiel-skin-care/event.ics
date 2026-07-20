@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Feng Shui Sound Bath: Children\, Creativity & Joy
+BEGIN:VEVENT
+UID:feng-shui-sound-bath-children-creativity-joy-2026-07-29-firiel-skin-car
+ e@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260730T010000Z
+DTEND:20260730T021500Z
+SUMMARY:Feng Shui Sound Bath: Children\, Creativity & Joy
+LOCATION:Firiel Skin Care\, 193 W South Boulder Rd\, Lafayette\, CO 80026
+DESCRIPTION:A feng-shui-themed sound bath presented by The Oracle Collectiv
+ e at Firiel Skin Care in Boulder\, Wednesday evening.\n\nTickets: https://
+ www.theoracle-collective.com/event-details-registration/7-29-feng-shui-sou
+ nd-bath-children-creativity-joy
+URL:https://soundbathcalendar.com/event/feng-shui-sound-bath-children-creat
+ ivity-joy-2026-07-29-firiel-skin-care/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sacred Sound Bath ❤ Dawn Stratton & Vialet Rayne
+BEGIN:VEVENT
+UID:sacred-sound-bath-dawn-stratton-vialet-rayne-2026-08-07-discover-your-s
+ piritual-gifts@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260807T223000Z
+DTEND:20260807T234500Z
+SUMMARY:Sacred Sound Bath ❤ Dawn Stratton & Vialet Rayne
+LOCATION:Discover Your Spiritual Gifts\, 7500 E. Arapahoe Road\, Suite 208\
+ , Centennial\, CO 80112
+DESCRIPTION:A sound bath led by Dawn Stratton and Vialet Rayne at Discover 
+ Your Spiritual Gifts in Denver\, Friday afternoon\; $40.\n\nTickets: https
+ ://www.eventbrite.com/e/sacred-sound-bath-dawn-stratton-vialet-rayne-ticke
+ ts-1993143495850
+URL:https://soundbathcalendar.com/event/sacred-sound-bath-dawn-stratton-via
+ let-rayne-2026-08-07-discover-your-spiritual-gifts/
+END:VEVENT
+END:VCALENDAR

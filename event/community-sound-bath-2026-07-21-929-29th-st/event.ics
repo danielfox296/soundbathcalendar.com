@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Community Sound Bath
+BEGIN:VEVENT
+UID:community-sound-bath-2026-07-21-929-29th-st@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260722T000000Z
+DTEND:20260722T011500Z
+SUMMARY:Community Sound Bath
+LOCATION:929 29th St\, 929 29th Street\, Denver\, CO 80205
+DESCRIPTION:A community sound bath hosted by Revive Wellness at 929 29th St
+  in Denver\, Tuesday evening\; donation-based.\n\nTickets: https://www.eve
+ ntbrite.com/e/community-sound-bath-tickets-1993611122534
+URL:https://soundbathcalendar.com/event/community-sound-bath-2026-07-21-929
+ -29th-st/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Cosmic Yoga and Sound Bath for a Summer Shift
+BEGIN:VEVENT
+UID:cosmic-yoga-and-sound-bath-for-a-summer-shift-2026-07-26-camdazco-farm@
+ soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260726T190000Z
+DTEND:20260726T201500Z
+SUMMARY:Cosmic Yoga and Sound Bath for a Summer Shift
+LOCATION:Camdazco Farm\, 10075 N. 75th Street\, Longmont\, CO 80503
+DESCRIPTION:A yoga and sound bath led by Joy Childress at Camdazco Farm in 
+ the Boulder area\, Sunday afternoon.\n\nTickets: https://www.eventbrite.co
+ m/e/cosmic-yoga-and-sound-bath-for-a-summer-shift-tickets-1993201502349
+URL:https://soundbathcalendar.com/event/cosmic-yoga-and-sound-bath-for-a-su
+ mmer-shift-2026-07-26-camdazco-farm/
+END:VEVENT
+END:VCALENDAR

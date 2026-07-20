@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath: Sacred Rest Ritual
+BEGIN:VEVENT
+UID:sound-bath-sacred-rest-ritual-2026-07-26-sacred-society@soundbathcalend
+ ar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260726T160000Z
+DTEND:20260726T171500Z
+SUMMARY:Sound Bath: Sacred Rest Ritual
+LOCATION:Sacred Society\, 3410 W 38th Ave\, Denver\, CO 80211
+DESCRIPTION:A sound bath framed as a rest ritual at Sacred Society in Denve
+ r\, Sunday morning.\n\nTickets: https://www.sacredsociety.com/offerings/so
+ und-baths
+URL:https://soundbathcalendar.com/event/sound-bath-sacred-rest-ritual-2026-
+ 07-26-sacred-society/
+END:VEVENT
+END:VCALENDAR

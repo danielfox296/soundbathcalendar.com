@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath Ceremony
+BEGIN:VEVENT
+UID:sound-bath-ceremony-2026-08-06-una-vida-meditation-movement@soundbathca
+ lendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260807T003000Z
+DTEND:20260807T014500Z
+SUMMARY:Sound Bath Ceremony
+LOCATION:Una Vida Meditation & Movement\, 7960 Niwot Road\, Suite B-12\, Lo
+ ngmont\, CO 80503
+DESCRIPTION:A sound bath ceremony led by Laura Riehman at Una Vida Meditati
+ on & Movement in Boulder\, Thursday evening\; $25–40.\n\nTickets: https:
+ //www.eventbrite.com/e/sound-bath-ceremony-tickets-1993974556575
+URL:https://soundbathcalendar.com/event/sound-bath-ceremony-2026-08-06-una-
+ vida-meditation-movement/
+END:VEVENT
+END:VCALENDAR

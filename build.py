@@ -407,9 +407,36 @@ def build():
         base, header, footer, cal_feed, cal_now)
     pages_built.extend(_event_outputs)
 
+    # --- ICS feeds (/front-range.ics, /<city>.ics) — Track B B.4 ---
+    build_ics_feeds(cal_rows, cal_now)
+
     print(f'\nBuilt {len(pages_built)} pages.')
 
     generate_sitemap(page_dirs, cal_now, extra_urls=_city_sitemap + _event_sitemap)
+
+
+def build_ics_feeds(cal_rows, now):
+    """Write the static ICS feeds (Track B B.4): the whole-calendar feed plus
+    one per city, at the site root, from the same rows the pages render. The
+    per-event .ics files are written beside their permalink pages in
+    build_event_pages. All are webcal-subscribable and .ics-downloadable."""
+    print('\nGenerating ICS feeds...')
+    written = []
+
+    def _write(name, text):
+        # newline='' so the explicit CRLF line endings survive untranslated.
+        with open(os.path.join(REPO, name), 'w', encoding='utf-8', newline='') as f:
+            f.write(text)
+        written.append(name)
+
+    _write('front-range.ics', external_events.build_calendar_ics(
+        cal_rows, SITE_URL, 'Sound baths on the Front Range', now))
+    for city in external_events.CITIES:
+        slug = external_events.city_slug(city)
+        _write(f'{slug}.ics', external_events.build_city_ics(
+            cal_rows, city, SITE_URL, now))
+
+    print(f'  ✓ {len(written)} ICS feed(s): ' + ', '.join(written))
 
 
 def build_city_pages(base, header, footer, cal_rows, now):
@@ -598,6 +625,11 @@ def build_event_pages(base, header, footer, cal_feed, now):
         print(f'  ✓ {output} ({"past/noindex" if is_past else "upcoming"})')
         if not is_past:
             sitemap_entries.append((canonical_url, lastmod))
+            # Per-event .ics beside the page (Track B B.4). newline='' keeps the
+            # explicit CRLF endings untranslated. Upcoming events only.
+            ics_path = os.path.join(REPO, 'event', slug, 'event.ics')
+            with open(ics_path, 'w', encoding='utf-8', newline='') as f:
+                f.write(external_events.build_event_ics(row, SITE_URL, now))
 
     return built, sitemap_entries
 

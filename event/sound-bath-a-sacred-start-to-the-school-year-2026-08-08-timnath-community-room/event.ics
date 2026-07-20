@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath: A Sacred Start to the School Year
+BEGIN:VEVENT
+UID:sound-bath-a-sacred-start-to-the-school-year-2026-08-08-timnath-communi
+ ty-room@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260808T163000Z
+DTEND:20260808T174500Z
+SUMMARY:Sound Bath: A Sacred Start to the School Year
+LOCATION:Timnath Community Room\, 4750 Signal Tree Drive\, Timnath\, CO 805
+ 47
+DESCRIPTION:A back-to-school sound bath led by Lauren Salz at the Timnath C
+ ommunity Room near Fort Collins\, Saturday morning.\n\nTickets: https://ww
+ w.eventbrite.com/e/sound-bath-a-sacred-start-to-the-school-year-tickets-19
+ 90594499734
+URL:https://soundbathcalendar.com/event/sound-bath-a-sacred-start-to-the-sc
+ hool-year-2026-08-08-timnath-community-room/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Kundalini in the Park
+BEGIN:VEVENT
+UID:kundalini-in-the-park-2026-08-02-north-boulder-park@soundbathcalendar.c
+ om
+DTSTAMP:20260720T070414Z
+DTSTART:20260802T150000Z
+DTEND:20260802T161500Z
+SUMMARY:Kundalini in the Park
+LOCATION:North Boulder Park
+DESCRIPTION:An outdoor kundalini and sound session led by Pavanjeet at Nort
+ h Boulder Park\, Sunday morning\; donation-based.\n\nTickets: https://www.
+ pavanjeet.com/inthepark
+URL:https://soundbathcalendar.com/event/kundalini-in-the-park-2026-08-02-no
+ rth-boulder-park/
+END:VEVENT
+END:VCALENDAR

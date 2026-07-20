@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:A Sound Bath to Unwind: Releasing Stress from Body & Mind
+BEGIN:VEVENT
+UID:a-sound-bath-to-unwind-releasing-stress-from-body-mind-2026-07-25-singi
+ ng-bowls-of-the-rockies@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260725T200000Z
+DTEND:20260725T211500Z
+SUMMARY:A Sound Bath to Unwind: Releasing Stress from Body & Mind
+LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
+ rado Springs\, CO 80903
+DESCRIPTION:A sound bath focused on stress release at Singing Bowls of the 
+ Rockies in Colorado Springs\, Saturday afternoon\; $39.\n\nTickets: https:
+ //www.eventbrite.com/e/a-sound-bath-to-unwind-releasing-stress-from-body-m
+ ind-tickets-1992091186364
+URL:https://soundbathcalendar.com/event/a-sound-bath-to-unwind-releasing-st
+ ress-from-body-mind-2026-07-25-singing-bowls-of-the-rockies/
+END:VEVENT
+END:VCALENDAR

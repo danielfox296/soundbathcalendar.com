@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sunset Reset: Poolside Full Moon Sound Bath
+BEGIN:VEVENT
+UID:sunset-reset-poolside-full-moon-sound-bath-2026-07-29-ascend-spa-wellne
+ ss-at-hotel-polaris@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260730T010000Z
+DTEND:20260730T021500Z
+SUMMARY:Sunset Reset: Poolside Full Moon Sound Bath
+LOCATION:Ascend Spa & Wellness at Hotel Polaris\, 8989 North Gate Boulevard
+ \, Colorado Springs\, CO 80921
+DESCRIPTION:A poolside full-moon sound bath by Singing Bowls of the Rockies
+  at Ascend Spa & Wellness\, Hotel Polaris\, in Colorado Springs\, Wednesda
+ y evening.\n\nTickets: https://go.evvnt.com/3692335-0
+URL:https://soundbathcalendar.com/event/sunset-reset-poolside-full-moon-sou
+ nd-bath-2026-07-29-ascend-spa-wellness-at-hotel-polaris/
+END:VEVENT
+END:VCALENDAR

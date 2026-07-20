@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Somatic BreathWork & Sound Bath
+BEGIN:VEVENT
+UID:somatic-breathwork-sound-bath-2026-08-04-singing-bowls-of-the-rockies@s
+ oundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260805T000000Z
+DTEND:20260805T011500Z
+SUMMARY:Somatic BreathWork & Sound Bath
+LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
+ rado Springs\, CO 80903
+DESCRIPTION:A somatic breathwork and sound bath at Singing Bowls of the Roc
+ kies in Colorado Springs\, Tuesday evening\; $45.\n\nTickets: https://www.
+ eventbrite.com/e/somatic-breathwork-sound-bath-tickets-1994143672405
+URL:https://soundbathcalendar.com/event/somatic-breathwork-sound-bath-2026-
+ 08-04-singing-bowls-of-the-rockies/
+END:VEVENT
+END:VCALENDAR

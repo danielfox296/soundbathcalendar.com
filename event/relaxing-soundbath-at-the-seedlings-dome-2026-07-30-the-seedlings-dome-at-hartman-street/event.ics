@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Relaxing Soundbath at the Seedlings Dome
+BEGIN:VEVENT
+UID:relaxing-soundbath-at-the-seedlings-dome-2026-07-30-the-seedlings-dome-
+ at-hartman-street@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260731T003000Z
+DTEND:20260731T014500Z
+SUMMARY:Relaxing Soundbath at the Seedlings Dome
+LOCATION:The Seedlings Dome at Hartman Street\, 105 Hartman Street\, Fort C
+ ollins\, CO 80521
+DESCRIPTION:A sound bath led by Zach Miller at the Seedlings Dome on Hartma
+ n Street in Fort Collins\, Thursday evening.\n\nTickets: https://www.event
+ brite.com/e/relaxing-soundbath-at-the-seedlings-dome-tickets-1993353836986
+URL:https://soundbathcalendar.com/event/relaxing-soundbath-at-the-seedlings
+ -dome-2026-07-30-the-seedlings-dome-at-hartman-street/
+END:VEVENT
+END:VCALENDAR

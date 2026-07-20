@@ -65,6 +65,7 @@ from collections import OrderedDict
 from datetime import datetime, timedelta, timezone
 from urllib.parse import quote_plus
 
+from _src.lib import ics as ics_lib
 from _src.lib import sessions_feed
 from _src.lib.sessions_feed import DENVER, parse_iso
 
@@ -75,6 +76,10 @@ FETCH_TIMEOUT_S = 10
 # [port] Firstwater's own session pages stay on the artist site; every
 # Firstwater row on this calendar links out to them absolutely.
 FIRSTWATER_URL = 'https://thefirstwater.co'
+
+# The calendar's own origin — used for absolute webcal:// + https .ics subscribe
+# URLs (the site is static, so every .ics is a build-emitted file served here).
+CALENDAR_ORIGIN = 'soundbathcalendar.com'
 
 # Canonical section keys, in the fixed render order (geography → time).
 CITIES = ('Denver', 'Boulder', 'Fort Collins', 'Colorado Springs')
@@ -1352,6 +1357,7 @@ def render_city_page(rows, city, nav_prefix, now=None):
     out.append(f'    <p class="cal-updated">Last updated {_esc(fmt_stamp_date(now))}.</p>')
     out.append(f'    <p class="cal-summary" id="cal-summary">'
                f'{_esc(build_city_summary_sentence(rows, city, now))}</p>')
+    out.append('    ' + render_ics_subscribe(f'{slug}.ics'))
 
     out.append('    ' + _render_bands(crows, nav_prefix, now))
     out.append('    ' + render_city_switcher(city, nav_prefix))
@@ -1412,6 +1418,94 @@ def city_faqpage_schema(city):
             for item in city_faq(city)
         ],
     }
+
+
+# ---------------------------------------------------------------------------
+# ICS feeds (Track B B.4) — per-city webcal subscribe + whole-calendar +
+# per-event .ics, all STATIC files the build emits from the same rows the pages
+# render (the move nobody local has: a subscriber never needs the site again).
+# Format/discipline mirror service/src/lib/ics.ts, via stdlib _src/lib/ics.py.
+# Sound baths carry no explicit end time in the feed, so DTEND is a fixed
+# default duration — a calendar-entry display convenience, not a claim about
+# the event. PLACEHOLDER duration, flagged for Daniel.
+# ---------------------------------------------------------------------------
+
+ICS_DEFAULT_DURATION_MIN = 75
+
+
+def _ics_location(row):
+    """One LOCATION string: venue + street address, else venue + city."""
+    bits = [x for x in (row.get('venue'), row.get('address')) if x]
+    if not bits:
+        bits = [x for x in (row.get('venue'), row.get('city')) if x]
+    return ', '.join(bits)
+
+
+def event_ics_input(row, site_url, now=None):
+    """Normalize one row into the event dict _src/lib/ics.py expects. URL points
+    at the event's own page (permalink for external, session page for
+    Firstwater); the ticket link rides in DESCRIPTION."""
+    start = parse_iso(row['starts_at'])
+    end = start + timedelta(minutes=ICS_DEFAULT_DURATION_MIN)
+    if row['kind'] == 'firstwater':
+        slug = (row.get('_sess') or {}).get('event_slug', '')
+        url = f'{FIRSTWATER_URL}/sessions/{slug}/' if slug else FIRSTWATER_URL
+        ticket = row.get('ticket_url', '')
+    else:
+        url = event_permalink_url(row, site_url)
+        ticket = _safe_ext_url(row.get('ticket_url', ''))
+    desc = factual_description(row)
+    if ticket:
+        desc = f'{desc}\n\nTickets: {ticket}'
+    return {
+        'uid': f'{event_slug(row)}@{CALENDAR_ORIGIN}',
+        'title': row['name'],
+        'start': start,
+        'end': end,
+        'location': _ics_location(row),
+        'description': desc,
+        'url': url,
+    }
+
+
+def build_calendar_ics(rows, site_url, cal_name, now=None):
+    """A VCALENDAR of the given rows (chronological)."""
+    now = _now_utc(now)
+    evs = [event_ics_input(r, site_url, now)
+           for r in sorted(rows, key=lambda r: parse_iso(r['starts_at']))]
+    return ics_lib.generate_calendar(evs, now, cal_name=cal_name)
+
+
+def build_city_ics(rows, city, site_url, now=None):
+    return build_calendar_ics(
+        city_rows(rows, city), site_url, f'Sound baths in {city}', now)
+
+
+def build_event_ics(row, site_url, now=None):
+    now = _now_utc(now)
+    return ics_lib.generate_calendar(
+        [event_ics_input(row, site_url, now)], now, cal_name=row['name'])
+
+
+def ics_webcal_url(ics_filename):
+    """webcal:// subscribe URL for a build-emitted .ics file at the site root."""
+    return f'webcal://{CALENDAR_ORIGIN}/{ics_filename}'
+
+
+def ics_https_url(ics_filename):
+    """https:// download URL for a build-emitted .ics file at the site root."""
+    return f'https://{CALENDAR_ORIGIN}/{ics_filename}'
+
+
+def render_ics_subscribe(ics_filename):
+    """The subscribe + download line for a root or city page. PLACEHOLDER copy."""
+    return (
+        '<p class="cal-ics">'
+        f'<a class="cal-ics__sub" href="{ics_webcal_url(ics_filename)}">'
+        'Subscribe in your calendar</a> '
+        f'<a class="cal-ics__dl" href="{ics_https_url(ics_filename)}">'
+        'Download .ics</a></p>'
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -1524,6 +1618,11 @@ def render_event_page(row, nav_prefix, site_url, now=None):
         links.append(
             f'<a class="cal-event__link" href="{esc(maps)}" target="_blank" '
             f'rel="noopener">Open in Maps</a>')
+    # Per-event .ics download (Track B B.4) — upcoming events only; the file is
+    # written beside this page at event/<slug>/event.ics.
+    if not is_past:
+        links.append(
+            '<a class="cal-event__link" href="event.ics">Add to calendar</a>')
     if links:
         out.append('    <p class="cal-event__cta">' + ' '.join(links) + '</p>')
 

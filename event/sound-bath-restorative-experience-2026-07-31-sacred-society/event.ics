@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath: Restorative Experience
+BEGIN:VEVENT
+UID:sound-bath-restorative-experience-2026-07-31-sacred-society@soundbathca
+ lendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260731T230000Z
+DTEND:20260801T001500Z
+SUMMARY:Sound Bath: Restorative Experience
+LOCATION:Sacred Society\, 3410 W 38th Ave\, Denver\, CO 80211
+DESCRIPTION:A restorative sound bath at Sacred Society in Denver\, Friday e
+ vening.\n\nTickets: https://www.sacredsociety.com/offerings/sound-baths
+URL:https://soundbathcalendar.com/event/sound-bath-restorative-experience-2
+ 026-07-31-sacred-society/
+END:VEVENT
+END:VCALENDAR

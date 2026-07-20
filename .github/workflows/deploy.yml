@@ -8,6 +8,13 @@ on:
   #   POST /repos/<owner>/<repo>/dispatches  {"event_type": "calendar-updated"}
   repository_dispatch:
     types: [calendar-updated, sessions-updated]
+  # Daily rebuild so the temporal root rolls over — "Today"/"Tonight"/"This
+  # weekend" are computed at build time, so a build each morning keeps them
+  # true even on days with no feed change. 12:00 UTC = 06:00 MDT / 05:00 MST
+  # (early Denver morning year-round; the 1h DST drift is immaterial for a
+  # date rollover). Content pulls stay on the Mon/Thu service schedule.
+  schedule:
+    - cron: '0 12 * * *'
   workflow_dispatch:
 
 jobs:

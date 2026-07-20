@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Friday Recharge: A Restorative Sound Journey
+BEGIN:VEVENT
+UID:friday-recharge-a-restorative-sound-journey-2026-07-24-wildfire-arts-ce
+ nter@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260725T003000Z
+DTEND:20260725T014500Z
+SUMMARY:Friday Recharge: A Restorative Sound Journey
+LOCATION:Wildfire Arts Center\, 425 Massachusetts Avenue\, Berthoud\, CO 80
+ 513
+DESCRIPTION:A restorative sound journey with Annmarie of ResoundingWell at 
+ Wildfire Arts Center in Fort Collins\, Friday evening.\n\nTickets: https:/
+ /www.eventbrite.com/e/friday-recharge-a-restorative-sound-journey-tickets-
+ 1992404310928
+URL:https://soundbathcalendar.com/event/friday-recharge-a-restorative-sound
+ -journey-2026-07-24-wildfire-arts-center/
+END:VEVENT
+END:VCALENDAR

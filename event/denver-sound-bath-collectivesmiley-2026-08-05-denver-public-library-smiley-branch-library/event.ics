@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Denver Sound Bath Collective-Smiley
+BEGIN:VEVENT
+UID:denver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smi
+ ley-branch-library@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260806T010000Z
+DTEND:20260806T021500Z
+SUMMARY:Denver Sound Bath Collective-Smiley
+LOCATION:Denver Public Library: Smiley Branch Library\, 4501 West 46th Aven
+ ue\, Denver\, CO 80212
+DESCRIPTION:A sound bath from the Denver Sound Bath Collective\, led by Iza
+ Belle Sweet\, at the Denver Public Library's Smiley Branch\, Wednesday eve
+ ning\; $15–40.\n\nTickets: https://www.eventbrite.com/e/denver-sound-bat
+ h-collective-smiley-tickets-1993054503672
+URL:https://soundbathcalendar.com/event/denver-sound-bath-collectivesmiley-
+ 2026-08-05-denver-public-library-smiley-branch-library/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Communal Quartz Sound Bath
+BEGIN:VEVENT
+UID:communal-quartz-sound-bath-2026-08-03-colorado-psychedelic-church@sound
+ bathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260804T000000Z
+DTEND:20260804T011500Z
+SUMMARY:Communal Quartz Sound Bath
+LOCATION:Colorado Psychedelic Church\, 5026 N Academy Blvd\, Colorado Sprin
+ gs\, CO
+DESCRIPTION:A communal quartz-bowl sound bath hosted by Colorado Psychedeli
+ c Church in Colorado Springs\, Monday evening\; donation-based.\n\nTickets
+ : https://www.meetup.com/coloradopsychedelicchurch/events/315679656/
+URL:https://soundbathcalendar.com/event/communal-quartz-sound-bath-2026-08-
+ 03-colorado-psychedelic-church/
+END:VEVENT
+END:VCALENDAR

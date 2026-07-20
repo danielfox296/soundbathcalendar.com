@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Second Saturday Sound Bath\, Meditation & Community Circle
+BEGIN:VEVENT
+UID:second-saturday-sound-bath-meditation-community-circle-2026-08-08-brook
+ stone-recreation-center@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260808T190000Z
+DTEND:20260808T201500Z
+SUMMARY:Second Saturday Sound Bath\, Meditation & Community Circle
+LOCATION:Brookstone Recreation Center\, 2575 East 1st Street\, Loveland\, C
+ O 80537
+DESCRIPTION:A Second Saturday sound bath\, meditation\, and community circl
+ e by Citrine Unlimited at Brookstone Recreation Center near Fort Collins\,
+  Saturday afternoon.\n\nTickets: https://www.eventbrite.com/e/second-satur
+ day-sound-bath-meditation-community-circle-tickets-1983554117762
+URL:https://soundbathcalendar.com/event/second-saturday-sound-bath-meditati
+ on-community-circle-2026-08-08-brookstone-recreation-center/
+END:VEVENT
+END:VCALENDAR

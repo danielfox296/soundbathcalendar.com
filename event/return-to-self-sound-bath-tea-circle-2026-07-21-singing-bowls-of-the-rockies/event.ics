@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Return to Self: Sound Bath & Tea Circle
+BEGIN:VEVENT
+UID:return-to-self-sound-bath-tea-circle-2026-07-21-singing-bowls-of-the-ro
+ ckies@soundbathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260722T013000Z
+DTEND:20260722T024500Z
+SUMMARY:Return to Self: Sound Bath & Tea Circle
+LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
+ rado Springs\, CO 80903
+DESCRIPTION:A sound bath followed by a tea circle at Singing Bowls of the R
+ ockies in Colorado Springs\, Tuesday evening\; $39.\n\nTickets: https://ww
+ w.eventbrite.com/e/return-to-self-sound-bath-tea-circle-tickets-1992077334
+ 934
+URL:https://soundbathcalendar.com/event/return-to-self-sound-bath-tea-circl
+ e-2026-07-21-singing-bowls-of-the-rockies/
+END:VEVENT
+END:VCALENDAR

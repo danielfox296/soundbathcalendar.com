@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Full Moon Meditation & Six Gong Relaxation
+BEGIN:VEVENT
+UID:full-moon-meditation-six-gong-relaxation-2026-07-30-the-starhouse@sound
+ bathcalendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260731T010000Z
+DTEND:20260731T021500Z
+SUMMARY:Full Moon Meditation & Six Gong Relaxation
+LOCATION:The StarHouse\, 3476 Sunshine Canyon Drive\, Boulder\, CO 80302
+DESCRIPTION:A full-moon meditation and six-gong relaxation led by Pavanjeet
+  at The StarHouse in Boulder\, Thursday evening.\n\nTickets: https://www.e
+ ventbrite.com/e/full-moon-meditation-six-gong-relaxation-tickets-198901960
+ 6185
+URL:https://soundbathcalendar.com/event/full-moon-meditation-six-gong-relax
+ ation-2026-07-30-the-starhouse/
+END:VEVENT
+END:VCALENDAR

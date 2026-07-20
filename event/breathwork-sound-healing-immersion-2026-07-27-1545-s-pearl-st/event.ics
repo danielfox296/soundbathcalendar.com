@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Breathwork + Sound Healing Immersion
+BEGIN:VEVENT
+UID:breathwork-sound-healing-immersion-2026-07-27-1545-s-pearl-st@soundbath
+ calendar.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260728T010000Z
+DTEND:20260728T021500Z
+SUMMARY:Breathwork + Sound Healing Immersion
+LOCATION:1545 S Pearl St\, 1545 South Pearl Street\, Denver\, CO 80210
+DESCRIPTION:A breathwork and sound-healing immersion hosted by Soul Growth 
+ Network at 1545 S Pearl St\, Denver\, Monday evening.\n\nTickets: https://
+ www.eventbrite.com/e/breathwork-sound-healing-immersion-tickets-1993707871
+ 914
+URL:https://soundbathcalendar.com/event/breathwork-sound-healing-immersion-
+ 2026-07-27-1545-s-pearl-st/
+END:VEVENT
+END:VCALENDAR

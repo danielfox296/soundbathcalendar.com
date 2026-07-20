@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Breath & Sound: Monthly Journey
+BEGIN:VEVENT
+UID:breath-sound-monthly-journey-2026-08-02-sacred-society@soundbathcalenda
+ r.com
+DTSTAMP:20260720T070414Z
+DTSTART:20260802T150000Z
+DTEND:20260802T161500Z
+SUMMARY:Breath & Sound: Monthly Journey
+LOCATION:Sacred Society\, 3410 W 38th Ave\, Denver\, CO 80211
+DESCRIPTION:A monthly breath-and-sound journey at Sacred Society in Denver\
+ , Sunday morning.\n\nTickets: https://www.sacredsociety.com/offerings/soun
+ d-baths
+URL:https://soundbathcalendar.com/event/breath-sound-monthly-journey-2026-0
+ 8-02-sacred-society/
+END:VEVENT
+END:VCALENDAR
