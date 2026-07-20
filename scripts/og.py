@@ -36,11 +36,24 @@ def _wave(draw):
     draw.line(pts, fill=ICE, width=3)
 
 
+# City page slugs — keep in sync with external_events.CITY_ANCHOR.
+CITY_SLUGS = {
+    'Denver': 'denver', 'Boulder': 'boulder',
+    'Fort Collins': 'fort-collins', 'Colorado Springs': 'colorado-springs',
+}
+
+
+def _base(d):
+    """Shared card furniture: waveform + wordmark eyebrow."""
+    _wave(d)
+    return _fonts()
+
+
 def card(path):
+    """The default/root OG card."""
     img = Image.new('RGB', (W, H), PAPER)
     d = ImageDraw.Draw(img)
-    _wave(d)
-    f_title, f_sub, f_eyebrow = _fonts()
+    f_title, f_sub, f_eyebrow = _base(d)
     d.text((80, 150), 'SOUND BATH CALENDAR', font=f_eyebrow, fill=ICE)
     d.text((80, 205), 'Sound baths in Denver', font=f_title, fill=INK)
     d.text((80, 290), '& the Front Range', font=f_title, fill=INK)
@@ -51,5 +64,22 @@ def card(path):
     print(f'  ok {path}')
 
 
+def city_card(path, city):
+    """A per-city OG card (Track B B.7): 'Sound baths in {City}'."""
+    img = Image.new('RGB', (W, H), PAPER)
+    d = ImageDraw.Draw(img)
+    f_title, f_sub, f_eyebrow = _base(d)
+    d.text((80, 150), 'SOUND BATH CALENDAR', font=f_eyebrow, fill=ICE)
+    d.text((80, 205), 'Sound baths in', font=f_title, fill=INK)
+    d.text((80, 290), city, font=f_title, fill=INK)
+    d.text((80, 396), 'Dates · times · venues · prices · updated weekly',
+           font=f_sub, fill=GRAY)
+    os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
+    img.save(path, optimize=True)
+    print(f'  ok {path}')
+
+
 card('img/og-default.png')
+for _city, _slug in CITY_SLUGS.items():
+    city_card(f'img/og/{_slug}.png', _city)
 print('og done')

@@ -121,7 +121,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../../styles.css?v=4ecb4258">
+  <link rel="stylesheet" href="../../styles.css?v=877a4cc3">
   <style>
     .cal-event { }
     .cal-event__crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 2rem; }
@@ -151,9 +151,12 @@
   <header class="masthead">
   <div class="container masthead-inner">
     <a href="../../" class="wordmark">Sound Bath Calendar</a>
-    <!-- City links return in B.2 as links to the /denver/ etc. city pages;
-         the root's own temporal jump-nav (Today · This weekend · …) lives in
-         the page body. Masthead stays wordmark + digest for now. -->
+    <nav class="masthead-cities" aria-label="Areas">
+      <a href="../../denver/">Denver</a>
+      <a href="../../boulder/">Boulder</a>
+      <a href="../../fort-collins/">Fort Collins</a>
+      <a href="../../colorado-springs/">Colorado Springs</a>
+    </nav>
     <!-- Slim digest capture: inline form on wide screens, an anchor link down
          to the full form on small ones. Same Formspree seam as the main form. -->
     <form class="masthead-digest" action="https://formspree.io/f/xgopwepl" method="POST">

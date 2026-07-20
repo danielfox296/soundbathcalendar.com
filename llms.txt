@@ -7,6 +7,11 @@
 - [The calendar](https://soundbathcalendar.com/): Every sound bath on the Front Range, grouped by time — today, this weekend, this week, and the weeks ahead — with each listing tagged by city (Denver, Boulder, Fort Collins, Colorado Springs). Updated through the week.
 - Every listed event has its own page at https://soundbathcalendar.com/event/<slug>/ with the date, time, venue, price, and the operator's ticket link. The full list of current event pages is in the sitemap: https://soundbathcalendar.com/sitemap.xml
 
-## Coming later
+## City pages
 
-- City pages at /denver/, /boulder/, /fort-collins/, and /colorado-springs/ are planned and will be listed here when they exist.
+Each city page is the same time-grouped calendar filtered to one area, with its own summary, FAQ, and event list:
+
+- [Denver](https://soundbathcalendar.com/denver/): Sound baths in Denver, grouped by time (today, this weekend, this week, the weeks ahead).
+- [Boulder](https://soundbathcalendar.com/boulder/): Sound baths in Boulder, grouped by time.
+- [Fort Collins](https://soundbathcalendar.com/fort-collins/): Sound baths in Fort Collins, grouped by time.
+- [Colorado Springs](https://soundbathcalendar.com/colorado-springs/): Sound baths in Colorado Springs, grouped by time.

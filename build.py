@@ -204,6 +204,9 @@ def build():
     # past-event drop, Last-updated stamp, summary) and the per-event permalink
     # pages (past/future gate) so every surface agrees within a build.
     cal_now = external_events.current_now()
+    # Future, de-duplicated, chronological rows — shared by the root injection,
+    # the ItemList schema, and the city pages (Track B B.2).
+    cal_rows = external_events.build_rows(cal_feed, feed, now=cal_now)
     print()
 
     page_dirs = []
@@ -211,7 +214,6 @@ def build():
         if 'config.json' in files:
             page_dirs.append(root)
 
-    _cal_rows = None
     for page_path in sorted(page_dirs):
         page_name = os.path.relpath(page_path, PAGES)
         config = json.loads(read(os.path.join(page_path, 'config.json')))
@@ -280,14 +282,13 @@ def build():
         # line) plus three markers filled from the feeds.
         # ---------------------------------------------------------------
         if output == 'index.html':
-            _cal_rows = external_events.build_rows(cal_feed, feed, now=cal_now)
             _cal_body = external_events.render_calendar_body(
-                _cal_rows, nav_prefix, now=cal_now)
+                cal_rows, nav_prefix, now=cal_now)
             content = content.replace('<!-- CALENDAR_BODY -->', _cal_body)
             content = content.replace(
                 '<!-- CALENDAR_SUMMARY -->',
                 html_mod.escape(
-                    external_events.build_summary_sentence(_cal_rows, now=cal_now)))
+                    external_events.build_summary_sentence(cal_rows, now=cal_now)))
             content = content.replace(
                 '<!-- CALENDAR_LAST_UPDATED -->',
                 html_mod.escape(external_events.fmt_stamp_date(cal_now)))
@@ -346,9 +347,9 @@ def build():
             schema_json += (f'\n  <script type="application/ld+json">\n'
                             f'{json.dumps(website_schema, indent=2)}\n  </script>')
 
-            if _cal_rows:
+            if cal_rows:
                 _il = external_events.calendar_itemlist(
-                    _cal_rows, canonical_url, SITE_URL)
+                    cal_rows, canonical_url, SITE_URL)
                 if _il:
                     # _ldjson (not raw json.dumps): the ItemList carries
                     # external-operator-controlled strings, so it must be
@@ -396,6 +397,11 @@ def build():
         if _write_page(output, html, pages_built):
             print(f'  ✓ {output}')
 
+    # --- City pages (/denver/ etc.) — Track B B.2 ---
+    _city_outputs, _city_sitemap = build_city_pages(
+        base, header, footer, cal_rows, cal_now)
+    pages_built.extend(_city_outputs)
+
     # --- Per-event permalink pages (/event/<slug>/) ---
     _event_outputs, _event_sitemap = build_event_pages(
         base, header, footer, cal_feed, cal_now)
@@ -403,7 +409,95 @@ def build():
 
     print(f'\nBuilt {len(pages_built)} pages.')
 
-    generate_sitemap(page_dirs, cal_now, extra_urls=_event_sitemap)
+    generate_sitemap(page_dirs, cal_now, extra_urls=_city_sitemap + _event_sitemap)
+
+
+def build_city_pages(base, header, footer, cal_rows, now):
+    """Emit the four city pages (/denver/ etc.) — Track B B.2. Each is the same
+    temporal bands as the root, filtered to one city, with its own H1, summary,
+    FAQ, OG image, and CollectionPage/ItemList/FAQPage/Breadcrumb schema. All
+    four have real inventory today, so none is a doorway page. Returns
+    (built_outputs, sitemap_entries) with one (loc, lastmod) per city.
+    """
+    print('\nGenerating city pages...')
+    built, sitemap_entries = [], []
+    lastmod = external_events.stamp_date_iso(now)
+    nav_prefix = '../'
+
+    for city in external_events.CITIES:
+        slug = external_events.city_slug(city)
+        output = f'{slug}/index.html'
+        canonical_url = external_events.city_page_url(city, SITE_URL)
+
+        # Title uses pipes (not em dashes); description is the stable per-city
+        # meta line (NOT the volatile count sentence, which is on-page only).
+        title = f'Sound Baths in {city} | {SITE_NAME}'
+        description = external_events.CITY_META[city]
+        meta_desc = (f'<meta name="description" '
+                     f'content="{html_mod.escape(description, quote=True)}">')
+
+        og_rel = f'img/og/{slug}.png'
+        og_image = (f'{SITE_URL}/{og_rel}'
+                    if os.path.exists(os.path.join(REPO, og_rel))
+                    else f'{SITE_URL}/img/og-default.png')
+        og_tags, twitter_tags = _og_twitter_tags(
+            external_events.CITY_H1[city], description, canonical_url, og_image)
+
+        # Organization (publisher) + CollectionPage + ItemList + FAQPage +
+        # BreadcrumbList. The ItemList carries external-operator strings, so it
+        # routes through _ldjson (breakout-safe); the rest are our own.
+        schema_json = (f'<script type="application/ld+json">\n'
+                       f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+        _cp = external_events.city_collectionpage_schema(
+            city, canonical_url, SITE_URL, description, lastmod)
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(_cp)}\n  </script>')
+        _il = external_events.city_itemlist(cal_rows, city, SITE_URL)
+        if _il:
+            schema_json += (f'\n  <script type="application/ld+json">\n'
+                            f'{_ldjson(_il)}\n  </script>')
+        _faq = external_events.city_faqpage_schema(city)
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(_faq)}\n  </script>')
+        breadcrumb_schema = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Calendar",
+                 "item": SITE_URL + "/"},
+                {"@type": "ListItem", "position": 2, "name": city,
+                 "item": canonical_url},
+            ],
+        }
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{json.dumps(breadcrumb_schema, indent=2)}\n  </script>')
+
+        content = external_events.render_city_page(cal_rows, city, nav_prefix, now=now)
+        page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
+        page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
+
+        html = _assemble(base, {
+            'title':            title,
+            'robots':           'index, follow',
+            'meta_description': meta_desc,
+            'canonical_url':    canonical_url,
+            'css_path':         nav_prefix,
+            'page_style':       '',
+            'og_tags':          og_tags,
+            'twitter_tags':     twitter_tags,
+            'schema_json':      schema_json,
+            'header':           page_header,
+            'content':          content,
+            'footer':           page_footer,
+        })
+
+        if not _write_page(output, html, built):
+            continue
+        n = len(external_events.city_rows(cal_rows, city))
+        print(f'  ✓ {output} ({n} upcoming)')
+        sitemap_entries.append((canonical_url, lastmod))
+
+    return built, sitemap_entries
 
 
 def build_event_pages(base, header, footer, cal_feed, now):

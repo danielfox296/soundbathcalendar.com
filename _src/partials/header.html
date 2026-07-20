@@ -1,9 +1,12 @@
 <header class="masthead">
   <div class="container masthead-inner">
     <a href="{{nav_prefix}}" class="wordmark">Sound Bath Calendar</a>
-    <!-- City links return in B.2 as links to the /denver/ etc. city pages;
-         the root's own temporal jump-nav (Today · This weekend · …) lives in
-         the page body. Masthead stays wordmark + digest for now. -->
+    <nav class="masthead-cities" aria-label="Areas">
+      <a href="{{nav_prefix}}denver/">Denver</a>
+      <a href="{{nav_prefix}}boulder/">Boulder</a>
+      <a href="{{nav_prefix}}fort-collins/">Fort Collins</a>
+      <a href="{{nav_prefix}}colorado-springs/">Colorado Springs</a>
+    </nav>
     <!-- Slim digest capture: inline form on wide screens, an anchor link down
          to the full form on small ones. Same Formspree seam as the main form. -->
     <form class="masthead-digest" action="https://formspree.io/f/xgopwepl" method="POST">

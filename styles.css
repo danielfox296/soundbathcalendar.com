@@ -43,13 +43,18 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .masthead { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 1px solid var(--line); }
 .masthead-inner { display: flex; align-items: center; gap: 1.4rem 2rem; padding-top: 0.7rem; padding-bottom: 0.7rem; flex-wrap: wrap; }
 .wordmark { font: 700 0.95rem var(--font-display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-decoration: none; white-space: nowrap; }
-.masthead-digest { display: flex; gap: 0.5rem; align-items: center; margin-left: auto; }
+.masthead-cities { display: flex; gap: 1.3rem; flex: 1 1 auto; min-width: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.masthead-cities::-webkit-scrollbar { display: none; }
+.masthead-cities a { color: rgba(10,11,13,0.62); text-decoration: none; font: 600 0.82rem var(--font-body); white-space: nowrap; }
+.masthead-cities a:hover { color: var(--ink); }
+.masthead-digest { display: flex; gap: 0.5rem; align-items: center; }
 .masthead-digest input[type="email"] { width: 15.5rem; max-width: 38vw; background: transparent; border: 1px solid rgba(10,11,13,0.25); padding: 0.45rem 0.7rem; font: 400 0.85rem var(--font-body); color: var(--ink); }
 .masthead-digest-link { display: none; font: 600 0.82rem var(--font-body); color: var(--accent-on-light); text-decoration: none; white-space: nowrap; }
 .masthead-digest-link:hover { text-decoration: underline; }
 @media (max-width: 900px) {
   .masthead-digest { display: none; }
-  .masthead-digest-link { display: inline; margin-left: auto; }
+  .masthead-digest-link { display: inline; order: 2; }
+  .masthead-cities { order: 3; flex-basis: 100%; }
   .masthead-inner { row-gap: 0.5rem; }
 }
 
@@ -125,6 +130,15 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 
 .cal-empty { color: rgba(10,11,13,0.55); font-size: 1rem; margin: 0; padding: 1.6rem 0; }
 .cal-empty--all { padding: 2.6rem 0; }
+
+/* ---- city pages: breadcrumb + other-areas nav (Track B B.2) ---- */
+.cal-crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 1.4rem; }
+.cal-crumbs a { color: var(--accent-on-light); text-decoration: none; }
+.cal-crumbs a:hover { text-decoration: underline; }
+.cal-cities { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem 1.4rem; margin: 3.4rem 0 0; padding-top: 1.8rem; border-top: 1px solid var(--line); }
+.cal-cities__label { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); }
+.cal-cities a { color: var(--accent-on-light); text-decoration: none; font: 600 0.9rem var(--font-body); }
+.cal-cities a:hover { text-decoration: underline; }
 
 /* ---- FAQ — an answer surface for search/AI. Always visible for extraction. */
 .cal-faq { margin: 5rem 0 0; padding-top: 3rem; border-top: 1px solid var(--line); scroll-margin-top: 90px; }

@@ -735,18 +735,22 @@ CALENDAR_FAQ = (
 )
 
 
-def render_faq_html():
+def _render_faq(items):
     """Always-visible FAQ block (better for AI extraction than a collapsed
-    accordion). The FAQPage JSON-LD is built from the same CALENDAR_FAQ source."""
+    accordion). The FAQPage JSON-LD is built from the same items."""
     out = ['<section class="cal-faq" id="faq">',
            '  <h2 class="cal-band__h2">Common questions</h2>']
-    for item in CALENDAR_FAQ:
+    for item in items:
         out.append('  <div class="cal-faq__item">')
         out.append(f'    <h3 class="cal-faq__q">{_esc(item["q"])}</h3>')
         out.append(f'    <p class="cal-faq__a">{_esc(item["a"])}</p>')
         out.append('  </div>')
     out.append('</section>')
     return '\n'.join(out)
+
+
+def render_faq_html():
+    return _render_faq(CALENDAR_FAQ)
 
 
 # ---------------------------------------------------------------------------
@@ -970,14 +974,11 @@ def _render_rows(rows, show_date, nav_prefix):
     return f'<div class="cal-rows">\n{inner}\n</div>'
 
 
-def render_calendar_body(rows, nav_prefix='', now=None):
-    """The dynamic middle of the root: a temporal jump-nav, the four bands in
-    fixed order (each drawn only when it has rooms), then the FAQ.
-
-    Static scaffold (H1, stamp, summary, digest, submission line) lives in the
-    section file; this returns everything that depends on the feed. An empty
-    weekend band simply isn't drawn — 'This week' carries the near term — so the
-    page never prints 'nothing this weekend' (the never-empty rule)."""
+def _render_bands(rows, nav_prefix='', now=None):
+    """The temporal jump-nav + the four bands in fixed order (each drawn only
+    when it has rooms). Shared by the root and the city pages; the caller
+    appends its own FAQ. An empty weekend band simply isn't drawn — 'This week'
+    carries the near term — so a page never prints 'nothing this weekend'."""
     today_b, weekend_b, week_b, ahead_b = band_assignments(rows, now)
     bands = []
     if today_b:
@@ -1007,10 +1008,15 @@ def render_calendar_body(rows, nav_prefix='', now=None):
         out.append('  ' + _render_rows(brows, show_date, nav_prefix))
         out.append('</section>')
 
-    # FAQ — a GEO/AIO citation surface (FAQPage JSON-LD emitted by build.py).
-    out.append(render_faq_html())
-
     return '\n'.join(out)
+
+
+def render_calendar_body(rows, nav_prefix='', now=None):
+    """The dynamic middle of the root: nav + bands + FAQ. Static scaffold (H1,
+    stamp, summary, digest, submission line) lives in the section file; this
+    returns everything that depends on the feed."""
+    # FAQ — a GEO/AIO citation surface (FAQPage JSON-LD emitted by build.py).
+    return _render_bands(rows, nav_prefix, now) + '\n' + render_faq_html()
 
 
 # ---------------------------------------------------------------------------
@@ -1193,6 +1199,217 @@ def faqpage_schema():
             {'@type': 'Question', 'name': item['q'],
              'acceptedAnswer': {'@type': 'Answer', 'text': item['a']}}
             for item in CALENDAR_FAQ
+        ],
+    }
+
+
+# ---------------------------------------------------------------------------
+# City pages (Track B B.2) — the durable geographic surfaces that own the
+# "{city} sound bath" query families. Same temporal bands as the root, filtered
+# to one city, each with its own H1, summary, FAQ, OG, and schema. The root
+# stays the freshness surface; these are the SEO surfaces. Assembly (base
+# layout, <head>, schema) is build.py's job; render_city_page returns the
+# <main> body, consonant with the permalink pipeline.
+# ---------------------------------------------------------------------------
+
+# PLACEHOLDER per-city display + search copy (flagged for Daniel).
+CITY_H1 = {c: f'Sound baths in {c}' for c in CITIES}
+CITY_META = {
+    c: (f'A weekly-updated calendar of sound baths in {c}, Colorado: dates, '
+        f'times, venues, prices, and ticket links for every listed session. '
+        f'Part of the Front Range sound bath calendar.')
+    for c in CITIES
+}
+
+
+def city_slug(city):
+    """Canonical URL slug for a city ('Fort Collins' -> 'fort-collins')."""
+    return CITY_ANCHOR[city]
+
+
+def city_page_path(city):
+    """Site-relative path for a city page (trailing slash)."""
+    return f'{city_slug(city)}/'
+
+
+def city_page_url(city, site_url):
+    return f'{site_url}/{city_page_path(city)}'
+
+
+def city_rows(rows, city):
+    """The subset of rows in one city, chronological."""
+    out = [r for r in rows if r['city'] == city]
+    out.sort(key=lambda r: parse_iso(r['starts_at']))
+    return out
+
+
+def build_city_summary_sentence(rows, city, now=None):
+    """Machine-extractable answer-first sentence for a city page: the next
+    seven days' count in that city, with a price span. Rebuilt every build."""
+    wk = [r for r in week_rows(rows, now) if r['city'] == city]
+    n = len(wk)
+    if n == 0:
+        return (f'No sound baths are on the {city} calendar for the next seven '
+                f'days yet; the weeks ahead are listed below.')
+    noun = 'bath' if n == 1 else 'baths'
+    sent = f'This week in {city}: {n} sound {noun}'
+    lo_label, hi = _price_span(wk)
+    if hi is not None:
+        sent += f', priced {lo_label} to ${_fmt_price_num(hi)}'
+    return sent + '.'
+
+
+def city_faq(city):
+    """PLACEHOLDER per-city FAQ (flagged for Daniel) — the calendar FAQ,
+    localized so each city page is its own answer surface for search/AI."""
+    return (
+        {
+            'q': f'Where can I find a sound bath in {city}?',
+            'a': (f'This page lists every sound bath on our {city} calendar, '
+                  'updated through the week. A sound bath is a session where you '
+                  'lie down, usually on a mat, while a facilitator plays '
+                  'instruments such as gongs, singing bowls, and chimes. Most run '
+                  '45 to 75 minutes, and you stay clothed and still throughout.'),
+        },
+        {
+            'q': f'How much do sound baths cost in {city}?',
+            'a': ('Most sessions run between $20 and $55. Some are offered by '
+                  'donation or free. Each listing shows its own price, and the '
+                  'ticket link goes straight to the operator.'),
+        },
+        {
+            'q': 'What should I bring to a sound bath?',
+            'a': ('Wear clothes you can lie down in. Many rooms provide mats, '
+                  'bolsters, and blankets, though your own blanket, a pillow, and '
+                  'water are never wrong. When in doubt, the operator’s listing '
+                  'says what the room supplies.'),
+        },
+    )
+
+
+def render_city_switcher(current_city, nav_prefix):
+    """Links to the OTHER city pages — the internal-link graph plus reader nav
+    across areas. The root is reachable from the masthead wordmark."""
+    out = ['<nav class="cal-cities" aria-label="Other areas">',
+           '  <span class="cal-cities__label">Other areas</span>']
+    for c in CITIES:
+        if c == current_city:
+            continue
+        out.append(f'  <a href="{nav_prefix}{city_page_path(c)}">{_esc(c)}</a>')
+    out.append('</nav>')
+    return '\n'.join(out)
+
+
+def render_digest_block(selected_city='all', source='calendar-digest'):
+    """The Thursday-digest capture form (Formspree), with one area preselected.
+    Mirrors the root form in sections/01-content.html; same endpoint + fields."""
+    opts = [('all', 'Everywhere on the Front Range')]
+    opts += [(city_slug(c), c) for c in CITIES]
+    option_html = '\n'.join(
+        f'          <option value="{v}"{" selected" if v == selected_city else ""}>'
+        f'{_esc(label)}</option>'
+        for v, label in opts
+    )
+    return f'''<div class="digest-block" id="digest">
+      <span class="eyebrow">The digest</span>
+      <p class="form-note">The week's rooms, Thursday mornings.</p>
+      <form class="contact-form" action="https://formspree.io/f/xgopwepl" method="POST">
+        <input type="hidden" name="_subject" value="SOUNDBATHCALENDAR digest">
+        <input type="hidden" name="_next" value="https://soundbathcalendar.com/thanks/">
+        <input type="hidden" name="venture" value="soundbathcalendar">
+        <input type="hidden" name="list_join" value="yes">
+        <input type="hidden" name="source" value="{_esc(source)}">
+        <label class="form-field">
+          <span>Email</span>
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+        <label class="form-field">
+          <span>Which areas?</span>
+          <select name="cities">
+{option_html}
+          </select>
+        </label>
+        <button type="submit" class="btn btn-primary">Get the digest</button>
+      </form>
+    </div>'''
+
+
+def render_city_page(rows, city, nav_prefix, now=None):
+    """The <main> body for one city page: crumb · H1 · stamp · summary · the
+    temporal bands (this city only) · other-areas nav · city FAQ · digest ·
+    submission line."""
+    now = _now_utc(now)
+    crows = city_rows(rows, city)
+    slug = city_slug(city)
+    out = ['<section class="section section--light cal-main">', '  <div class="container">']
+
+    out.append('    <nav class="cal-crumbs" aria-label="Breadcrumb">')
+    out.append(f'      <a href="{nav_prefix}">Calendar</a> <span aria-hidden="true">/</span> '
+               f'<span>{_esc(city)}</span>')
+    out.append('    </nav>')
+
+    out.append(f'    <h1 class="cal-h1">{_esc(CITY_H1[city])}</h1>')
+    out.append(f'    <p class="cal-updated">Last updated {_esc(fmt_stamp_date(now))}.</p>')
+    out.append(f'    <p class="cal-summary" id="cal-summary">'
+               f'{_esc(build_city_summary_sentence(rows, city, now))}</p>')
+
+    out.append('    ' + _render_bands(crows, nav_prefix, now))
+    out.append('    ' + render_city_switcher(city, nav_prefix))
+    out.append('    ' + _render_faq(city_faq(city)))
+    out.append('    ' + render_digest_block(selected_city=slug, source=f'city-{slug}-digest'))
+
+    out.append('    <p class="cal-submit">Running a room we should know about? '
+               '<a href="https://thefirstwater.co/contact/">Send it our way.</a></p>')
+
+    out.append('  </div>')
+    out.append('</section>')
+    return '\n'.join(out)
+
+
+def city_collectionpage_schema(city, page_url, site_url, description, date_modified):
+    """CollectionPage schema for a city page (speakable summary + build-time
+    dateModified), published by the Sound Bath Calendar WebSite."""
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        'name': f'Upcoming sound baths in {city}, Colorado',
+        'url': page_url,
+        'description': description,
+        'dateModified': date_modified,
+        'isPartOf': {'@type': 'WebSite', 'name': 'Sound Bath Calendar',
+                     'url': site_url},
+        'speakable': {'@type': 'SpeakableSpecification',
+                      'cssSelector': ['#cal-summary']},
+    }
+
+
+def city_itemlist(rows, city, site_url):
+    """ItemList of Events for one city (chronological), or None when empty."""
+    crows = city_rows(rows, city)
+    if not crows:
+        return None
+    items = []
+    for i, row in enumerate(crows, start=1):
+        ev = (_firstwater_event(row, site_url)
+              if row['kind'] == 'firstwater' else _external_event(row, site_url))
+        items.append({'@type': 'ListItem', 'position': i, 'item': ev})
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        'name': f'Upcoming sound baths in {city}',
+        'itemListElement': items,
+    }
+
+
+def city_faqpage_schema(city):
+    """FAQPage schema built from the same city_faq the page renders."""
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        'mainEntity': [
+            {'@type': 'Question', 'name': item['q'],
+             'acceptedAnswer': {'@type': 'Answer', 'text': item['a']}}
+            for item in city_faq(city)
         ],
     }
 
