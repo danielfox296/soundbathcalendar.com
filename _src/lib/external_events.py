@@ -989,14 +989,15 @@ def _fmt_price_num(n):
 def _external_offer(row):
     """Offer/AggregateOffer for an external row, or None. Ticket url only when
     known; price only when it can be read accurately from the price string.
-    Free events carry isAccessibleForFree:true (spec §6)."""
+    [port] isAccessibleForFree moved OFF the Offer (validator.schema.org
+    warning: not a recognized Offer property) and onto the Event, where
+    schema.org defines it; price:0 already says free here."""
     kind = _parse_price(row['price'])
     url = _safe_ext_url(row['ticket_url']) or None
     if kind[0] == 'fixed':
         offer = {'@type': 'Offer', 'price': _fmt_price_num(kind[1]), 'priceCurrency': 'USD'}
     elif kind[0] == 'free':
-        offer = {'@type': 'Offer', 'price': '0', 'priceCurrency': 'USD',
-                 'isAccessibleForFree': True}
+        offer = {'@type': 'Offer', 'price': '0', 'priceCurrency': 'USD'}
     elif kind[0] == 'range':
         offer = {'@type': 'AggregateOffer',
                  'lowPrice': _fmt_price_num(kind[1]),
@@ -1051,6 +1052,9 @@ def _external_event(row, site_url):
     offer = _external_offer(row)
     if offer:
         ev['offers'] = offer
+    # Free events: the flag lives on the Event (its schema.org home).
+    if _parse_price(row['price'])[0] == 'free':
+        ev['isAccessibleForFree'] = True
     slug = event_slug(row)
     if slug:
         ev['url'] = event_permalink_url(row, site_url)
