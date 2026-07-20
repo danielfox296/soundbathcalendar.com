@@ -1,0 +1,49 @@
+<section class="section section--light cal-main">
+  <div class="container">
+    <h1 class="cal-h1">Sound baths in Denver &amp; the Front Range</h1>
+    <p class="cal-updated">Last updated <!-- CALENDAR_LAST_UPDATED -->.</p>
+
+    <p class="cal-summary" id="cal-summary"><!-- CALENDAR_SUMMARY --></p>
+
+    <nav class="cal-jump" aria-label="Jump to an area">
+      <a href="#this-weekend">This weekend</a>
+      <a href="#denver">Denver</a>
+      <a href="#boulder">Boulder</a>
+      <a href="#fort-collins">Fort Collins</a>
+      <a href="#colorado-springs">Colorado Springs</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <!-- CALENDAR_BODY -->
+
+    <div class="digest-block" id="digest">
+      <span class="eyebrow">The digest</span>
+      <p class="form-note">The week's rooms, Thursday mornings.</p>
+      <form class="contact-form" action="https://formspree.io/f/xgopwepl" method="POST">
+        <input type="hidden" name="_subject" value="SOUNDBATHCALENDAR digest">
+        <input type="hidden" name="_next" value="https://soundbathcalendar.com/thanks/">
+        <input type="hidden" name="venture" value="soundbathcalendar">
+        <input type="hidden" name="list_join" value="yes">
+        <input type="hidden" name="source" value="calendar-digest">
+        <label class="form-field">
+          <span>Email</span>
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+        <label class="form-field">
+          <span>Which areas?</span>
+          <select name="cities">
+            <option value="all" selected>Everywhere on the Front Range</option>
+            <option value="denver">Denver</option>
+            <option value="boulder">Boulder</option>
+            <option value="fort-collins">Fort Collins</option>
+            <option value="colorado-springs">Colorado Springs</option>
+          </select>
+        </label>
+        <button type="submit" class="btn btn-primary">Get the digest</button>
+      </form>
+    </div>
+
+    <p class="cal-submit">Running a room we should know about?
+    <a href="https://thefirstwater.co/contact/">Send it our way.</a></p>
+  </div>
+</section>

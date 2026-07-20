@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Sound Bath Calendar — ink tile, three ice bars (a sound wave at 16px). -->
+  <rect width="32" height="32" rx="7" fill="#0A0B0D"/>
+  <rect x="7" y="12" width="4" height="9" rx="2" fill="#62B6E8"/>
+  <rect x="14" y="8" width="4" height="17" rx="2" fill="#62B6E8"/>
+  <rect x="21" y="12" width="4" height="9" rx="2" fill="#62B6E8"/>
+</svg>

@@ -1,0 +1,25 @@
+<header class="masthead">
+  <div class="container masthead-inner">
+    <a href="{{nav_prefix}}" class="wordmark">Sound Bath Calendar</a>
+    <nav class="masthead-cities" aria-label="Areas">
+      <a href="{{nav_prefix}}#denver">Denver</a>
+      <a href="{{nav_prefix}}#boulder">Boulder</a>
+      <a href="{{nav_prefix}}#fort-collins">Fort Collins</a>
+      <a href="{{nav_prefix}}#colorado-springs">Colorado Springs</a>
+    </nav>
+    <!-- Slim digest capture: inline form on wide screens, an anchor link down
+         to the full form on small ones. Same Formspree seam as the main form. -->
+    <form class="masthead-digest" action="https://formspree.io/f/xgopwepl" method="POST">
+      <input type="hidden" name="_subject" value="SOUNDBATHCALENDAR digest">
+      <input type="hidden" name="_next" value="https://soundbathcalendar.com/thanks/">
+      <input type="hidden" name="venture" value="soundbathcalendar">
+      <input type="hidden" name="list_join" value="yes">
+      <input type="hidden" name="source" value="masthead-digest">
+      <label class="visually-hidden" for="mh-email">Email for the Thursday digest</label>
+      <input id="mh-email" type="email" name="email" autocomplete="email"
+             placeholder="Email for the Thursday digest" required>
+      <button type="submit" class="btn btn-primary btn-slim">Get the digest</button>
+    </form>
+    <a class="masthead-digest-link" href="{{nav_prefix}}#digest">The digest</a>
+  </div>
+</header>

@@ -1,0 +1,12 @@
+# Sound Bath Calendar
+
+> A curated, weekly-updated calendar of sound baths across Denver and the Front Range: Boulder, Fort Collins, and Colorado Springs. Dates, times, venues, prices, and ticket links for every listed session. Kept by Firstwater (thefirstwater.co).
+
+## Pages
+
+- [The calendar](https://soundbathcalendar.com/): Every sound bath on the Front Range for the weeks ahead: a this-weekend strip, then Denver, Boulder, Fort Collins, and Colorado Springs sections, updated through the week.
+- Every listed event has its own page at https://soundbathcalendar.com/event/<slug>/ with the date, time, venue, price, and the operator's ticket link. The full list of current event pages is in the sitemap: https://soundbathcalendar.com/sitemap.xml
+
+## Coming later
+
+- City pages at /denver/, /boulder/, /fort-collins/, and /colorado-springs/ are planned and will be listed here when they exist.

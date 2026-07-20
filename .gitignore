@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+
+# Claude Code — per-user local settings & agent worktrees (never commit; may contain secrets)
+.claude/settings.local.json
+.claude/worktrees/

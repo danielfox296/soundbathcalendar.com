@@ -1,0 +1,158 @@
+/* SOUND BATH CALENDAR — v1 (2026-07-19 brand split).
+   Tokens carried from the Firstwater design system chassis; light ground,
+   utility register. One sheet: the calendar is the site.
+   No JS anywhere — every rule below must hold with scripts blocked. */
+:root {
+  --ink: #0A0B0D;
+  --paper: #F5F7FA;
+  --gray: #98A1AB;
+  --accent: #62B6E8;
+  /* Accessible link blue on the paper ground: #1F6FA8 on #F5F7FA = 5.02:1
+     (WCAG AA needs 4.5:1). The ice --accent stays for marks, not text. */
+  --accent-on-light: #1F6FA8;
+  --line: rgba(10, 11, 13, 0.14);
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--accent-on-light); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.08; letter-spacing: -0.015em; }
+.container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+.eyebrow { font: 600 0.75rem var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(10,11,13,0.65); display: block; margin-bottom: 1.2rem; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent-on-light); outline-offset: 2px; }
+
+/* ---- sections (consonant with the chassis; light by default, no tall hero) */
+.section { padding: 2.2rem 0 4rem; position: relative; }
+.section--light { background: var(--paper); color: var(--ink); }
+.section--light a { color: var(--accent-on-light); }
+
+/* ---- masthead: compact, light, sticky. Wordmark · city anchors · slim
+        digest capture. Two rows on small screens, one on wide. ---- */
+.masthead { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 1px solid var(--line); }
+.masthead-inner { display: flex; align-items: center; gap: 1.4rem 2rem; padding-top: 0.7rem; padding-bottom: 0.7rem; flex-wrap: wrap; }
+.wordmark { font: 700 0.95rem var(--font-display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-decoration: none; white-space: nowrap; }
+.masthead-cities { display: flex; gap: 1.3rem; flex: 1 1 auto; min-width: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.masthead-cities::-webkit-scrollbar { display: none; }
+.masthead-cities a { color: rgba(10,11,13,0.62); text-decoration: none; font: 600 0.82rem var(--font-body); white-space: nowrap; }
+.masthead-cities a:hover { color: var(--ink); }
+.masthead-digest { display: flex; gap: 0.5rem; align-items: center; }
+.masthead-digest input[type="email"] { width: 15.5rem; max-width: 38vw; background: transparent; border: 1px solid rgba(10,11,13,0.25); padding: 0.45rem 0.7rem; font: 400 0.85rem var(--font-body); color: var(--ink); }
+.masthead-digest-link { display: none; font: 600 0.82rem var(--font-body); color: var(--accent-on-light); text-decoration: none; white-space: nowrap; }
+.masthead-digest-link:hover { text-decoration: underline; }
+@media (max-width: 900px) {
+  .masthead-digest { display: none; }
+  .masthead-digest-link { display: inline; order: 2; }
+  .masthead-cities { order: 3; flex-basis: 100%; }
+  .masthead-inner { row-gap: 0.5rem; }
+}
+
+/* ---- buttons ---- */
+.btn { display: inline-block; font: 600 0.95rem var(--font-body); text-decoration: none; padding: 0.95rem 2rem; border: none; cursor: pointer; transition: filter .2s, transform .15s; }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--accent); color: var(--ink); }
+.btn-primary:hover { filter: brightness(1.12); }
+.btn-slim { padding: 0.5rem 1rem; font-size: 0.82rem; }
+
+/* ---- forms (digest capture) ---- */
+.contact-form { max-width: 34rem; }
+.form-field { display: block; margin-bottom: 1.6rem; }
+.form-field span { display: block; font: 600 0.75rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(10,11,13,0.65); margin-bottom: 0.5rem; }
+.form-field input, .form-field select { width: 100%; background: transparent; border: 1px solid rgba(10,11,13,0.25); padding: 0.85rem 1rem; font: 400 1rem var(--font-body); color: var(--ink); }
+.form-field input:focus, .form-field select:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.form-note { max-width: 34rem; color: rgba(10,11,13,0.65); margin: 0 0 1.4rem; }
+.digest-block { max-width: 34rem; margin-top: 4.5rem; padding-top: 2.6rem; border-top: 1px solid var(--line); scroll-margin-top: 90px; }
+
+/* ---- calendar root: answer-first head (no hero, no image, no animation) */
+.cal-h1 { font-size: clamp(1.7rem, 3.6vw, 2.7rem); font-weight: 500; margin: 0.6rem 0 0.9rem; letter-spacing: -0.01em; }
+.cal-updated { color: rgba(10,11,13,0.55); font-size: 0.85rem; letter-spacing: 0.03em; margin: 0 0 1rem; }
+/* Answer-first, machine-extractable summary (speakable via schema). */
+.cal-summary { font: 500 1.12rem var(--font-display); color: var(--ink); max-width: 44rem; margin: 0 0 1.6rem; line-height: 1.45; }
+
+.cal-jump { display: flex; flex-wrap: wrap; gap: 0.7rem 1.5rem; margin: 0 0 2.2rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line); }
+.cal-jump a { color: var(--accent-on-light); text-decoration: none; font: 600 0.76rem var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; }
+.cal-jump a:hover { text-decoration: underline; }
+
+.cal-weekend { margin-bottom: 4rem; scroll-margin-top: 90px; }
+.cal-weekend--empty { margin-bottom: 2.4rem; }
+.cal-weekend--empty .cal-empty { padding: 0; }
+.cal-weekend__h2, .cal-area__h2 { font-size: clamp(1.45rem, 2.6vw, 2rem); margin: 0 0 1.4rem; }
+.cal-area { margin-bottom: 4rem; scroll-margin-top: 90px; }
+.cal-area:last-of-type { margin-bottom: 2rem; }
+
+/* ---- calendar rows (unchanged row anatomy from the parent surface) ---- */
+.cal-rows { border-top: 1px solid var(--line); }
+.cal-row { display: grid; grid-template-columns: 150px 1fr; gap: 1.4rem 2rem; padding: 1.8rem 0; border-bottom: 1px solid var(--line); align-items: start; }
+.cal-row__when { display: flex; flex-direction: column; gap: 0.15rem; }
+.cal-row__date { font: 600 1rem var(--font-display); color: var(--ink); }
+.cal-row__time { color: rgba(10,11,13,0.55); font-size: 0.9rem; }
+
+/* Body = optional flyer thumbnail (one consistent frame) + the text column.
+   Rows with no image render with no frame — the text simply fills the row. */
+.cal-row__body { display: flex; gap: 1.3rem; align-items: flex-start; min-width: 0; }
+.cal-row__media { flex: 0 0 auto; width: 132px; aspect-ratio: 3 / 2; overflow: hidden; background: rgba(10,11,13,0.05); }
+.cal-row__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cal-row__text { min-width: 0; flex: 1 1 auto; }
+
+.cal-row__name { font-size: 1.25rem; font-weight: 500; margin: 0 0 0.4rem; letter-spacing: -0.01em; }
+.cal-row__name a { color: inherit; text-decoration: none; }
+.cal-row__name a:hover { text-decoration: underline; text-decoration-color: var(--accent-on-light); }
+.cal-row__meta { color: rgba(10,11,13,0.62); font-size: 0.95rem; margin: 0; max-width: 42rem; }
+/* Factual line — states what the event is, never whether it's good. */
+.cal-row__desc { color: rgba(10,11,13,0.72); font-size: 0.98rem; margin: 0.5rem 0 0; max-width: 42rem; line-height: 1.5; }
+/* Daniel's one line — the moat — reads as editorial, set in the display face. */
+.cal-row__note { font: 500 1.08rem var(--font-display); color: var(--ink); margin: 0.7rem 0 0; max-width: 38rem; line-height: 1.4; }
+.cal-row__cta { display: flex; flex-wrap: wrap; gap: 0.4rem 1.3rem; margin: 0.8rem 0 0; }
+.cal-row__cta a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
+.cal-row__cta a:hover { text-decoration: underline; }
+
+/* Firstwater's rows — one operator among many, still visibly its own. */
+.cal-row--firstwater { border-left: 3px solid var(--accent); padding-left: 1.4rem; background: rgba(98,182,232,0.06); }
+.cal-row--firstwater .cal-row__when { padding-left: 0; }
+.cal-row__tag { display: inline-block; font: 600 0.66rem var(--font-body); letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-on-light); margin-bottom: 0.5rem; }
+.cal-row__ours { display: inline-block; font: 600 0.62rem var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(10,11,13,0.5); margin-left: 0.6rem; }
+
+.cal-empty { color: rgba(10,11,13,0.55); font-size: 1rem; margin: 0; padding: 1.6rem 0; }
+
+/* ---- FAQ — an answer surface for search/AI. Always visible for extraction. */
+.cal-faq { margin: 5rem 0 0; padding-top: 3rem; border-top: 1px solid var(--line); scroll-margin-top: 90px; }
+.cal-faq__item { margin: 0 0 1.8rem; max-width: 44rem; }
+.cal-faq__q { font-size: 1.15rem; font-weight: 500; margin: 0 0 0.5rem; }
+.cal-faq__a { color: rgba(10,11,13,0.72); font-size: 0.98rem; line-height: 1.6; margin: 0; }
+
+.cal-submit { margin: 3.5rem 0 0; padding-top: 2.4rem; border-top: 1px solid var(--line); color: rgba(10,11,13,0.7); }
+.cal-submit a { color: var(--accent-on-light); }
+
+/* ---- thanks page ---- */
+.thanks-main { min-height: 55vh; }
+.thanks-sub { color: rgba(10,11,13,0.65); max-width: 38rem; margin: 0.6rem 0 2rem; }
+
+/* ---- footer: the byline bridge ---- */
+.site-footer { border-top: 1px solid var(--line); padding: 2.6rem 0 3.2rem; }
+.footer-inner { display: flex; flex-direction: column; gap: 0.4rem; }
+.footer-fine { color: rgba(10,11,13,0.55); font-size: 0.85rem; }
+.footer-fine a { color: var(--accent-on-light); }
+
+@media (max-width: 640px) {
+  .cal-row { grid-template-columns: 1fr; gap: 0.5rem; }
+  .cal-row__when { flex-direction: row; gap: 0.8rem; align-items: baseline; }
+  .cal-row__media { width: 92px; }
+  /* First-viewport budget: stamp + summary + first rows above the fold. */
+  .section { padding-top: 1.4rem; }
+  .cal-h1 { margin-top: 0.2rem; }
+  .cal-summary { font-size: 1rem; margin-bottom: 1.2rem; }
+  .cal-jump { margin-bottom: 1.6rem; gap: 0.55rem 1.2rem; padding-bottom: 1rem; }
+  .cal-weekend, .cal-area { margin-bottom: 3rem; }
+  .cal-weekend--empty { margin-bottom: 2rem; }
+}
