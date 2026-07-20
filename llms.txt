@@ -4,7 +4,7 @@
 
 ## Pages
 
-- [The calendar](https://soundbathcalendar.com/): Every sound bath on the Front Range for the weeks ahead: a this-weekend strip, then Denver, Boulder, Fort Collins, and Colorado Springs sections, updated through the week.
+- [The calendar](https://soundbathcalendar.com/): Every sound bath on the Front Range, grouped by time — today, this weekend, this week, and the weeks ahead — with each listing tagged by city (Denver, Boulder, Fort Collins, Colorado Springs). Updated through the week.
 - Every listed event has its own page at https://soundbathcalendar.com/event/<slug>/ with the date, time, venue, price, and the operator's ticket link. The full list of current event pages is in the sitemap: https://soundbathcalendar.com/sitemap.xml
 
 ## Coming later

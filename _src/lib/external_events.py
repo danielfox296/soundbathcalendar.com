@@ -268,6 +268,16 @@ def fmt_row_date(ts):
     return f'{d.strftime("%a")}, {d.strftime("%b")} {_day(d.strftime("%d"))}'
 
 
+def fmt_row_dow(ts):
+    """Weekday abbreviation for the tear-off date rail: 'Sat'."""
+    return _denver(ts).strftime('%a')
+
+
+def fmt_row_daynum(ts):
+    """Day-of-month numeral for the date rail: '25' (no leading zero)."""
+    return _day(_denver(ts).strftime('%d'))
+
+
 def fmt_time(ts):
     return sessions_feed.fmt_time(ts)
 
@@ -729,7 +739,7 @@ def render_faq_html():
     """Always-visible FAQ block (better for AI extraction than a collapsed
     accordion). The FAQPage JSON-LD is built from the same CALENDAR_FAQ source."""
     out = ['<section class="cal-faq" id="faq">',
-           '  <h2 class="cal-area__h2">Common questions</h2>']
+           '  <h2 class="cal-band__h2">Common questions</h2>']
     for item in CALENDAR_FAQ:
         out.append('  <div class="cal-faq__item">')
         out.append(f'    <h3 class="cal-faq__q">{_esc(item["q"])}</h3>')
@@ -770,21 +780,18 @@ def _safe_ext_url(v):
     return s if probe.startswith(('http://', 'https://')) else ''
 
 
-# Register-passable PLACEHOLDER empty-state line (per-city). Flagged for Daniel.
+# Register-passable PLACEHOLDER empty-state lines. Flagged for Daniel.
+# Per-city (reserved for the Track B city pages, B.2):
 EMPTY_STATE = 'No rooms on the calendar in {city} this week.'
+# Whole calendar (feed entirely dry — rare; the committed cache holds weeks):
+ALL_EMPTY = 'No sound baths on the Front Range calendar right now. Check back soon.'
 
 
-def _place_label(row, in_strip):
-    """The 'venue + neighborhood/city' locator per row anatomy.
-
-    Denver rows show a neighborhood when known; other cities show the city.
-    In the cross-area weekend strip, Denver rows also carry the city so the
-    reader knows where the room is.
-    """
-    if row['city'] == 'Denver':
-        if in_strip:
-            return f'Denver, {row["neighborhood"]}' if row['neighborhood'] else 'Denver'
-        return row['neighborhood'] or None
+def _city_tag(row):
+    """The per-row geography chip. Now that time is the axis (Track B), every
+    root row is city-tagged; Denver rows append a known neighborhood."""
+    if row['city'] == 'Denver' and row.get('neighborhood'):
+        return f'Denver · {row["neighborhood"]}'
     return row['city']
 
 
@@ -799,12 +806,17 @@ def _facil_venue_link(row):
     return None, None
 
 
-def _render_row(row, in_strip=False, nav_prefix=''):
+def _render_row(row, show_date=True, nav_prefix=''):
     is_fw = row['kind'] == 'firstwater'
     cls = 'cal-row cal-row--firstwater' if is_fw else 'cal-row'
     parts = [f'<article class="{cls}">']
+    # Tear-off date rail: weekday over numeral over time. The Today/Tonight band
+    # omits the date (its heading already says "today"); every other band spans
+    # multiple days, so its rows carry day + numeral.
     parts.append('  <div class="cal-row__when">')
-    parts.append(f'    <span class="cal-row__date">{_esc(fmt_row_date(row["starts_at"]))}</span>')
+    if show_date:
+        parts.append(f'    <span class="cal-row__dow">{_esc(fmt_row_dow(row["starts_at"]))}</span>')
+        parts.append(f'    <span class="cal-row__dnum">{_esc(fmt_row_daynum(row["starts_at"]))}</span>')
     parts.append(f'    <span class="cal-row__time">{_esc(fmt_time(row["starts_at"]))}</span>')
     parts.append('  </div>')
     parts.append('  <div class="cal-row__body">')
@@ -824,10 +836,14 @@ def _render_row(row, in_strip=False, nav_prefix=''):
 
     parts.append('    <div class="cal-row__text">')
 
-    # Firstwater's own rows: distinct treatment + a subtle "our room" marker.
+    # Marks line: the city chip (every row, now that time is the axis) plus
+    # Firstwater's own-room marker on its own rows.
+    parts.append('      <div class="cal-row__marks">')
+    parts.append(f'        <span class="cal-row__city">{_esc(_city_tag(row))}</span>')
     if is_fw:
-        parts.append('      <span class="cal-row__tag">Firstwater</span>')
-        parts.append('      <span class="cal-row__ours">Our room</span>')
+        parts.append('        <span class="cal-row__tag">Firstwater</span>')
+        parts.append('        <span class="cal-row__ours">Our room</span>')
+    parts.append('      </div>')
 
     # Name links to the event's page: external -> its calendar permalink (our
     # rich, indexable surface + the internal link that puts it in the crawl
@@ -847,28 +863,23 @@ def _render_row(row, in_strip=False, nav_prefix=''):
     else:
         parts.append(f'      <h3 class="cal-row__name">{_esc(row["name"])}</h3>')
 
-    # Facts line: operator · venue + neighborhood/city · price. Firstwater rows
-    # carry the tag instead of the operator name. When an operator runs its own
-    # room (operator == venue) the name is shown once, not doubled.
+    # Facts line: operator · venue · price. Geography rides the city chip above;
+    # the factual sentence now lives only on the permalink page (B.3: these are
+    # calendar rows, not article cards). An operator running its own room
+    # (operator == venue) shows the name once, not doubled.
     meta = []
     if not is_fw and row['operator']:
         meta.append(row['operator'])
     if row['venue'] and normalize(row['venue']) != normalize(row['operator'] if not is_fw else ''):
         meta.append(row['venue'])
-    place = _place_label(row, in_strip)
-    if place:
-        meta.append(place)
     if row['price']:
         meta.append(row['price'])
     if meta:
         parts.append(f'      <p class="cal-row__meta">{_esc(" · ".join(meta))}</p>')
 
-    # Factual line (authored description, else deterministic template) — always
-    # present, so no row is thin; states what the event IS, never whether it's good.
-    parts.append(f'      <p class="cal-row__desc">{_esc(factual_description(row))}</p>')
-
-    # Daniel's one-line editorial note — the moat. External rows only, and only
-    # when he has written one; a bare row (factual line only) is the honest default.
+    # Daniel's one-line editorial note — the moat — set as a margin voice.
+    # External rows only, and only when he has written one; a bare row is the
+    # honest default.
     note = editorial_note(row)
     if note:
         parts.append(f'      <p class="cal-row__note">{_esc(note)}</p>')
@@ -904,50 +915,97 @@ def _render_row(row, in_strip=False, nav_prefix=''):
     return '\n'.join(parts)
 
 
-def _render_rows(rows, in_strip, nav_prefix, empty_text):
-    if not rows:
-        return f'<p class="cal-empty">{_esc(empty_text)}</p>'
-    inner = '\n'.join(_render_row(r, in_strip=in_strip, nav_prefix=nav_prefix) for r in rows)
+# ---------------------------------------------------------------------------
+# Temporal bands — the root's axis (Track B B.1). Every future row lands in
+# exactly one band; the bands render in this fixed order:
+#   Today / Tonight  ·  This weekend  ·  This week  ·  The weeks ahead
+# ---------------------------------------------------------------------------
+
+def band_assignments(rows, now=None):
+    """Partition future rows into the four temporal bands, each chronological:
+    (today, this_weekend, this_week, weeks_ahead).
+
+    Clean partition — today wins first; then the relevant Fri–Sun weekend
+    (always within the next 7 days); then anything else inside 7 days; then
+    everything beyond. Rows are assumed already future + de-duplicated + sorted
+    (build_rows guarantees this)."""
+    now = _now_utc(now)
+    today = now.astimezone(DENVER).date()
+    wknd_start, wknd_end = weekend_window(now)
+    week_end = now + timedelta(days=7)
+
+    today_b, weekend_b, week_b, ahead_b = [], [], [], []
+    for r in rows:
+        dt = parse_iso(r['starts_at'])
+        local = dt.astimezone(DENVER)
+        if local.date() == today:
+            today_b.append(r)
+        elif wknd_start <= local <= wknd_end:
+            weekend_b.append(r)
+        elif dt <= week_end:
+            week_b.append(r)
+        else:
+            ahead_b.append(r)
+    return today_b, weekend_b, week_b, ahead_b
+
+
+# "Tonight" reads truer than "Today" once the day's only remaining rooms are
+# evening ones; cutover 5pm Denver. PLACEHOLDER rule, flagged for Daniel.
+_TONIGHT_HOUR = 17
+
+
+def today_band_label(today_rows, now=None):
+    """'Today', or 'Tonight' when every remaining room today is an evening one."""
+    if today_rows and all(
+        parse_iso(r['starts_at']).astimezone(DENVER).hour >= _TONIGHT_HOUR
+        for r in today_rows
+    ):
+        return 'Tonight'
+    return 'Today'
+
+
+def _render_rows(rows, show_date, nav_prefix):
+    inner = '\n'.join(
+        _render_row(r, show_date=show_date, nav_prefix=nav_prefix) for r in rows)
     return f'<div class="cal-rows">\n{inner}\n</div>'
 
 
 def render_calendar_body(rows, nav_prefix='', now=None):
-    """The dynamic middle of /calendar/: this-weekend strip + four area sections.
+    """The dynamic middle of the root: a temporal jump-nav, the four bands in
+    fixed order (each drawn only when it has rooms), then the FAQ.
 
-    Static scaffolding (hero, jump nav, email capture, submission line) lives
-    in the section file; this returns everything that depends on the feed.
-    """
-    groups = group_by_city(rows)
-    wk = weekend_rows(rows, now)
+    Static scaffold (H1, stamp, summary, digest, submission line) lives in the
+    section file; this returns everything that depends on the feed. An empty
+    weekend band simply isn't drawn — 'This week' carries the near term — so the
+    page never prints 'nothing this weekend' (the never-empty rule)."""
+    today_b, weekend_b, week_b, ahead_b = band_assignments(rows, now)
+    bands = []
+    if today_b:
+        bands.append(('today', today_band_label(today_b, now), today_b, False))
+    if weekend_b:
+        bands.append(('this-weekend', 'This weekend', weekend_b, True))
+    if week_b:
+        bands.append(('this-week', 'This week', week_b, True))
+    if ahead_b:
+        bands.append(('weeks-ahead', 'The weeks ahead', ahead_b, True))
 
     out = []
 
-    # This-weekend strip — cuts across all areas. [port] When the weekend is
-    # empty the strip collapses to one honest line (no headline over nothing),
-    # keeping the first real rows inside the first viewport.
-    if wk:
-        out.append('<div class="cal-weekend" id="this-weekend">')
-        out.append('  <span class="eyebrow">This weekend</span>')
-        out.append('  <h2 class="cal-weekend__h2">Sound baths this weekend on the Front Range</h2>')
-        out.append('  ' + _render_rows(
-            wk, in_strip=True, nav_prefix=nav_prefix, empty_text=''))
-        out.append('</div>')
-    else:
-        out.append('<div class="cal-weekend cal-weekend--empty" id="this-weekend">')
-        out.append('  <p class="cal-empty">Nothing on the calendar this weekend. '
-                   'The week ahead is below.</p>')
-        out.append('</div>')
+    # Temporal jump-nav — only the bands that exist, plus the FAQ.
+    out.append('<nav class="cal-jump" aria-label="Jump to a time">')
+    for bid, label, _brows, _sd in bands:
+        out.append(f'  <a href="#{bid}">{_esc(label)}</a>')
+    out.append('  <a href="#faq">FAQ</a>')
+    out.append('</nav>')
 
-    # Area sections, fixed order, chronological within.
-    for city in CITIES:
-        anchor = CITY_ANCHOR[city]
-        out.append(f'<div class="cal-area" id="{anchor}">')
-        out.append(f'  <h2 class="cal-area__h2">{_esc(CITY_H2[city])}</h2>')
-        out.append('  ' + _render_rows(
-            groups[city], in_strip=False, nav_prefix=nav_prefix,
-            empty_text=EMPTY_STATE.format(city=city),
-        ))
-        out.append('</div>')
+    if not bands:
+        out.append(f'<p class="cal-empty cal-empty--all">{_esc(ALL_EMPTY)}</p>')
+
+    for bid, label, brows, show_date in bands:
+        out.append(f'<section class="cal-band" id="{bid}">')
+        out.append(f'  <h2 class="cal-band__h2">{_esc(label)}</h2>')
+        out.append('  ' + _render_rows(brows, show_date, nav_prefix))
+        out.append('</section>')
 
     # FAQ — a GEO/AIO citation surface (FAQPage JSON-LD emitted by build.py).
     out.append(render_faq_html())
@@ -1086,10 +1144,8 @@ def calendar_itemlist(rows, page_url, site_url):
     Rows are already future + approved + de-duplicated + city/chronologically
     ordered by build_rows/group_by_city; the caller passes that same ordering.
     """
-    ordered = []
-    for city in CITIES:
-        ordered.extend(r for r in rows if r['city'] == city)
-    ordered.sort(key=lambda r: (CITIES.index(r['city']), parse_iso(r['starts_at'])))
+    # Chronological, to match the page's temporal axis (Track B).
+    ordered = sorted(rows, key=lambda r: parse_iso(r['starts_at']))
     if not ordered:
         return None
 
@@ -1254,9 +1310,8 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     if links:
         out.append('    <p class="cal-event__cta">' + ' '.join(links) + '</p>')
 
-    anchor = CITY_ANCHOR.get(row['city'], '')
     out.append(
-        f'    <p class="cal-event__back"><a href="{nav_prefix}#{anchor}">'
+        f'    <p class="cal-event__back"><a href="{nav_prefix}">'
         'Part of the Front Range calendar →</a></p>')
 
     out.append('  </div>')

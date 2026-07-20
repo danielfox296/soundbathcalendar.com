@@ -128,7 +128,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../../styles.css?v=8588f729">
+  <link rel="stylesheet" href="../../styles.css?v=4ecb4258">
   <style>
     .cal-event { }
     .cal-event__crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 2rem; }
@@ -158,12 +158,9 @@
   <header class="masthead">
   <div class="container masthead-inner">
     <a href="../../" class="wordmark">Sound Bath Calendar</a>
-    <nav class="masthead-cities" aria-label="Areas">
-      <a href="../../#denver">Denver</a>
-      <a href="../../#boulder">Boulder</a>
-      <a href="../../#fort-collins">Fort Collins</a>
-      <a href="../../#colorado-springs">Colorado Springs</a>
-    </nav>
+    <!-- City links return in B.2 as links to the /denver/ etc. city pages;
+         the root's own temporal jump-nav (Today · This weekend · …) lives in
+         the page body. Masthead stays wordmark + digest for now. -->
     <!-- Slim digest capture: inline form on wide screens, an anchor link down
          to the full form on small ones. Same Formspree seam as the main form. -->
     <form class="masthead-digest" action="https://formspree.io/f/xgopwepl" method="POST">
@@ -203,7 +200,7 @@
       <dt>Operator</dt><dd>Discover Your Spiritual Gifts</dd>
     </dl>
     <p class="cal-event__cta"><a class="btn btn-primary" href="https://www.eventbrite.com/e/sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-tickets-1636336469429" target="_blank" rel="noopener">Tickets</a> <a class="cal-event__link" href="https://discoveryourspiritualgifts.com" target="_blank" rel="noopener">Discover Your Spiritual Gifts</a> <a class="cal-event__link" href="https://www.google.com/maps/search/?api=1&amp;query=7500+E.+Arapahoe+Road%2C+Suite+208%2C+Centennial%2C+CO+80112%2C+Denver%2C+CO" target="_blank" rel="noopener">Open in Maps</a></p>
-    <p class="cal-event__back"><a href="../../#denver">Part of the Front Range calendar →</a></p>
+    <p class="cal-event__back"><a href="../../">Part of the Front Range calendar →</a></p>
   </div>
 </section>
   </main>
