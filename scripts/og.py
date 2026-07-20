@@ -31,7 +31,7 @@ def _fonts():
 
 
 def _wave(draw):
-    pts = [(x, 470 + 55 * math.sin(x / 70) * math.exp(-((x - 700) / 420) ** 2))
+    pts = [(x, 505 + 48 * math.sin(x / 70) * math.exp(-((x - 700) / 420) ** 2))
            for x in range(0, W, 4)]
     draw.line(pts, fill=ICE, width=3)
 

@@ -460,11 +460,14 @@ def build_event_pages(base, header, footer, cal_feed, now):
         og_tags, twitter_tags = _og_twitter_tags(
             name, description, canonical_url, og_image)
 
-        # Event + BreadcrumbList JSON-LD. The Event carries external-operator
-        # strings, so both blocks route through _ldjson (breakout-safe).
-        _ev = external_events.event_jsonld(row, SITE_URL)
+        # Organization (publisher entity, sitewide) + Event + BreadcrumbList.
+        # The Event carries external-operator strings, so it and the crumbs
+        # route through _ldjson (breakout-safe); the Organization is our own.
         schema_json = (f'<script type="application/ld+json">\n'
-                       f'{_ldjson(_ev)}\n  </script>')
+                       f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+        _ev = external_events.event_jsonld(row, SITE_URL)
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(_ev)}\n  </script>')
         breadcrumb_schema = {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
