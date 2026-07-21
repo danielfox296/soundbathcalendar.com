@@ -55,6 +55,7 @@ if REPO not in sys.path:
 from _src.lib import sessions_feed
 from _src.lib import external_events
 from _src.lib import practitioners as practitioners_lib
+from _src.lib import venues as venues_lib
 
 SITE_URL = 'https://soundbathcalendar.com'
 SITE_NAME = 'Sound Bath Calendar'
@@ -212,6 +213,10 @@ def build():
     print('Loading practitioners feed...')
     pract_feed = practitioners_lib.load_feed(REPO)
     practs = practitioners_lib.published_practitioners(pract_feed)
+    print()
+    print('Loading venues feed...')
+    venue_feed = venues_lib.load_feed(REPO)
+    venue_list = venues_lib.published_venues(venue_feed)
     print()
 
     page_dirs = []
@@ -417,13 +422,19 @@ def build():
         base, header, footer, practs, cal_rows, cal_now)
     pages_built.extend(_pract_outputs)
 
+    # --- Venue pages (/venue/<slug>/) + index — CAL-03 ---
+    _venue_outputs, _venue_sitemap = build_venue_pages(
+        base, header, footer, venue_list, cal_rows, cal_now)
+    pages_built.extend(_venue_outputs)
+
     # --- ICS feeds (/front-range.ics, /<city>.ics) — Track B B.4 ---
     build_ics_feeds(cal_rows, cal_now)
 
     print(f'\nBuilt {len(pages_built)} pages.')
 
     generate_sitemap(page_dirs, cal_now,
-                     extra_urls=_city_sitemap + _event_sitemap + _pract_sitemap)
+                     extra_urls=(_city_sitemap + _event_sitemap
+                                 + _pract_sitemap + _venue_sitemap))
 
 
 def build_ics_feeds(cal_rows, now):
@@ -795,6 +806,148 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
 
     if not practs:
         print('  (no published practitioners yet)')
+
+    return built, sitemap_entries
+
+
+def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
+    """Emit /venue/<slug>/ pages for every PUBLISHED venue + the /venues/ index
+    (CAL-03). Individual pages are curated (Daniel publishes the rooms worth a
+    page), so they're indexed; the index is noindexed until it has a few
+    (doorway-page discipline). Returns (built_outputs, sitemap_entries)."""
+    import shutil
+    shutil.rmtree(os.path.join(REPO, 'venue'), ignore_errors=True)
+
+    print('\nGenerating venue pages...')
+    built, sitemap_entries = [], []
+    lastmod = external_events.stamp_date_iso(now)
+
+    count_by_slug = {}
+    for v in venue_list:
+        count_by_slug[v['slug']] = len(venues_lib.sessions_for(v['slug'], cal_rows))
+
+    for v in venue_list:
+        slug = v['slug']
+        output = f'venue/{slug}/index.html'
+        nav_prefix = '../../'
+        canonical_url = venues_lib.venue_url(slug, SITE_URL)
+        name = v['name']
+        sessions = venues_lib.sessions_for(slug, cal_rows)
+
+        title = f'{html_mod.escape(name)} · Sound bath venue | {SITE_NAME}'
+        where = ', '.join(x for x in (v.get('address'), v.get('city')) if x)
+        desc_body = ' '.join((v.get('description') or '').split())
+        description = (desc_body[:157].rstrip() + '…') if len(desc_body) > 158 else (
+            desc_body or
+            f'{name}{" in " + where if where else ""}: directions, what to expect, '
+            f'and upcoming sound baths at this room.')
+        meta_desc = (f'<meta name="description" '
+                     f'content="{html_mod.escape(description, quote=True)}">')
+
+        og_image = (external_events._safe_ext_url(v.get('photo_url') or '')
+                    or f'{SITE_URL}/img/og-default.png')
+        og_tags, twitter_tags = _og_twitter_tags(
+            name, description, canonical_url, og_image)
+
+        schema_json = (f'<script type="application/ld+json">\n'
+                       f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+        _place = venues_lib.place_schema(v, canonical_url, sessions)
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(_place)}\n  </script>')
+        breadcrumb_schema = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Calendar",
+                 "item": SITE_URL + "/"},
+                {"@type": "ListItem", "position": 2, "name": "Venues",
+                 "item": SITE_URL + "/venues/"},
+                {"@type": "ListItem", "position": 3, "name": name},
+            ],
+        }
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(breadcrumb_schema)}\n  </script>')
+
+        content = venues_lib.render_venue_page(v, sessions, nav_prefix, SITE_URL, now=now)
+        page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
+        page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
+
+        html = _assemble(base, {
+            'title': title,
+            'robots': 'index, follow',
+            'meta_description': meta_desc,
+            'canonical_url': canonical_url,
+            'css_path': nav_prefix,
+            'page_style': venues_lib.VENUE_PAGE_STYLE,
+            'og_tags': og_tags,
+            'twitter_tags': twitter_tags,
+            'schema_json': schema_json,
+            'header': page_header,
+            'content': content,
+            'footer': page_footer,
+        })
+        if _write_page(output, html, built):
+            print(f'  ✓ {output} ({count_by_slug.get(slug, 0)} upcoming)')
+            sitemap_entries.append((canonical_url, lastmod))
+
+    # --- index (/venues/) ---
+    INDEX_MIN_INDEXED = 3
+    index_output = 'venues/index.html'
+    index_nav = '../'
+    index_canonical = f'{SITE_URL}/venues/'
+    indexable = len(venue_list) >= INDEX_MIN_INDEXED
+    robots_value = 'index, follow' if indexable else 'noindex, follow'
+    index_desc = ('The rooms hosting sound baths across Denver and the Colorado '
+                  'Front Range: where they are, what to expect, and what is on next.')
+    index_meta = (f'<meta name="description" '
+                  f'content="{html_mod.escape(index_desc, quote=True)}">')
+    og_tags, twitter_tags = _og_twitter_tags(
+        'Venues', index_desc, index_canonical, f'{SITE_URL}/img/og-default.png')
+
+    schema_json = (f'<script type="application/ld+json">\n'
+                   f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+    _il = venues_lib.index_itemlist(venue_list, SITE_URL)
+    if _il:
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(_il)}\n  </script>')
+    index_breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Calendar",
+             "item": SITE_URL + "/"},
+            {"@type": "ListItem", "position": 2, "name": "Venues",
+             "item": index_canonical},
+        ],
+    }
+    schema_json += (f'\n  <script type="application/ld+json">\n'
+                    f'{json.dumps(index_breadcrumb, indent=2)}\n  </script>')
+
+    index_content = venues_lib.render_index(venue_list, count_by_slug, index_nav)
+    page_header = header.strip().replace('{{nav_prefix}}', index_nav)
+    page_footer = footer.strip().replace('{{nav_prefix}}', index_nav)
+    html = _assemble(base, {
+        'title': f'Venues | {SITE_NAME}',
+        'robots': robots_value,
+        'meta_description': index_meta,
+        'canonical_url': index_canonical,
+        'css_path': index_nav,
+        'page_style': venues_lib.INDEX_STYLE,
+        'og_tags': og_tags,
+        'twitter_tags': twitter_tags,
+        'schema_json': schema_json,
+        'header': page_header,
+        'content': index_content,
+        'footer': page_footer,
+    })
+    if _write_page(index_output, html, built):
+        print(f'  ✓ {index_output} ({len(venue_list)} listed, '
+              f'{"indexed" if indexable else "noindex until 3"})')
+        if indexable:
+            sitemap_entries.append((index_canonical, lastmod))
+
+    if not venue_list:
+        print('  (no published venues yet)')
 
     return built, sitemap_entries
 

@@ -360,6 +360,9 @@ def _external_row(e):
         # the service), so a slug present means /practitioner/<slug>/ exists.
         'practitioner': (e.get('practitioner')
                          if isinstance(e.get('practitioner'), dict) else None),
+        # CAL-03: {slug, name} of the linked PUBLISHED venue, or None.
+        'venue_ref': (e.get('venue_ref')
+                      if isinstance(e.get('venue_ref'), dict) else None),
         '_ext': e,
         '_sess': None,
         '_event_title': None,
@@ -1747,9 +1750,22 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     out.append(
         f'      <dt>When</dt><dd>{esc(sessions_feed.fmt_date_long(row["starts_at"]))} '
         f'· {esc(fmt_time(row["starts_at"]))} (Denver time)</dd>')
-    venue_bits = ' · '.join(x for x in (row.get('venue'), row.get('address')) if x)
-    if venue_bits:
-        out.append(f'      <dt>Where</dt><dd>{esc(venue_bits)}</dd>')
+    # Where: link the venue to its curated /venue/<slug>/ page when linked to a
+    # published one (CAL-03); otherwise the plain venue + address string.
+    vr = row.get('venue_ref') or {}
+    vr_slug = vr.get('slug') if isinstance(vr, dict) else None
+    if vr_slug:
+        vr_href = f'{nav_prefix}venue/{vr_slug}/'
+        addr = row.get('address')
+        where_dd = (f'<a class="cal-event__link" href="{esc(vr_href)}">'
+                    f'{esc(vr.get("name") or row.get("venue") or "")}</a>')
+        if addr:
+            where_dd += f' · {esc(addr)}'
+        out.append(f'      <dt>Where</dt><dd>{where_dd}</dd>')
+    else:
+        venue_bits = ' · '.join(x for x in (row.get('venue'), row.get('address')) if x)
+        if venue_bits:
+            out.append(f'      <dt>Where</dt><dd>{esc(venue_bits)}</dd>')
     place = row['neighborhood'] if row['city'] == 'Denver' and row.get('neighborhood') else None
     area = f'{place}, {row["city"]}' if place else row['city']
     out.append(f'      <dt>Area</dt><dd>{esc(area)}</dd>')
