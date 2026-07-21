@@ -63,9 +63,10 @@ import unicodedata
 import urllib.request
 from collections import OrderedDict
 from datetime import datetime, timedelta, timezone
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, urlencode
 
 from _src.lib import ics as ics_lib
+from _src.lib import taxonomy
 from _src.lib import sessions_feed
 from _src.lib.sessions_feed import DENVER, parse_iso
 
@@ -825,12 +826,74 @@ def _facil_venue_link(row):
     return None, None
 
 
+# ---------------------------------------------------------------------------
+# Tags (CAL-01) — the controlled-vocabulary chips + filter facet. Feed rows may
+# still carry legacy free-form tags; taxonomy.normalize_tags folds them to
+# canonical slugs (and an already-canonical slug maps to itself), so the site
+# renders one clean vocabulary regardless of what a given row was tagged with.
+# ---------------------------------------------------------------------------
+
+def row_tag_slugs(row):
+    """Canonical tag slugs for a row, order-preserved and de-duplicated."""
+    return taxonomy.normalize_tags(row.get('tags'))
+
+
+def render_tag_chips(row, cls='cal-tags'):
+    """Tag chips for a row/page, or '' when the row carries no known tags."""
+    slugs = row_tag_slugs(row)
+    if not slugs:
+        return ''
+    chips = ''.join(
+        f'<span class="cal-tag">{_esc(taxonomy.label_for(s))}</span>' for s in slugs)
+    return f'<p class="{cls}">{chips}</p>'
+
+
+def present_tag_slugs(rows):
+    """The canonical slugs actually present across rows, in vocabulary order —
+    so the filter facet only ever offers a tag that will match something."""
+    present = set()
+    for r in rows:
+        present.update(row_tag_slugs(r))
+    return [slug for slug, _label, _axis in taxonomy.TAGS if slug in present]
+
+
+def add_to_calendar_urls(row, site_url, now=None):
+    """Prefilled one-click 'add to calendar' launch URLs for one event.
+    Reuses event_ics_input (same title/window/location/description the .ics
+    carries) so Google/Outlook/Apple all agree. Apple = the local event.ics."""
+    ev = event_ics_input(row, site_url, now)
+    start_utc = ics_lib.ics_utc(ev['start'])            # 20260724T190000Z
+    end_utc = ics_lib.ics_utc(ev['end'])
+    iso_start = ev['start'].astimezone(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    iso_end = ev['end'].astimezone(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    google = 'https://calendar.google.com/calendar/render?' + urlencode({
+        'action': 'TEMPLATE',
+        'text': ev['title'],
+        'dates': f'{start_utc}/{end_utc}',
+        'details': ev['description'],
+        'location': ev['location'],
+    })
+    outlook = 'https://outlook.live.com/calendar/0/deeplink/compose?' + urlencode({
+        'path': '/calendar/action/compose',
+        'rru': 'addevent',
+        'subject': ev['title'],
+        'startdt': iso_start,
+        'enddt': iso_end,
+        'location': ev['location'],
+        'body': ev['description'],
+    })
+    return {'google': google, 'outlook': outlook, 'apple': 'event.ics'}
+
+
 def _render_row(row, show_date=True, nav_prefix=''):
     is_fw = row['kind'] == 'firstwater'
     cls = 'cal-row cal-row--firstwater' if is_fw else 'cal-row'
-    # Filter hooks (B.5): area + free/donation, read by filters.js.
+    # Filter hooks: area + free/donation (B.5) + tags (CAL-01), read by
+    # filters.js. data-tags is a space-joined slug list (empty when untagged).
+    _slugs = row_tag_slugs(row)
     data = (f' data-city="{_esc(city_slug(row["city"]))}"'
-            f' data-free="{"1" if _is_free_or_donation(row) else "0"}"')
+            f' data-free="{"1" if _is_free_or_donation(row) else "0"}"'
+            f' data-tags="{_esc(" ".join(_slugs))}"')
     parts = [f'<article class="{cls}"{data}>']
     # Tear-off date rail: weekday over numeral over time. The Today/Tonight band
     # omits the date (its heading already says "today"); every other band spans
@@ -905,6 +968,13 @@ def _render_row(row, show_date=True, nav_prefix=''):
     note = editorial_note(row)
     if note:
         parts.append(f'      <p class="cal-row__note">{_esc(note)}</p>')
+
+    # Tag chips (CAL-01) — external rows only; the canonical vocabulary, or
+    # nothing when the row carries no known tag (a bare row is the honest default).
+    if not is_fw:
+        chips = render_tag_chips(row, cls='cal-row__tags')
+        if chips:
+            parts.append('      ' + chips)
 
     # CTA row: ticket link (external -> their link, new tab; Firstwater -> its
     # session page) plus the operator/venue 'own page' link when known. External
@@ -1033,22 +1103,46 @@ def _render_bands(rows, nav_prefix='', now=None):
 NO_RESULTS = 'No sessions match those filters.'
 
 
-def render_filters(include_city=True):
-    """The progressive-enhancement filter bar (B.5): area (root only) +
-    free/donation. Hidden until filters.js reveals it, so no-JS visitors see
-    every row and the page is fully usable. PLACEHOLDER copy, flagged."""
+def render_filters(rows=None, include_city=True):
+    """The progressive-enhancement filter bar (B.5 + CAL-01): area (root only) +
+    free/donation + tags. Hidden until filters.js reveals it, so no-JS visitors
+    see every row and the page is fully usable. The tag facet only offers tags
+    actually present in `rows` (never a filter that would match nothing), grouped
+    by axis. PLACEHOLDER copy, flagged."""
     out = ['<div class="cal-filters" data-cal-filters hidden>']
+    out.append('  <div class="cal-filters__primary">')
     if include_city:
         opts = ['<option value="">All areas</option>']
         opts += [f'<option value="{_esc(city_slug(c))}">{_esc(c)}</option>'
                  for c in CITIES]
-        out.append('  <label class="cal-filters__field">')
-        out.append('    <span class="visually-hidden">Filter by area</span>')
-        out.append('    <select data-filter-city>' + ''.join(opts) + '</select>')
-        out.append('  </label>')
-    out.append('  <label class="cal-filters__check">'
+        out.append('    <label class="cal-filters__field">')
+        out.append('      <span class="visually-hidden">Filter by area</span>')
+        out.append('      <select data-filter-city>' + ''.join(opts) + '</select>')
+        out.append('    </label>')
+    out.append('    <label class="cal-filters__check">'
                '<input type="checkbox" data-filter-free> '
                '<span>Free / donation only</span></label>')
+    out.append('  </div>')
+
+    present = present_tag_slugs(rows or [])
+    if present:
+        present_set = set(present)
+        out.append('  <div class="cal-filters__tags" role="group" '
+                   'aria-label="Filter by tag">')
+        for axis, axis_label in taxonomy.TAG_AXES:
+            axis_slugs = [s for s, _l in taxonomy.tags_by_axis(axis)
+                          if s in present_set]
+            if not axis_slugs:
+                continue
+            out.append('    <div class="cal-filters__axis">')
+            out.append(f'      <span class="cal-filters__axislabel">{_esc(axis_label)}</span>')
+            for slug in axis_slugs:
+                out.append(
+                    '      <label class="cal-tag cal-tag--toggle">'
+                    f'<input type="checkbox" data-filter-tag="{_esc(slug)}"> '
+                    f'<span>{_esc(taxonomy.label_for(slug))}</span></label>')
+            out.append('    </div>')
+        out.append('  </div>')
     out.append('</div>')
     return '\n'.join(out)
 
@@ -1064,7 +1158,7 @@ def render_calendar_body(rows, nav_prefix='', now=None):
     the section file; this returns everything that depends on the feed."""
     # FAQ — a GEO/AIO citation surface (FAQPage JSON-LD emitted by build.py).
     return '\n'.join([
-        render_filters(include_city=True),
+        render_filters(rows, include_city=True),
         _render_bands(rows, nav_prefix, now),
         _render_noresults(),
         render_faq_html(),
@@ -1404,8 +1498,9 @@ def render_city_page(rows, city, nav_prefix, now=None):
                f'{_esc(build_city_summary_sentence(rows, city, now))}</p>')
     out.append('    ' + render_ics_subscribe(f'{slug}.ics'))
 
-    # City is fixed here, so the bar carries only the free/donation chip.
-    out.append('    ' + render_filters(include_city=False))
+    # City is fixed here, so the bar carries the free/donation chip + the tags
+    # present in this city.
+    out.append('    ' + render_filters(crows, include_city=False))
     out.append('    ' + _render_bands(crows, nav_prefix, now))
     out.append('    ' + _render_noresults())
     out.append('    ' + render_city_switcher(city, nav_prefix))
@@ -1620,6 +1715,11 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     if note:
         out.append(f'    <p class="cal-event__note">{esc(note)}</p>')
 
+    # Tag chips (CAL-01) — the canonical vocabulary for this session, or nothing.
+    chips = render_tag_chips(row, cls='cal-event__tags')
+    if chips:
+        out.append('    ' + chips)
+
     img = row.get('image_url')
     if img:
         out.append('    <figure class="cal-event__figure">')
@@ -1666,13 +1766,33 @@ def render_event_page(row, nav_prefix, site_url, now=None):
         links.append(
             f'<a class="cal-event__link" href="{esc(maps)}" target="_blank" '
             f'rel="noopener">Open in Maps</a>')
-    # Per-event .ics download (Track B B.4) — upcoming events only; the file is
-    # written beside this page at event/<slug>/event.ics.
-    if not is_past:
-        links.append(
-            '<a class="cal-event__link" href="event.ics">Add to calendar</a>')
     if links:
         out.append('    <p class="cal-event__cta">' + ' '.join(links) + '</p>')
+
+    # Add-to-calendar menu (CAL-01) — upcoming events only. A <details>
+    # disclosure (no JS) offering Google/Outlook launch links + the local
+    # event.ics for Apple/Outlook desktop and a raw download. The .ics is
+    # written beside this page at event/<slug>/event.ics (Track B B.4).
+    if not is_past:
+        cal = add_to_calendar_urls(row, site_url, now)
+        out.append('    <details class="cal-addcal">')
+        out.append('      <summary class="cal-event__link cal-addcal__summary">'
+                   'Add to calendar</summary>')
+        out.append('      <div class="cal-addcal__menu">')
+        out.append(
+            f'        <a class="cal-addcal__opt" href="{esc(cal["google"])}" '
+            f'target="_blank" rel="noopener">Google Calendar</a>')
+        out.append(
+            '        <a class="cal-addcal__opt" href="event.ics">'
+            'Apple Calendar</a>')
+        out.append(
+            f'        <a class="cal-addcal__opt" href="{esc(cal["outlook"])}" '
+            f'target="_blank" rel="noopener">Outlook</a>')
+        out.append(
+            '        <a class="cal-addcal__opt" href="event.ics" '
+            'download>Download .ics</a>')
+        out.append('      </div>')
+        out.append('    </details>')
 
     out.append(
         f'    <p class="cal-event__back"><a href="{nav_prefix}">'
