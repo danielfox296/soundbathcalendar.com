@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Stretch & Sound
+BEGIN:VEVENT
+UID:stretch-sound-2026-07-24-sacred-society@soundbathcalendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260725T000000Z
+DTEND:20260725T011500Z
+SUMMARY:Stretch & Sound
+LOCATION:Sacred Society\, 3410 W 38th Ave\, Denver\, CO 80211
+DESCRIPTION:A 60-minute stretch-and-sound session with Christina Epps at Sa
+ cred Society in Denver's Highlands\, Friday July 24 at 6:00 PM.\n\nTickets
+ : https://momence.com/s/139248318
+URL:https://soundbathcalendar.com/event/stretch-sound-2026-07-24-sacred-soc
+ iety/
+END:VEVENT
+END:VCALENDAR

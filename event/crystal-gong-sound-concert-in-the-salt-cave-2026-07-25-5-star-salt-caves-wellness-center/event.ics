@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Crystal & Gong Sound Concert in the Salt Cave
+BEGIN:VEVENT
+UID:crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-cave
+ s-wellness-center@soundbathcalendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260726T003000Z
+DTEND:20260726T014500Z
+SUMMARY:Crystal & Gong Sound Concert in the Salt Cave
+LOCATION:5 Star Salt Caves Wellness Center\, 722 S Pearl St\, Denver\, CO 8
+ 0209
+DESCRIPTION:Salt-cave sound concert with crystal bowls and gong led by Ann 
+ Martin at 5 Star Salt Caves on South Pearl Street\, Saturday July 25\; $60
+ .\n\nTickets: https://5starsaltcaves.com/sound-bath-in-the-salt-cave/
+URL:https://soundbathcalendar.com/event/crystal-gong-sound-concert-in-the-s
+ alt-cave-2026-07-25-5-star-salt-caves-wellness-center/
+END:VEVENT
+END:VCALENDAR

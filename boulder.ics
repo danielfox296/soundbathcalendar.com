@@ -5,9 +5,25 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:Sound baths in Boulder
 BEGIN:VEVENT
+UID:wednesday-meditation-2026-07-22-unity-of-boulder-spiritual-center@sound
+ bathcalendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260723T010000Z
+DTEND:20260723T021500Z
+SUMMARY:Wednesday Meditation
+LOCATION:Unity of Boulder Spiritual Center\, 2855 Folsom St\, Boulder\, CO 
+ 80304
+DESCRIPTION:A weekly guided meditation with a sound bath component (crystal
+  and Tibetan singing bowls\, native flute or chanting) led by Norma at Uni
+ ty of Boulder\, Wednesday July 22 at 7:00 PM. Free.\n\nTickets: https://un
+ ityofboulder.com/events/wednesday-meditation/
+URL:https://soundbathcalendar.com/event/wednesday-meditation-2026-07-22-uni
+ ty-of-boulder-spiritual-center/
+END:VEVENT
+BEGIN:VEVENT
 UID:cosmic-yoga-and-sound-bath-for-a-summer-shift-2026-07-26-camdazco-farm@
  soundbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260726T190000Z
 DTEND:20260726T201500Z
 SUMMARY:Cosmic Yoga and Sound Bath for a Summer Shift
@@ -19,9 +35,24 @@ URL:https://soundbathcalendar.com/event/cosmic-yoga-and-sound-bath-for-a-su
  mmer-shift-2026-07-26-camdazco-farm/
 END:VEVENT
 BEGIN:VEVENT
+UID:gong-bath-with-beth-2026-07-27-una-vida-meditation-movement@soundbathca
+ lendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260728T011500Z
+DTEND:20260728T023000Z
+SUMMARY:Gong Bath with Beth
+LOCATION:Una Vida Meditation & Movement\, 7960 Niwot Road\, Suite B-12\, Lo
+ ngmont\, CO 80503
+DESCRIPTION:A recurring Monday-evening gong bath led by Beth at Una Vida Me
+ ditation & Movement in Longmont\, Monday July 27 at 7:15 PM.\n\nTickets: h
+ ttps://www.unavidaniwot.com/
+URL:https://soundbathcalendar.com/event/gong-bath-with-beth-2026-07-27-una-
+ vida-meditation-movement/
+END:VEVENT
+BEGIN:VEVENT
 UID:feng-shui-sound-bath-children-creativity-joy-2026-07-29-firiel-skin-car
  e@soundbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260730T010000Z
 DTEND:20260730T021500Z
 SUMMARY:Feng Shui Sound Bath: Children\, Creativity & Joy
@@ -36,7 +67,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:full-moon-meditation-six-gong-relaxation-2026-07-30-the-starhouse@sound
  bathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260731T010000Z
 DTEND:20260731T021500Z
 SUMMARY:Full Moon Meditation & Six Gong Relaxation
@@ -51,7 +82,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:kundalini-in-the-park-2026-08-02-north-boulder-park@soundbathcalendar.c
  om
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260802T150000Z
 DTEND:20260802T161500Z
 SUMMARY:Kundalini in the Park
@@ -63,9 +94,25 @@ URL:https://soundbathcalendar.com/event/kundalini-in-the-park-2026-08-02-no
  rth-boulder-park/
 END:VEVENT
 BEGIN:VEVENT
+UID:acudetox-sound-bath-journey-experience-2026-08-02-north-of-ordinary-col
+ lective@soundbathcalendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260802T190000Z
+DTEND:20260802T201500Z
+SUMMARY:AcuDetox & Sound Bath Journey Experience
+LOCATION:North Of Ordinary Collective\, 4949 Broadway\, Suite 127\, Boulder
+ \, CO 80304
+DESCRIPTION:An acupuncture-detox and sound bath journey facilitated by Terr
+ i Slezak at North Of Ordinary Collective in Boulder\, Sunday August 2 at 1
+ :00 PM. Sliding scale $27–$44.\n\nTickets: https://www.eventbrite.com/e/
+ acudetox-sound-bath-journey-experience-tickets-1994511598883
+URL:https://soundbathcalendar.com/event/acudetox-sound-bath-journey-experie
+ nce-2026-08-02-north-of-ordinary-collective/
+END:VEVENT
+BEGIN:VEVENT
 UID:sound-bath-ceremony-2026-08-06-una-vida-meditation-movement@soundbathca
  lendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260807T003000Z
 DTEND:20260807T014500Z
 SUMMARY:Sound Bath Ceremony
@@ -80,7 +127,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:solar-eclipse-sunset-gong-bath-2026-08-11-north-boulder-park@soundbathc
  alendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260812T010000Z
 DTEND:20260812T021500Z
 SUMMARY:Solar Eclipse Sunset Gong Bath

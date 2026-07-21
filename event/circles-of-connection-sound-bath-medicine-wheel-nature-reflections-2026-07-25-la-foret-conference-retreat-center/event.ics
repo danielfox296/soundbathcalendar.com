@@ -1,0 +1,26 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Circles of Connection: Sound Bath\, Medicine Wheel\, Nature Re
+ flections
+BEGIN:VEVENT
+UID:circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026
+ -07-25-la-foret-conference-retreat-center@soundbathcalendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260725T180000Z
+DTEND:20260725T191500Z
+SUMMARY:Circles of Connection: Sound Bath\, Medicine Wheel\, Nature Reflect
+ ions
+LOCATION:La Foret Conference & Retreat Center\, 6145 Shoup Road\, Colorado 
+ Springs\, CO 80908
+DESCRIPTION:An outdoor gathering combining a sound bath\, medicine wheel\, 
+ and nature reflection\, led by Sharay Fay.\n\nTickets: https://www.eventbr
+ ite.com/e/circles-of-connection-sound-bath-medicine-wheel-nature-reflectio
+ ns-tickets-1689648747889
+URL:https://soundbathcalendar.com/event/circles-of-connection-sound-bath-me
+ dicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-cen
+ ter/
+END:VEVENT
+END:VCALENDAR

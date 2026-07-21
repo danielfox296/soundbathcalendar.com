@@ -5,24 +5,9 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:Sound baths in Colorado Springs
 BEGIN:VEVENT
-UID:communal-quartz-sound-bath-2026-07-20-colorado-psychedelic-church@sound
- bathcalendar.com
-DTSTAMP:20260720T234600Z
-DTSTART:20260721T000000Z
-DTEND:20260721T011500Z
-SUMMARY:Communal Quartz Sound Bath
-LOCATION:Colorado Psychedelic Church\, 5026 N Academy Blvd\, Colorado Sprin
- gs\, CO
-DESCRIPTION:A communal quartz-bowl sound bath hosted by Colorado Psychedeli
- c Church in Colorado Springs\, Monday evening\; donation-based.\n\nTickets
- : https://www.meetup.com/coloradopsychedelicchurch/events/315492584/
-URL:https://soundbathcalendar.com/event/communal-quartz-sound-bath-2026-07-
- 20-colorado-psychedelic-church/
-END:VEVENT
-BEGIN:VEVENT
 UID:return-to-self-sound-bath-tea-circle-2026-07-21-singing-bowls-of-the-ro
  ckies@soundbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260722T013000Z
 DTEND:20260722T024500Z
 SUMMARY:Return to Self: Sound Bath & Tea Circle
@@ -37,7 +22,7 @@ URL:https://soundbathcalendar.com/event/return-to-self-sound-bath-tea-circl
 END:VEVENT
 BEGIN:VEVENT
 UID:community-sound-bath-2026-07-22-the-next-us@soundbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260723T000000Z
 DTEND:20260723T011500Z
 SUMMARY:Community Sound Bath
@@ -51,7 +36,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:floating-sound-bath-elise-nicole-2026-07-22-camino-massage-therapy@soun
  dbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260723T003000Z
 DTEND:20260723T014500Z
 SUMMARY:Floating Sound Bath - Elise Nicole
@@ -66,7 +51,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:reiki-sound-bath-feat-megan-odom-2026-07-24-singing-bowls-of-the-rockie
  s@soundbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260725T003000Z
 DTEND:20260725T014500Z
 SUMMARY:Reiki & Sound Bath feat. Megan Odom
@@ -80,9 +65,27 @@ URL:https://soundbathcalendar.com/event/reiki-sound-bath-feat-megan-odom-20
  26-07-24-singing-bowls-of-the-rockies/
 END:VEVENT
 BEGIN:VEVENT
+UID:circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026
+ -07-25-la-foret-conference-retreat-center@soundbathcalendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260725T180000Z
+DTEND:20260725T191500Z
+SUMMARY:Circles of Connection: Sound Bath\, Medicine Wheel\, Nature Reflect
+ ions
+LOCATION:La Foret Conference & Retreat Center\, 6145 Shoup Road\, Colorado 
+ Springs\, CO 80908
+DESCRIPTION:An outdoor gathering combining a sound bath\, medicine wheel\, 
+ and nature reflection\, led by Sharay Fay.\n\nTickets: https://www.eventbr
+ ite.com/e/circles-of-connection-sound-bath-medicine-wheel-nature-reflectio
+ ns-tickets-1689648747889
+URL:https://soundbathcalendar.com/event/circles-of-connection-sound-bath-me
+ dicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-cen
+ ter/
+END:VEVENT
+BEGIN:VEVENT
 UID:a-sound-bath-to-unwind-releasing-stress-from-body-mind-2026-07-25-singi
  ng-bowls-of-the-rockies@soundbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260725T200000Z
 DTEND:20260725T211500Z
 SUMMARY:A Sound Bath to Unwind: Releasing Stress from Body & Mind
@@ -98,7 +101,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:colorado-salt-cave-wsound-healing-2026-07-26-colorado-salt-cave@soundba
  thcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260726T200000Z
 DTEND:20260726T211500Z
 SUMMARY:Colorado Salt Cave w/Sound Healing
@@ -113,7 +116,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:dreamtime-journeys-a-shamanic-sound-journey-experience-2026-07-27-souls
  hines-yoga-studio-healing-arts@soundbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260728T010000Z
 DTEND:20260728T021500Z
 SUMMARY:Dreamtime Journeys: A Shamanic Sound Journey Experience
@@ -129,7 +132,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:sunset-reset-poolside-full-moon-sound-bath-2026-07-29-ascend-spa-wellne
  ss-at-hotel-polaris@soundbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260730T010000Z
 DTEND:20260730T021500Z
 SUMMARY:Sunset Reset: Poolside Full Moon Sound Bath
@@ -144,7 +147,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:community-candle-lit-sound-bath-2026-07-31-the-next-us@soundbathcalenda
  r.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260801T000000Z
 DTEND:20260801T011500Z
 SUMMARY:Community Candle lit sound bath
@@ -159,7 +162,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:vagus-nerve-activation-sound-bath-reconnect-with-inner-peace-2026-07-31
  -singing-bowls-of-the-rockies@soundbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260801T010000Z
 DTEND:20260801T021500Z
 SUMMARY:Vagus Nerve Activation Sound Bath - Reconnect with Inner Peace
@@ -175,7 +178,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:selfcare-sunday-sound-bath-a-path-to-wellness-and-peace-2026-08-02-sing
  ing-bowls-of-the-rockies@soundbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260802T223000Z
 DTEND:20260802T234500Z
 SUMMARY:Self-Care Sunday Sound Bath: A Path to Wellness and Peace
@@ -191,7 +194,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:communal-quartz-sound-bath-2026-08-03-colorado-psychedelic-church@sound
  bathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260804T000000Z
 DTEND:20260804T011500Z
 SUMMARY:Communal Quartz Sound Bath
@@ -206,7 +209,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:somatic-breathwork-sound-bath-2026-08-04-singing-bowls-of-the-rockies@s
  oundbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260805T000000Z
 DTEND:20260805T011500Z
 SUMMARY:Somatic BreathWork & Sound Bath
@@ -221,7 +224,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:chakra-cleansing-sound-bath-2026-08-07-singing-bowls-of-the-rockies@sou
  ndbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260808T010000Z
 DTEND:20260808T021500Z
 SUMMARY:Chakra Cleansing Sound Bath
@@ -236,7 +239,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:lions-gate-portal-sound-bath-2026-08-08-singing-bowls-of-the-rockies@so
  undbathcalendar.com
-DTSTAMP:20260720T234600Z
+DTSTAMP:20260721T234042Z
 DTSTART:20260808T223000Z
 DTEND:20260808T234500Z
 SUMMARY:Lion's Gate Portal Sound Bath

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:45-Minute Reset: Sound\, Movement\, Breath & Laughter
+BEGIN:VEVENT
+UID:45minute-reset-sound-movement-breath-laughter-2026-07-24-inca-street-co
+ llective@soundbathcalendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260725T011500Z
+DTEND:20260725T023000Z
+SUMMARY:45-Minute Reset: Sound\, Movement\, Breath & Laughter
+LOCATION:Inca Street Collective\, 855 Inca St Ste A\, Denver\, CO 80204
+DESCRIPTION:A 45-minute session of sound immersion\, movement and breathwor
+ k led by Kochun-Ra at Inca Street Collective in La Alma-Lincoln Park\, Fri
+ day July 24 at 7:15 PM.\n\nTickets: https://www.eventbrite.com/e/45-minute
+ -reset-sound-movement-breath-laughter-tickets-1993978325849
+URL:https://soundbathcalendar.com/event/45minute-reset-sound-movement-breat
+ h-laughter-2026-07-24-inca-street-collective/
+END:VEVENT
+END:VCALENDAR

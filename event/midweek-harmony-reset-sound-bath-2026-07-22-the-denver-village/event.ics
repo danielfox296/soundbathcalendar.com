@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Midweek Harmony Reset - Sound Bath
+BEGIN:VEVENT
+UID:midweek-harmony-reset-sound-bath-2026-07-22-the-denver-village@soundbat
+ hcalendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260722T233000Z
+DTEND:20260723T004500Z
+SUMMARY:Midweek Harmony Reset - Sound Bath
+LOCATION:The Denver Village\, 2503 & 2513 Elmira St\, Aurora\, CO 80010
+DESCRIPTION:A midweek restorative sound bath at The Denver Village in Auror
+ a\, Wednesday July 22 from 5:30-6:30 PM.\n\nTickets: https://www.thedenver
+ village.com/events-workshop/midweek-harmony-reset-sound-bath-effrw-hg9jg-x
+ d2gg-bdrap-xecmp-hbzp6-4ltln-j9y36-jww6r-js8b5-8pswt-rtfnb-ft2ph
+URL:https://soundbathcalendar.com/event/midweek-harmony-reset-sound-bath-20
+ 26-07-22-the-denver-village/
+END:VEVENT
+END:VCALENDAR

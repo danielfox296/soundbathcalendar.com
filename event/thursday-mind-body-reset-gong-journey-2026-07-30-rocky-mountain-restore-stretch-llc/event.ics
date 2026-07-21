@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Thursday Mind Body Reset — Gong Journey
+BEGIN:VEVENT
+UID:thursday-mind-body-reset-gong-journey-2026-07-30-rocky-mountain-restore
+ -stretch-llc@soundbathcalendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260731T001500Z
+DTEND:20260731T013000Z
+SUMMARY:Thursday Mind Body Reset — Gong Journey
+LOCATION:Rocky Mountain Restore & Stretch LLC\, 3616 Soderburg Drive\, Fort
+  Collins\, CO 80526
+DESCRIPTION:Weekly Thursday evening gong bath using multiple large gongs\, 
+ followed by tea and community time\; held at the studio near Horsetooth Re
+ servoir.\n\nTickets: https://www.eventbrite.com/e/thursday-mind-body-reset
+ -gong-journey-tickets-1994098983740
+URL:https://soundbathcalendar.com/event/thursday-mind-body-reset-gong-journ
+ ey-2026-07-30-rocky-mountain-restore-stretch-llc/
+END:VEVENT
+END:VCALENDAR

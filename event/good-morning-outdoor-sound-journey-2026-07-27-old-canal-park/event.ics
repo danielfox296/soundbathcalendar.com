@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Good Morning Outdoor Sound Journey
+BEGIN:VEVENT
+UID:good-morning-outdoor-sound-journey-2026-07-27-old-canal-park@soundbathc
+ alendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260727T140000Z
+DTEND:20260727T151500Z
+SUMMARY:Good Morning Outdoor Sound Journey
+LOCATION:Old Canal Park\, Old Canal Park\, Loveland\, CO
+DESCRIPTION:Morning outdoor sound journey held at Old Canal Park\; donation
+ -based.\n\nTickets: https://resoundingwell.com/events
+URL:https://soundbathcalendar.com/event/good-morning-outdoor-sound-journey-
+ 2026-07-27-old-canal-park/
+END:VEVENT
+END:VCALENDAR

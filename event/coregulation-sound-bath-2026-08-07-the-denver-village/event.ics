@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Co-Regulation Sound Bath
+BEGIN:VEVENT
+UID:coregulation-sound-bath-2026-08-07-the-denver-village@soundbathcalendar
+ .com
+DTSTAMP:20260721T234042Z
+DTSTART:20260808T000000Z
+DTEND:20260808T011500Z
+SUMMARY:Co-Regulation Sound Bath
+LOCATION:The Denver Village\, 2503 & 2513 Elmira St\, Aurora\, CO 80010
+DESCRIPTION:A partner co-regulation sound bath using crystal singing bowls 
+ at The Denver Village in Aurora\, Friday August 7 from 6:00-7:00 PM.\n\nTi
+ ckets: https://www.thedenvervillage.com/events-workshop/midweek-harmony-re
+ set-sound-bath-effrw-hg9jg-xd2gg-bdrap-xecmp-hbzp6-4ltln-j9y36-jww6r-js8b5
+ -8pswt-rtfnb-ft2ph-t36z9
+URL:https://soundbathcalendar.com/event/coregulation-sound-bath-2026-08-07-
+ the-denver-village/
+END:VEVENT
+END:VCALENDAR

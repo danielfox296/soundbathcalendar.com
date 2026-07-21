@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Singing Bowls at the Gardens: Sunrise to Starlight
+BEGIN:VEVENT
+UID:singing-bowls-at-the-gardens-sunrise-to-starlight-2026-07-28-denver-bot
+ anic-gardens-mitchell-hall@soundbathcalendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260728T233000Z
+DTEND:20260729T004500Z
+SUMMARY:Singing Bowls at the Gardens: Sunrise to Starlight
+LOCATION:Denver Botanic Gardens\, Mitchell Hall\, 1007 York St\, Denver\, C
+ O 80206
+DESCRIPTION:A reclined singing-bowl and gong sound meditation with Ann Mart
+ in in Mitchell Hall at Denver Botanic Gardens\, Tuesday July 28 at 5:30 PM
+ \; $25 general\, $22 members.\n\nTickets: https://tickets.botanicgardens.o
+ rg/events/e492c0f2-f809-468c-0220-f900957a8dec
+URL:https://soundbathcalendar.com/event/singing-bowls-at-the-gardens-sunris
+ e-to-starlight-2026-07-28-denver-botanic-gardens-mitchell-hall/
+END:VEVENT
+END:VCALENDAR

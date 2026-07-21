@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:AcuDetox & Sound Bath Journey Experience
+BEGIN:VEVENT
+UID:acudetox-sound-bath-journey-experience-2026-08-02-north-of-ordinary-col
+ lective@soundbathcalendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260802T190000Z
+DTEND:20260802T201500Z
+SUMMARY:AcuDetox & Sound Bath Journey Experience
+LOCATION:North Of Ordinary Collective\, 4949 Broadway\, Suite 127\, Boulder
+ \, CO 80304
+DESCRIPTION:An acupuncture-detox and sound bath journey facilitated by Terr
+ i Slezak at North Of Ordinary Collective in Boulder\, Sunday August 2 at 1
+ :00 PM. Sliding scale $27–$44.\n\nTickets: https://www.eventbrite.com/e/
+ acudetox-sound-bath-journey-experience-tickets-1994511598883
+URL:https://soundbathcalendar.com/event/acudetox-sound-bath-journey-experie
+ nce-2026-08-02-north-of-ordinary-collective/
+END:VEVENT
+END:VCALENDAR

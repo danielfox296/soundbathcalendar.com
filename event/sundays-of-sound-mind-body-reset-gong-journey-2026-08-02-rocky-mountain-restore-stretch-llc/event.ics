@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sundays of Sound - Mind Body Reset Gong Journey
+BEGIN:VEVENT
+UID:sundays-of-sound-mind-body-reset-gong-journey-2026-08-02-rocky-mountain
+ -restore-stretch-llc@soundbathcalendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260802T160000Z
+DTEND:20260802T171500Z
+SUMMARY:Sundays of Sound - Mind Body Reset Gong Journey
+LOCATION:Rocky Mountain Restore & Stretch LLC\, 3616 Soderburg Drive\, Fort
+  Collins\, CO 80526
+DESCRIPTION:Sunday morning gong journey using multiple large gongs for deep
+  relaxation\, held at the Fort Collins studio.\n\nTickets: https://www.eve
+ ntbrite.com/e/sundays-of-sound-mind-body-reset-gong-journey-tickets-199458
+ 1267263
+URL:https://soundbathcalendar.com/event/sundays-of-sound-mind-body-reset-go
+ ng-journey-2026-08-02-rocky-mountain-restore-stretch-llc/
+END:VEVENT
+END:VCALENDAR

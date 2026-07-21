@@ -121,7 +121,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../../styles.css?v=e6e2d763">
+  <link rel="stylesheet" href="../../styles.css?v=d602c3bb">
   <style>
     .cal-event { }
     .cal-event__crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 2rem; }
@@ -179,6 +179,7 @@
     <span class="eyebrow">Front Range calendar</span>
     <h1 class="cal-event__h1">Kundalini in the Park</h1>
     <p class="cal-event__desc">An outdoor kundalini and sound session led by Pavanjeet at North Boulder Park, Sunday morning; donation-based.</p>
+    <p class="cal-event__tags"><span class="cal-tag">Gong bath</span><span class="cal-tag">Breathwork + sound</span></p>
     <figure class="cal-event__figure">
       <img src="http://static1.squarespace.com/static/54e612e0e4b0fbb3ebf7262b/t/683cde636708fc15e1a08843/1748819555879/parkclassedit.jpg?format=1500w" alt="Kundalini in the Park — Pavanjeet at North Boulder Park, Boulder" loading="lazy" decoding="async">
       <figcaption>Kundalini in the Park — Pavanjeet at North Boulder Park, Boulder</figcaption>
@@ -190,7 +191,16 @@
       <dt>Price</dt><dd>Donation</dd>
       <dt>Operator</dt><dd>Pavanjeet</dd>
     </dl>
-    <p class="cal-event__cta"><a class="btn btn-primary" href="https://www.pavanjeet.com/inthepark" target="_blank" rel="noopener">Tickets</a> <a class="cal-event__link" href="https://www.pavanjeet.com" target="_blank" rel="noopener">Pavanjeet</a> <a class="cal-event__link" href="event.ics">Add to calendar</a></p>
+    <p class="cal-event__cta"><a class="btn btn-primary" href="https://www.pavanjeet.com/inthepark" target="_blank" rel="noopener">Tickets</a> <a class="cal-event__link" href="https://www.pavanjeet.com" target="_blank" rel="noopener">Pavanjeet</a></p>
+    <details class="cal-addcal">
+      <summary class="cal-event__link cal-addcal__summary">Add to calendar</summary>
+      <div class="cal-addcal__menu">
+        <a class="cal-addcal__opt" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Kundalini+in+the+Park&amp;dates=20260802T150000Z%2F20260802T161500Z&amp;details=An+outdoor+kundalini+and+sound+session+led+by+Pavanjeet+at+North+Boulder+Park%2C+Sunday+morning%3B+donation-based.%0A%0ATickets%3A+https%3A%2F%2Fwww.pavanjeet.com%2Finthepark&amp;location=North+Boulder+Park" target="_blank" rel="noopener">Google Calendar</a>
+        <a class="cal-addcal__opt" href="event.ics">Apple Calendar</a>
+        <a class="cal-addcal__opt" href="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&amp;rru=addevent&amp;subject=Kundalini+in+the+Park&amp;startdt=2026-08-02T15%3A00%3A00Z&amp;enddt=2026-08-02T16%3A15%3A00Z&amp;location=North+Boulder+Park&amp;body=An+outdoor+kundalini+and+sound+session+led+by+Pavanjeet+at+North+Boulder+Park%2C+Sunday+morning%3B+donation-based.%0A%0ATickets%3A+https%3A%2F%2Fwww.pavanjeet.com%2Finthepark" target="_blank" rel="noopener">Outlook</a>
+        <a class="cal-addcal__opt" href="event.ics" download>Download .ics</a>
+      </div>
+    </details>
     <p class="cal-event__back"><a href="../../">Part of the Front Range calendar →</a></p>
   </div>
 </section>
@@ -198,6 +208,10 @@
 
   <footer class="site-footer">
   <div class="container footer-inner">
+    <nav class="footer-nav" aria-label="More">
+      <a href="../../practitioners/">Practitioners</a>
+      <a href="../../venues/">Venues</a>
+    </nav>
     <p class="footer-fine">Kept by <a href="https://thefirstwater.co/">Firstwater</a>.</p>
     <p class="footer-fine">Denver, Colorado.</p>
   </div>

@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:MindFree Fridays Sound Healing
+BEGIN:VEVENT
+UID:mindfree-fridays-sound-healing-2026-07-24-karma-yoga-center@soundbathca
+ lendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260725T010000Z
+DTEND:20260725T021500Z
+SUMMARY:MindFree Fridays Sound Healing
+LOCATION:Karma Yoga Center\, 1760 S Broadway\, Denver\, CO 80210
+DESCRIPTION:The recurring MindFree Fridays evening sound healing at Karma Y
+ oga Center on South Broadway\, Friday July 24 at 7:00 PM (weekly series).\
+ n\nTickets: https://www.karmayogacenter.com/events-and-workshops/
+URL:https://soundbathcalendar.com/event/mindfree-fridays-sound-healing-2026
+ -07-24-karma-yoga-center/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Gong Bath with Beth
+BEGIN:VEVENT
+UID:gong-bath-with-beth-2026-07-27-una-vida-meditation-movement@soundbathca
+ lendar.com
+DTSTAMP:20260721T234042Z
+DTSTART:20260728T011500Z
+DTEND:20260728T023000Z
+SUMMARY:Gong Bath with Beth
+LOCATION:Una Vida Meditation & Movement\, 7960 Niwot Road\, Suite B-12\, Lo
+ ngmont\, CO 80503
+DESCRIPTION:A recurring Monday-evening gong bath led by Beth at Una Vida Me
+ ditation & Movement in Longmont\, Monday July 27 at 7:15 PM.\n\nTickets: h
+ ttps://www.unavidaniwot.com/
+URL:https://soundbathcalendar.com/event/gong-bath-with-beth-2026-07-27-una-
+ vida-meditation-movement/
+END:VEVENT
+END:VCALENDAR
