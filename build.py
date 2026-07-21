@@ -54,6 +54,7 @@ if REPO not in sys.path:
     sys.path.insert(0, REPO)
 from _src.lib import sessions_feed
 from _src.lib import external_events
+from _src.lib import practitioners as practitioners_lib
 
 SITE_URL = 'https://soundbathcalendar.com'
 SITE_NAME = 'Sound Bath Calendar'
@@ -207,6 +208,10 @@ def build():
     # Future, de-duplicated, chronological rows — shared by the root injection,
     # the ItemList schema, and the city pages (Track B B.2).
     cal_rows = external_events.build_rows(cal_feed, feed, now=cal_now)
+    print()
+    print('Loading practitioners feed...')
+    pract_feed = practitioners_lib.load_feed(REPO)
+    practs = practitioners_lib.published_practitioners(pract_feed)
     print()
 
     page_dirs = []
@@ -407,12 +412,18 @@ def build():
         base, header, footer, cal_feed, cal_now)
     pages_built.extend(_event_outputs)
 
+    # --- Practitioner pages (/practitioner/<slug>/) + index — CAL-02 ---
+    _pract_outputs, _pract_sitemap = build_practitioner_pages(
+        base, header, footer, practs, cal_rows, cal_now)
+    pages_built.extend(_pract_outputs)
+
     # --- ICS feeds (/front-range.ics, /<city>.ics) — Track B B.4 ---
     build_ics_feeds(cal_rows, cal_now)
 
     print(f'\nBuilt {len(pages_built)} pages.')
 
-    generate_sitemap(page_dirs, cal_now, extra_urls=_city_sitemap + _event_sitemap)
+    generate_sitemap(page_dirs, cal_now,
+                     extra_urls=_city_sitemap + _event_sitemap + _pract_sitemap)
 
 
 def build_ics_feeds(cal_rows, now):
@@ -630,6 +641,160 @@ def build_event_pages(base, header, footer, cal_feed, now):
             ics_path = os.path.join(REPO, 'event', slug, 'event.ics')
             with open(ics_path, 'w', encoding='utf-8', newline='') as f:
                 f.write(external_events.build_event_ics(row, SITE_URL, now))
+
+    return built, sitemap_entries
+
+
+def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
+    """Emit /practitioner/<slug>/ pages for every PUBLISHED practitioner + the
+    /practitioners/ index (CAL-02). Individual profiles are curated (a bio is
+    required to publish), so they're indexed; the index page is noindexed until
+    it has enough profiles to be a real page (doorway-page discipline). Returns
+    (built_outputs, sitemap_entries) — (loc, lastmod) per indexed page.
+    """
+    import shutil
+    # Clear stale profile pages first: an unpublished practitioner must not leave
+    # an orphaned page behind. The directory reflects ONLY the published set.
+    shutil.rmtree(os.path.join(REPO, 'practitioner'), ignore_errors=True)
+
+    print('\nGenerating practitioner pages...')
+    built, sitemap_entries = [], []
+    lastmod = external_events.stamp_date_iso(now)
+
+    # Upcoming-session counts per practitioner (for the index cards).
+    count_by_slug = {}
+    for p in practs:
+        count_by_slug[p['slug']] = len(
+            practitioners_lib.sessions_for(p['slug'], cal_rows))
+
+    # --- individual profile pages ---
+    for p in practs:
+        slug = p['slug']
+        output = f'practitioner/{slug}/index.html'
+        nav_prefix = '../../'
+        canonical_url = practitioners_lib.practitioner_url(slug, SITE_URL)
+        name = p['name']
+        sessions = practitioners_lib.sessions_for(slug, cal_rows)
+
+        title = f'{html_mod.escape(name)} · Sound bath practitioner | {SITE_NAME}'
+        bio = ' '.join((p.get('bio') or '').split())
+        description = (bio[:157].rstrip() + '…') if len(bio) > 158 else (
+            bio or f'{name} leads sound baths on the Colorado Front Range. '
+                   f'Bio and upcoming sessions.')
+        meta_desc = (f'<meta name="description" '
+                     f'content="{html_mod.escape(description, quote=True)}">')
+
+        og_image = (external_events._safe_ext_url(p.get('photo_url') or '')
+                    or f'{SITE_URL}/img/og-default.png')
+        og_tags, twitter_tags = _og_twitter_tags(
+            name, description, canonical_url, og_image)
+
+        # Organization (publisher) + ProfilePage/Person + BreadcrumbList. The
+        # Person carries operator-adjacent strings, so route it through _ldjson.
+        schema_json = (f'<script type="application/ld+json">\n'
+                       f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+        _person = practitioners_lib.person_schema(p, canonical_url, sessions)
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(_person)}\n  </script>')
+        breadcrumb_schema = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Calendar",
+                 "item": SITE_URL + "/"},
+                {"@type": "ListItem", "position": 2, "name": "Practitioners",
+                 "item": SITE_URL + "/practitioners/"},
+                {"@type": "ListItem", "position": 3, "name": name},
+            ],
+        }
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(breadcrumb_schema)}\n  </script>')
+
+        content = practitioners_lib.render_practitioner_page(
+            p, sessions, nav_prefix, SITE_URL, now=now)
+        page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
+        page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
+
+        html = _assemble(base, {
+            'title': title,
+            'robots': 'index, follow',
+            'meta_description': meta_desc,
+            'canonical_url': canonical_url,
+            'css_path': nav_prefix,
+            'page_style': practitioners_lib.PRACTITIONER_PAGE_STYLE,
+            'og_tags': og_tags,
+            'twitter_tags': twitter_tags,
+            'schema_json': schema_json,
+            'header': page_header,
+            'content': content,
+            'footer': page_footer,
+        })
+        if _write_page(output, html, built):
+            print(f'  ✓ {output} ({count_by_slug.get(slug, 0)} upcoming)')
+            sitemap_entries.append((canonical_url, lastmod))
+
+    # --- index page (/practitioners/) ---
+    # Doorway-page discipline: keep the directory out of the index until it has
+    # a few real profiles; the individual pages still rank on their own.
+    INDEX_MIN_INDEXED = 3
+    index_output = 'practitioners/index.html'
+    index_nav = '../'
+    index_canonical = f'{SITE_URL}/practitioners/'
+    indexable = len(practs) >= INDEX_MIN_INDEXED
+    robots_value = 'index, follow' if indexable else 'noindex, follow'
+    index_title = f'Practitioners | {SITE_NAME}'
+    index_desc = ('The facilitators leading sound baths across Denver and the '
+                  'Colorado Front Range: who they are and where to find them next.')
+    index_meta = (f'<meta name="description" '
+                  f'content="{html_mod.escape(index_desc, quote=True)}">')
+    og_tags, twitter_tags = _og_twitter_tags(
+        'Practitioners', index_desc, index_canonical,
+        f'{SITE_URL}/img/og-default.png')
+
+    schema_json = (f'<script type="application/ld+json">\n'
+                   f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+    _il = practitioners_lib.index_itemlist(practs, SITE_URL)
+    if _il:
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(_il)}\n  </script>')
+    index_breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Calendar",
+             "item": SITE_URL + "/"},
+            {"@type": "ListItem", "position": 2, "name": "Practitioners",
+             "item": index_canonical},
+        ],
+    }
+    schema_json += (f'\n  <script type="application/ld+json">\n'
+                    f'{json.dumps(index_breadcrumb, indent=2)}\n  </script>')
+
+    index_content = practitioners_lib.render_index(practs, count_by_slug, index_nav)
+    page_header = header.strip().replace('{{nav_prefix}}', index_nav)
+    page_footer = footer.strip().replace('{{nav_prefix}}', index_nav)
+    html = _assemble(base, {
+        'title': index_title,
+        'robots': robots_value,
+        'meta_description': index_meta,
+        'canonical_url': index_canonical,
+        'css_path': index_nav,
+        'page_style': practitioners_lib.INDEX_STYLE,
+        'og_tags': og_tags,
+        'twitter_tags': twitter_tags,
+        'schema_json': schema_json,
+        'header': page_header,
+        'content': index_content,
+        'footer': page_footer,
+    })
+    if _write_page(index_output, html, built):
+        print(f'  ✓ {index_output} ({len(practs)} listed, '
+              f'{"indexed" if indexable else "noindex until 3"})')
+        if indexable:
+            sitemap_entries.append((index_canonical, lastmod))
+
+    if not practs:
+        print('  (no published practitioners yet)')
 
     return built, sitemap_entries
 

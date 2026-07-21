@@ -161,6 +161,10 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-row__name a { color: inherit; text-decoration: none; }
 .cal-row__name a:hover { text-decoration: underline; text-decoration-color: var(--accent-on-light); }
 .cal-row__meta { color: rgba(10,11,13,0.62); font-size: 0.92rem; margin: 0; max-width: 42rem; }
+/* Practitioner cross-link on a row (CAL-02) — quiet, discovery not decoration. */
+.cal-row__with { font-size: 0.85rem; color: rgba(10,11,13,0.6); margin: 0.15rem 0 0; }
+.cal-row__with a { color: var(--accent-on-light); text-decoration: none; }
+.cal-row__with a:hover { text-decoration: underline; }
 /* Daniel's one line — the moat — as a margin voice: display face, set off from
    the facts by a quiet accent rule. */
 .cal-row__note { font: 500 1.02rem var(--font-display); color: var(--ink); margin: 0.55rem 0 0; padding-left: 0.9rem; border-left: 2px solid var(--accent); max-width: 38rem; line-height: 1.4; }
@@ -201,6 +205,9 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .footer-inner { display: flex; flex-direction: column; gap: 0.4rem; }
 .footer-fine { color: rgba(10,11,13,0.55); font-size: 0.85rem; }
 .footer-fine a { color: var(--accent-on-light); }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin-bottom: 0.5rem; }
+.footer-nav a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
+.footer-nav a:hover { text-decoration: underline; }
 
 @media (max-width: 640px) {
   /* Rows become self-contained cards; the day+time rail runs as one line. */

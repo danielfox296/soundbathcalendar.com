@@ -355,6 +355,11 @@ def _external_row(e):
         'operator_url': _safe_ext_url(e.get('operator_url', '')),
         'venue_url': _safe_ext_url(e.get('venue_url', '')),
         'description': (e.get('description', '') or '').strip(),
+        # CAL-02: {slug, name} of the linked PUBLISHED practitioner, or None. The
+        # feed only ever carries a published practitioner here (drafts stay in
+        # the service), so a slug present means /practitioner/<slug>/ exists.
+        'practitioner': (e.get('practitioner')
+                         if isinstance(e.get('practitioner'), dict) else None),
         '_ext': e,
         '_sess': None,
         '_event_title': None,
@@ -961,6 +966,14 @@ def _render_row(row, show_date=True, nav_prefix=''):
         meta.append(row['price'])
     if meta:
         parts.append(f'      <p class="cal-row__meta">{_esc(" · ".join(meta))}</p>')
+
+    # Practitioner link (CAL-02) — external rows linked to a published profile.
+    # Inlined path (no import of practitioners.py) to avoid a cycle.
+    pr = row.get('practitioner') or {}
+    if not is_fw and isinstance(pr, dict) and pr.get('slug'):
+        parts.append(
+            f'      <p class="cal-row__with">with <a href="'
+            f'{nav_prefix}practitioner/{_esc(pr["slug"])}/">{_esc(pr.get("name") or "")}</a></p>')
 
     # Daniel's one-line editorial note — the moat — set as a margin voice.
     # External rows only, and only when he has written one; a bare row is the
@@ -1742,7 +1755,16 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     out.append(f'      <dt>Area</dt><dd>{esc(area)}</dd>')
     if row.get('price'):
         out.append(f'      <dt>Price</dt><dd>{esc(row["price"])}</dd>')
-    if row.get('facilitator'):
+    # Facilitator: link to the practitioner profile when this session is linked
+    # to a published one (CAL-02); otherwise the plain listing string.
+    pr = row.get('practitioner') or {}
+    pr_slug = pr.get('slug') if isinstance(pr, dict) else None
+    if pr_slug:
+        pr_href = f'{nav_prefix}practitioner/{pr_slug}/'
+        out.append(
+            f'      <dt>Facilitator</dt><dd><a class="cal-event__link" '
+            f'href="{esc(pr_href)}">{esc(pr.get("name") or row.get("facilitator") or "")}</a></dd>')
+    elif row.get('facilitator'):
         out.append(f'      <dt>Facilitator</dt><dd>{esc(row["facilitator"])}</dd>')
     if row.get('operator'):
         out.append(f'      <dt>Operator</dt><dd>{esc(row["operator"])}</dd>')
