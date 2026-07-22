@@ -104,6 +104,12 @@ MAP_HEAD = """<link rel="stylesheet" href="{{css_path}}vendor/leaflet/leaflet.cs
     .sbc-pop__more { list-style: none; margin-left: -1.05rem; color: rgba(var(--ink-rgb),0.55); }
     .leaflet-container { font: inherit; }
     .map-empty { color: rgba(var(--ink-rgb),0.55); }
+    /* Dark mode (CAL-14 polish): the light OSM raster tiles are inverted +
+       hue-rotated into a dark basemap. Only .leaflet-tile is filtered — markers,
+       popups, and controls live in other panes and stay untouched. */
+    @media (prefers-color-scheme: dark) {
+      .leaflet-tile { filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9); }
+    }
   </style>"""
 
 

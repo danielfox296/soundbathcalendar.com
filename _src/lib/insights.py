@@ -359,4 +359,11 @@ INSIGHTS_HEAD = """<style>
   @media (prefers-reduced-motion: no-preference) {
     .soh-row__fill { transition: width .6s cubic-bezier(.2,.7,.3,1); }
   }
+  /* Dark mode (CAL-14 polish): the report already rides the site tokens (--ink,
+     --paper, --line, --accent-on-light) which flip; only its own --soh-* need a
+     dark card + a lighter dim, so the stat cards / tables stop reading as a white
+     island on the dark ground. --soh-wash (alpha ice) works on both. */
+  @media (prefers-color-scheme: dark) {
+    .soh { --soh-card: #181c22; --soh-dim: #9aa3ad; }
+  }
 </style>"""
