@@ -61,6 +61,7 @@ from _src.lib import mapview as mapview_lib
 from _src.lib import rss as rss_lib
 from _src.lib import insights as insights_lib
 from _src.lib import tag_pages as tag_pages_lib
+from _src.lib import roundups as roundups_lib
 
 SITE_URL = 'https://soundbathcalendar.com'
 SITE_NAME = 'Sound Bath Calendar'
@@ -490,6 +491,11 @@ def build():
         base, header, footer, cal_now)
     pages_built.extend(_insights_outputs)
 
+    # --- Editorial roundups (/roundups/) — CAL-19 ---
+    _roundup_outputs, _roundup_sitemap = build_roundup_pages(
+        base, header, footer, cal_now)
+    pages_built.extend(_roundup_outputs)
+
     # --- ICS feeds (/front-range.ics, /<city>.ics) — Track B B.4 ---
     build_ics_feeds(cal_rows, cal_now)
 
@@ -502,7 +508,8 @@ def build():
                      extra_urls=(_city_sitemap + _event_sitemap
                                  + _pract_sitemap + _venue_sitemap
                                  + _operator_sitemap + _map_sitemap
-                                 + _tag_sitemap + _insights_sitemap))
+                                 + _tag_sitemap + _insights_sitemap
+                                 + _roundup_sitemap))
 
 
 def build_ics_feeds(cal_rows, now):
@@ -1288,6 +1295,120 @@ def build_insights_pages(base, header, footer, now):
     for i, ed in enumerate(editions):
         _emit(f'state-of-sound-healing/{ed["edition"]["slug"]}/index.html', '../../',
               ed, editions[:i] + editions[i + 1:], False)
+    return built, sitemap_entries
+
+
+def build_roundup_pages(base, header, footer, now):
+    """Emit the editorial roundups (CAL-19): /roundups/<slug>/ per committed
+    post under _src/roundups/, plus the /roundups/ index. SITE-ONLY: posts are
+    human-written source files (Daniel's voice — the build never synthesizes
+    opinion), rendered as-committed so a published roundup never drifts with
+    the feed. Posts are always indexed; the index earns `index, follow` only
+    at >= INDEX_MIN posts (doorway discipline, like /tags/ and the entity
+    indexes). Returns (built_outputs, sitemap_entries)."""
+    print('\nGenerating roundup pages...')
+    posts = roundups_lib.load_posts(REPO)
+    built, sitemap_entries = [], []
+
+    def _emit(output, nav_prefix, title, description, robots_value, content,
+              schema_objs, lastmod, feature=True):
+        canonical = page_url(output)
+        meta_desc = ''
+        if description:
+            meta_desc = (f'<meta name="description" '
+                         f'content="{html_mod.escape(description, quote=True)}">')
+        og_tags, twitter_tags = _og_twitter_tags(
+            title.split(' | ')[0], description, canonical,
+            f'{SITE_URL}/img/og-default.png')
+        # _ldjson throughout: headlines/deks can carry operator-derived
+        # strings (event titles), so guard against '</script>' breakout.
+        schema_json = '\n  '.join(
+            f'<script type="application/ld+json">\n{_ldjson(obj)}\n  </script>'
+            for obj in schema_objs)
+        html = _assemble(base, {
+            'title': title, 'robots': robots_value,
+            'meta_description': meta_desc, 'canonical_url': canonical,
+            'css_path': nav_prefix, 'page_style': roundups_lib.ROUNDUPS_HEAD,
+            'og_tags': og_tags, 'twitter_tags': twitter_tags,
+            'schema_json': schema_json,
+            'header': header.strip().replace('{{nav_prefix}}', nav_prefix),
+            'content': content,
+            'footer': footer.strip().replace('{{nav_prefix}}', nav_prefix),
+        })
+        if _write_page(output, html, built):
+            print(f'  ✓ {output}')
+            if 'noindex' not in robots_value:
+                sitemap_entries.append((canonical, lastmod))
+
+    # --- Each post (always indexed: committed human-written content) ---
+    for post in posts:
+        byline = post.get('byline') or SITE_NAME
+        # Site byline -> Organization author; a personal byline (Daniel's
+        # call, flagged in the ticket) renders as a Person automatically.
+        author = ({"@type": "Organization", "name": SITE_NAME, "url": SITE_URL}
+                  if byline == SITE_NAME else {"@type": "Person", "name": byline})
+        canonical = f'{SITE_URL}/roundups/{post["slug"]}/'
+        article = {
+            "@context": "https://schema.org", "@type": "Article",
+            "headline": post['title'],
+            "description": post.get('description', ''),
+            "datePublished": post['date'], "dateModified": post['date'],
+            "author": author,
+            "publisher": {"@type": "Organization", "name": SITE_NAME,
+                          "url": SITE_URL},
+            "url": canonical, "mainEntityOfPage": canonical,
+            "isPartOf": {"@type": "WebSite", "name": SITE_NAME,
+                         "url": SITE_URL},
+        }
+        breadcrumb = {
+            "@context": "https://schema.org", "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Calendar",
+                 "item": SITE_URL + "/"},
+                {"@type": "ListItem", "position": 2, "name": "Roundups",
+                 "item": SITE_URL + "/roundups/"},
+                {"@type": "ListItem", "position": 3, "name": post['title'],
+                 "item": canonical},
+            ],
+        }
+        _emit(f'roundups/{post["slug"]}/index.html', '../../',
+              f'{post["title"]} | {SITE_NAME}',
+              post.get('description', '') or post.get('dek', ''),
+              'index, follow',
+              roundups_lib.render_post(post, '../../'),
+              (ORG_SCHEMA, article, breadcrumb),
+              post['date'])
+
+    # --- Index (noindex until INDEX_MIN posts — doorway discipline) ---
+    indexable = len(posts) >= roundups_lib.INDEX_MIN
+    index_canonical = f'{SITE_URL}/roundups/'
+    collection = {
+        "@context": "https://schema.org", "@type": "CollectionPage",
+        "name": f'Roundups | {SITE_NAME}',
+        "url": index_canonical,
+        "description": ('Occasional, human-edited cuts of the Front Range '
+                        'sound bath calendar.'),
+        "isPartOf": {"@type": "WebSite", "name": SITE_NAME, "url": SITE_URL},
+    }
+    index_breadcrumb = {
+        "@context": "https://schema.org", "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Calendar",
+             "item": SITE_URL + "/"},
+            {"@type": "ListItem", "position": 2, "name": "Roundups",
+             "item": index_canonical},
+        ],
+    }
+    _emit('roundups/index.html', '../',
+          f'Roundups | {SITE_NAME}',
+          ('Human-edited cuts of the Front Range sound bath calendar: which '
+           'rooms are busy, what costs nothing, what only happens once.'),
+          'index, follow' if indexable else 'noindex, follow',
+          roundups_lib.render_index(posts, '../'),
+          (ORG_SCHEMA, collection, index_breadcrumb),
+          external_events.stamp_date_iso(now))
+    print(f'  ({len(posts)} post(s); index '
+          f'{"indexed" if indexable else "noindex until " + str(roundups_lib.INDEX_MIN)})')
     return built, sitemap_entries
 
 
