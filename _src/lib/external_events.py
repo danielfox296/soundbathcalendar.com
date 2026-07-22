@@ -763,14 +763,14 @@ CALENDAR_FAQ = (
         'a': ('Most sessions in Denver, Boulder, Fort Collins, and Colorado '
               'Springs run between $20 and $55. Some are offered by donation or '
               'free. Each listing shows its own price, and the ticket link goes '
-              'straight to the operator.'),
+              'straight to the organizer.'),
     },
     {
         'q': 'What should I bring to a sound bath?',
         'a': ('Wear clothes you can lie down in. Many rooms provide mats, '
               'bolsters, and blankets, though your own blanket, a pillow, and '
-              'water are never wrong. When in doubt, the operator’s listing '
-              'says what the room supplies.'),
+              'water are never wrong. When in doubt, ask the organizer what '
+              'the room supplies.'),
     },
 )
 
@@ -1632,14 +1632,14 @@ def city_faq(city):
             'q': f'How much do sound baths cost in {city}?',
             'a': ('Most sessions run between $20 and $55. Some are offered by '
                   'donation or free. Each listing shows its own price, and the '
-                  'ticket link goes straight to the operator.'),
+                  'ticket link goes straight to the organizer.'),
         },
         {
             'q': 'What should I bring to a sound bath?',
             'a': ('Wear clothes you can lie down in. Many rooms provide mats, '
                   'bolsters, and blankets, though your own blanket, a pillow, and '
-                  'water are never wrong. When in doubt, the operator’s listing '
-                  'says what the room supplies.'),
+                  'water are never wrong. When in doubt, ask the organizer what '
+                  'the room supplies.'),
         },
     )
 
@@ -2133,10 +2133,10 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     if orf_slug:
         orf_href = f'{nav_prefix}operator/{orf_slug}/'
         out.append(
-            f'      <dt>Operator</dt><dd><a class="cal-event__link" '
+            f'      <dt>Organizer</dt><dd><a class="cal-event__link" '
             f'href="{esc(orf_href)}">{esc(orf.get("name") or row.get("operator") or "")}</a></dd>')
     elif row.get('operator'):
-        out.append(f'      <dt>Operator</dt><dd>{esc(row["operator"])}</dd>')
+        out.append(f'      <dt>Organizer</dt><dd>{esc(row["operator"])}</dd>')
     out.append('    </dl>')
 
     # Embedded venue mini-map (CAL-10) — the no-key Google embed the venue pages

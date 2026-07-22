@@ -230,7 +230,7 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None):
         n = len(session_rows)
         fallback = (
             f'{name} is one of the venues on the Front Range sound bath '
-            f'calendar{" in " + area if area else ""}. '
+            f'calendar{" — in " + area if area else ""}. '
             + (f'It has {n} upcoming session{"s" if n != 1 else ""} listed — '
                f'dates, prices, and ticket links below.' if n else
                'Nothing is listed here right now — the calendar below has '

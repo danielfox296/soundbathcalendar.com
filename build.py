@@ -1404,8 +1404,8 @@ def build_roundup_pages(base, header, footer, now):
         "@context": "https://schema.org", "@type": "CollectionPage",
         "name": f'Roundups | {SITE_NAME}',
         "url": index_canonical,
-        "description": ('Occasional, human-edited cuts of the Front Range '
-                        'sound bath calendar.'),
+        "description": ('Occasional cuts of the Front Range sound bath '
+                        'calendar, built from the listings.'),
         "isPartOf": {"@type": "WebSite", "name": SITE_NAME, "url": SITE_URL},
     }
     index_breadcrumb = {
@@ -1419,8 +1419,9 @@ def build_roundup_pages(base, header, footer, now):
     }
     _emit('roundups/index.html', '../',
           f'Roundups | {SITE_NAME}',
-          ('Human-edited cuts of the Front Range sound bath calendar: which '
-           'venues are busy, what costs nothing, what only happens once.'),
+          ('Cuts of the Front Range sound bath calendar, built from the '
+           'listings: which venues are busy, what costs nothing, what only '
+           'happens once.'),
           'index, follow' if indexable else 'noindex, follow',
           roundups_lib.render_index(posts, '../'),
           (ORG_SCHEMA, collection, index_breadcrumb),

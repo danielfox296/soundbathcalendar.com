@@ -191,9 +191,9 @@ TAG_INTRO = {
         'you lie down, stay still, and rest while the instruments play.'),
     'beginner-friendly': (
         'These sessions are a good first sound bath: nothing is expected of you '
-        'beyond lying down and resting, and facilitators explain what will happen '
-        'before they start. You stay clothed and still throughout — there is no '
-        'way to do it wrong.'),
+        'beyond lying down and resting, and most facilitators explain what will '
+        'happen before they start — you can always ask. You stay clothed and '
+        'still throughout — there is no way to do it wrong.'),
     'free-donation': (
         'These sessions are free or offered by donation, so cost is not a barrier '
         'to trying one. The experience is the same as a paid sound bath — you lie '
@@ -217,9 +217,10 @@ _GENERIC_INTRO = {
         'itself runs as usual: you lie down, stay clothed and still, and rest for '
         'the length of the session.'),
     'access': (
-        'These listings are flagged {label_l}, so you know before you book. The '
-        'session is a normal sound bath — you lie down and rest while the '
-        'instruments play — with that detail confirmed up front.'),
+        'These listings are flagged {label_l} from the organizer\'s own listing, '
+        'so you know before you book. The session is a normal sound bath — you '
+        'lie down and rest while the instruments play. Confirm the detail with '
+        'the organizer when it matters.'),
 }
 
 
@@ -288,7 +289,7 @@ _TAG_FAQ = {
             'a': ('Strong breathwork can bring on lightheadedness, tingling, or '
                   'strong emotion, and some patterns are not advised during '
                   'pregnancy or with certain heart, blood-pressure, or seizure '
-                  'conditions. Check with the operator — and your doctor if unsure '
+                  'conditions. Check with the organizer — and your doctor if unsure '
                   '— before booking. This is not medical advice.'),
         },
     ),
@@ -313,8 +314,9 @@ def tag_faq(rows, slug):
             {
                 'q': 'Do I need any experience?',
                 'a': ('No. There is nothing to learn or perform — you lie down and '
-                      'rest. Facilitators explain what will happen before they '
-                      'start, so a first sound bath is as easy as any other.'),
+                      'rest. Most facilitators explain what will happen before '
+                      'they start — and you can always ask — so a first sound '
+                      'bath is as easy as any other.'),
             },
         ]
     # Price is always useful and always current.
@@ -326,7 +328,7 @@ def tag_faq(rows, slug):
             'q': 'How much do these sessions cost?',
             'a': (f'The sessions listed here run {span}. Some are offered by '
                   'donation or free. Each listing shows its own price, and the '
-                  'ticket link goes straight to the operator.'),
+                  'ticket link goes straight to the organizer.'),
         })
     return tuple(items)
 
