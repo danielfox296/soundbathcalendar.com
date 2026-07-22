@@ -12,6 +12,10 @@
   <meta name="description" content="An outdoor kundalini and sound session led by Pavanjeet at North Boulder Park, Sunday morning; donation-based.">
   <meta name="theme-color" content="#F5F7FA">
 
+  <!-- RSS feed discovery (CAL-05). Root feed by default; city pages override
+       https://soundbathcalendar.com/feed.xml with their own region feed. -->
+  <link rel="alternate" type="application/rss+xml" title="Sound Bath Calendar" href="https://soundbathcalendar.com/feed.xml">
+
   <!-- Open Graph -->
   <meta property="og:title" content="Kundalini in the Park">
   <meta property="og:description" content="An outdoor kundalini and sound session led by Pavanjeet at North Boulder Park, Sunday morning; donation-based.">
@@ -70,6 +74,10 @@
     }
   },
   "description": "An outdoor kundalini and sound session led by Pavanjeet at North Boulder Park, Sunday morning; donation-based.",
+  "performer": {
+    "@type": "Person",
+    "name": "Pavanjeet"
+  },
   "organizer": {
     "@type": "Organization",
     "name": "Pavanjeet",
@@ -82,7 +90,9 @@
   },
   "offers": {
     "@type": "Offer",
-    "url": "https://www.pavanjeet.com/inthepark"
+    "url": "https://www.pavanjeet.com/inthepark",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2026-07-19T12:58:37-06:00"
   },
   "url": "https://soundbathcalendar.com/event/kundalini-in-the-park-2026-08-02-north-boulder-park/"
 }
@@ -121,27 +131,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../../styles.css?v=d602c3bb">
+  <link rel="stylesheet" href="../../styles.css?v=9054b17d">
   <style>
     .cal-event { }
-    .cal-event__crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 2rem; }
+    .cal-event__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
     .cal-event__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .cal-event__crumbs a:hover { text-decoration: underline; }
-    .cal-past-banner { background: rgba(10,11,13,0.05); border-left: 3px solid var(--gray); padding: 0.9rem 1.2rem; margin: 0 0 2rem; font-size: 0.95rem; }
+    .cal-past-banner { background: rgba(var(--ink-rgb),0.05); border-left: 3px solid var(--gray); padding: 0.9rem 1.2rem; margin: 0 0 2rem; font-size: 0.95rem; }
     .cal-past-banner a { color: var(--accent-on-light); }
     .cal-event__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.4rem 0 1.4rem; }
-    .cal-event__desc { font-size: 1.15rem; line-height: 1.6; max-width: 42rem; color: rgba(10,11,13,0.78); margin: 0 0 1rem; }
+    .cal-event__desc { font-size: 1.15rem; line-height: 1.6; max-width: 42rem; color: rgba(var(--ink-rgb),0.78); margin: 0 0 1rem; }
     .cal-event__note { font: 500 1.2rem var(--font-display); color: var(--ink); max-width: 40rem; line-height: 1.4; margin: 0 0 1.6rem; }
     .cal-event__figure { margin: 2rem 0; max-width: 640px; }
-    .cal-event__figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: rgba(10,11,13,0.06); }
-    .cal-event__figure figcaption { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin-top: 0.6rem; }
+    .cal-event__figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: rgba(var(--ink-rgb),0.06); }
+    .cal-event__figure figcaption { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin-top: 0.6rem; }
     .cal-event__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.6rem; margin: 2rem 0; max-width: 40rem; }
     .cal-event__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); align-self: baseline; }
     .cal-event__facts dd { margin: 0; color: var(--ink); }
     .cal-event__cta { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; margin: 2rem 0; }
     .cal-event__link { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .cal-event__link:hover { text-decoration: underline; }
-    .cal-event__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(10,11,13,0.14); }
+    .cal-event__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
     .cal-event__back a { color: var(--accent-on-light); text-decoration: none; }
     .cal-event__back a:hover { text-decoration: underline; }
     @media (max-width: 640px) { .cal-event__facts { grid-template-columns: 1fr; gap: 0.2rem; } .cal-event__facts dd { margin-bottom: 0.8rem; } }
@@ -151,11 +161,12 @@
   <header class="masthead">
   <div class="container masthead-inner">
     <a href="../../" class="wordmark">Sound Bath Calendar</a>
-    <nav class="masthead-cities" aria-label="Areas">
+    <nav class="masthead-cities" aria-label="Calendar navigation">
       <a href="../../denver/">Denver</a>
       <a href="../../boulder/">Boulder</a>
       <a href="../../fort-collins/">Fort Collins</a>
       <a href="../../colorado-springs/">Colorado Springs</a>
+      <a href="../../map/">Map</a>
     </nav>
     <!-- Slim digest capture: inline form on wide screens, an anchor link down
          to the full form on small ones. Same Formspree seam as the main form. -->
@@ -176,20 +187,26 @@
     <nav class="cal-event__crumbs" aria-label="Breadcrumb">
       <a href="../../">Calendar</a> <span aria-hidden="true">/</span> <span>Kundalini in the Park</span>
     </nav>
+    <div class="detail-shell">
+      <div class="detail-main">
     <span class="eyebrow">Front Range calendar</span>
     <h1 class="cal-event__h1">Kundalini in the Park</h1>
     <p class="cal-event__desc">An outdoor kundalini and sound session led by Pavanjeet at North Boulder Park, Sunday morning; donation-based.</p>
-    <p class="cal-event__tags"><span class="cal-tag">Gong bath</span><span class="cal-tag">Breathwork + sound</span></p>
+    <p class="cal-event__tags"><a class="cal-tag cal-tag--link" href="../../gong-bath/">Gong bath</a><a class="cal-tag cal-tag--link" href="../../breathwork-sound/">Breathwork + sound</a></p>
     <figure class="cal-event__figure">
       <img src="http://static1.squarespace.com/static/54e612e0e4b0fbb3ebf7262b/t/683cde636708fc15e1a08843/1748819555879/parkclassedit.jpg?format=1500w" alt="Kundalini in the Park — Pavanjeet at North Boulder Park, Boulder" loading="lazy" decoding="async">
       <figcaption>Kundalini in the Park — Pavanjeet at North Boulder Park, Boulder</figcaption>
     </figure>
+      </div>
+      <aside class="detail-aside">
+        <div class="detail-card">
     <dl class="cal-event__facts">
       <dt>When</dt><dd>Sunday, August 2, 2026 · 9:00 AM (Denver time)</dd>
-      <dt>Where</dt><dd>North Boulder Park</dd>
+      <dt>Where</dt><dd><a class="cal-event__link" href="../../venue/north-boulder-park/">North Boulder Park</a></dd>
       <dt>Area</dt><dd>Boulder</dd>
       <dt>Price</dt><dd>Donation</dd>
-      <dt>Operator</dt><dd>Pavanjeet</dd>
+      <dt>Facilitator</dt><dd>Pavanjeet</dd>
+      <dt>Operator</dt><dd><a class="cal-event__link" href="../../operator/pavanjeet/">Pavanjeet</a></dd>
     </dl>
     <p class="cal-event__cta"><a class="btn btn-primary" href="https://www.pavanjeet.com/inthepark" target="_blank" rel="noopener">Tickets</a> <a class="cal-event__link" href="https://www.pavanjeet.com" target="_blank" rel="noopener">Pavanjeet</a></p>
     <details class="cal-addcal">
@@ -201,24 +218,56 @@
         <a class="cal-addcal__opt" href="event.ics" download>Download .ics</a>
       </div>
     </details>
+        </div>
+      </aside>
+    </div>
     <p class="cal-event__back"><a href="../../">Part of the Front Range calendar →</a></p>
   </div>
 </section>
   </main>
 
   <footer class="site-footer">
-  <div class="container footer-inner">
-    <nav class="footer-nav" aria-label="More">
-      <a href="../../practitioners/">Practitioners</a>
-      <a href="../../venues/">Venues</a>
-    </nav>
-    <p class="footer-fine">Kept by <a href="https://thefirstwater.co/">Firstwater</a>.</p>
-    <p class="footer-fine">Denver, Colorado.</p>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../../" class="footer-wordmark">Sound Bath Calendar</a>
+        <p class="footer-tag">Every sound bath on the Colorado Front Range —
+        Denver, Boulder, Fort Collins, Colorado Springs — kept current every week.</p>
+      </div>
+      <nav class="footer-col" aria-label="Calendar">
+        <span class="footer-col__h">Calendar</span>
+        <a href="../../denver/">Denver</a>
+        <a href="../../boulder/">Boulder</a>
+        <a href="../../fort-collins/">Fort Collins</a>
+        <a href="../../colorado-springs/">Colorado Springs</a>
+        <a href="../../map/">Map</a>
+        <a href="../../browse/">Browse</a>
+      </nav>
+      <nav class="footer-col" aria-label="The scene">
+        <span class="footer-col__h">The scene</span>
+        <a href="../../practitioners/">Practitioners</a>
+        <a href="../../venues/">Venues</a>
+        <a href="../../operators/">Organizers</a>
+        <a href="../../state-of-sound-healing/">State of the scene</a>
+      </nav>
+      <nav class="footer-col" aria-label="Learn">
+        <span class="footer-col__h">Learn</span>
+        <a href="../../what-to-expect/">What to expect</a>
+        <a href="../../learn/">Learn</a>
+        <a href="../../roundups/">Roundups</a>
+        <a href="../../#digest">The Thursday digest</a>
+        <a href="../../feed.xml">RSS</a>
+      </nav>
+    </div>
+    <div class="footer-bar">
+      <p class="footer-fine">Kept by <a href="https://thefirstwater.co/">Firstwater</a></p>
+      <p class="footer-fine">Denver, Colorado</p>
+    </div>
   </div>
 </footer>
 
   <!-- Progressive-enhancement calendar filters (Track B B.5). The page is fully
        usable without it — it only reveals and wires the filter bar. -->
-  <script defer src="../../filters.js"></script>
+  <script defer src="../../filters.js?v=8a39f81c"></script>
 </body>
 </html>

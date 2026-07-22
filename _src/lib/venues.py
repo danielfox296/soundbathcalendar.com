@@ -341,29 +341,19 @@ def place_schema(v, canonical_url, session_rows):
 # Index (/venues/)
 # ---------------------------------------------------------------------------
 
-INDEX_STYLE = """<style>
-    .venues__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
-    .venues__crumbs a { color: var(--accent-on-light); text-decoration: none; }
-    .venues__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.8rem; }
-    .venues__lede { font-size: 1.1rem; color: rgba(var(--ink-rgb),0.75); max-width: 40rem; margin: 0 0 2rem; }
-    .venues__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.4rem; }
-    .venues__card { display: block; text-decoration: none; color: inherit; border: 1px solid rgba(var(--ink-rgb),0.14); padding: 1rem; }
-    .venues__card:hover { border-color: var(--accent-on-light); }
-    .venues__name { font: 500 1.1rem var(--font-display); color: var(--ink); }
-    .venues__meta { font-size: 0.85rem; color: rgba(var(--ink-rgb),0.6); margin-top: 0.2rem; }
-  </style>"""
+# The directory design (.dir-*) is shared with /practitioners/ and /operators/
+# and lives in styles.css; no page-specific style block remains.
+INDEX_STYLE = ''
 
 
-def render_index(venues, count_by_slug, nav_prefix):
+def render_index(venues, count_by_slug, nav_prefix, art_by_slug=None):
+    from _src.lib import directory
+    art_by_slug = art_by_slug or {}
     out = ['<section class="section section--light venues">', '  <div class="container">']
-    out.append('    <nav class="venues__crumbs" aria-label="Breadcrumb">')
-    out.append(f'      <a href="{nav_prefix}">Calendar</a> <span aria-hidden="true">/</span> '
-               '<span>Venues</span>')
-    out.append('    </nav>')
-    out.append('    <span class="eyebrow">Front Range calendar</span>')
-    out.append('    <h1 class="venues__h1">Venues</h1>')
-    out.append('    <p class="venues__lede">The rooms hosting sound baths across Denver and '
-               'the Front Range — where they are, what to expect, and what is on there next.</p>')
+    out.append(directory.render_head(
+        nav_prefix, 'Venues', 'Venues',
+        'The rooms hosting sound baths across Denver and the Front Range — '
+        'where they are, what to expect, and what is on there next.'))
     if not venues:
         out.append(X.render_empty_state(
             nav_prefix,
@@ -371,7 +361,7 @@ def render_index(venues, count_by_slug, nav_prefix):
             'get there, and what it is like inside. Every room is already on the '
             'calendar and the map.'))
     else:
-        out.append('    <div class="venues__grid">')
+        out.append('    <div class="dir-grid">')
         for v in venues:
             slug = v['slug']
             href = f'{nav_prefix}{venue_path(slug)}'
@@ -379,10 +369,8 @@ def render_index(venues, count_by_slug, nav_prefix):
             area = f'{place}, {v["city"]}' if place else v.get('city', '')
             n = count_by_slug.get(slug, 0)
             meta = ' · '.join(x for x in (area, (f'{n} upcoming' if n else '')) if x) or 'Venue'
-            out.append(
-                f'      <a class="venues__card" href="{_esc(href)}">'
-                f'<span class="venues__name">{_esc(v["name"])}</span>'
-                f'<span class="venues__meta">{_esc(meta)}</span></a>')
+            out.append(directory.render_card(
+                href, v['name'], meta, art_by_slug.get(slug, '')))
         out.append('    </div>')
     out.append('  </div>')
     out.append('</section>')

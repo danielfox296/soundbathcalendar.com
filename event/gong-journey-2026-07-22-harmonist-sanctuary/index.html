@@ -12,6 +12,10 @@
   <meta name="description" content="A gong journey presented by Sound Murals at Harmonist Sanctuary in Denver, Wednesday evening.">
   <meta name="theme-color" content="#F5F7FA">
 
+  <!-- RSS feed discovery (CAL-05). Root feed by default; city pages override
+       https://soundbathcalendar.com/feed.xml with their own region feed. -->
+  <link rel="alternate" type="application/rss+xml" title="Sound Bath Calendar" href="https://soundbathcalendar.com/feed.xml">
+
   <!-- Open Graph -->
   <meta property="og:title" content="Gong Journey">
   <meta property="og:description" content="A gong journey presented by Sound Murals at Harmonist Sanctuary in Denver, Wednesday evening.">
@@ -83,7 +87,9 @@
   },
   "offers": {
     "@type": "Offer",
-    "url": "https://www.eventbrite.com/e/gong-journey-tickets-1992588980279"
+    "url": "https://www.eventbrite.com/e/gong-journey-tickets-1992588980279",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2026-07-19T12:59:42-06:00"
   },
   "url": "https://soundbathcalendar.com/event/gong-journey-2026-07-22-harmonist-sanctuary/"
 }
@@ -122,27 +128,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../../styles.css?v=d602c3bb">
+  <link rel="stylesheet" href="../../styles.css?v=9054b17d">
   <style>
     .cal-event { }
-    .cal-event__crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 2rem; }
+    .cal-event__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
     .cal-event__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .cal-event__crumbs a:hover { text-decoration: underline; }
-    .cal-past-banner { background: rgba(10,11,13,0.05); border-left: 3px solid var(--gray); padding: 0.9rem 1.2rem; margin: 0 0 2rem; font-size: 0.95rem; }
+    .cal-past-banner { background: rgba(var(--ink-rgb),0.05); border-left: 3px solid var(--gray); padding: 0.9rem 1.2rem; margin: 0 0 2rem; font-size: 0.95rem; }
     .cal-past-banner a { color: var(--accent-on-light); }
     .cal-event__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.4rem 0 1.4rem; }
-    .cal-event__desc { font-size: 1.15rem; line-height: 1.6; max-width: 42rem; color: rgba(10,11,13,0.78); margin: 0 0 1rem; }
+    .cal-event__desc { font-size: 1.15rem; line-height: 1.6; max-width: 42rem; color: rgba(var(--ink-rgb),0.78); margin: 0 0 1rem; }
     .cal-event__note { font: 500 1.2rem var(--font-display); color: var(--ink); max-width: 40rem; line-height: 1.4; margin: 0 0 1.6rem; }
     .cal-event__figure { margin: 2rem 0; max-width: 640px; }
-    .cal-event__figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: rgba(10,11,13,0.06); }
-    .cal-event__figure figcaption { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin-top: 0.6rem; }
+    .cal-event__figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: rgba(var(--ink-rgb),0.06); }
+    .cal-event__figure figcaption { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin-top: 0.6rem; }
     .cal-event__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.6rem; margin: 2rem 0; max-width: 40rem; }
     .cal-event__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); align-self: baseline; }
     .cal-event__facts dd { margin: 0; color: var(--ink); }
     .cal-event__cta { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; margin: 2rem 0; }
     .cal-event__link { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .cal-event__link:hover { text-decoration: underline; }
-    .cal-event__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(10,11,13,0.14); }
+    .cal-event__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
     .cal-event__back a { color: var(--accent-on-light); text-decoration: none; }
     .cal-event__back a:hover { text-decoration: underline; }
     @media (max-width: 640px) { .cal-event__facts { grid-template-columns: 1fr; gap: 0.2rem; } .cal-event__facts dd { margin-bottom: 0.8rem; } }
@@ -152,11 +158,12 @@
   <header class="masthead">
   <div class="container masthead-inner">
     <a href="../../" class="wordmark">Sound Bath Calendar</a>
-    <nav class="masthead-cities" aria-label="Areas">
+    <nav class="masthead-cities" aria-label="Calendar navigation">
       <a href="../../denver/">Denver</a>
       <a href="../../boulder/">Boulder</a>
       <a href="../../fort-collins/">Fort Collins</a>
       <a href="../../colorado-springs/">Colorado Springs</a>
+      <a href="../../map/">Map</a>
     </nav>
     <!-- Slim digest capture: inline form on wide screens, an anchor link down
          to the full form on small ones. Same Formspree seam as the main form. -->
@@ -177,20 +184,26 @@
     <nav class="cal-event__crumbs" aria-label="Breadcrumb">
       <a href="../../">Calendar</a> <span aria-hidden="true">/</span> <span>Gong Journey</span>
     </nav>
+    <div class="detail-shell">
+      <div class="detail-main">
     <span class="eyebrow">Front Range calendar</span>
     <h1 class="cal-event__h1">Gong Journey</h1>
     <p class="cal-event__desc">A gong journey presented by Sound Murals at Harmonist Sanctuary in Denver, Wednesday evening.</p>
-    <p class="cal-event__tags"><span class="cal-tag">Gong bath</span></p>
+    <p class="cal-event__tags"><a class="cal-tag cal-tag--link" href="../../gong-bath/">Gong bath</a></p>
     <figure class="cal-event__figure">
       <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1184954631%2F885379362523%2F1%2Foriginal.20260519-155448?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.504&amp;fp-y=0.419&amp;s=19d0390ecf9df5444e1dbcc7222b5eed" alt="Gong Journey — Sound Murals at Harmonist Sanctuary, East Colfax" loading="lazy" decoding="async">
       <figcaption>Gong Journey — Sound Murals at Harmonist Sanctuary, East Colfax</figcaption>
     </figure>
+      </div>
+      <aside class="detail-aside">
+        <div class="detail-card">
     <dl class="cal-event__facts">
       <dt>When</dt><dd>Wednesday, July 22, 2026 · 7:00 PM (Denver time)</dd>
-      <dt>Where</dt><dd>Harmonist Sanctuary · 4633 East Colfax Avenue, Denver, CO 80220</dd>
+      <dt>Where</dt><dd><a class="cal-event__link" href="../../venue/harmonist-sanctuary/">Harmonist Sanctuary</a> · 4633 East Colfax Avenue, Denver, CO 80220</dd>
       <dt>Area</dt><dd>East Colfax, Denver</dd>
-      <dt>Operator</dt><dd>Sound Murals</dd>
+      <dt>Operator</dt><dd><a class="cal-event__link" href="../../operator/sound-murals/">Sound Murals</a></dd>
     </dl>
+    <iframe class="detail-card__map" loading="lazy" title="Map" src="https://maps.google.com/maps?q=4633+East+Colfax+Avenue%2C+Denver%2C+CO+80220%2C+Denver%2C+CO&amp;z=15&amp;output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe>
     <p class="cal-event__cta"><a class="btn btn-primary" href="https://www.eventbrite.com/e/gong-journey-tickets-1992588980279" target="_blank" rel="noopener">Tickets</a> <a class="cal-event__link" href="https://soundmurals.com" target="_blank" rel="noopener">Sound Murals</a> <a class="cal-event__link" href="https://www.google.com/maps/search/?api=1&amp;query=4633+East+Colfax+Avenue%2C+Denver%2C+CO+80220%2C+Denver%2C+CO" target="_blank" rel="noopener">Open in Maps</a></p>
     <details class="cal-addcal">
       <summary class="cal-event__link cal-addcal__summary">Add to calendar</summary>
@@ -201,24 +214,56 @@
         <a class="cal-addcal__opt" href="event.ics" download>Download .ics</a>
       </div>
     </details>
+        </div>
+      </aside>
+    </div>
     <p class="cal-event__back"><a href="../../">Part of the Front Range calendar →</a></p>
   </div>
 </section>
   </main>
 
   <footer class="site-footer">
-  <div class="container footer-inner">
-    <nav class="footer-nav" aria-label="More">
-      <a href="../../practitioners/">Practitioners</a>
-      <a href="../../venues/">Venues</a>
-    </nav>
-    <p class="footer-fine">Kept by <a href="https://thefirstwater.co/">Firstwater</a>.</p>
-    <p class="footer-fine">Denver, Colorado.</p>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../../" class="footer-wordmark">Sound Bath Calendar</a>
+        <p class="footer-tag">Every sound bath on the Colorado Front Range —
+        Denver, Boulder, Fort Collins, Colorado Springs — kept current every week.</p>
+      </div>
+      <nav class="footer-col" aria-label="Calendar">
+        <span class="footer-col__h">Calendar</span>
+        <a href="../../denver/">Denver</a>
+        <a href="../../boulder/">Boulder</a>
+        <a href="../../fort-collins/">Fort Collins</a>
+        <a href="../../colorado-springs/">Colorado Springs</a>
+        <a href="../../map/">Map</a>
+        <a href="../../browse/">Browse</a>
+      </nav>
+      <nav class="footer-col" aria-label="The scene">
+        <span class="footer-col__h">The scene</span>
+        <a href="../../practitioners/">Practitioners</a>
+        <a href="../../venues/">Venues</a>
+        <a href="../../operators/">Organizers</a>
+        <a href="../../state-of-sound-healing/">State of the scene</a>
+      </nav>
+      <nav class="footer-col" aria-label="Learn">
+        <span class="footer-col__h">Learn</span>
+        <a href="../../what-to-expect/">What to expect</a>
+        <a href="../../learn/">Learn</a>
+        <a href="../../roundups/">Roundups</a>
+        <a href="../../#digest">The Thursday digest</a>
+        <a href="../../feed.xml">RSS</a>
+      </nav>
+    </div>
+    <div class="footer-bar">
+      <p class="footer-fine">Kept by <a href="https://thefirstwater.co/">Firstwater</a></p>
+      <p class="footer-fine">Denver, Colorado</p>
+    </div>
   </div>
 </footer>
 
   <!-- Progressive-enhancement calendar filters (Track B B.5). The page is fully
        usable without it — it only reveals and wires the filter bar. -->
-  <script defer src="../../filters.js"></script>
+  <script defer src="../../filters.js?v=8a39f81c"></script>
 </body>
 </html>

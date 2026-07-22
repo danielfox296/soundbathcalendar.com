@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bing Webmaster Tools site verification (account-level code, same
+       account as thefirstwater.co) -->
+  <meta name="msvalidate.01" content="9C97AFC25A8EE199FF51C4C6D7C46F2E" />
+  <link rel="canonical" href="https://soundbathcalendar.com/map/">
+  <meta name="robots" content="index, follow">
+  <title>Map of sound baths on the Front Range | Sound Bath Calendar</title>
+  <meta name="description" content="An interactive map of every upcoming sound bath across Denver and the Colorado Front Range — pinned by room, with dates and ticket links.">
+  <meta name="theme-color" content="#F5F7FA">
+
+  <!-- RSS feed discovery (CAL-05). Root feed by default; city pages override
+       https://soundbathcalendar.com/feed.xml with their own region feed. -->
+  <link rel="alternate" type="application/rss+xml" title="Sound Bath Calendar" href="https://soundbathcalendar.com/feed.xml">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Sound baths on the map">
+  <meta property="og:description" content="An interactive map of every upcoming sound bath across Denver and the Colorado Front Range — pinned by room, with dates and ticket links.">
+  <meta property="og:url" content="https://soundbathcalendar.com/map/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://soundbathcalendar.com/img/og/map.jpg">
+  <meta property="og:site_name" content="Sound Bath Calendar">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sound baths on the map">
+  <meta name="twitter:description" content="An interactive map of every upcoming sound bath across Denver and the Colorado Front Range — pinned by room, with dates and ticket links.">
+  <meta name="twitter:image" content="https://soundbathcalendar.com/img/og/map.jpg">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Sound Bath Calendar",
+  "url": "https://soundbathcalendar.com",
+  "sameAs": [
+    "https://thefirstwater.co"
+  ],
+  "description": "A curated, weekly-updated calendar of sound baths across Denver and the Front Range: Boulder, Fort Collins, and Colorado Springs. Every room worth knowing.",
+  "areaServed": {
+    "@type": "AdministrativeArea",
+    "name": "Denver metro and the Colorado Front Range"
+  },
+  "knowsAbout": [
+    "sound baths",
+    "gong baths",
+    "sound healing",
+    "breathwork with sound",
+    "guided meditation with sound"
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Sound baths on the Front Range map",
+  "url": "https://soundbathcalendar.com/map/",
+  "description": "An interactive map of every upcoming sound bath across Denver and the Colorado Front Range \u2014 pinned by room, with dates and ticket links.",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Sound Bath Calendar",
+    "url": "https://soundbathcalendar.com"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Calendar",
+      "item": "https://soundbathcalendar.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Map",
+      "item": "https://soundbathcalendar.com/map/"
+    }
+  ]
+}
+  </script>
+
+  <!-- Google tag (gtag.js) — Sound Bath Calendar's own GA4 property
+       (G-LXTJV4R877, created 2026-07-19). Never reuse Firstwater's GA4 property. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LXTJV4R877"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LXTJV4R877');
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
+  <link rel="stylesheet" href="../styles.css?v=9054b17d">
+  <link rel="stylesheet" href="../vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="../vendor/markercluster/MarkerCluster.css">
+  <style>
+    .map-wrap { margin: 0; }
+    .map-intro { margin: 0 0 1.4rem; }
+    .map-intro .cal-updated { color: rgba(var(--ink-rgb),0.55); font-size: 0.85rem; margin: 0.2rem 0 0; }
+    /* List + map split (CAL-10 phase C): the list flows with the page scroll, the
+       map sits sticky beside it. Below 900px they stack, map band on top. With JS
+       blocked the list is fully usable and the map box simply never initializes. */
+    .map-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+    @media (min-width: 900px) {
+      .map-split { grid-template-columns: minmax(340px, 5fr) 7fr; gap: 2.4rem; align-items: start; }
+      .map-split__map { position: sticky; top: 90px; }
+      /* In the narrow list column the map is the visual — drop the flyer tile so
+         the rows read as a clean scan list beside it. */
+      .map-split__list .cal-row__media { display: none; }
+    }
+    @media (max-width: 899px) { .map-split__map { order: -1; } }
+    /* Fixed px height (not vh): guarantees the container is sized before Leaflet
+       inits, so fitBounds sees real dimensions in every context. */
+    #sbc-map { width: 100%; height: 680px; border: 1px solid var(--line); background: var(--paper); }
+    @media (max-width: 899px) { #sbc-map { height: 440px; } }
+    /* Count-carrying pins (CAL-10): a venue pin shows its session count; a
+       cluster sums the sessions inside it. Token colors — they flip in dark. */
+    .sbc-pin { width: 100%; height: 100%; background: var(--ink); color: var(--paper);
+      border: 2px solid var(--paper); border-radius: 50%; display: flex;
+      align-items: center; justify-content: center;
+      font: 600 12px/1 var(--font-body); box-shadow: 0 1px 4px rgba(0,0,0,0.35); }
+    .sbc-pin--cluster { font-size: 13px; }
+    .sbc-pin--hot { background: var(--accent); color: #0A0B0D; border-color: #0A0B0D; }
+    /* Popup surfaces ride the tokens so they follow dark mode — the leaflet.css
+       default is hardcoded white, which went illegible once --ink flipped. */
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--paper); color: var(--ink); }
+    .sbc-pop__name { font: 600 0.98rem var(--font-body); margin: 0 0 0.3rem; }
+    .sbc-pop__name a { color: var(--accent-on-light); text-decoration: none; }
+    .sbc-pop__list { margin: 0; padding-left: 1.05rem; }
+    .sbc-pop__list li { font-size: 0.86rem; line-height: 1.5; }
+    .sbc-pop__list a { color: var(--ink); }
+    .sbc-pop__more { list-style: none; margin-left: -1.05rem; color: rgba(var(--ink-rgb),0.55); }
+    .leaflet-container { font: inherit; }
+    .map-empty { color: rgba(var(--ink-rgb),0.55); }
+    /* Dark mode (CAL-14 polish): the light OSM raster tiles are inverted +
+       hue-rotated into a dark basemap. Only .leaflet-tile is filtered — markers,
+       popups, and controls live in other panes and stay untouched. */
+    @media (prefers-color-scheme: dark) {
+      .leaflet-tile { filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9); }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+  <div class="container masthead-inner">
+    <a href="../" class="wordmark">Sound Bath Calendar</a>
+    <nav class="masthead-cities" aria-label="Calendar navigation">
+      <a href="../denver/">Denver</a>
+      <a href="../boulder/">Boulder</a>
+      <a href="../fort-collins/">Fort Collins</a>
+      <a href="../colorado-springs/">Colorado Springs</a>
+      <a href="../map/">Map</a>
+    </nav>
+    <!-- Slim digest capture: inline form on wide screens, an anchor link down
+         to the full form on small ones. Same Formspree seam as the main form. -->
+    <form class="masthead-digest" action="https://admin.soundbathcalendar.com/digest/subscribe" method="POST">
+      <input type="hidden" name="next" value="https://soundbathcalendar.com/thanks/">
+      <label class="visually-hidden" for="mh-email">Email for the Thursday digest</label>
+      <input id="mh-email" type="email" name="email" autocomplete="email"
+             placeholder="Email for the Thursday digest" required>
+      <button type="submit" class="btn btn-primary btn-slim">Get the digest</button>
+    </form>
+    <a class="masthead-digest-link" href="../#digest">The digest</a>
+  </div>
+</header>
+
+  <main>
+  <section class="section section--light map-wrap">
+  <div class="container">
+    <div class="map-intro">
+      <span class="eyebrow">Front Range calendar</span>
+      <h1 class="cal-h1">Sound baths on the map</h1>
+      <p class="cal-summary">Every upcoming session, pinned by room, beside the list. Tap a marker for what is on there and when.</p>
+      <p class="cal-updated">Last updated July 22, 2026.</p>
+    </div>
+    <div class="map-split">
+      <div class="map-split__list">
+<nav class="cal-jump" aria-label="Jump to a time">
+  <a href="#today" data-band="today">Tonight</a>
+  <a href="#this-weekend" data-band="this-weekend">This weekend</a>
+  <a href="#this-week" data-band="this-week">This week</a>
+  <a href="#weeks-ahead" data-band="weeks-ahead">The weeks ahead</a>
+  <a href="#faq">FAQ</a>
+</nav>
+<section class="cal-band" id="today">
+  <h2 class="cal-band__h2">Tonight</h2>
+  <div class="cal-rows">
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.69837" data-lng="-104.873009">
+  <div class="cal-row__when">
+    <span class="cal-row__time">5:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://images.squarespace-cdn.com/content/v1/661980168a4a1d082549c6b0/1764796815449-E1R3KVLG1RAUECW8U2EE/instruments+photo+caley+gardens.jpg" alt="Midweek Harmony Reset - Sound Bath — The Denver Village, Denver" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/midweek-harmony-reset-sound-bath-2026-07-22-the-denver-village/">Midweek Harmony Reset - Sound Bath</a></h3>
+      <p class="cal-row__meta">The Denver Village</p>
+      <p class="cal-row__cta"><a href="https://www.thedenvervillage.com/events-workshop/midweek-harmony-reset-sound-bath-effrw-hg9jg-xd2gg-bdrap-xecmp-hbzp6-4ltln-j9y36-jww6r-js8b5-8pswt-rtfnb-ft2ph" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.thedenvervillage.com/events-workshop" target="_blank" rel="noopener">The Denver Village</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="1" data-tags="" data-lat="38.84205" data-lng="-104.824457">
+  <div class="cal-row__when">
+    <span class="cal-row__time">6:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1185167628%2F41374558650%2F1%2Foriginal.20260521-202636?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.52&amp;fp-y=0.771&amp;s=570dee5a036894bc1649730048f89af6" alt="Community Sound Bath — Colorful Sound Vibrations at The Next Us, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/community-sound-bath-2026-07-22-the-next-us/">Community Sound Bath</a></h3>
+      <p class="cal-row__meta">Colorful Sound Vibrations · The Next Us · Free</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/community-sound-bath-tickets-1993478398553" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.eventbrite.com/o/121383640027" target="_blank" rel="noopener">Colorful Sound Vibrations</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="0" data-tags="" data-lat="38.828286" data-lng="-104.827954">
+  <div class="cal-row__when">
+    <span class="cal-row__time">6:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1187032162%2F362102452485%2F1%2Foriginal.20260616-145844?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=826d362a6dd40f4bf081d9243427625f" alt="Floating Sound Bath - Elise Nicole — Elise Nicole at Camino Massage Therapy, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/floating-sound-bath-elise-nicole-2026-07-22-camino-massage-therapy/">Floating Sound Bath - Elise Nicole</a></h3>
+      <p class="cal-row__meta">Elise Nicole · Camino Massage Therapy · $45</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/floating-sound-bath-elise-nicole-tickets-1991992401897" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://caminomassage.com" target="_blank" rel="noopener">Elise Nicole</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="boulder" data-free="1" data-tags="" data-lat="40.028756" data-lng="-105.264249">
+  <div class="cal-row__when">
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://unityofboulder.com/wp-content/uploads/2023/09/Med-with-Norma-Wide.jpg" alt="Wednesday Meditation — Unity of Boulder Spiritual Community at Unity of Boulder Spiritual Center, Boulder" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Boulder</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/wednesday-meditation-2026-07-22-unity-of-boulder-spiritual-center/">Wednesday Meditation</a></h3>
+      <p class="cal-row__meta">Unity of Boulder Spiritual Community · Unity of Boulder Spiritual Center · Free (donations appreciated)</p>
+      <p class="cal-row__cta"><a href="https://unityofboulder.com/events/wednesday-meditation/" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://unityofboulder.com/events/wednesday-meditation/" target="_blank" rel="noopener">Unity of Boulder Spiritual Community</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="fort-collins" data-free="0" data-tags="" data-lat="40.588205" data-lng="-105.076836">
+  <div class="cal-row__when">
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1187746188%2F3004593821062%2F1%2Foriginal.20260626-234312?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=5d4a6803104a87e879b3f60f869af76d" alt="Nourish: Women&#x27;s Circle &amp; Sound Bath — The Living Room Fort Collins at The Living Room, Fort Collins" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Fort Collins</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/nourish-womens-circle-sound-bath-2026-07-22-the-living-room/">Nourish: Women&#x27;s Circle &amp; Sound Bath</a></h3>
+      <p class="cal-row__meta">The Living Room Fort Collins · The Living Room</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/nourish-womens-circle-sound-bath-tickets-1992674546209" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://thelivingroomfoco.com" target="_blank" rel="noopener">The Living Room Fort Collins</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="gong-bath" data-lat="39.740218" data-lng="-104.933092">
+  <div class="cal-row__when">
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1184954631%2F885379362523%2F1%2Foriginal.20260519-155448?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.504&amp;fp-y=0.419&amp;s=19d0390ecf9df5444e1dbcc7222b5eed" alt="Gong Journey — Sound Murals at Harmonist Sanctuary, East Colfax" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · East Colfax</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/gong-journey-2026-07-22-harmonist-sanctuary/">Gong Journey</a></h3>
+      <p class="cal-row__meta">Sound Murals · Harmonist Sanctuary</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/gong-journey-tickets-1992588980279" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://soundmurals.com" target="_blank" rel="noopener">Sound Murals</a></p>
+    </div>
+  </div>
+</article>
+</div>
+</section>
+<section class="cal-band" id="this-weekend">
+  <h2 class="cal-band__h2">This weekend</h2>
+  <div class="cal-rows">
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.769392" data-lng="-105.032509">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">24</span>
+    <span class="cal-row__time">6:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media cal-row__media--empty" aria-hidden="true"></div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · Highlands</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/stretch-sound-2026-07-24-sacred-society/">Stretch &amp; Sound</a></h3>
+      <p class="cal-row__meta">Sacred Society</p>
+      <p class="cal-row__cta"><a href="https://momence.com/s/139248318" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.sacredsociety.com/offerings/sound-baths" target="_blank" rel="noopener">Sacred Society</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="fort-collins" data-free="0" data-tags="gong-bath" data-lat="40.306128" data-lng="-105.080238">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">24</span>
+    <span class="cal-row__time">6:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F927826293%2F1458112394913%2F1%2Foriginal.20250105-040912?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.507575757576&amp;fp-y=0.33853354894&amp;s=64ef09bd6e1cb743442c0e0b30d99c11" alt="Friday Recharge: A Restorative Sound Journey — Annmarie of ResoundingWell at Wildfire Arts Center, Fort Collins" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Fort Collins</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/friday-recharge-a-restorative-sound-journey-2026-07-24-wildfire-arts-center/">Friday Recharge: A Restorative Sound Journey</a></h3>
+      <p class="cal-row__meta">Annmarie of ResoundingWell · Wildfire Arts Center</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/friday-recharge-a-restorative-sound-journey-tickets-1992404310928" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://resoundingwell.com" target="_blank" rel="noopener">Annmarie of ResoundingWell</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="0" data-tags="" data-lat="38.832995" data-lng="-104.829159">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">24</span>
+    <span class="cal-row__time">6:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1185279528%2F365104895489%2F1%2Foriginal.20260523-155148?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=dd42c630821e82f5269729ec8b4bdd09" alt="Reiki &amp; Sound Bath feat. Megan Odom — Singing Bowls of the Rockies, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/reiki-sound-bath-feat-megan-odom-2026-07-24-singing-bowls-of-the-rockies/">Reiki &amp; Sound Bath feat. Megan Odom</a></h3>
+      <p class="cal-row__meta">Singing Bowls of the Rockies · $45</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/reiki-sound-bath-feat-megan-odom-tickets-1990238643358" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.singingbowlsoftherockies.com" target="_blank" rel="noopener">Singing Bowls of the Rockies</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.684695" data-lng="-104.987433">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">24</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media cal-row__media--empty" aria-hidden="true"></div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/mindfree-fridays-sound-healing-2026-07-24-karma-yoga-center/">MindFree Fridays Sound Healing</a></h3>
+      <p class="cal-row__meta">Karma Yoga Center</p>
+      <p class="cal-row__cta"><a href="https://www.karmayogacenter.com/events-and-workshops/" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.karmayogacenter.com/events-and-workshops/" target="_blank" rel="noopener">Karma Yoga Center</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.688525" data-lng="-104.980527">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">24</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1176232293%2F1717123237503%2F1%2Foriginal.20260130-041610?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.518&amp;fp-y=0.222&amp;s=e8a8bd97733bca403872b7643c66cebb" alt="Activating Your Inner Fire: Guided Meditation and Sound Healing Immersion — Soul Growth Network at 1545 S Pearl St, Platt Park" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · Platt Park</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/activating-your-inner-fire-guided-meditation-and-sound-healing-immersion-2026-07-24-1545-s-pearl-st/">Activating Your Inner Fire: Guided Meditation and Sound Healing Immersion</a></h3>
+      <p class="cal-row__meta">Soul Growth Network · 1545 S Pearl St</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/activating-your-inner-fire-guided-meditation-and-sound-healing-immersion-tickets-1993707540924" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://soulgrowthnetwork.com" target="_blank" rel="noopener">Soul Growth Network</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="breathwork-sound" data-lat="39.730024" data-lng="-104.997925">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">24</span>
+    <span class="cal-row__time">7:15 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1188688367%2F151207764676%2F1%2Foriginal.20260712-050617?crop=focalpoint&amp;fit=crop&amp;w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=0783a6b11e6f1da050489294fcfc3c29" alt="45-Minute Reset: Sound, Movement, Breath &amp; Laughter — Kochun-Ra at Inca Street Collective, La Alma - Lincoln Park" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · La Alma - Lincoln Park</span>
+        <a class="cal-row__modality" href="../breathwork-sound/">Breathwork + sound</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/45minute-reset-sound-movement-breath-laughter-2026-07-24-inca-street-collective/">45-Minute Reset: Sound, Movement, Breath &amp; Laughter</a></h3>
+      <p class="cal-row__meta">Kochun-Ra · Inca Street Collective</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/45-minute-reset-sound-movement-breath-laughter-tickets-1993978325849" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.eventbrite.com/o/16623167298" target="_blank" rel="noopener">Kochun-Ra</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="0" data-tags="">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sat</span>
+    <span class="cal-row__dnum">25</span>
+    <span class="cal-row__time">12:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1121785743%2F1415215040793%2F1%2Foriginal.20250911-233753?crop=focalpoint&amp;amp;fit=crop&amp;amp;w=940&amp;amp;auto=format%2Ccompress&amp;amp;q=75&amp;amp;sharp=10&amp;amp;fp-x=0.5&amp;amp;fp-y=0.5&amp;amp;s=f3b9bc9d2654a496ad03f3c8c3ab6c94" alt="Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections — Soul Light, LLC at La Foret Conference &amp; Retreat Center, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center/">Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections</a></h3>
+      <p class="cal-row__meta">Soul Light, LLC · La Foret Conference &amp; Retreat Center · $35-$50</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-tickets-1689648747889" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://msha.ke/soullightllc" target="_blank" rel="noopener">Soul Light, LLC</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="0" data-tags="" data-lat="38.832995" data-lng="-104.829159">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sat</span>
+    <span class="cal-row__dnum">25</span>
+    <span class="cal-row__time">2:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1187669216%2F365104895489%2F1%2Foriginal.20260625-203048?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=8e93f23beb19dcba4966137411d27fa8" alt="A Sound Bath to Unwind: Releasing Stress from Body &amp; Mind — Singing Bowls of the Rockies, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/a-sound-bath-to-unwind-releasing-stress-from-body-mind-2026-07-25-singing-bowls-of-the-rockies/">A Sound Bath to Unwind: Releasing Stress from Body &amp; Mind</a></h3>
+      <p class="cal-row__meta">Singing Bowls of the Rockies · $39</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/a-sound-bath-to-unwind-releasing-stress-from-body-mind-tickets-1992091186364" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.singingbowlsoftherockies.com" target="_blank" rel="noopener">Singing Bowls of the Rockies</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.740218" data-lng="-104.933092">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sat</span>
+    <span class="cal-row__dnum">25</span>
+    <span class="cal-row__time">5:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1187647119%2F1972218088703%2F1%2Foriginal.20260625-154009?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=829de2defe9d91910b2fb506425cb42a" alt="Creative Poetry Sound Bath — All Things Serene at Harmonist Sanctuary, East Colfax" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · East Colfax</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/creative-poetry-sound-bath-2026-07-25-harmonist-sanctuary/">Creative Poetry Sound Bath</a></h3>
+      <p class="cal-row__meta">All Things Serene · Harmonist Sanctuary</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/creative-poetry-sound-bath-tickets-1992576932243" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.harmonistsanctuary.org" target="_blank" rel="noopener">Harmonist Sanctuary</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="gong-bath" data-lat="39.703472" data-lng="-104.980219">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sat</span>
+    <span class="cal-row__dnum">25</span>
+    <span class="cal-row__time">6:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img1.wsimg.com/isteam/ip/52467a92-9014-436e-be8d-903fcdb5b87a/blob-cdbc9ec.png" alt="Crystal &amp; Gong Sound Concert in the Salt Cave — 5 Star Salt Caves Wellness Center, West Washington Park" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · West Washington Park</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center/">Crystal &amp; Gong Sound Concert in the Salt Cave</a></h3>
+      <p class="cal-row__meta">5 Star Salt Caves Wellness Center · $60</p>
+      <p class="cal-row__cta"><a href="https://5starsaltcaves.com/sound-bath-in-the-salt-cave/" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://5starsaltcaves.com" target="_blank" rel="noopener">5 Star Salt Caves Wellness Center</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.769392" data-lng="-105.032509">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sun</span>
+    <span class="cal-row__dnum">26</span>
+    <span class="cal-row__time">10:00 AM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media cal-row__media--empty" aria-hidden="true"></div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · Highlands</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/sound-bath-sacred-rest-ritual-2026-07-26-sacred-society/">Sound Bath: Sacred Rest Ritual</a></h3>
+      <p class="cal-row__meta">Sacred Society</p>
+      <p class="cal-row__cta"><a href="https://www.sacredsociety.com/offerings/sound-baths" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.sacredsociety.com" target="_blank" rel="noopener">Sacred Society</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="boulder" data-free="0" data-tags="" data-lat="40.157241" data-lng="-105.178404">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sun</span>
+    <span class="cal-row__dnum">26</span>
+    <span class="cal-row__time">1:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188201273%2F181484102815%2F1%2Foriginal.20260704-134936?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.503&amp;fp-y=0.46&amp;s=0ac649700b95c139aca49c6d016d5b2d" alt="Cosmic Yoga and Sound Bath for a Summer Shift — Camdazco Farm, Boulder" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Boulder</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/cosmic-yoga-and-sound-bath-for-a-summer-shift-2026-07-26-camdazco-farm/">Cosmic Yoga and Sound Bath for a Summer Shift</a></h3>
+      <p class="cal-row__meta">Camdazco Farm</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/cosmic-yoga-and-sound-bath-for-a-summer-shift-tickets-1993201502349" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.camdazcofarm.com/" target="_blank" rel="noopener">Camdazco Farm</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="0" data-tags="breathwork-sound" data-lat="38.898894" data-lng="-104.850044">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sun</span>
+    <span class="cal-row__dnum">26</span>
+    <span class="cal-row__time">2:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://secure.meetupstatic.com/photos/event/e/8/a/2/600_534299554.jpeg" alt="Colorado Salt Cave w/Sound Healing — Essential Wellness Society of Colorado at Colorado Salt Cave, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+        <a class="cal-row__modality" href="../breathwork-sound/">Breathwork + sound</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/colorado-salt-cave-wsound-healing-2026-07-26-colorado-salt-cave/">Colorado Salt Cave w/Sound Healing</a></h3>
+      <p class="cal-row__meta">Essential Wellness Society of Colorado · Colorado Salt Cave · $65</p>
+      <p class="cal-row__cta"><a href="https://www.meetup.com/essential-wellness-society-colorado/events/315579943/" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.essentialwellnesssociety.com/" target="_blank" rel="noopener">Essential Wellness Society of Colorado</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.69837" data-lng="-104.873009">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sun</span>
+    <span class="cal-row__dnum">26</span>
+    <span class="cal-row__time">6:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1172534889%2F572711759515%2F1%2Foriginal.20251208-164621?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=0a693f10700db3db98ac16fe85db6e3a" alt="Buck Moon Sound Bath — The Denver Village, Denver" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/buck-moon-sound-bath-2026-07-26-the-denver-village/">Buck Moon Sound Bath</a></h3>
+      <p class="cal-row__meta">The Denver Village</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/buck-moon-sound-bath-tickets-1977297110886" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.thedenvervillage.com/events-workshop" target="_blank" rel="noopener">The Denver Village</a></p>
+    </div>
+  </div>
+</article>
+</div>
+</section>
+<section class="cal-band" id="this-week">
+  <h2 class="cal-band__h2">This week</h2>
+  <div class="cal-rows">
+<article class="cal-row" data-city="fort-collins" data-free="0" data-tags="gong-bath">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Thu</span>
+    <span class="cal-row__dnum">23</span>
+    <span class="cal-row__time">6:15 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1185765802%2F732979952313%2F1%2Foriginal.20260530-155609?crop=focalpoint&amp;fit=crop&amp;w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=e3407899097eb98a34c983af0aaaffaa" alt="Thursday Mind Body Reset — Gong Journey — Rocky Mountain Restore &amp; Stretch at Rocky Mountain Restore &amp; Stretch LLC, Fort Collins" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Fort Collins</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/thursday-mind-body-reset-gong-journey-2026-07-23-rocky-mountain-restore-stretch-llc/">Thursday Mind Body Reset — Gong Journey</a></h3>
+      <p class="cal-row__meta">Rocky Mountain Restore &amp; Stretch · Rocky Mountain Restore &amp; Stretch LLC · From $44.52</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/thursday-mind-body-reset-gong-journey-tickets-1994098983740" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.rockymountainrestoreandstretch.com" target="_blank" rel="noopener">Rocky Mountain Restore &amp; Stretch</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="fort-collins" data-free="0" data-tags="gong-bath">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Thu</span>
+    <span class="cal-row__dnum">23</span>
+    <span class="cal-row__time">6:15 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://static.wixstatic.com/media/37af73_6840b593100c42cdb32e4f76258d6673~mv2.png/v1/fill/w_940,h_788,al_c/37af73_6840b593100c42cdb32e4f76258d6673~mv2.png" alt="Thursday&#x27;s Weekly Gong Journey — Rocky Mountain Restore &amp; Stretch, Fort Collins" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Fort Collins</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/thursdays-weekly-gong-journey-2026-07-23-rocky-mountain-restore-stretch/">Thursday&#x27;s Weekly Gong Journey</a></h3>
+      <p class="cal-row__meta">Rocky Mountain Restore &amp; Stretch · $40</p>
+      <p class="cal-row__cta"><a href="https://www.rockymountainrestoreandstretch.com/event-details-registration/thursdays-weekly-gong-journey-2026-07-23-18-15" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.rockymountainrestoreandstretch.com" target="_blank" rel="noopener">Rocky Mountain Restore &amp; Stretch</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="fort-collins" data-free="1" data-tags="">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Mon</span>
+    <span class="cal-row__dnum">27</span>
+    <span class="cal-row__time">8:00 AM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img1.wsimg.com/isteam/ip/3e9a6958-4ca3-44ee-8e8e-b80ffe67c099/61-IMG_9257.jpg" alt="Good Morning Outdoor Sound Journey — ResoundingWell at Old Canal Park, Fort Collins" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Fort Collins</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/good-morning-outdoor-sound-journey-2026-07-27-old-canal-park/">Good Morning Outdoor Sound Journey</a></h3>
+      <p class="cal-row__meta">ResoundingWell · Old Canal Park · Donation</p>
+      <p class="cal-row__cta"><a href="https://resoundingwell.com/events" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://resoundingwell.com" target="_blank" rel="noopener">ResoundingWell</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="breathwork-sound" data-lat="39.688525" data-lng="-104.980527">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Mon</span>
+    <span class="cal-row__dnum">27</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1170352253%2F1717123237503%2F1%2Foriginal.20251106-205809?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.508&amp;fp-y=0.463&amp;s=5b1948a987dc266472f80d80234128c3" alt="Breathwork + Sound Healing Immersion — Soul Growth Network at 1545 S Pearl St, Platt Park" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · Platt Park</span>
+        <a class="cal-row__modality" href="../breathwork-sound/">Breathwork + sound</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/breathwork-sound-healing-immersion-2026-07-27-1545-s-pearl-st/">Breathwork + Sound Healing Immersion</a></h3>
+      <p class="cal-row__meta">Soul Growth Network · 1545 S Pearl St</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/breathwork-sound-healing-immersion-tickets-1993707871914" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://soulgrowthnetwork.com" target="_blank" rel="noopener">Soul Growth Network</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="0" data-tags="" data-lat="38.894765" data-lng="-104.969547">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Mon</span>
+    <span class="cal-row__dnum">27</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://secure.meetupstatic.com/photos/event/e/a/3/4/600_527819956.jpeg" alt="Dreamtime Journeys: A Shamanic Sound Journey Experience — Universal Metaphysics Meetup Group at Soulshines Yoga Studio &amp; Healing Arts, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/dreamtime-journeys-a-shamanic-sound-journey-experience-2026-07-27-soulshines-yoga-studio-healing-arts/">Dreamtime Journeys: A Shamanic Sound Journey Experience</a></h3>
+      <p class="cal-row__meta">Universal Metaphysics Meetup Group · Soulshines Yoga Studio &amp; Healing Arts · $40</p>
+      <p class="cal-row__cta"><a href="https://www.meetup.com/universalmetaphysics/events/315684291/" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://universalmetaphysics.org/" target="_blank" rel="noopener">Universal Metaphysics Meetup Group</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="boulder" data-free="0" data-tags="gong-bath">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Mon</span>
+    <span class="cal-row__dnum">27</span>
+    <span class="cal-row__time">7:15 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://static1.squarespace.com/static/611f0a9cbabebd01212ff5b3/t/614915bced8271425779a1a7/1632179644657/Untitled+design.png?format=1500w" alt="Gong Bath with Beth — Una Vida Meditation &amp; Movement, Boulder" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Boulder</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/gong-bath-with-beth-2026-07-27-una-vida-meditation-movement/">Gong Bath with Beth</a></h3>
+      <p class="cal-row__meta">Una Vida Meditation &amp; Movement</p>
+      <p class="cal-row__cta"><a href="https://www.unavidaniwot.com/" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.unavidaniwot.com/" target="_blank" rel="noopener">Una Vida Meditation &amp; Movement</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="gong-bath" data-lat="39.732465" data-lng="-104.96095">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Tue</span>
+    <span class="cal-row__dnum">28</span>
+    <span class="cal-row__time">5:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media cal-row__media--empty" aria-hidden="true"></div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · Cheesman Park</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/singing-bowls-at-the-gardens-sunrise-to-starlight-2026-07-28-denver-botanic-gardens-mitchell-hall/">Singing Bowls at the Gardens: Sunrise to Starlight</a></h3>
+      <p class="cal-row__meta">Denver Botanic Gardens · Denver Botanic Gardens, Mitchell Hall · $25</p>
+      <p class="cal-row__cta"><a href="https://tickets.botanicgardens.org/events/e492c0f2-f809-468c-0220-f900957a8dec" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.botanicgardens.org/programs/singing-bowls-gardens" target="_blank" rel="noopener">Denver Botanic Gardens</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.750985" data-lng="-105.029641">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Tue</span>
+    <span class="cal-row__dnum">28</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1185331136%2F214699472161%2F1%2Foriginal.20260524-215804?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.492&amp;fp-y=0.547&amp;s=82f6c9a7e9ba5791d50bd21d0184ea8c" alt="Sound Immersion with the Harmonic Quintessence (Hg) — Vialet B Rayne at Merritt Wellness, Denver" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/sound-immersion-with-the-harmonic-quintessence-hg-2026-07-28-merritt-wellness/">Sound Immersion with the Harmonic Quintessence (Hg)</a></h3>
+      <p class="cal-row__meta">Vialet B Rayne · Merritt Wellness · $70</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/sound-immersion-with-the-harmonic-quintessence-hg-tickets-1990289025051" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.vialetrayne.com" target="_blank" rel="noopener">Vialet B Rayne</a></p>
+    </div>
+  </div>
+</article>
+</div>
+</section>
+<section class="cal-band" id="weeks-ahead">
+  <h2 class="cal-band__h2">The weeks ahead</h2>
+  <div class="cal-rows">
+<article class="cal-row" data-city="fort-collins" data-free="0" data-tags="gong-bath">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Wed</span>
+    <span class="cal-row__dnum">29</span>
+    <span class="cal-row__time">6:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://static.wixstatic.com/media/37af73_c07b9d90685a4dad8ff8447bdc0a6f8c~mv2.png/v1/fill/w_940,h_788,al_c/37af73_c07b9d90685a4dad8ff8447bdc0a6f8c~mv2.png" alt="Outdoor Full Moon Gong Journey — Rocky Mountain Restore &amp; Stretch, Fort Collins" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Fort Collins</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/outdoor-full-moon-gong-journey-2026-07-29-rocky-mountain-restore-stretch/">Outdoor Full Moon Gong Journey</a></h3>
+      <p class="cal-row__meta">Rocky Mountain Restore &amp; Stretch · $42–47</p>
+      <p class="cal-row__cta"><a href="https://www.rockymountainrestoreandstretch.com/event-details-registration/outdoor-full-moon-gong-journey" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.rockymountainrestoreandstretch.com" target="_blank" rel="noopener">Rocky Mountain Restore &amp; Stretch</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="boulder" data-free="0" data-tags="" data-lat="39.987074" data-lng="-105.093198">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Wed</span>
+    <span class="cal-row__dnum">29</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://secure.meetupstatic.com/photos/event/8/5/2/3/600_534934083.jpeg" alt="Feng Shui Sound Bath: Children, Creativity &amp; Joy — The Oracle Collective at Firiel Skin Care, Boulder" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Boulder</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/feng-shui-sound-bath-children-creativity-joy-2026-07-29-firiel-skin-care/">Feng Shui Sound Bath: Children, Creativity &amp; Joy</a></h3>
+      <p class="cal-row__meta">The Oracle Collective · Firiel Skin Care</p>
+      <p class="cal-row__cta"><a href="https://www.theoracle-collective.com/event-details-registration/7-29-feng-shui-sound-bath-children-creativity-joy" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.theoracle-collective.com" target="_blank" rel="noopener">The Oracle Collective</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="0" data-tags="" data-lat="39.023824" data-lng="-104.83869">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Wed</span>
+    <span class="cal-row__dnum">29</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://d3qhuibmnnxhh6.cloudfront.net/uploads/event/image/674387/large.jpg" alt="Sunset Reset: Poolside Full Moon Sound Bath — Singing Bowls of the Rockies at Ascend Spa &amp; Wellness at Hotel Polaris, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/sunset-reset-poolside-full-moon-sound-bath-2026-07-29-ascend-spa-wellness-at-hotel-polaris/">Sunset Reset: Poolside Full Moon Sound Bath</a></h3>
+      <p class="cal-row__meta">Singing Bowls of the Rockies · Ascend Spa &amp; Wellness at Hotel Polaris</p>
+      <p class="cal-row__cta"><a href="https://go.evvnt.com/3692335-0" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.singingbowlsoftherockies.com" target="_blank" rel="noopener">Singing Bowls of the Rockies</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.740218" data-lng="-104.933092">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Wed</span>
+    <span class="cal-row__dnum">29</span>
+    <span class="cal-row__time">7:15 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1177332912%2F2263468207483%2F1%2Foriginal.20260211-234224?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.542&amp;fp-y=0.393&amp;s=06fa6132348379f73643ca16332f9ca0" alt="Candlelight Sound Bath — Liminal Lemonade at Harmonist Sanctuary, East Colfax" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · East Colfax</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/candlelight-sound-bath-2026-07-29-harmonist-sanctuary/">Candlelight Sound Bath</a></h3>
+      <p class="cal-row__meta">Liminal Lemonade · Harmonist Sanctuary</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/candlelight-sound-bath-tickets-1982925649998" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.liminallemonade.com" target="_blank" rel="noopener">Liminal Lemonade</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="1" data-tags="" data-lat="39.758957" data-lng="-104.978451">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Thu</span>
+    <span class="cal-row__dnum">30</span>
+    <span class="cal-row__time">6:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1046637953%2F1103626744413%2F1%2Foriginal.20250605-144301?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=3fa8eb2b05dcf90709635dabb1afc1c0" alt="Full Moon Sound Bath — Revive wellness at 929 29th St, Five Points" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · Five Points</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/full-moon-sound-bath-2026-07-30-929-29th-st/">Full Moon Sound Bath</a></h3>
+      <p class="cal-row__meta">Revive wellness · 929 29th St · Donation</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/full-moon-sound-bath-tickets-1993611581908" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.revivewellnesscolorado.com/" target="_blank" rel="noopener">Revive wellness</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="fort-collins" data-free="0" data-tags="" data-lat="40.588493" data-lng="-105.132561">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Thu</span>
+    <span class="cal-row__dnum">30</span>
+    <span class="cal-row__time">6:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188306917%2F182177525029%2F1%2Foriginal.20260706-182108?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.502&amp;fp-y=0.683&amp;s=cc6c5c33446c298b31d0c3ef575dadd0" alt="Relaxing Soundbath at the Seedlings Dome — Zach Miller at The Seedlings Dome at Hartman Street, Fort Collins" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Fort Collins</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/relaxing-soundbath-at-the-seedlings-dome-2026-07-30-the-seedlings-dome-at-hartman-street/">Relaxing Soundbath at the Seedlings Dome</a></h3>
+      <p class="cal-row__meta">Zach Miller · The Seedlings Dome at Hartman Street</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/relaxing-soundbath-at-the-seedlings-dome-tickets-1993353836986" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.soundwavesacrament.com/" target="_blank" rel="noopener">Zach Miller</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="boulder" data-free="0" data-tags="gong-bath" data-lat="40.048192" data-lng="-105.32622">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Thu</span>
+    <span class="cal-row__dnum">30</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1184030067%2F232943210601%2F1%2Foriginal.20260507-154404?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.498&amp;fp-y=0.421&amp;s=fca436183d536357b87cb58433aea8ec" alt="Full Moon Meditation &amp; Six Gong Relaxation — Pavanjeet at The StarHouse, Boulder" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Boulder</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/full-moon-meditation-six-gong-relaxation-2026-07-30-the-starhouse/">Full Moon Meditation &amp; Six Gong Relaxation</a></h3>
+      <p class="cal-row__meta">Pavanjeet · The StarHouse</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/full-moon-meditation-six-gong-relaxation-tickets-1989019606185" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.pavanjeet.com" target="_blank" rel="noopener">Pavanjeet</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="1" data-tags="" data-lat="38.84205" data-lng="-104.824457">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">31</span>
+    <span class="cal-row__time">6:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188806489%2F724080710653%2F1%2Foriginal.20260714-034211?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.454&amp;fp-y=0.169&amp;s=891f3db767f78c53c359ca72e831b3fd" alt="Community Candle lit sound bath — Think Positive Club at The Next Us, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/community-candle-lit-sound-bath-2026-07-31-the-next-us/">Community Candle lit sound bath</a></h3>
+      <p class="cal-row__meta">Think Positive Club · The Next Us · Donation</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/community-candle-lit-sound-bath-tickets-1993889907387" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.thinkpositiveclub.com/" target="_blank" rel="noopener">Think Positive Club</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.688525" data-lng="-104.980527">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">31</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F919401093%2F1717123237503%2F1%2Foriginal.20241218-032412?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.370099672843&amp;s=8769b3a7b5fe1dba2175ba5a34e9bc68" alt="Full Moon Sound Medicine Journey — Soul Growth Network at 1545 S Pearl St, Platt Park" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · Platt Park</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st/">Full Moon Sound Medicine Journey</a></h3>
+      <p class="cal-row__meta">Soul Growth Network · 1545 S Pearl St</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/full-moon-sound-medicine-journey-tickets-1993708019355" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://soulgrowthnetwork.com" target="_blank" rel="noopener">Soul Growth Network</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="0" data-tags="" data-lat="38.832995" data-lng="-104.829159">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">31</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1187669535%2F365104895489%2F1%2Foriginal.20260625-203520?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.89&amp;fp-y=0.468&amp;s=cc955702314e20f7d10d09684f38ad7c" alt="Vagus Nerve Activation Sound Bath - Reconnect with Inner Peace — Singing Bowls of the Rockies, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/vagus-nerve-activation-sound-bath-reconnect-with-inner-peace-2026-07-31-singing-bowls-of-the-rockies/">Vagus Nerve Activation Sound Bath - Reconnect with Inner Peace</a></h3>
+      <p class="cal-row__meta">Singing Bowls of the Rockies · $39</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/vagus-nerve-activation-sound-bath-reconnect-with-inner-peace-tickets-1992093067992" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.singingbowlsoftherockies.com" target="_blank" rel="noopener">Singing Bowls of the Rockies</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="1" data-tags="" data-lat="39.695178" data-lng="-104.964609">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sat</span>
+    <span class="cal-row__dnum">1</span>
+    <span class="cal-row__time">3:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1189179907%2F2997668619628%2F1%2Foriginal.20260719-225321?w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;s=e800e6555deba7e97451f24abbfe5e9a" alt="Psychic Sound Bath Wash Park — Dr. Adrian Voss at Washington Park, Washington Park" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · Washington Park</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/psychic-sound-bath-wash-park-2026-08-01-washington-park/">Psychic Sound Bath Wash Park</a></h3>
+      <p class="cal-row__meta">Dr. Adrian Voss · Washington Park · Free</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/psychic-sound-bath-wash-park-tickets-1994519064212" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://intuitivesounds.org/" target="_blank" rel="noopener">Dr. Adrian Voss</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="fort-collins" data-free="0" data-tags="" data-lat="40.40764" data-lng="-105.135837">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sat</span>
+    <span class="cal-row__dnum">1</span>
+    <span class="cal-row__time">3:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188648580%2F140729295266%2F1%2Foriginal.20260711-003808?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=45d4da8e5ab1d3b7f1641de37691f919" alt="Sacred Roots Gathering Sound Bath — Norabell Dechant at Verdant Nature Creations, Fort Collins" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Fort Collins</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/sacred-roots-gathering-sound-bath-2026-08-01-verdant-nature-creations/">Sacred Roots Gathering Sound Bath</a></h3>
+      <p class="cal-row__meta">Norabell Dechant · Verdant Nature Creations</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/sacred-roots-gathering-sound-bath-tickets-1992732656017" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.pursuitofvitality.com/" target="_blank" rel="noopener">Norabell Dechant</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="boulder" data-free="1" data-tags="gong-bath breathwork-sound" data-lat="40.027945" data-lng="-105.286501">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sun</span>
+    <span class="cal-row__dnum">2</span>
+    <span class="cal-row__time">9:00 AM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="http://static1.squarespace.com/static/54e612e0e4b0fbb3ebf7262b/t/683cde636708fc15e1a08843/1748819555879/parkclassedit.jpg?format=1500w" alt="Kundalini in the Park — Pavanjeet at North Boulder Park, Boulder" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Boulder</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/kundalini-in-the-park-2026-08-02-north-boulder-park/">Kundalini in the Park</a></h3>
+      <p class="cal-row__meta">Pavanjeet · North Boulder Park · Donation</p>
+      <p class="cal-row__tags"><a class="cal-tag cal-tag--link" href="../breathwork-sound/">Breathwork + sound</a></p>
+      <p class="cal-row__cta"><a href="https://www.pavanjeet.com/inthepark" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.pavanjeet.com" target="_blank" rel="noopener">Pavanjeet</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="fort-collins" data-free="0" data-tags="gong-bath">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sun</span>
+    <span class="cal-row__dnum">2</span>
+    <span class="cal-row__time">10:00 AM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1185766369%2F732979952313%2F1%2Foriginal.20260530-160846?crop=focalpoint&amp;fit=crop&amp;w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=9d57118a23e7ec91b571f81105c3d18e" alt="Sundays of Sound - Mind Body Reset Gong Journey — Rocky Mountain Restore &amp; Stretch at Rocky Mountain Restore &amp; Stretch LLC, Fort Collins" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Fort Collins</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/sundays-of-sound-mind-body-reset-gong-journey-2026-08-02-rocky-mountain-restore-stretch-llc/">Sundays of Sound - Mind Body Reset Gong Journey</a></h3>
+      <p class="cal-row__meta">Rocky Mountain Restore &amp; Stretch · Rocky Mountain Restore &amp; Stretch LLC · From $44.52</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/sundays-of-sound-mind-body-reset-gong-journey-tickets-1994581267263" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.rockymountainrestoreandstretch.com" target="_blank" rel="noopener">Rocky Mountain Restore &amp; Stretch</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="fort-collins" data-free="0" data-tags="gong-bath">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sun</span>
+    <span class="cal-row__dnum">2</span>
+    <span class="cal-row__time">10:00 AM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://static.wixstatic.com/media/37af73_2ab7f42311fc441aabf7cddb8c819f90~mv2.png/v1/fill/w_940,h_788,al_c/37af73_2ab7f42311fc441aabf7cddb8c819f90~mv2.png" alt="Sunday Morning of Sound Gong Journey - Horsetooth Reservoir — Rocky Mountain Restore &amp; Stretch, Fort Collins" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Fort Collins</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/sunday-morning-of-sound-gong-journey-horsetooth-reservoir-2026-08-02-rocky-mountain-restore-stretch/">Sunday Morning of Sound Gong Journey - Horsetooth Reservoir</a></h3>
+      <p class="cal-row__meta">Rocky Mountain Restore &amp; Stretch · $41–46</p>
+      <p class="cal-row__cta"><a href="https://www.rockymountainrestoreandstretch.com/event-details-registration/sunday-morning-of-sound-gong-journey-horsetooth-reservoir-1" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.rockymountainrestoreandstretch.com" target="_blank" rel="noopener">Rocky Mountain Restore &amp; Stretch</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="boulder" data-free="1" data-tags="" data-lat="40.064895" data-lng="-105.283547">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sun</span>
+    <span class="cal-row__dnum">2</span>
+    <span class="cal-row__time">1:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1189098051%2F162273044203%2F1%2Foriginal.20260717-205704?crop=focalpoint&amp;amp;fit=crop&amp;amp;w=940&amp;amp;auto=format%2Ccompress&amp;amp;q=75&amp;amp;sharp=10&amp;amp;fp-x=0.5&amp;amp;fp-y=0.5&amp;amp;s=e0bd785debea4721b96e52e08265ef81" alt="AcuDetox &amp; Sound Bath Journey Experience — Terri Slezak at North Of Ordinary Collective, Boulder" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Boulder</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/acudetox-sound-bath-journey-experience-2026-08-02-north-of-ordinary-collective/">AcuDetox &amp; Sound Bath Journey Experience</a></h3>
+      <p class="cal-row__meta">Terri Slezak · North Of Ordinary Collective · $27–$44 sliding scale</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/acudetox-sound-bath-journey-experience-tickets-1994511598883" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.instagram.com/territheparadox/" target="_blank" rel="noopener">Terri Slezak</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.688525" data-lng="-104.980527">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sun</span>
+    <span class="cal-row__dnum">2</span>
+    <span class="cal-row__time">4:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F758480089%2F92682142139%2F1%2Foriginal.20240503-015112?w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;rect=0%2C504%2C4032%2C2016&amp;s=6a8355eea8f737d58cb4d4f4e3132437" alt="Energy Healing + Sound Bath Immersion — Kathy Sietos at Green Light Reiki, Platt Park" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · Platt Park</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/energy-healing-sound-bath-immersion-2026-08-02-green-light-reiki/">Energy Healing + Sound Bath Immersion</a></h3>
+      <p class="cal-row__meta">Kathy Sietos · Green Light Reiki</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/energy-healing-sound-bath-immersion-tickets-1979113678288" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.greenlightreiki.com/" target="_blank" rel="noopener">Kathy Sietos</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="0" data-tags="" data-lat="38.832995" data-lng="-104.829159">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sun</span>
+    <span class="cal-row__dnum">2</span>
+    <span class="cal-row__time">4:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188993129%2F365104895489%2F1%2Foriginal.20260716-115357?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.486&amp;fp-y=0.059&amp;s=4d1fa44e4601522463175b2d94525b8d" alt="Self-Care Sunday Sound Bath: A Path to Wellness and Peace — Singing Bowls of the Rockies, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/selfcare-sunday-sound-bath-a-path-to-wellness-and-peace-2026-08-02-singing-bowls-of-the-rockies/">Self-Care Sunday Sound Bath: A Path to Wellness and Peace</a></h3>
+      <p class="cal-row__meta">Singing Bowls of the Rockies · $39</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/self-care-sunday-sound-bath-a-path-to-wellness-and-peace-tickets-1994143363481" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.singingbowlsoftherockies.com" target="_blank" rel="noopener">Singing Bowls of the Rockies</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="fort-collins" data-free="0" data-tags="" data-lat="40.552087" data-lng="-105.082085">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sun</span>
+    <span class="cal-row__dnum">2</span>
+    <span class="cal-row__time">5:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1066496033%2F1458112394913%2F1%2Foriginal.20250704-035207?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.508269853647&amp;fp-y=0.727136277967&amp;s=1d787dbe45532f52b05687a868981934" alt="Harvesting Intentions: A Sound Journey into Gratitude — Annmarie of ResoundingWell at Live Beyond Limit, Fort Collins" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Fort Collins</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/harvesting-intentions-a-sound-journey-into-gratitude-2026-08-02-live-beyond-limit/">Harvesting Intentions: A Sound Journey into Gratitude</a></h3>
+      <p class="cal-row__meta">Annmarie of ResoundingWell · Live Beyond Limit</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/harvesting-intentions-a-sound-journey-into-gratitude-tickets-1993952865697" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://resoundingwell.com" target="_blank" rel="noopener">Annmarie of ResoundingWell</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="1" data-tags="" data-lat="38.903358" data-lng="-104.775385">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Mon</span>
+    <span class="cal-row__dnum">3</span>
+    <span class="cal-row__time">6:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://secure.meetupstatic.com/photos/event/7/5/1/5/600_534989973.jpeg" alt="Communal Quartz Sound Bath — Colorado Psychedelic Church, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/communal-quartz-sound-bath-2026-08-03-colorado-psychedelic-church/">Communal Quartz Sound Bath</a></h3>
+      <p class="cal-row__meta">Colorado Psychedelic Church · Donation</p>
+      <p class="cal-row__cta"><a href="https://www.meetup.com/coloradopsychedelicchurch/events/315679656/" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.coloradopsychedelicchurch.com" target="_blank" rel="noopener">Colorado Psychedelic Church</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="0" data-tags="breathwork-sound" data-lat="38.832995" data-lng="-104.829159">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Tue</span>
+    <span class="cal-row__dnum">4</span>
+    <span class="cal-row__time">6:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188993500%2F365104895489%2F1%2Foriginal.20260716-120121?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=626b91e5a015d7f2da8aad5bdaca9b04" alt="Somatic BreathWork &amp; Sound Bath — Singing Bowls of the Rockies, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+        <a class="cal-row__modality" href="../breathwork-sound/">Breathwork + sound</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/somatic-breathwork-sound-bath-2026-08-04-singing-bowls-of-the-rockies/">Somatic BreathWork &amp; Sound Bath</a></h3>
+      <p class="cal-row__meta">Singing Bowls of the Rockies · $45</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/somatic-breathwork-sound-bath-tickets-1994143672405" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.singingbowlsoftherockies.com" target="_blank" rel="noopener">Singing Bowls of the Rockies</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.763168" data-lng="-105.025758">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Tue</span>
+    <span class="cal-row__dnum">4</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1186895672%2F68448586439%2F1%2Foriginal.20260615-005704?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=436920a6237389e510a11fffe2eb1094" alt="Deep Restorative Sound Bath &amp; Guided Meditation — IzaBelle Sweet at Denver Public Library: Woodbury Branch Library, Denver" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/deep-restorative-sound-bath-guided-meditation-2026-08-04-denver-public-library-woodbury-branch-library/">Deep Restorative Sound Bath &amp; Guided Meditation</a></h3>
+      <p class="cal-row__meta">IzaBelle Sweet · Denver Public Library: Woodbury Branch Library · $15–40</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/deep-restorative-sound-bath-guided-meditation-tickets-1993053455537" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.eventbrite.com/o/13380693760" target="_blank" rel="noopener">IzaBelle Sweet</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.780552" data-lng="-105.045088">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Wed</span>
+    <span class="cal-row__dnum">5</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1186895672%2F68448586439%2F1%2Foriginal.20260615-005704?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=436920a6237389e510a11fffe2eb1094" alt="Denver Sound Bath Collective-Smiley — Denver Sound Bath Collective at Denver Public Library: Smiley Branch Library, Berkeley" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · Berkeley</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/denver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smiley-branch-library/">Denver Sound Bath Collective-Smiley</a></h3>
+      <p class="cal-row__meta">Denver Sound Bath Collective · Denver Public Library: Smiley Branch Library · $15–40</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/denver-sound-bath-collective-smiley-tickets-1993054503672" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.eventbrite.com/o/13380693760" target="_blank" rel="noopener">Denver Sound Bath Collective</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="boulder" data-free="0" data-tags="">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Thu</span>
+    <span class="cal-row__dnum">6</span>
+    <span class="cal-row__time">6:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188883657%2F25832096703%2F1%2Foriginal.20260715-001334?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=7b57bd09041318b208d9653567a2382b" alt="Sound Bath Ceremony — Una Vida Meditation &amp; Movement (Laura Riehman) at Una Vida Meditation &amp; Movement, Boulder" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Boulder</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/sound-bath-ceremony-2026-08-06-una-vida-meditation-movement/">Sound Bath Ceremony</a></h3>
+      <p class="cal-row__meta">Una Vida Meditation &amp; Movement (Laura Riehman) · Una Vida Meditation &amp; Movement · $25–40</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/sound-bath-ceremony-tickets-1993974556575" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.unavidaniwot.com/" target="_blank" rel="noopener">Una Vida Meditation &amp; Movement (Laura Riehman)</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.594303" data-lng="-104.901254">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">7</span>
+    <span class="cal-row__time">4:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188160149%2F214699472161%2F1%2Foriginal.20260703-151835?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.748&amp;fp-y=0.527&amp;s=c5a5dd34f618d51b8931bc134c8cec27" alt="Sacred Sound Bath ❤ Dawn Stratton &amp; Vialet Rayne — Discover Your Spiritual Gifts, Denver" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/sacred-sound-bath-dawn-stratton-vialet-rayne-2026-08-07-discover-your-spiritual-gifts/">Sacred Sound Bath ❤ Dawn Stratton &amp; Vialet Rayne</a></h3>
+      <p class="cal-row__meta">Discover Your Spiritual Gifts · $40</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/sacred-sound-bath-dawn-stratton-vialet-rayne-tickets-1993143495850" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://discoveryourspiritualgifts.com" target="_blank" rel="noopener">Discover Your Spiritual Gifts</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.69837" data-lng="-104.873009">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">7</span>
+    <span class="cal-row__time">6:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://images.squarespace-cdn.com/content/v1/661980168a4a1d082549c6b0/1764796815449-E1R3KVLG1RAUECW8U2EE/instruments+photo+caley+gardens.jpg" alt="Co-Regulation Sound Bath — The Denver Village, Denver" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/coregulation-sound-bath-2026-08-07-the-denver-village/">Co-Regulation Sound Bath</a></h3>
+      <p class="cal-row__meta">The Denver Village</p>
+      <p class="cal-row__cta"><a href="https://www.thedenvervillage.com/events-workshop/midweek-harmony-reset-sound-bath-effrw-hg9jg-xd2gg-bdrap-xecmp-hbzp6-4ltln-j9y36-jww6r-js8b5-8pswt-rtfnb-ft2ph-t36z9" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.thedenvervillage.com/events-workshop" target="_blank" rel="noopener">The Denver Village</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.740218" data-lng="-104.933092">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">7</span>
+    <span class="cal-row__time">6:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1177346676%2F2263468207483%2F1%2Foriginal.20260212-032933?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.508&amp;fp-y=0.498&amp;s=93b94479dee8306e495b7a77593363fe" alt="First Friday: Flow State Sound Bath — Liminal Lemonade at Harmonist Sanctuary, East Colfax" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver · East Colfax</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/first-friday-flow-state-sound-bath-2026-08-07-harmonist-sanctuary/">First Friday: Flow State Sound Bath</a></h3>
+      <p class="cal-row__meta">Liminal Lemonade · Harmonist Sanctuary</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/first-friday-flow-state-sound-bath-tickets-1982939514467" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.liminallemonade.com" target="_blank" rel="noopener">Liminal Lemonade</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.594303" data-lng="-104.901254">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">7</span>
+    <span class="cal-row__time">6:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188160149%2F214699472161%2F1%2Foriginal.20260703-151835?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.748&amp;fp-y=0.527&amp;s=c5a5dd34f618d51b8931bc134c8cec27" alt="Sacred Healing Sound Bath ❤ Vialet B Rayne &amp; Dawn Stratton — Discover Your Spiritual Gifts, Denver" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-2026-08-07-discover-your-spiritual-gifts/">Sacred Healing Sound Bath ❤ Vialet B Rayne &amp; Dawn Stratton</a></h3>
+      <p class="cal-row__meta">Discover Your Spiritual Gifts · $40</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-tickets-1636336469429" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://discoveryourspiritualgifts.com" target="_blank" rel="noopener">Discover Your Spiritual Gifts</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="0" data-tags="" data-lat="38.832995" data-lng="-104.829159">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Fri</span>
+    <span class="cal-row__dnum">7</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188993894%2F365104895489%2F1%2Foriginal.20260716-120730?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=9b6149b3b1dbb219c0ed31c55b0250aa" alt="Chakra Cleansing Sound Bath — Singing Bowls of the Rockies, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/chakra-cleansing-sound-bath-2026-08-07-singing-bowls-of-the-rockies/">Chakra Cleansing Sound Bath</a></h3>
+      <p class="cal-row__meta">Singing Bowls of the Rockies · $39</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/chakra-cleansing-sound-bath-tickets-1994144139803" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.singingbowlsoftherockies.com" target="_blank" rel="noopener">Singing Bowls of the Rockies</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="fort-collins" data-free="0" data-tags="" data-lat="40.521063" data-lng="-104.976334">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sat</span>
+    <span class="cal-row__dnum">8</span>
+    <span class="cal-row__time">10:30 AM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1185666714%2F2201706823063%2F1%2Foriginal.20260529-010742?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.065&amp;fp-y=0.41&amp;s=ff1aa097ab7a7be63f58f001fb06552a" alt="Sound Bath: A Sacred Start to the School Year — Lauren Salz at Timnath Community Room, Fort Collins" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Fort Collins</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/sound-bath-a-sacred-start-to-the-school-year-2026-08-08-timnath-community-room/">Sound Bath: A Sacred Start to the School Year</a></h3>
+      <p class="cal-row__meta">Lauren Salz · Timnath Community Room</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/sound-bath-a-sacred-start-to-the-school-year-tickets-1990594499734" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.eventbrite.com/o/90940014013" target="_blank" rel="noopener">Lauren Salz</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="fort-collins" data-free="0" data-tags="" data-lat="40.392818" data-lng="-105.041318">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sat</span>
+    <span class="cal-row__dnum">8</span>
+    <span class="cal-row__time">1:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1177955237%2F178255149259%2F1%2Foriginal.20260219-175815?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=f4e26275c6eb6c46fc96f8155192e20d" alt="Second Saturday Sound Bath, Meditation &amp; Community Circle — Citrine Unlimited LLC at Brookstone Recreation Center, Fort Collins" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Fort Collins</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/second-saturday-sound-bath-meditation-community-circle-2026-08-08-brookstone-recreation-center/">Second Saturday Sound Bath, Meditation &amp; Community Circle</a></h3>
+      <p class="cal-row__meta">Citrine Unlimited LLC · Brookstone Recreation Center</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/second-saturday-sound-bath-meditation-community-circle-tickets-1983554117762" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.citrineunlimited.com/" target="_blank" rel="noopener">Citrine Unlimited LLC</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="colorado-springs" data-free="0" data-tags="" data-lat="38.832995" data-lng="-104.829159">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sat</span>
+    <span class="cal-row__dnum">8</span>
+    <span class="cal-row__time">4:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188994221%2F365104895489%2F1%2Foriginal.20260716-121457?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.494&amp;fp-y=0.783&amp;s=8f8914c0086c80d8dfac12b2de0f5546" alt="Lion&#x27;s Gate Portal Sound Bath — Singing Bowls of the Rockies, Colorado Springs" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Colorado Springs</span>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/lions-gate-portal-sound-bath-2026-08-08-singing-bowls-of-the-rockies/">Lion&#x27;s Gate Portal Sound Bath</a></h3>
+      <p class="cal-row__meta">Singing Bowls of the Rockies · $39</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/lions-gate-portal-sound-bath-tickets-1994144613219" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.singingbowlsoftherockies.com" target="_blank" rel="noopener">Singing Bowls of the Rockies</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="denver" data-free="0" data-tags="gong-bath" data-lat="39.618875" data-lng="-104.896049">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Sun</span>
+    <span class="cal-row__dnum">9</span>
+    <span class="cal-row__time">3:30 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F895544893%2F562040949077%2F1%2Foriginal.20241109-201833?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.00032196969697&amp;fp-y=0.00667910447761&amp;s=e91b86ac5cf0e131e887886e43cd4652" alt="Vibrations of Peace: Gong Bath &amp; Sound Immersion — Mile High Mindfulness, Denver" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Denver</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/vibrations-of-peace-gong-bath-sound-immersion-2026-08-09-mile-high-mindfulness/">Vibrations of Peace: Gong Bath &amp; Sound Immersion</a></h3>
+      <p class="cal-row__meta">Mile High Mindfulness</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/vibrations-of-peace-gong-bath-sound-immersion-tickets-815845514897" target="_blank" rel="noopener">Tickets</a></p>
+    </div>
+  </div>
+</article>
+<article class="cal-row" data-city="boulder" data-free="0" data-tags="gong-bath" data-lat="40.027945" data-lng="-105.286501">
+  <div class="cal-row__when">
+    <span class="cal-row__dow">Tue</span>
+    <span class="cal-row__dnum">11</span>
+    <span class="cal-row__time">7:00 PM</span>
+  </div>
+  <div class="cal-row__body">
+    <div class="cal-row__media">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F809182039%2F232943210601%2F1%2Foriginal.20240717-032739?w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;rect=0%2C280%2C3360%2C1680&amp;s=710ff13d0cf76a0ba6d79b059e905102" alt="Solar Eclipse Sunset Gong Bath — Pavanjeet at North Boulder Park, Boulder" loading="lazy" decoding="async">
+    </div>
+    <div class="cal-row__text">
+      <div class="cal-row__marks">
+        <span class="cal-row__city">Boulder</span>
+        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
+      </div>
+      <h3 class="cal-row__name"><a href="../event/solar-eclipse-sunset-gong-bath-2026-08-11-north-boulder-park/">Solar Eclipse Sunset Gong Bath</a></h3>
+      <p class="cal-row__meta">Pavanjeet · North Boulder Park</p>
+      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/solar-eclipse-sunset-gong-bath-tickets-1993167940966" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.pavanjeet.com" target="_blank" rel="noopener">Pavanjeet</a></p>
+    </div>
+  </div>
+</article>
+</div>
+</section>
+      </div>
+      <div class="map-split__map">
+        <div id="sbc-map" role="application" aria-label="Map of upcoming sound baths"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="../vendor/leaflet/leaflet.js"></script>
+<script src="../vendor/markercluster/leaflet.markercluster.js"></script>
+<script>
+(function(){
+  if (typeof L === "undefined") return;
+  var PINS = [{"lat": 38.832995, "lng": -104.829159, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/singing-bowls-of-the-rockies/\"\u003eSinging Bowls of the Rockies\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/reiki-sound-bath-feat-megan-odom-2026-07-24-singing-bowls-of-the-rockies/\"\u003eFri, Jul 24 \u00b7 6:30 PM \u2014 Reiki \u0026amp; Sound Bath feat. Megan Odom\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/a-sound-bath-to-unwind-releasing-stress-from-body-mind-2026-07-25-singing-bowls-of-the-rockies/\"\u003eSat, Jul 25 \u00b7 2:00 PM \u2014 A Sound Bath to Unwind: Releasing Stress from Body \u0026amp; Mind\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/vagus-nerve-activation-sound-bath-reconnect-with-inner-peace-2026-07-31-singing-bowls-of-the-rockies/\"\u003eFri, Jul 31 \u00b7 7:00 PM \u2014 Vagus Nerve Activation Sound Bath - Reconnect with Inner Peace\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/selfcare-sunday-sound-bath-a-path-to-wellness-and-peace-2026-08-02-singing-bowls-of-the-rockies/\"\u003eSun, Aug 2 \u00b7 4:30 PM \u2014 Self-Care Sunday Sound Bath: A Path to Wellness and Peace\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/somatic-breathwork-sound-bath-2026-08-04-singing-bowls-of-the-rockies/\"\u003eTue, Aug 4 \u00b7 6:00 PM \u2014 Somatic BreathWork \u0026amp; Sound Bath\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/chakra-cleansing-sound-bath-2026-08-07-singing-bowls-of-the-rockies/\"\u003eFri, Aug 7 \u00b7 7:00 PM \u2014 Chakra Cleansing Sound Bath\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/lions-gate-portal-sound-bath-2026-08-08-singing-bowls-of-the-rockies/\"\u003eSat, Aug 8 \u00b7 4:30 PM \u2014 Lion\u0026#x27;s Gate Portal Sound Bath\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 7}, {"lat": 39.740218, "lng": -104.933092, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/harmonist-sanctuary/\"\u003eHarmonist Sanctuary\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/gong-journey-2026-07-22-harmonist-sanctuary/\"\u003eWed, Jul 22 \u00b7 7:00 PM \u2014 Gong Journey\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/creative-poetry-sound-bath-2026-07-25-harmonist-sanctuary/\"\u003eSat, Jul 25 \u00b7 5:00 PM \u2014 Creative Poetry Sound Bath\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/candlelight-sound-bath-2026-07-29-harmonist-sanctuary/\"\u003eWed, Jul 29 \u00b7 7:15 PM \u2014 Candlelight Sound Bath\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/first-friday-flow-state-sound-bath-2026-08-07-harmonist-sanctuary/\"\u003eFri, Aug 7 \u00b7 6:00 PM \u2014 First Friday: Flow State Sound Bath\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 4}, {"lat": 39.69837, "lng": -104.873009, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/the-denver-village/\"\u003eThe Denver Village\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/midweek-harmony-reset-sound-bath-2026-07-22-the-denver-village/\"\u003eWed, Jul 22 \u00b7 5:30 PM \u2014 Midweek Harmony Reset - Sound Bath\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/buck-moon-sound-bath-2026-07-26-the-denver-village/\"\u003eSun, Jul 26 \u00b7 6:00 PM \u2014 Buck Moon Sound Bath\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/coregulation-sound-bath-2026-08-07-the-denver-village/\"\u003eFri, Aug 7 \u00b7 6:00 PM \u2014 Co-Regulation Sound Bath\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 3}, {"lat": 39.688525, "lng": -104.980527, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/1545-s-pearl-st/\"\u003e1545 S Pearl St\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/activating-your-inner-fire-guided-meditation-and-sound-healing-immersion-2026-07-24-1545-s-pearl-st/\"\u003eFri, Jul 24 \u00b7 7:00 PM \u2014 Activating Your Inner Fire: Guided Meditation and Sound Healing Immersion\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/breathwork-sound-healing-immersion-2026-07-27-1545-s-pearl-st/\"\u003eMon, Jul 27 \u00b7 7:00 PM \u2014 Breathwork + Sound Healing Immersion\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st/\"\u003eFri, Jul 31 \u00b7 7:00 PM \u2014 Full Moon Sound Medicine Journey\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 3}, {"lat": 38.84205, "lng": -104.824457, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/the-next-us/\"\u003eThe Next Us\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/community-sound-bath-2026-07-22-the-next-us/\"\u003eWed, Jul 22 \u00b7 6:00 PM \u2014 Community Sound Bath\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/community-candle-lit-sound-bath-2026-07-31-the-next-us/\"\u003eFri, Jul 31 \u00b7 6:00 PM \u2014 Community Candle lit sound bath\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 2}, {"lat": 39.769392, "lng": -105.032509, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/sacred-society/\"\u003eSacred Society\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/stretch-sound-2026-07-24-sacred-society/\"\u003eFri, Jul 24 \u00b7 6:00 PM \u2014 Stretch \u0026amp; Sound\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/sound-bath-sacred-rest-ritual-2026-07-26-sacred-society/\"\u003eSun, Jul 26 \u00b7 10:00 AM \u2014 Sound Bath: Sacred Rest Ritual\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 2}, {"lat": 40.027945, "lng": -105.286501, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/north-boulder-park/\"\u003eNorth Boulder Park\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/kundalini-in-the-park-2026-08-02-north-boulder-park/\"\u003eSun, Aug 2 \u00b7 9:00 AM \u2014 Kundalini in the Park\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/solar-eclipse-sunset-gong-bath-2026-08-11-north-boulder-park/\"\u003eTue, Aug 11 \u00b7 7:00 PM \u2014 Solar Eclipse Sunset Gong Bath\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 2}, {"lat": 39.594303, "lng": -104.901254, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/discover-your-spiritual-gifts/\"\u003eDiscover Your Spiritual Gifts\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/sacred-sound-bath-dawn-stratton-vialet-rayne-2026-08-07-discover-your-spiritual-gifts/\"\u003eFri, Aug 7 \u00b7 4:30 PM \u2014 Sacred Sound Bath \u2764 Dawn Stratton \u0026amp; Vialet Rayne\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca href=\"../event/sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-2026-08-07-discover-your-spiritual-gifts/\"\u003eFri, Aug 7 \u00b7 6:30 PM \u2014 Sacred Healing Sound Bath \u2764 Vialet B Rayne \u0026amp; Dawn Stratton\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 2}, {"lat": 38.828286, "lng": -104.827954, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/camino-massage-therapy/\"\u003eCamino Massage Therapy\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/floating-sound-bath-elise-nicole-2026-07-22-camino-massage-therapy/\"\u003eWed, Jul 22 \u00b7 6:30 PM \u2014 Floating Sound Bath - Elise Nicole\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 40.028756, "lng": -105.264249, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/unity-of-boulder-spiritual-center/\"\u003eUnity of Boulder Spiritual Center\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/wednesday-meditation-2026-07-22-unity-of-boulder-spiritual-center/\"\u003eWed, Jul 22 \u00b7 7:00 PM \u2014 Wednesday Meditation\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 40.588205, "lng": -105.076836, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/the-living-room/\"\u003eThe Living Room\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/nourish-womens-circle-sound-bath-2026-07-22-the-living-room/\"\u003eWed, Jul 22 \u00b7 7:00 PM \u2014 Nourish: Women\u0026#x27;s Circle \u0026amp; Sound Bath\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 40.306128, "lng": -105.080238, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/wildfire-arts-center/\"\u003eWildfire Arts Center\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/friday-recharge-a-restorative-sound-journey-2026-07-24-wildfire-arts-center/\"\u003eFri, Jul 24 \u00b7 6:30 PM \u2014 Friday Recharge: A Restorative Sound Journey\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 39.684695, "lng": -104.987433, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/karma-yoga-center/\"\u003eKarma Yoga Center\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/mindfree-fridays-sound-healing-2026-07-24-karma-yoga-center/\"\u003eFri, Jul 24 \u00b7 7:00 PM \u2014 MindFree Fridays Sound Healing\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 39.730024, "lng": -104.997925, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/inca-street-collective/\"\u003eInca Street Collective\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/45minute-reset-sound-movement-breath-laughter-2026-07-24-inca-street-collective/\"\u003eFri, Jul 24 \u00b7 7:15 PM \u2014 45-Minute Reset: Sound, Movement, Breath \u0026amp; Laughter\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 39.703472, "lng": -104.980219, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/5-star-salt-caves-wellness-center/\"\u003e5 Star Salt Caves Wellness Center\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center/\"\u003eSat, Jul 25 \u00b7 6:30 PM \u2014 Crystal \u0026amp; Gong Sound Concert in the Salt Cave\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 40.157241, "lng": -105.178404, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/camdazco-farm/\"\u003eCamdazco Farm\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/cosmic-yoga-and-sound-bath-for-a-summer-shift-2026-07-26-camdazco-farm/\"\u003eSun, Jul 26 \u00b7 1:00 PM \u2014 Cosmic Yoga and Sound Bath for a Summer Shift\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 38.898894, "lng": -104.850044, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/colorado-salt-cave/\"\u003eColorado Salt Cave\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/colorado-salt-cave-wsound-healing-2026-07-26-colorado-salt-cave/\"\u003eSun, Jul 26 \u00b7 2:00 PM \u2014 Colorado Salt Cave w/Sound Healing\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 38.894765, "lng": -104.969547, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/soulshines-yoga-studio-healing-arts/\"\u003eSoulshines Yoga Studio \u0026amp; Healing Arts\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/dreamtime-journeys-a-shamanic-sound-journey-experience-2026-07-27-soulshines-yoga-studio-healing-arts/\"\u003eMon, Jul 27 \u00b7 7:00 PM \u2014 Dreamtime Journeys: A Shamanic Sound Journey Experience\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 39.732465, "lng": -104.96095, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/denver-botanic-gardens-mitchell-hall/\"\u003eDenver Botanic Gardens, Mitchell Hall\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/singing-bowls-at-the-gardens-sunrise-to-starlight-2026-07-28-denver-botanic-gardens-mitchell-hall/\"\u003eTue, Jul 28 \u00b7 5:30 PM \u2014 Singing Bowls at the Gardens: Sunrise to Starlight\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 39.750985, "lng": -105.029641, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/merritt-wellness/\"\u003eMerritt Wellness\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/sound-immersion-with-the-harmonic-quintessence-hg-2026-07-28-merritt-wellness/\"\u003eTue, Jul 28 \u00b7 7:00 PM \u2014 Sound Immersion with the Harmonic Quintessence (Hg)\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 39.987074, "lng": -105.093198, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/firiel-skin-care/\"\u003eFiriel Skin Care\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/feng-shui-sound-bath-children-creativity-joy-2026-07-29-firiel-skin-care/\"\u003eWed, Jul 29 \u00b7 7:00 PM \u2014 Feng Shui Sound Bath: Children, Creativity \u0026amp; Joy\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 39.023824, "lng": -104.83869, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/ascend-spa-wellness-at-hotel-polaris/\"\u003eAscend Spa \u0026amp; Wellness at Hotel Polaris\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/sunset-reset-poolside-full-moon-sound-bath-2026-07-29-ascend-spa-wellness-at-hotel-polaris/\"\u003eWed, Jul 29 \u00b7 7:00 PM \u2014 Sunset Reset: Poolside Full Moon Sound Bath\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 39.758957, "lng": -104.978451, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/929-29th-st/\"\u003e929 29th St\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/full-moon-sound-bath-2026-07-30-929-29th-st/\"\u003eThu, Jul 30 \u00b7 6:00 PM \u2014 Full Moon Sound Bath\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 40.588493, "lng": -105.132561, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/the-seedlings-dome-at-hartman-street/\"\u003eThe Seedlings Dome at Hartman Street\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/relaxing-soundbath-at-the-seedlings-dome-2026-07-30-the-seedlings-dome-at-hartman-street/\"\u003eThu, Jul 30 \u00b7 6:30 PM \u2014 Relaxing Soundbath at the Seedlings Dome\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 40.048192, "lng": -105.32622, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/the-starhouse/\"\u003eThe StarHouse\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/full-moon-meditation-six-gong-relaxation-2026-07-30-the-starhouse/\"\u003eThu, Jul 30 \u00b7 7:00 PM \u2014 Full Moon Meditation \u0026amp; Six Gong Relaxation\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 39.695178, "lng": -104.964609, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/washington-park/\"\u003eWashington Park\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/psychic-sound-bath-wash-park-2026-08-01-washington-park/\"\u003eSat, Aug 1 \u00b7 3:00 PM \u2014 Psychic Sound Bath Wash Park\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 40.40764, "lng": -105.135837, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/verdant-nature-creations/\"\u003eVerdant Nature Creations\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/sacred-roots-gathering-sound-bath-2026-08-01-verdant-nature-creations/\"\u003eSat, Aug 1 \u00b7 3:30 PM \u2014 Sacred Roots Gathering Sound Bath\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 40.064895, "lng": -105.283547, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/north-of-ordinary-collective/\"\u003eNorth Of Ordinary Collective\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/acudetox-sound-bath-journey-experience-2026-08-02-north-of-ordinary-collective/\"\u003eSun, Aug 2 \u00b7 1:00 PM \u2014 AcuDetox \u0026amp; Sound Bath Journey Experience\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 39.688525, "lng": -104.980527, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/green-light-reiki/\"\u003eGreen Light Reiki\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/energy-healing-sound-bath-immersion-2026-08-02-green-light-reiki/\"\u003eSun, Aug 2 \u00b7 4:00 PM \u2014 Energy Healing + Sound Bath Immersion\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 40.552087, "lng": -105.082085, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/live-beyond-limit/\"\u003eLive Beyond Limit\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/harvesting-intentions-a-sound-journey-into-gratitude-2026-08-02-live-beyond-limit/\"\u003eSun, Aug 2 \u00b7 5:00 PM \u2014 Harvesting Intentions: A Sound Journey into Gratitude\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 38.903358, "lng": -104.775385, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/colorado-psychedelic-church/\"\u003eColorado Psychedelic Church\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/communal-quartz-sound-bath-2026-08-03-colorado-psychedelic-church/\"\u003eMon, Aug 3 \u00b7 6:00 PM \u2014 Communal Quartz Sound Bath\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 39.763168, "lng": -105.025758, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/denver-public-library-woodbury-branch-library/\"\u003eDenver Public Library: Woodbury Branch Library\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/deep-restorative-sound-bath-guided-meditation-2026-08-04-denver-public-library-woodbury-branch-library/\"\u003eTue, Aug 4 \u00b7 7:00 PM \u2014 Deep Restorative Sound Bath \u0026amp; Guided Meditation\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 39.780552, "lng": -105.045088, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/denver-public-library-smiley-branch-library/\"\u003eDenver Public Library: Smiley Branch Library\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/denver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smiley-branch-library/\"\u003eWed, Aug 5 \u00b7 7:00 PM \u2014 Denver Sound Bath Collective-Smiley\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 40.521063, "lng": -104.976334, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/timnath-community-room/\"\u003eTimnath Community Room\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/sound-bath-a-sacred-start-to-the-school-year-2026-08-08-timnath-community-room/\"\u003eSat, Aug 8 \u00b7 10:30 AM \u2014 Sound Bath: A Sacred Start to the School Year\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 40.392818, "lng": -105.041318, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/brookstone-recreation-center/\"\u003eBrookstone Recreation Center\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/second-saturday-sound-bath-meditation-community-circle-2026-08-08-brookstone-recreation-center/\"\u003eSat, Aug 8 \u00b7 1:00 PM \u2014 Second Saturday Sound Bath, Meditation \u0026amp; Community Circle\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}, {"lat": 39.618875, "lng": -104.896049, "html": "\u003cdiv class=\"sbc-pop\"\u003e\u003cp class=\"sbc-pop__name\"\u003e\u003ca href=\"../venue/mile-high-mindfulness/\"\u003eMile High Mindfulness\u003c/a\u003e\u003c/p\u003e\u003cul class=\"sbc-pop__list\"\u003e\u003cli\u003e\u003ca href=\"../event/vibrations-of-peace-gong-bath-sound-immersion-2026-08-09-mile-high-mindfulness/\"\u003eSun, Aug 9 \u00b7 3:30 PM \u2014 Vibrations of Peace: Gong Bath \u0026amp; Sound Immersion\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003c/div\u003e", "n": 1}];
+  var byKey = {};
+  function key(la, ln){ return la.toFixed(5) + "," + ln.toFixed(5); }
+  function pinIcon(n, cluster){
+    var size = cluster ? 34 : 28;
+    var cls = cluster ? "sbc-pin sbc-pin--cluster" : "sbc-pin";
+    return L.divIcon({className: "", html: "<div class=\"" + cls + "\">" + n + "</div>", iconSize: [size, size], iconAnchor: [size/2, size/2], popupAnchor: [0, -size/2 - 2]});
+  }
+  function init(){
+    var map = L.map("sbc-map", {scrollWheelZoom:false}).setView([39.74,-104.99], 9);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom:19, attribution:"&copy; OpenStreetMap contributors"}).addTo(map);
+    var group = (typeof L.markerClusterGroup === "function") ? L.markerClusterGroup({maxClusterRadius: 46, showCoverageOnHover: false,
+      iconCreateFunction: function(c){ var n = 0;
+        c.getAllChildMarkers().forEach(function(m){ n += (m.options.sessions || 0); });
+        return pinIcon(n, true); }}) : null;
+    var ms = PINS.map(function(p){
+      var m = L.marker([p.lat,p.lng], {sessions: p.n, icon: pinIcon(p.n, false)}).bindPopup(p.html);
+      byKey[key(p.lat, p.lng)] = m;
+      return m;
+    });
+    if (group){ ms.forEach(function(m){ group.addLayer(m); }); map.addLayer(group); }
+    else { ms.forEach(function(m){ m.addTo(map); }); }
+    var bounds = L.latLngBounds(PINS.map(function(p){ return [p.lat, p.lng]; }));
+    var fit = function(){ map.invalidateSize(); if (PINS.length){ map.fitBounds(bounds.pad(0.12), {maxZoom:12, animate:false}); } };
+    fit();
+    setTimeout(fit, 250);
+    var rows = [].slice.call(document.querySelectorAll(".map-split__list .cal-row"));
+    rows.forEach(function(r){
+      var la = parseFloat(r.getAttribute("data-lat")), ln = parseFloat(r.getAttribute("data-lng"));
+      if (isNaN(la) || isNaN(ln)) return;
+      var k = key(la, ln);
+      function pinEl(){ var m = byKey[k]; if (!m) return null;
+        var t = (group && group.getVisibleParent) ? (group.getVisibleParent(m) || m) : m;
+        return t._icon ? t._icon.querySelector(".sbc-pin") : null; }
+      r.addEventListener("mouseenter", function(){ var el = pinEl(); if (el) el.classList.add("sbc-pin--hot"); });
+      r.addEventListener("mouseleave", function(){ var el = pinEl(); if (el) el.classList.remove("sbc-pin--hot"); });
+    });
+  }
+  if (document.readyState === "complete") { init(); }
+  else { window.addEventListener("load", init); }
+})();
+</script>
+  </main>
+
+  <footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="footer-wordmark">Sound Bath Calendar</a>
+        <p class="footer-tag">Every sound bath on the Colorado Front Range —
+        Denver, Boulder, Fort Collins, Colorado Springs — kept current every week.</p>
+      </div>
+      <nav class="footer-col" aria-label="Calendar">
+        <span class="footer-col__h">Calendar</span>
+        <a href="../denver/">Denver</a>
+        <a href="../boulder/">Boulder</a>
+        <a href="../fort-collins/">Fort Collins</a>
+        <a href="../colorado-springs/">Colorado Springs</a>
+        <a href="../map/">Map</a>
+        <a href="../browse/">Browse</a>
+      </nav>
+      <nav class="footer-col" aria-label="The scene">
+        <span class="footer-col__h">The scene</span>
+        <a href="../practitioners/">Practitioners</a>
+        <a href="../venues/">Venues</a>
+        <a href="../operators/">Organizers</a>
+        <a href="../state-of-sound-healing/">State of the scene</a>
+      </nav>
+      <nav class="footer-col" aria-label="Learn">
+        <span class="footer-col__h">Learn</span>
+        <a href="../what-to-expect/">What to expect</a>
+        <a href="../learn/">Learn</a>
+        <a href="../roundups/">Roundups</a>
+        <a href="../#digest">The Thursday digest</a>
+        <a href="../feed.xml">RSS</a>
+      </nav>
+    </div>
+    <div class="footer-bar">
+      <p class="footer-fine">Kept by <a href="https://thefirstwater.co/">Firstwater</a></p>
+      <p class="footer-fine">Denver, Colorado</p>
+    </div>
+  </div>
+</footer>
+
+  <!-- Progressive-enhancement calendar filters (Track B B.5). The page is fully
+       usable without it — it only reveals and wires the filter bar. -->
+  <script defer src="../filters.js?v=8a39f81c"></script>
+</body>
+</html>

@@ -57,6 +57,7 @@ from _src.lib import external_events
 from _src.lib import practitioners as practitioners_lib
 from _src.lib import venues as venues_lib
 from _src.lib import operators as operators_lib
+from _src.lib import directory as directory_lib
 from _src.lib import mapview as mapview_lib
 from _src.lib import rss as rss_lib
 from _src.lib import insights as insights_lib
@@ -776,11 +777,13 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
     built, sitemap_entries = [], []
     lastmod = external_events.stamp_date_iso(now)
 
-    # Upcoming-session counts per practitioner (for the index cards).
-    count_by_slug = {}
+    # Upcoming-session counts + card art per practitioner (for the index cards):
+    # curated photo first, else the next session's listing image.
+    count_by_slug, art_by_slug = {}, {}
     for p in practs:
-        count_by_slug[p['slug']] = len(
-            practitioners_lib.sessions_for(p['slug'], cal_rows))
+        sessions = practitioners_lib.sessions_for(p['slug'], cal_rows)
+        count_by_slug[p['slug']] = len(sessions)
+        art_by_slug[p['slug']] = directory_lib.art_for(p, sessions)
 
     # --- individual profile pages ---
     for p in practs:
@@ -885,7 +888,8 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
     schema_json += (f'\n  <script type="application/ld+json">\n'
                     f'{json.dumps(index_breadcrumb, indent=2)}\n  </script>')
 
-    index_content = practitioners_lib.render_index(practs, count_by_slug, index_nav)
+    index_content = practitioners_lib.render_index(
+        practs, count_by_slug, index_nav, art_by_slug)
     page_header = header.strip().replace('{{nav_prefix}}', index_nav)
     page_footer = footer.strip().replace('{{nav_prefix}}', index_nav)
     html = _assemble(base, {
@@ -926,9 +930,12 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
     built, sitemap_entries = [], []
     lastmod = external_events.stamp_date_iso(now)
 
-    count_by_slug = {}
+    # Counts + card art (curated photo, else the next session's listing image).
+    count_by_slug, art_by_slug = {}, {}
     for v in venue_list:
-        count_by_slug[v['slug']] = len(venues_lib.sessions_for(v['slug'], cal_rows))
+        sessions = venues_lib.sessions_for(v['slug'], cal_rows)
+        count_by_slug[v['slug']] = len(sessions)
+        art_by_slug[v['slug']] = directory_lib.art_for(v, sessions)
 
     for v in venue_list:
         slug = v['slug']
@@ -1027,7 +1034,8 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
     schema_json += (f'\n  <script type="application/ld+json">\n'
                     f'{json.dumps(index_breadcrumb, indent=2)}\n  </script>')
 
-    index_content = venues_lib.render_index(venue_list, count_by_slug, index_nav)
+    index_content = venues_lib.render_index(
+        venue_list, count_by_slug, index_nav, art_by_slug)
     page_header = header.strip().replace('{{nav_prefix}}', index_nav)
     page_footer = footer.strip().replace('{{nav_prefix}}', index_nav)
     html = _assemble(base, {
@@ -1070,9 +1078,13 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
     built, sitemap_entries = [], []
     lastmod = external_events.stamp_date_iso(now)
 
-    count_by_slug = {}
+    # Counts + card art (operators carry no curated photo; the next session's
+    # listing image stands in).
+    count_by_slug, art_by_slug = {}, {}
     for o in operator_list:
-        count_by_slug[o['slug']] = len(operators_lib.sessions_for(o['slug'], cal_rows))
+        sessions = operators_lib.sessions_for(o['slug'], cal_rows)
+        count_by_slug[o['slug']] = len(sessions)
+        art_by_slug[o['slug']] = directory_lib.art_for(o, sessions)
 
     for o in operator_list:
         slug = o['slug']
@@ -1169,7 +1181,8 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
     schema_json += (f'\n  <script type="application/ld+json">\n'
                     f'{json.dumps(index_breadcrumb, indent=2)}\n  </script>')
 
-    index_content = operators_lib.render_index(operator_list, count_by_slug, index_nav)
+    index_content = operators_lib.render_index(
+        operator_list, count_by_slug, index_nav, art_by_slug)
     page_header = header.strip().replace('{{nav_prefix}}', index_nav)
     page_footer = footer.strip().replace('{{nav_prefix}}', index_nav)
     html = _assemble(base, {

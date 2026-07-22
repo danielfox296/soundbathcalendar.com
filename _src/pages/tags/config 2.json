@@ -1,0 +1,5 @@
+{
+  "title": "Browse sound baths by category | Sound Bath Calendar",
+  "output": "tags/index.html",
+  "redirect_to": "../browse/"
+}

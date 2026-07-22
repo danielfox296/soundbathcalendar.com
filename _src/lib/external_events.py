@@ -1659,7 +1659,7 @@ def render_city_switcher(current_city, nav_prefix):
 
 # CAL-18: how many rooms the digest preview shows before the fade. Small on
 # purpose — the preview is a glimpse of the email, not a second calendar.
-_PREVIEW_MAX_ROWS = 4
+_PREVIEW_MAX_ROWS = 3
 
 
 def _digest_preview_meta(row):

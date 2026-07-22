@@ -12,12 +12,16 @@
   <meta name="description" content="An outdoor gathering combining a sound bath, medicine wheel, and nature reflection, led by Sharay Fay.">
   <meta name="theme-color" content="#F5F7FA">
 
+  <!-- RSS feed discovery (CAL-05). Root feed by default; city pages override
+       https://soundbathcalendar.com/feed.xml with their own region feed. -->
+  <link rel="alternate" type="application/rss+xml" title="Sound Bath Calendar" href="https://soundbathcalendar.com/feed.xml">
+
   <!-- Open Graph -->
   <meta property="og:title" content="Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections">
   <meta property="og:description" content="An outdoor gathering combining a sound bath, medicine wheel, and nature reflection, led by Sharay Fay.">
   <meta property="og:url" content="https://soundbathcalendar.com/event/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center/">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://soundbathcalendar.com/img/og-default.png">
+  <meta property="og:image" content="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1121785743%2F1415215040793%2F1%2Foriginal.20250911-233753?crop=focalpoint&amp;amp;fit=crop&amp;amp;w=940&amp;amp;auto=format%2Ccompress&amp;amp;q=75&amp;amp;sharp=10&amp;amp;fp-x=0.5&amp;amp;fp-y=0.5&amp;amp;s=f3b9bc9d2654a496ad03f3c8c3ab6c94">
   <meta property="og:site_name" content="Sound Bath Calendar">
   <meta property="og:locale" content="en_US">
 
@@ -25,7 +29,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections">
   <meta name="twitter:description" content="An outdoor gathering combining a sound bath, medicine wheel, and nature reflection, led by Sharay Fay.">
-  <meta name="twitter:image" content="https://soundbathcalendar.com/img/og-default.png">
+  <meta name="twitter:image" content="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1121785743%2F1415215040793%2F1%2Foriginal.20250911-233753?crop=focalpoint&amp;amp;fit=crop&amp;amp;w=940&amp;amp;auto=format%2Ccompress&amp;amp;q=75&amp;amp;sharp=10&amp;amp;fp-x=0.5&amp;amp;fp-y=0.5&amp;amp;s=f3b9bc9d2654a496ad03f3c8c3ab6c94">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -77,14 +81,22 @@
   },
   "organizer": {
     "@type": "Organization",
-    "name": "Soul Light, LLC"
+    "name": "Soul Light, LLC",
+    "url": "https://msha.ke/soullightllc"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1121785743%2F1415215040793%2F1%2Foriginal.20250911-233753?crop=focalpoint\u0026amp;fit=crop\u0026amp;w=940\u0026amp;auto=format%2Ccompress\u0026amp;q=75\u0026amp;sharp=10\u0026amp;fp-x=0.5\u0026amp;fp-y=0.5\u0026amp;s=f3b9bc9d2654a496ad03f3c8c3ab6c94",
+    "caption": "Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections \u2014 Soul Light, LLC at La Foret Conference \u0026 Retreat Center, Colorado Springs"
   },
   "offers": {
     "@type": "AggregateOffer",
     "lowPrice": "35",
     "highPrice": "50",
     "priceCurrency": "USD",
-    "url": "https://www.eventbrite.com/e/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-tickets-1689648747889"
+    "url": "https://www.eventbrite.com/e/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-tickets-1689648747889",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2026-07-21T10:35:19-06:00"
   },
   "url": "https://soundbathcalendar.com/event/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center/"
 }
@@ -123,27 +135,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../../styles.css?v=d602c3bb">
+  <link rel="stylesheet" href="../../styles.css?v=9054b17d">
   <style>
     .cal-event { }
-    .cal-event__crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 2rem; }
+    .cal-event__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
     .cal-event__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .cal-event__crumbs a:hover { text-decoration: underline; }
-    .cal-past-banner { background: rgba(10,11,13,0.05); border-left: 3px solid var(--gray); padding: 0.9rem 1.2rem; margin: 0 0 2rem; font-size: 0.95rem; }
+    .cal-past-banner { background: rgba(var(--ink-rgb),0.05); border-left: 3px solid var(--gray); padding: 0.9rem 1.2rem; margin: 0 0 2rem; font-size: 0.95rem; }
     .cal-past-banner a { color: var(--accent-on-light); }
     .cal-event__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.4rem 0 1.4rem; }
-    .cal-event__desc { font-size: 1.15rem; line-height: 1.6; max-width: 42rem; color: rgba(10,11,13,0.78); margin: 0 0 1rem; }
+    .cal-event__desc { font-size: 1.15rem; line-height: 1.6; max-width: 42rem; color: rgba(var(--ink-rgb),0.78); margin: 0 0 1rem; }
     .cal-event__note { font: 500 1.2rem var(--font-display); color: var(--ink); max-width: 40rem; line-height: 1.4; margin: 0 0 1.6rem; }
     .cal-event__figure { margin: 2rem 0; max-width: 640px; }
-    .cal-event__figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: rgba(10,11,13,0.06); }
-    .cal-event__figure figcaption { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin-top: 0.6rem; }
+    .cal-event__figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: rgba(var(--ink-rgb),0.06); }
+    .cal-event__figure figcaption { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin-top: 0.6rem; }
     .cal-event__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.6rem; margin: 2rem 0; max-width: 40rem; }
     .cal-event__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); align-self: baseline; }
     .cal-event__facts dd { margin: 0; color: var(--ink); }
     .cal-event__cta { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; margin: 2rem 0; }
     .cal-event__link { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .cal-event__link:hover { text-decoration: underline; }
-    .cal-event__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(10,11,13,0.14); }
+    .cal-event__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
     .cal-event__back a { color: var(--accent-on-light); text-decoration: none; }
     .cal-event__back a:hover { text-decoration: underline; }
     @media (max-width: 640px) { .cal-event__facts { grid-template-columns: 1fr; gap: 0.2rem; } .cal-event__facts dd { margin-bottom: 0.8rem; } }
@@ -153,11 +165,12 @@
   <header class="masthead">
   <div class="container masthead-inner">
     <a href="../../" class="wordmark">Sound Bath Calendar</a>
-    <nav class="masthead-cities" aria-label="Areas">
+    <nav class="masthead-cities" aria-label="Calendar navigation">
       <a href="../../denver/">Denver</a>
       <a href="../../boulder/">Boulder</a>
       <a href="../../fort-collins/">Fort Collins</a>
       <a href="../../colorado-springs/">Colorado Springs</a>
+      <a href="../../map/">Map</a>
     </nav>
     <!-- Slim digest capture: inline form on wide screens, an anchor link down
          to the full form on small ones. Same Formspree seam as the main form. -->
@@ -178,18 +191,28 @@
     <nav class="cal-event__crumbs" aria-label="Breadcrumb">
       <a href="../../">Calendar</a> <span aria-hidden="true">/</span> <span>Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections</span>
     </nav>
+    <div class="detail-shell">
+      <div class="detail-main">
     <span class="eyebrow">Front Range calendar</span>
     <h1 class="cal-event__h1">Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections</h1>
     <p class="cal-event__desc">An outdoor gathering combining a sound bath, medicine wheel, and nature reflection, led by Sharay Fay.</p>
+    <figure class="cal-event__figure">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1121785743%2F1415215040793%2F1%2Foriginal.20250911-233753?crop=focalpoint&amp;amp;fit=crop&amp;amp;w=940&amp;amp;auto=format%2Ccompress&amp;amp;q=75&amp;amp;sharp=10&amp;amp;fp-x=0.5&amp;amp;fp-y=0.5&amp;amp;s=f3b9bc9d2654a496ad03f3c8c3ab6c94" alt="Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections — Soul Light, LLC at La Foret Conference &amp; Retreat Center, Colorado Springs" loading="lazy" decoding="async">
+      <figcaption>Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections — Soul Light, LLC at La Foret Conference &amp; Retreat Center, Colorado Springs</figcaption>
+    </figure>
+      </div>
+      <aside class="detail-aside">
+        <div class="detail-card">
     <dl class="cal-event__facts">
       <dt>When</dt><dd>Saturday, July 25, 2026 · 12:00 PM (Denver time)</dd>
-      <dt>Where</dt><dd>La Foret Conference &amp; Retreat Center · 6145 Shoup Road, Colorado Springs, CO 80908</dd>
+      <dt>Where</dt><dd><a class="cal-event__link" href="../../venue/la-foret-conference-retreat-center/">La Foret Conference &amp; Retreat Center</a> · 6145 Shoup Road, Colorado Springs, CO 80908</dd>
       <dt>Area</dt><dd>Colorado Springs</dd>
       <dt>Price</dt><dd>$35-$50</dd>
       <dt>Facilitator</dt><dd>Sharay Fay</dd>
-      <dt>Operator</dt><dd>Soul Light, LLC</dd>
+      <dt>Operator</dt><dd><a class="cal-event__link" href="../../operator/soul-light-llc/">Soul Light, LLC</a></dd>
     </dl>
-    <p class="cal-event__cta"><a class="btn btn-primary" href="https://www.eventbrite.com/e/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-tickets-1689648747889" target="_blank" rel="noopener">Tickets</a> <a class="cal-event__link" href="https://www.google.com/maps/search/?api=1&amp;query=6145+Shoup+Road%2C+Colorado+Springs%2C+CO+80908%2C+Colorado+Springs%2C+CO" target="_blank" rel="noopener">Open in Maps</a></p>
+    <iframe class="detail-card__map" loading="lazy" title="Map" src="https://maps.google.com/maps?q=6145+Shoup+Road%2C+Colorado+Springs%2C+CO+80908%2C+Colorado+Springs%2C+CO&amp;z=15&amp;output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <p class="cal-event__cta"><a class="btn btn-primary" href="https://www.eventbrite.com/e/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-tickets-1689648747889" target="_blank" rel="noopener">Tickets</a> <a class="cal-event__link" href="https://msha.ke/soullightllc" target="_blank" rel="noopener">Soul Light, LLC</a> <a class="cal-event__link" href="https://www.google.com/maps/search/?api=1&amp;query=6145+Shoup+Road%2C+Colorado+Springs%2C+CO+80908%2C+Colorado+Springs%2C+CO" target="_blank" rel="noopener">Open in Maps</a></p>
     <details class="cal-addcal">
       <summary class="cal-event__link cal-addcal__summary">Add to calendar</summary>
       <div class="cal-addcal__menu">
@@ -199,24 +222,56 @@
         <a class="cal-addcal__opt" href="event.ics" download>Download .ics</a>
       </div>
     </details>
+        </div>
+      </aside>
+    </div>
     <p class="cal-event__back"><a href="../../">Part of the Front Range calendar →</a></p>
   </div>
 </section>
   </main>
 
   <footer class="site-footer">
-  <div class="container footer-inner">
-    <nav class="footer-nav" aria-label="More">
-      <a href="../../practitioners/">Practitioners</a>
-      <a href="../../venues/">Venues</a>
-    </nav>
-    <p class="footer-fine">Kept by <a href="https://thefirstwater.co/">Firstwater</a>.</p>
-    <p class="footer-fine">Denver, Colorado.</p>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../../" class="footer-wordmark">Sound Bath Calendar</a>
+        <p class="footer-tag">Every sound bath on the Colorado Front Range —
+        Denver, Boulder, Fort Collins, Colorado Springs — kept current every week.</p>
+      </div>
+      <nav class="footer-col" aria-label="Calendar">
+        <span class="footer-col__h">Calendar</span>
+        <a href="../../denver/">Denver</a>
+        <a href="../../boulder/">Boulder</a>
+        <a href="../../fort-collins/">Fort Collins</a>
+        <a href="../../colorado-springs/">Colorado Springs</a>
+        <a href="../../map/">Map</a>
+        <a href="../../browse/">Browse</a>
+      </nav>
+      <nav class="footer-col" aria-label="The scene">
+        <span class="footer-col__h">The scene</span>
+        <a href="../../practitioners/">Practitioners</a>
+        <a href="../../venues/">Venues</a>
+        <a href="../../operators/">Organizers</a>
+        <a href="../../state-of-sound-healing/">State of the scene</a>
+      </nav>
+      <nav class="footer-col" aria-label="Learn">
+        <span class="footer-col__h">Learn</span>
+        <a href="../../what-to-expect/">What to expect</a>
+        <a href="../../learn/">Learn</a>
+        <a href="../../roundups/">Roundups</a>
+        <a href="../../#digest">The Thursday digest</a>
+        <a href="../../feed.xml">RSS</a>
+      </nav>
+    </div>
+    <div class="footer-bar">
+      <p class="footer-fine">Kept by <a href="https://thefirstwater.co/">Firstwater</a></p>
+      <p class="footer-fine">Denver, Colorado</p>
+    </div>
   </div>
 </footer>
 
   <!-- Progressive-enhancement calendar filters (Track B B.5). The page is fully
        usable without it — it only reveals and wires the filter bar. -->
-  <script defer src="../../filters.js"></script>
+  <script defer src="../../filters.js?v=8a39f81c"></script>
 </body>
 </html>

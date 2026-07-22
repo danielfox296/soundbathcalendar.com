@@ -345,31 +345,20 @@ def person_schema(pract, canonical_url, session_rows):
 # the caller noindexes it until enough profiles exist to be a real page.
 # ---------------------------------------------------------------------------
 
-INDEX_STYLE = """<style>
-    .practs__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
-    .practs__crumbs a { color: var(--accent-on-light); text-decoration: none; }
-    .practs__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.8rem; }
-    .practs__lede { font-size: 1.1rem; color: rgba(var(--ink-rgb),0.75); max-width: 40rem; margin: 0 0 2rem; }
-    .practs__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.4rem; }
-    .practs__card { display: flex; gap: 0.9rem; align-items: center; text-decoration: none; color: inherit; border: 1px solid rgba(var(--ink-rgb),0.14); padding: 0.9rem; }
-    .practs__card:hover { border-color: var(--accent-on-light); }
-    .practs__thumb { flex: 0 0 auto; width: 56px; height: 56px; object-fit: cover; background: rgba(var(--ink-rgb),0.06); }
-    .practs__name { font: 500 1.05rem var(--font-display); color: var(--ink); }
-    .practs__meta { font-size: 0.85rem; color: rgba(var(--ink-rgb),0.6); }
-  </style>"""
+# The directory design (.dir-*) is shared with /venues/ and /operators/ and
+# lives in styles.css; no page-specific style block remains.
+INDEX_STYLE = ''
 
 
-def render_index(practs, count_by_slug, nav_prefix):
+def render_index(practs, count_by_slug, nav_prefix, art_by_slug=None):
     """The <main> for /practitioners/ — a directory card per published profile."""
+    from _src.lib import directory
+    art_by_slug = art_by_slug or {}
     out = ['<section class="section section--light practs">', '  <div class="container">']
-    out.append('    <nav class="practs__crumbs" aria-label="Breadcrumb">')
-    out.append(f'      <a href="{nav_prefix}">Calendar</a> <span aria-hidden="true">/</span> '
-               '<span>Practitioners</span>')
-    out.append('    </nav>')
-    out.append('    <span class="eyebrow">Front Range calendar</span>')
-    out.append('    <h1 class="practs__h1">Practitioners</h1>')
-    out.append('    <p class="practs__lede">The facilitators leading sound baths across '
-               'the Front Range — who they are, and where to find them next.</p>')
+    out.append(directory.render_head(
+        nav_prefix, 'Practitioners', 'Practitioners',
+        'The facilitators leading sound baths across the Front Range — '
+        'who they are, and where to find them next.'))
     if not practs:
         out.append(X.render_empty_state(
             nav_prefix,
@@ -377,19 +366,14 @@ def render_index(practs, count_by_slug, nav_prefix):
             'instruments they play, and when they are next leading a room. Until then, '
             'find them by session on the calendar.'))
     else:
-        out.append('    <div class="practs__grid">')
+        out.append('    <div class="dir-grid">')
         for p in practs:
             slug = p['slug']
             href = f'{nav_prefix}{practitioner_path(slug)}'
-            photo = X._safe_ext_url(p.get('photo_url') or '')
             n = count_by_slug.get(slug, 0)
             meta = f'{n} upcoming session{"" if n == 1 else "s"}' if n else 'Profile'
-            thumb = (f'<img class="practs__thumb" src="{_esc(photo)}" alt="{_esc(p["name"])}" '
-                     f'loading="lazy" referrerpolicy="no-referrer">') if photo else ''
-            out.append(
-                f'      <a class="practs__card" href="{_esc(href)}">{thumb}'
-                f'<span><span class="practs__name">{_esc(p["name"])}</span><br>'
-                f'<span class="practs__meta">{_esc(meta)}</span></span></a>')
+            out.append(directory.render_card(
+                href, p['name'], meta, art_by_slug.get(slug, '')))
         out.append('    </div>')
     out.append('  </div>')
     out.append('</section>')

@@ -303,30 +303,19 @@ def organization_schema(o, canonical_url):
 # Index (/operators/)
 # ---------------------------------------------------------------------------
 
-INDEX_STYLE = """<style>
-    .operators__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
-    .operators__crumbs a { color: var(--accent-on-light); text-decoration: none; }
-    .operators__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.8rem; }
-    .operators__lede { font-size: 1.1rem; color: rgba(var(--ink-rgb),0.75); max-width: 40rem; margin: 0 0 2rem; }
-    .operators__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.4rem; }
-    .operators__card { display: block; text-decoration: none; color: inherit; border: 1px solid rgba(var(--ink-rgb),0.14); padding: 1rem; }
-    .operators__card:hover { border-color: var(--accent-on-light); }
-    .operators__name { font: 500 1.1rem var(--font-display); color: var(--ink); }
-    .operators__meta { font-size: 0.85rem; color: rgba(var(--ink-rgb),0.6); margin-top: 0.2rem; }
-  </style>"""
+# The directory design (.dir-*) is shared with /practitioners/ and /venues/
+# and lives in styles.css; no page-specific style block remains.
+INDEX_STYLE = ''
 
 
-def render_index(operators, count_by_slug, nav_prefix):
+def render_index(operators, count_by_slug, nav_prefix, art_by_slug=None):
+    from _src.lib import directory
+    art_by_slug = art_by_slug or {}
     out = ['<section class="section section--light operators">', '  <div class="container">']
-    out.append('    <nav class="operators__crumbs" aria-label="Breadcrumb">')
-    out.append(f'      <a href="{nav_prefix}">Calendar</a> <span aria-hidden="true">/</span> '
-               '<span>Organizers</span>')
-    out.append('    </nav>')
-    out.append('    <span class="eyebrow">Front Range calendar</span>')
-    out.append('    <h1 class="operators__h1">Organizers</h1>')
-    out.append('    <p class="operators__lede">The collectives and studios running sound baths '
-               'across Denver and the Front Range — who they are, and where you can catch them '
-               'next.</p>')
+    out.append(directory.render_head(
+        nav_prefix, 'Organizers', 'Organizers',
+        'The collectives and studios running sound baths across Denver and the '
+        'Front Range — who they are, and where you can catch them next.'))
     if not operators:
         out.append(X.render_empty_state(
             nav_prefix,
@@ -334,16 +323,14 @@ def render_index(operators, count_by_slug, nav_prefix):
             'studios running these rooms, with every session they host in one place. '
             'For now, browse them by session on the calendar.'))
     else:
-        out.append('    <div class="operators__grid">')
+        out.append('    <div class="dir-grid">')
         for o in operators:
             slug = o['slug']
             href = f'{nav_prefix}{operator_path(slug)}'
             n = count_by_slug.get(slug, 0)
             meta = (f'{n} upcoming' if n else 'Organizer')
-            out.append(
-                f'      <a class="operators__card" href="{_esc(href)}">'
-                f'<span class="operators__name">{_esc(o["name"])}</span>'
-                f'<span class="operators__meta">{_esc(meta)}</span></a>')
+            out.append(directory.render_card(
+                href, o['name'], meta, art_by_slug.get(slug, '')))
         out.append('    </div>')
     out.append('  </div>')
     out.append('</section>')
