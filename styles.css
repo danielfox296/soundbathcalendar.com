@@ -58,11 +58,22 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
   .masthead-inner { row-gap: 0.5rem; }
 }
 
-/* ---- buttons ---- */
-.btn { display: inline-block; font: 600 0.95rem var(--font-body); text-decoration: none; padding: 0.95rem 2rem; border: none; cursor: pointer; transition: filter .2s, transform .15s; }
+/* ---- buttons (CAL-11) — primary is INK fill + PAPER text: high-contrast,
+        editorial, ~17:1. The ice --accent is a MARK color, never a text-bearing
+        button fill — ice #62B6E8 under --ink text is ~1.9:1 and reads as a
+        *disabled* button (the v1 defect). Ice returns only as a hover accent
+        (an inset underline) and on the small non-critical toggles further down
+        (near-me pressed, tag toggle), where "soft" reads as "selected." ---- */
+.btn { display: inline-block; font: 600 0.95rem var(--font-body); text-decoration: none; padding: 0.95rem 2rem; border: 1px solid transparent; cursor: pointer; transition: background .2s, color .2s, border-color .2s, box-shadow .2s, transform .15s; }
 .btn:active { transform: translateY(1px); }
-.btn-primary { background: var(--accent); color: var(--ink); }
-.btn-primary:hover { filter: brightness(1.12); }
+.btn-primary { background: var(--ink); color: var(--paper); }
+/* Anchor buttons sit inside .section--light, whose `a` color (0-1-1) would beat
+   .btn-primary (0-1-0) and paint the label link-blue on ink — pin the label. */
+.section--light a.btn-primary { color: var(--paper); }
+.section--light a.btn-secondary { color: var(--ink); }
+.btn-primary:hover { box-shadow: inset 0 -2px 0 var(--accent); }
+.btn-secondary { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-secondary:hover { border-color: var(--accent-on-light); }
 .btn-slim { padding: 0.5rem 1rem; font-size: 0.82rem; }
 
 /* ---- forms (digest capture) ---- */
