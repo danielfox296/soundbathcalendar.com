@@ -1496,7 +1496,8 @@ def build_map_page(base, header, footer, cal_rows, now, geocode=None):
                     f'{json.dumps(breadcrumb, indent=2)}\n  </script>')
 
     content = mapview_lib.render_map_page(
-        pins, nav_prefix, external_events.fmt_stamp_date(now))
+        pins, nav_prefix, external_events.fmt_stamp_date(now),
+        cal_rows=cal_rows, now=now, geocode=geocode)
     page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
     page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
 
