@@ -56,6 +56,7 @@ from _src.lib import sessions_feed
 from _src.lib import external_events
 from _src.lib import practitioners as practitioners_lib
 from _src.lib import venues as venues_lib
+from _src.lib import mapview as mapview_lib
 
 SITE_URL = 'https://soundbathcalendar.com'
 SITE_NAME = 'Sound Bath Calendar'
@@ -427,6 +428,11 @@ def build():
         base, header, footer, venue_list, cal_rows, cal_now)
     pages_built.extend(_venue_outputs)
 
+    # --- Map view (/map/) — CAL-04 ---
+    _map_outputs, _map_sitemap = build_map_page(
+        base, header, footer, cal_rows, cal_now)
+    pages_built.extend(_map_outputs)
+
     # --- ICS feeds (/front-range.ics, /<city>.ics) — Track B B.4 ---
     build_ics_feeds(cal_rows, cal_now)
 
@@ -434,7 +440,7 @@ def build():
 
     generate_sitemap(page_dirs, cal_now,
                      extra_urls=(_city_sitemap + _event_sitemap
-                                 + _pract_sitemap + _venue_sitemap))
+                                 + _pract_sitemap + _venue_sitemap + _map_sitemap))
 
 
 def build_ics_feeds(cal_rows, now):
@@ -949,6 +955,77 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
     if not venue_list:
         print('  (no published venues yet)')
 
+    return built, sitemap_entries
+
+
+def build_map_page(base, header, footer, cal_rows, now):
+    """Emit /map/ — an interactive Leaflet map of every upcoming session, pinned
+    by venue (CAL-04). Coordinates come from the committed data/geocode.json;
+    venues without one simply have no pin. Returns (built_outputs, sitemap)."""
+    print('\nGenerating map page...')
+    geocode = mapview_lib.load_geocode(REPO)
+    nav_prefix = '../'
+    pins = mapview_lib.build_pins(cal_rows, geocode, nav_prefix)
+
+    output = 'map/index.html'
+    canonical_url = f'{SITE_URL}/map/'
+    title = f'Map of sound baths on the Front Range | {SITE_NAME}'
+    description = ('An interactive map of every upcoming sound bath across Denver '
+                  'and the Colorado Front Range — pinned by room, with dates and '
+                  'ticket links.')
+    meta_desc = (f'<meta name="description" '
+                 f'content="{html_mod.escape(description, quote=True)}">')
+    og_tags, twitter_tags = _og_twitter_tags(
+        'Sound baths on the map', description, canonical_url,
+        f'{SITE_URL}/img/og-default.png')
+
+    schema_json = (f'<script type="application/ld+json">\n'
+                   f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+    collectionpage = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Sound baths on the Front Range map",
+        "url": canonical_url,
+        "description": description,
+        "isPartOf": {"@type": "WebSite", "name": SITE_NAME, "url": SITE_URL},
+    }
+    schema_json += (f'\n  <script type="application/ld+json">\n'
+                    f'{json.dumps(collectionpage, indent=2)}\n  </script>')
+    breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Calendar",
+             "item": SITE_URL + "/"},
+            {"@type": "ListItem", "position": 2, "name": "Map", "item": canonical_url},
+        ],
+    }
+    schema_json += (f'\n  <script type="application/ld+json">\n'
+                    f'{json.dumps(breadcrumb, indent=2)}\n  </script>')
+
+    content = mapview_lib.render_map_page(
+        pins, nav_prefix, external_events.fmt_stamp_date(now))
+    page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
+    page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
+
+    html = _assemble(base, {
+        'title': title,
+        'robots': 'index, follow',
+        'meta_description': meta_desc,
+        'canonical_url': canonical_url,
+        'css_path': nav_prefix,
+        'page_style': mapview_lib.MAP_HEAD,
+        'og_tags': og_tags,
+        'twitter_tags': twitter_tags,
+        'schema_json': schema_json,
+        'header': page_header,
+        'content': content,
+        'footer': page_footer,
+    })
+    built, sitemap_entries = [], []
+    if _write_page(output, html, built):
+        print(f'  ✓ {output} ({len(pins)} pins from {len(cal_rows)} rows)')
+        sitemap_entries.append((canonical_url, external_events.stamp_date_iso(now)))
     return built, sitemap_entries
 
 
