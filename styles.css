@@ -169,8 +169,10 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-band__h2 { font-size: clamp(1.4rem, 2.6vw, 1.95rem); margin: 0 0 1.2rem; }
 
 /* ---- calendar rows: dense on desktop, cards on mobile (B.3) ---- */
+/* CAL-12: tighter vertical rhythm (was 1.15rem) — more rooms per screen on a
+   scan surface, without crowding. */
 .cal-rows { border-top: 1px solid var(--line); }
-.cal-row { display: grid; grid-template-columns: 78px 1fr; gap: 0 1.5rem; padding: 1.15rem 0; border-bottom: 1px solid var(--line); align-items: start; }
+.cal-row { display: grid; grid-template-columns: 78px 1fr; gap: 0 1.5rem; padding: 0.85rem 0; border-bottom: 1px solid var(--line); align-items: start; }
 
 /* Tear-off date rail: weekday over numeral over time. The Today band omits the
    date, so a time-only rail sits at the top of the column. */
@@ -184,11 +186,22 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-row__body { display: flex; gap: 1.1rem; align-items: flex-start; min-width: 0; }
 .cal-row__media { flex: 0 0 auto; width: 104px; aspect-ratio: 3 / 2; overflow: hidden; background: rgba(10,11,13,0.05); border-radius: 2px; }
 .cal-row__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* CAL-12: reserved placeholder for an image-less row — a quiet sine-wave mark so
+   the column holds its width and every text column shares one left edge, without
+   reading as a broken image. */
+.cal-row__media--empty { display: flex; align-items: center; justify-content: center; }
+.cal-row__media--empty::after { content: "\223F"; font: 400 1.3rem var(--font-display); color: rgba(10,11,13,0.16); }
 .cal-row__text { min-width: 0; flex: 1 1 auto; }
 
-/* Marks line above the name: the city chip (every row) + Firstwater's marks. */
+/* Marks line above the name: the city chip (every row) + the modality kicker
+   (CAL-12) + Firstwater's marks. */
 .cal-row__marks { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.7rem; margin-bottom: 0.25rem; }
 .cal-row__city { font: 600 0.68rem var(--font-body); letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-on-light); }
+/* Modality kicker — 'what kind of sound bath' beside the city, a quiet middot
+   apart. Links to its tag page when one exists (CAL-09). */
+.cal-row__modality { font: 600 0.68rem var(--font-body); letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-on-light); text-decoration: none; }
+.cal-row__modality::before { content: "\00B7"; margin-right: 0.6rem; color: rgba(10,11,13,0.35); }
+a.cal-row__modality:hover { text-decoration: underline; }
 .cal-row__tag { font: 600 0.66rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-on-light); }
 .cal-row__ours { font: 600 0.62rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(10,11,13,0.5); }
 
@@ -247,7 +260,9 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 @media (max-width: 640px) {
   /* Rows become self-contained cards; the day+time rail runs as one line. */
   .cal-rows { border-top: none; }
-  .cal-row { grid-template-columns: 1fr; gap: 0.5rem; padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: 6px; margin-bottom: 0.85rem; }
+  /* CAL-12: radius 0 per the doctrine (was 6px) — sharp editorial card edge; the
+     media tile keeps its 2px (photographic content). */
+  .cal-row { grid-template-columns: 1fr; gap: 0.5rem; padding: 1rem 1.1rem; border: 1px solid var(--line); margin-bottom: 0.85rem; }
   .cal-row__when { flex-direction: row; gap: 0.55rem; align-items: baseline; }
   .cal-row__dnum { font-size: 1.1rem; }
   .cal-row__time { margin-top: 0; }

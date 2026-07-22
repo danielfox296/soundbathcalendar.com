@@ -862,11 +862,25 @@ def set_linked_tag_pages(mapping):
     _LINKED_TAG_PAGES = dict(mapping or {})
 
 
-def render_tag_chips(row, cls='cal-tags', nav_prefix=''):
+def row_primary_modality(row):
+    """The row's primary modality slug (first in vocabulary order), or None.
+    Surfaced as the row's kicker mark (CAL-12) so 'what kind of sound bath' is
+    scannable at the top of the row without reading down to the chips."""
+    for s in row_tag_slugs(row):
+        if taxonomy.AXIS_BY_SLUG.get(s) == 'modality':
+            return s
+    return None
+
+
+def render_tag_chips(row, cls='cal-tags', nav_prefix='', skip=None):
     """Tag chips for a row/page, or '' when the row carries no known tags. A tag
     with a live landing page (CAL-09) renders as a link; the rest stay inert
-    <span>s. nav_prefix resolves the link from the caller's depth."""
+    <span>s. nav_prefix resolves the link from the caller's depth. `skip` drops
+    slugs already shown elsewhere (CAL-12: the modality kicker), so the row's
+    chip set doesn't repeat the kicker."""
     slugs = row_tag_slugs(row)
+    if skip:
+        slugs = [s for s in slugs if s not in skip]
     if not slugs:
         return ''
     parts = []
@@ -948,23 +962,40 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None):
 
     # Event image — one consistent frame (fixed ratio, object-fit cover, lazy)
     # so heterogeneous operator flyers sit coherently. The frame is Firstwater's,
-    # the content is the operator's (RA-style). External rows only, and only when
-    # the listing carried a scheme-safe image; no image -> no frame (clean row).
+    # the content is the operator's (RA-style). CAL-12: the media column is now
+    # RESERVED for every external row — an image-less row draws a quiet
+    # placeholder tile instead of collapsing, so every text column shares one
+    # left edge (mirrors digest.ts `showThumb`). FW rows keep their border+tint
+    # identity and carry no media tile.
     img = row.get('image_url')
-    if img and not is_fw:
-        parts.append('    <div class="cal-row__media">')
-        parts.append(
-            f'      <img src="{_esc(img)}" alt="{_esc(alt_text(row))}" '
-            f'loading="lazy" decoding="async">'
-        )
-        parts.append('    </div>')
+    if not is_fw:
+        if img:
+            parts.append('    <div class="cal-row__media">')
+            parts.append(
+                f'      <img src="{_esc(img)}" alt="{_esc(alt_text(row))}" '
+                f'loading="lazy" decoding="async">'
+            )
+            parts.append('    </div>')
+        else:
+            parts.append('    <div class="cal-row__media cal-row__media--empty"'
+                         ' aria-hidden="true"></div>')
 
     parts.append('    <div class="cal-row__text">')
 
-    # Marks line: the city chip (every row, now that time is the axis) plus
-    # Firstwater's own-room marker on its own rows.
+    # Marks line: the city chip (every row) + the primary modality kicker (CAL-12,
+    # 'what kind of sound bath' at a glance, linked to its tag page when one
+    # exists) + Firstwater's own-room marker on its own rows.
+    mod = None if is_fw else row_primary_modality(row)
     parts.append('      <div class="cal-row__marks">')
     parts.append(f'        <span class="cal-row__city">{_esc(_city_tag(row))}</span>')
+    if mod:
+        _mlabel = _esc(taxonomy.label_for(mod))
+        _mpath = _LINKED_TAG_PAGES.get(mod)
+        if _mpath:
+            parts.append(f'        <a class="cal-row__modality" '
+                         f'href="{_esc(nav_prefix + _mpath)}">{_mlabel}</a>')
+        else:
+            parts.append(f'        <span class="cal-row__modality">{_mlabel}</span>')
     if is_fw:
         parts.append('        <span class="cal-row__tag">Firstwater</span>')
         parts.append('        <span class="cal-row__ours">Our room</span>')
@@ -1020,7 +1051,10 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None):
     # Tag chips (CAL-01) — external rows only; the canonical vocabulary, or
     # nothing when the row carries no known tag (a bare row is the honest default).
     if not is_fw:
-        chips = render_tag_chips(row, cls='cal-row__tags', nav_prefix=nav_prefix)
+        # Skip the modality already shown as the kicker (CAL-12) so the chip set
+        # carries the qualifiers (intent/setting/access), not a repeat.
+        chips = render_tag_chips(row, cls='cal-row__tags', nav_prefix=nav_prefix,
+                                 skip={mod} if mod else None)
         if chips:
             parts.append('      ' + chips)
 
