@@ -49,7 +49,10 @@ def emit(name, photo_file, ratio_w, ratio_h, focal):
 SURFACES = [
     # /what-to-expect/ hero: the first-timer on the mat (matches its OG card).
     ('what-to-expect', 'pexels-6914822.jpg', 21, 10, (0.5, 0.55)),
-    # City-page warm bands (16:5 strips; the listing ROOT stays utilitarian).
+    # Root warm band (Daniel opted the root in, 2026-07-22): same 16:5 strip,
+    # the og-default photograph.
+    ('front-range', 'pexels-6013471.jpg', 16, 5, (0.5, 0.68)),
+    # City-page warm bands (16:5 strips).
     ('denver', 'pexels-6013488.jpg', 16, 5, (0.5, 0.80)),
     ('boulder', 'pexels-6997998.jpg', 16, 5, (0.5, 0.55)),
     ('fort-collins', 'pexels-5602465.jpg', 16, 5, (0.5, 0.68)),

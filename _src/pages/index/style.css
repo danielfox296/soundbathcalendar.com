@@ -1,0 +1,6 @@
+/* Homepage-only styles. The warm band (CAL-22 follow-up) mirrors the city
+   pages' external_events.CITY_WARM_STYLE — natural photo, dark scheme dims
+   via CSS, layout reserved by width/height + aspect-ratio. */
+.cal-warmband { margin: 0 0 2rem; }
+.cal-warmband img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 5; object-fit: cover; }
+@media (prefers-color-scheme: dark) { .cal-warmband img { filter: brightness(0.82); } }
