@@ -128,7 +128,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../../styles.css?v=9054b17d">
+  <link rel="stylesheet" href="../../styles.css?v=8d326f4b">
   <style>
     .cal-event { }
     .cal-event__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
@@ -153,6 +153,34 @@
     .cal-event__back a:hover { text-decoration: underline; }
     @media (max-width: 640px) { .cal-event__facts { grid-template-columns: 1fr; gap: 0.2rem; } .cal-event__facts dd { margin-bottom: 0.8rem; } }
   </style>
+
+  <!-- Systemic image fallback: external listing images (operator CDNs,
+       Eventbrite, wsimg…) expire and hotlink-block routinely. Any <img> that
+       fails to load is removed and its parent gets .img-broken, which each
+       tile context styles as a designed placeholder (styles.css) — never the
+       browser's broken-image glyph. Inline + in <head> so the capture-phase
+       listener exists before the parser reaches the first <img>; the
+       DOMContentLoaded sweep catches anything that failed even earlier
+       (e.g. cached failures resolving instantly). -->
+  <script>
+    (function () {
+      function fail(img) {
+        var p = img.parentElement;
+        if (!p) return;
+        p.classList.add('img-broken');
+        img.remove();
+      }
+      addEventListener('error', function (e) {
+        var t = e.target;
+        if (t && t.tagName === 'IMG') fail(t);
+      }, true);
+      document.addEventListener('DOMContentLoaded', function () {
+        Array.prototype.slice.call(document.images).forEach(function (img) {
+          if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
+        });
+      });
+    })();
+  </script>
 </head>
 <body>
   <header class="masthead">
@@ -191,7 +219,7 @@
     <p class="cal-event__desc">A gong journey presented by Sound Murals at Harmonist Sanctuary in Denver, Wednesday evening.</p>
     <p class="cal-event__tags"><a class="cal-tag cal-tag--link" href="../../gong-bath/">Gong bath</a></p>
     <figure class="cal-event__figure">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1184954631%2F885379362523%2F1%2Foriginal.20260519-155448?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.504&amp;fp-y=0.419&amp;s=19d0390ecf9df5444e1dbcc7222b5eed" alt="Gong Journey — Sound Murals at Harmonist Sanctuary, East Colfax" loading="lazy" decoding="async">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1184954631%2F885379362523%2F1%2Foriginal.20260519-155448?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.504&amp;fp-y=0.419&amp;s=19d0390ecf9df5444e1dbcc7222b5eed" alt="Gong Journey — Sound Murals at Harmonist Sanctuary, East Colfax" loading="lazy" decoding="async" referrerpolicy="no-referrer">
       <figcaption>Gong Journey — Sound Murals at Harmonist Sanctuary, East Colfax</figcaption>
     </figure>
       </div>

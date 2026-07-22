@@ -181,7 +181,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .digest-preview__time { flex: 0 0 3.1rem; font: 600 0.68rem var(--font-body); color: rgba(var(--ink-rgb),0.62); white-space: nowrap; padding-top: 0.15rem; }
 .digest-preview__thumb { flex: 0 0 auto; width: 56px; height: 38px; background: var(--dp-thumbbg); border-radius: 2px; overflow: hidden; }
 .digest-preview__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.digest-preview__thumb--empty { background: transparent; }
+.digest-preview__thumb--empty, .digest-preview__thumb.img-broken { background: transparent; }
 .digest-preview__text { min-width: 0; display: flex; flex-direction: column; gap: 0.1rem; }
 .digest-preview__city { font: 600 0.56rem var(--font-body); letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-on-light); }
 .digest-preview__name { font: 500 0.88rem var(--font-display); letter-spacing: -0.01em; line-height: 1.3; color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 2px; }
@@ -307,9 +307,10 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-row__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 /* CAL-12: reserved placeholder for an image-less row — a quiet sine-wave mark so
    the column holds its width and every text column shares one left edge, without
-   reading as a broken image. */
-.cal-row__media--empty { display: flex; align-items: center; justify-content: center; }
-.cal-row__media--empty::after { content: "\223F"; font: 400 1.3rem var(--font-display); color: rgba(var(--ink-rgb),0.16); }
+   reading as a broken image. .img-broken (a load-time failure, marked by the
+   base-layout fallback script) collapses to the same designed state. */
+.cal-row__media--empty, .cal-row__media.img-broken { display: flex; align-items: center; justify-content: center; }
+.cal-row__media--empty::after, .cal-row__media.img-broken::after { content: "\223F"; font: 400 1.3rem var(--font-display); color: rgba(var(--ink-rgb),0.16); }
 .cal-row__text { min-width: 0; flex: 1 1 auto; }
 
 /* Marks line above the name: the city chip (every row) + the modality kicker
@@ -379,6 +380,13 @@ a.cal-row__modality:hover { text-decoration: underline; }
 .thanks-main { min-height: 55vh; }
 .thanks-sub { color: rgba(var(--ink-rgb),0.65); max-width: 38rem; margin: 0.6rem 0 2rem; }
 
+/* ---- image fallback (systemic): the base-layout script removes any <img>
+        that fails to load and marks its parent .img-broken. Tile contexts
+        above restate their designed empty state for it; standalone figures
+        (event flyer, warm bands, article images) simply disappear — a caption
+        with no picture, or an empty frame, must never remain. ---- */
+.cal-event__figure.img-broken, .cal-warmband.img-broken, figure.img-broken { display: none; }
+
 /* ---- entity directories (/practitioners/, /venues/, /operators/): one
         shared card design (rendered by _src/lib/directory.py). Media tile on
         top — the entity's photo, else its next session's listing image, else
@@ -398,10 +406,13 @@ a.cal-row__modality:hover { text-decoration: underline; }
 .dir-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
 .dir-card:hover .dir-card__media img { transform: scale(1.03); }
 /* Placeholder tile: the entity's initial as a quiet monogram over the tint,
-   with a thin accent baseline — designed absence, not a broken image. */
-.dir-card__media--ph { display: grid; place-items: center; position: relative; }
-.dir-card__media--ph::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--accent); opacity: 0.55; }
-.dir-card__monogram { font: 300 2.6rem var(--font-display); letter-spacing: -0.02em; color: rgba(var(--ink-rgb),0.32); }
+   with a thin accent baseline — designed absence, not a broken image. The
+   same state serves .img-broken (an image that failed at load time, swapped
+   in by the base-layout fallback script): the monogram rides data-monogram
+   so CSS can draw it with no image and no extra markup. */
+.dir-card__media--ph, .dir-card__media.img-broken { display: grid; place-items: center; position: relative; }
+.dir-card__media--ph::after, .dir-card__media.img-broken::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--accent); opacity: 0.55; }
+.dir-card__media--ph::before, .dir-card__media.img-broken::before { content: attr(data-monogram); font: 300 2.6rem var(--font-display); letter-spacing: -0.02em; color: rgba(var(--ink-rgb),0.32); }
 .dir-card__name { display: block; margin-top: 0.75rem; font: 500 1.02rem var(--font-display); letter-spacing: -0.01em; line-height: 1.3; color: var(--ink); }
 .dir-card:hover .dir-card__name { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
 .dir-card__meta { display: block; margin-top: 0.2rem; font-size: 0.82rem; color: rgba(var(--ink-rgb),0.58); }

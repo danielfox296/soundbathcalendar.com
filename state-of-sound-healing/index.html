@@ -131,7 +131,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=9054b17d">
+  <link rel="stylesheet" href="../styles.css?v=8d326f4b">
   <style>
   .soh { --soh-white: #fff; --soh-dim: #5d6570; --soh-wash: rgba(98,182,232,0.14);
          --soh-line: var(--line);
@@ -292,6 +292,34 @@
   .soh-js .in-view .soh-row:nth-child(6) .soh-row__fill { transition-delay: .40s; }
   .soh-js .in-view .soh-row:nth-child(7) .soh-row__fill { transition-delay: .48s; }
 </style>
+
+  <!-- Systemic image fallback: external listing images (operator CDNs,
+       Eventbrite, wsimg…) expire and hotlink-block routinely. Any <img> that
+       fails to load is removed and its parent gets .img-broken, which each
+       tile context styles as a designed placeholder (styles.css) — never the
+       browser's broken-image glyph. Inline + in <head> so the capture-phase
+       listener exists before the parser reaches the first <img>; the
+       DOMContentLoaded sweep catches anything that failed even earlier
+       (e.g. cached failures resolving instantly). -->
+  <script>
+    (function () {
+      function fail(img) {
+        var p = img.parentElement;
+        if (!p) return;
+        p.classList.add('img-broken');
+        img.remove();
+      }
+      addEventListener('error', function (e) {
+        var t = e.target;
+        if (t && t.tagName === 'IMG') fail(t);
+      }, true);
+      document.addEventListener('DOMContentLoaded', function () {
+        Array.prototype.slice.call(document.images).forEach(function (img) {
+          if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
+        });
+      });
+    })();
+  </script>
 </head>
 <body>
   <header class="masthead">

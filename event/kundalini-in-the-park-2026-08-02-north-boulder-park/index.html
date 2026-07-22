@@ -131,7 +131,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../../styles.css?v=9054b17d">
+  <link rel="stylesheet" href="../../styles.css?v=8d326f4b">
   <style>
     .cal-event { }
     .cal-event__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
@@ -156,6 +156,34 @@
     .cal-event__back a:hover { text-decoration: underline; }
     @media (max-width: 640px) { .cal-event__facts { grid-template-columns: 1fr; gap: 0.2rem; } .cal-event__facts dd { margin-bottom: 0.8rem; } }
   </style>
+
+  <!-- Systemic image fallback: external listing images (operator CDNs,
+       Eventbrite, wsimg…) expire and hotlink-block routinely. Any <img> that
+       fails to load is removed and its parent gets .img-broken, which each
+       tile context styles as a designed placeholder (styles.css) — never the
+       browser's broken-image glyph. Inline + in <head> so the capture-phase
+       listener exists before the parser reaches the first <img>; the
+       DOMContentLoaded sweep catches anything that failed even earlier
+       (e.g. cached failures resolving instantly). -->
+  <script>
+    (function () {
+      function fail(img) {
+        var p = img.parentElement;
+        if (!p) return;
+        p.classList.add('img-broken');
+        img.remove();
+      }
+      addEventListener('error', function (e) {
+        var t = e.target;
+        if (t && t.tagName === 'IMG') fail(t);
+      }, true);
+      document.addEventListener('DOMContentLoaded', function () {
+        Array.prototype.slice.call(document.images).forEach(function (img) {
+          if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
+        });
+      });
+    })();
+  </script>
 </head>
 <body>
   <header class="masthead">
@@ -194,7 +222,7 @@
     <p class="cal-event__desc">An outdoor kundalini and sound session led by Pavanjeet at North Boulder Park, Sunday morning; donation-based.</p>
     <p class="cal-event__tags"><a class="cal-tag cal-tag--link" href="../../gong-bath/">Gong bath</a><a class="cal-tag cal-tag--link" href="../../breathwork-sound/">Breathwork + sound</a></p>
     <figure class="cal-event__figure">
-      <img src="http://static1.squarespace.com/static/54e612e0e4b0fbb3ebf7262b/t/683cde636708fc15e1a08843/1748819555879/parkclassedit.jpg?format=1500w" alt="Kundalini in the Park — Pavanjeet at North Boulder Park, Boulder" loading="lazy" decoding="async">
+      <img src="http://static1.squarespace.com/static/54e612e0e4b0fbb3ebf7262b/t/683cde636708fc15e1a08843/1748819555879/parkclassedit.jpg?format=1500w" alt="Kundalini in the Park — Pavanjeet at North Boulder Park, Boulder" loading="lazy" decoding="async" referrerpolicy="no-referrer">
       <figcaption>Kundalini in the Park — Pavanjeet at North Boulder Park, Boulder</figcaption>
     </figure>
       </div>

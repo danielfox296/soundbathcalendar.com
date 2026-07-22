@@ -1015,7 +1015,7 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None):
             parts.append('    <div class="cal-row__media">')
             parts.append(
                 f'      <img src="{_esc(img)}" alt="{_esc(alt_text(row))}" '
-                f'loading="lazy" decoding="async">'
+                f'loading="lazy" decoding="async" referrerpolicy="no-referrer">'
             )
             parts.append('    </div>')
         else:
@@ -1723,7 +1723,8 @@ def render_digest_preview(rows, now=None):
             if show_thumb:
                 u = r.get('image_url') or ''
                 thumb = (f'<span class="digest-preview__thumb">'
-                         f'<img src="{_esc(u)}" alt="" loading="lazy"></span>'
+                         f'<img src="{_esc(u)}" alt="" loading="lazy" '
+                         f'referrerpolicy="no-referrer"></span>'
                          if u else
                          '<span class="digest-preview__thumb digest-preview__thumb--empty"></span>')
             city = (r.get('city') or '').strip()
@@ -2079,7 +2080,7 @@ def render_event_page(row, nav_prefix, site_url, now=None):
         out.append('    <figure class="cal-event__figure">')
         out.append(
             f'      <img src="{esc(img)}" alt="{esc(alt_text(row))}" '
-            f'loading="lazy" decoding="async">')
+            f'loading="lazy" decoding="async" referrerpolicy="no-referrer">')
         out.append(f'      <figcaption>{esc(alt_text(row))}</figcaption>')
         out.append('    </figure>')
 

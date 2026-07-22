@@ -759,8 +759,36 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=9054b17d">
+  <link rel="stylesheet" href="../styles.css?v=8d326f4b">
   
+
+  <!-- Systemic image fallback: external listing images (operator CDNs,
+       Eventbrite, wsimg…) expire and hotlink-block routinely. Any <img> that
+       fails to load is removed and its parent gets .img-broken, which each
+       tile context styles as a designed placeholder (styles.css) — never the
+       browser's broken-image glyph. Inline + in <head> so the capture-phase
+       listener exists before the parser reaches the first <img>; the
+       DOMContentLoaded sweep catches anything that failed even earlier
+       (e.g. cached failures resolving instantly). -->
+  <script>
+    (function () {
+      function fail(img) {
+        var p = img.parentElement;
+        if (!p) return;
+        p.classList.add('img-broken');
+        img.remove();
+      }
+      addEventListener('error', function (e) {
+        var t = e.target;
+        if (t && t.tagName === 'IMG') fail(t);
+      }, true);
+      document.addEventListener('DOMContentLoaded', function () {
+        Array.prototype.slice.call(document.images).forEach(function (img) {
+          if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
+        });
+      });
+    })();
+  </script>
 </head>
 <body>
   <header class="masthead">
@@ -831,7 +859,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1184954631%2F885379362523%2F1%2Foriginal.20260519-155448?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.504&amp;fp-y=0.419&amp;s=19d0390ecf9df5444e1dbcc7222b5eed" alt="Gong Journey — Sound Murals at Harmonist Sanctuary, East Colfax" loading="lazy" decoding="async">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1184954631%2F885379362523%2F1%2Foriginal.20260519-155448?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.504&amp;fp-y=0.419&amp;s=19d0390ecf9df5444e1dbcc7222b5eed" alt="Gong Journey — Sound Murals at Harmonist Sanctuary, East Colfax" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -857,7 +885,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F927826293%2F1458112394913%2F1%2Foriginal.20250105-040912?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.507575757576&amp;fp-y=0.33853354894&amp;s=64ef09bd6e1cb743442c0e0b30d99c11" alt="Friday Recharge: A Restorative Sound Journey — Annmarie of ResoundingWell at Wildfire Arts Center, Fort Collins" loading="lazy" decoding="async">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F927826293%2F1458112394913%2F1%2Foriginal.20250105-040912?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.507575757576&amp;fp-y=0.33853354894&amp;s=64ef09bd6e1cb743442c0e0b30d99c11" alt="Friday Recharge: A Restorative Sound Journey — Annmarie of ResoundingWell at Wildfire Arts Center, Fort Collins" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -878,7 +906,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://img1.wsimg.com/isteam/ip/52467a92-9014-436e-be8d-903fcdb5b87a/blob-cdbc9ec.png" alt="Crystal &amp; Gong Sound Concert in the Salt Cave — 5 Star Salt Caves Wellness Center, West Washington Park" loading="lazy" decoding="async">
+      <img src="https://img1.wsimg.com/isteam/ip/52467a92-9014-436e-be8d-903fcdb5b87a/blob-cdbc9ec.png" alt="Crystal &amp; Gong Sound Concert in the Salt Cave — 5 Star Salt Caves Wellness Center, West Washington Park" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -904,7 +932,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1185765802%2F732979952313%2F1%2Foriginal.20260530-155609?crop=focalpoint&amp;fit=crop&amp;w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=e3407899097eb98a34c983af0aaaffaa" alt="Thursday Mind Body Reset — Gong Journey — Rocky Mountain Restore &amp; Stretch at Rocky Mountain Restore &amp; Stretch LLC, Fort Collins" loading="lazy" decoding="async">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1185765802%2F732979952313%2F1%2Foriginal.20260530-155609?crop=focalpoint&amp;fit=crop&amp;w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=e3407899097eb98a34c983af0aaaffaa" alt="Thursday Mind Body Reset — Gong Journey — Rocky Mountain Restore &amp; Stretch at Rocky Mountain Restore &amp; Stretch LLC, Fort Collins" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -925,7 +953,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://static.wixstatic.com/media/37af73_6840b593100c42cdb32e4f76258d6673~mv2.png/v1/fill/w_940,h_788,al_c/37af73_6840b593100c42cdb32e4f76258d6673~mv2.png" alt="Thursday&#x27;s Weekly Gong Journey — Rocky Mountain Restore &amp; Stretch, Fort Collins" loading="lazy" decoding="async">
+      <img src="https://static.wixstatic.com/media/37af73_6840b593100c42cdb32e4f76258d6673~mv2.png/v1/fill/w_940,h_788,al_c/37af73_6840b593100c42cdb32e4f76258d6673~mv2.png" alt="Thursday&#x27;s Weekly Gong Journey — Rocky Mountain Restore &amp; Stretch, Fort Collins" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -946,7 +974,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://static1.squarespace.com/static/611f0a9cbabebd01212ff5b3/t/614915bced8271425779a1a7/1632179644657/Untitled+design.png?format=1500w" alt="Gong Bath with Beth — Una Vida Meditation &amp; Movement, Boulder" loading="lazy" decoding="async">
+      <img src="https://static1.squarespace.com/static/611f0a9cbabebd01212ff5b3/t/614915bced8271425779a1a7/1632179644657/Untitled+design.png?format=1500w" alt="Gong Bath with Beth — Una Vida Meditation &amp; Movement, Boulder" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -991,7 +1019,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://static.wixstatic.com/media/37af73_c07b9d90685a4dad8ff8447bdc0a6f8c~mv2.png/v1/fill/w_940,h_788,al_c/37af73_c07b9d90685a4dad8ff8447bdc0a6f8c~mv2.png" alt="Outdoor Full Moon Gong Journey — Rocky Mountain Restore &amp; Stretch, Fort Collins" loading="lazy" decoding="async">
+      <img src="https://static.wixstatic.com/media/37af73_c07b9d90685a4dad8ff8447bdc0a6f8c~mv2.png/v1/fill/w_940,h_788,al_c/37af73_c07b9d90685a4dad8ff8447bdc0a6f8c~mv2.png" alt="Outdoor Full Moon Gong Journey — Rocky Mountain Restore &amp; Stretch, Fort Collins" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -1012,7 +1040,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1184030067%2F232943210601%2F1%2Foriginal.20260507-154404?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.498&amp;fp-y=0.421&amp;s=fca436183d536357b87cb58433aea8ec" alt="Full Moon Meditation &amp; Six Gong Relaxation — Pavanjeet at The StarHouse, Boulder" loading="lazy" decoding="async">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1184030067%2F232943210601%2F1%2Foriginal.20260507-154404?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.498&amp;fp-y=0.421&amp;s=fca436183d536357b87cb58433aea8ec" alt="Full Moon Meditation &amp; Six Gong Relaxation — Pavanjeet at The StarHouse, Boulder" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -1033,7 +1061,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="http://static1.squarespace.com/static/54e612e0e4b0fbb3ebf7262b/t/683cde636708fc15e1a08843/1748819555879/parkclassedit.jpg?format=1500w" alt="Kundalini in the Park — Pavanjeet at North Boulder Park, Boulder" loading="lazy" decoding="async">
+      <img src="http://static1.squarespace.com/static/54e612e0e4b0fbb3ebf7262b/t/683cde636708fc15e1a08843/1748819555879/parkclassedit.jpg?format=1500w" alt="Kundalini in the Park — Pavanjeet at North Boulder Park, Boulder" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -1055,7 +1083,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1185766369%2F732979952313%2F1%2Foriginal.20260530-160846?crop=focalpoint&amp;fit=crop&amp;w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=9d57118a23e7ec91b571f81105c3d18e" alt="Sundays of Sound - Mind Body Reset Gong Journey — Rocky Mountain Restore &amp; Stretch at Rocky Mountain Restore &amp; Stretch LLC, Fort Collins" loading="lazy" decoding="async">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1185766369%2F732979952313%2F1%2Foriginal.20260530-160846?crop=focalpoint&amp;fit=crop&amp;w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=9d57118a23e7ec91b571f81105c3d18e" alt="Sundays of Sound - Mind Body Reset Gong Journey — Rocky Mountain Restore &amp; Stretch at Rocky Mountain Restore &amp; Stretch LLC, Fort Collins" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -1076,7 +1104,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://static.wixstatic.com/media/37af73_2ab7f42311fc441aabf7cddb8c819f90~mv2.png/v1/fill/w_940,h_788,al_c/37af73_2ab7f42311fc441aabf7cddb8c819f90~mv2.png" alt="Sunday Morning of Sound Gong Journey - Horsetooth Reservoir — Rocky Mountain Restore &amp; Stretch, Fort Collins" loading="lazy" decoding="async">
+      <img src="https://static.wixstatic.com/media/37af73_2ab7f42311fc441aabf7cddb8c819f90~mv2.png/v1/fill/w_940,h_788,al_c/37af73_2ab7f42311fc441aabf7cddb8c819f90~mv2.png" alt="Sunday Morning of Sound Gong Journey - Horsetooth Reservoir — Rocky Mountain Restore &amp; Stretch, Fort Collins" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -1097,7 +1125,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F895544893%2F562040949077%2F1%2Foriginal.20241109-201833?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.00032196969697&amp;fp-y=0.00667910447761&amp;s=e91b86ac5cf0e131e887886e43cd4652" alt="Vibrations of Peace: Gong Bath &amp; Sound Immersion — Mile High Mindfulness, Denver" loading="lazy" decoding="async">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F895544893%2F562040949077%2F1%2Foriginal.20241109-201833?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.00032196969697&amp;fp-y=0.00667910447761&amp;s=e91b86ac5cf0e131e887886e43cd4652" alt="Vibrations of Peace: Gong Bath &amp; Sound Immersion — Mile High Mindfulness, Denver" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -1118,7 +1146,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F809182039%2F232943210601%2F1%2Foriginal.20240717-032739?w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;rect=0%2C280%2C3360%2C1680&amp;s=710ff13d0cf76a0ba6d79b059e905102" alt="Solar Eclipse Sunset Gong Bath — Pavanjeet at North Boulder Park, Boulder" loading="lazy" decoding="async">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F809182039%2F232943210601%2F1%2Foriginal.20240717-032739?w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;rect=0%2C280%2C3360%2C1680&amp;s=710ff13d0cf76a0ba6d79b059e905102" alt="Solar Eclipse Sunset Gong Bath — Pavanjeet at North Boulder Park, Boulder" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -1193,7 +1221,7 @@
           </div>
           <div class="digest-preview__row">
             <span class="digest-preview__time">5:30 PM</span>
-            <span class="digest-preview__thumb"><img src="https://images.squarespace-cdn.com/content/v1/661980168a4a1d082549c6b0/1764796815449-E1R3KVLG1RAUECW8U2EE/instruments+photo+caley+gardens.jpg" alt="" loading="lazy"></span>
+            <span class="digest-preview__thumb"><img src="https://images.squarespace-cdn.com/content/v1/661980168a4a1d082549c6b0/1764796815449-E1R3KVLG1RAUECW8U2EE/instruments+photo+caley+gardens.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></span>
             <span class="digest-preview__text">
               <span class="digest-preview__city">Denver</span>
               <span class="digest-preview__name">Midweek Harmony Reset - Sound Bath</span>
@@ -1202,7 +1230,7 @@
           </div>
           <div class="digest-preview__row">
             <span class="digest-preview__time">6:00 PM</span>
-            <span class="digest-preview__thumb"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1185167628%2F41374558650%2F1%2Foriginal.20260521-202636?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.52&amp;fp-y=0.771&amp;s=570dee5a036894bc1649730048f89af6" alt="" loading="lazy"></span>
+            <span class="digest-preview__thumb"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1185167628%2F41374558650%2F1%2Foriginal.20260521-202636?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.52&amp;fp-y=0.771&amp;s=570dee5a036894bc1649730048f89af6" alt="" loading="lazy" referrerpolicy="no-referrer"></span>
             <span class="digest-preview__text">
               <span class="digest-preview__city">Colorado Springs</span>
               <span class="digest-preview__name">Community Sound Bath</span>
@@ -1211,7 +1239,7 @@
           </div>
           <div class="digest-preview__row">
             <span class="digest-preview__time">6:30 PM</span>
-            <span class="digest-preview__thumb"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1187032162%2F362102452485%2F1%2Foriginal.20260616-145844?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=826d362a6dd40f4bf081d9243427625f" alt="" loading="lazy"></span>
+            <span class="digest-preview__thumb"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1187032162%2F362102452485%2F1%2Foriginal.20260616-145844?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=826d362a6dd40f4bf081d9243427625f" alt="" loading="lazy" referrerpolicy="no-referrer"></span>
             <span class="digest-preview__text">
               <span class="digest-preview__city">Colorado Springs</span>
               <span class="digest-preview__name">Floating Sound Bath - Elise Nicole</span>

@@ -44,15 +44,19 @@ def render_head(nav_prefix, crumb_label, h1, lede):
 def render_card(href, name, meta, img_url):
     """One directory card. A missing image draws the monogram placeholder —
     the media tile is RESERVED (CAL-12 doctrine: every text column shares one
-    left edge, and the grid stays uniform). The monogram is aria-hidden; the
-    name below carries the meaning."""
+    left edge, and the grid stays uniform). The tile ALWAYS carries
+    data-monogram: when a present image later fails to load (expired CDN URL,
+    hotlink block), the base-layout fallback marks the tile .img-broken and
+    CSS draws the same monogram — designed absence either way. The tile is
+    aria-hidden throughout; the name below carries the meaning."""
+    initial = (name or '?').strip()[:1].upper()
     if img_url:
-        media = (f'<span class="dir-card__media"><img src="{_esc(img_url)}" alt="" '
+        media = (f'<span class="dir-card__media" data-monogram="{_esc(initial)}" '
+                 f'aria-hidden="true"><img src="{_esc(img_url)}" alt="" '
                  f'loading="lazy" decoding="async" referrerpolicy="no-referrer"></span>')
     else:
-        initial = (name or '?').strip()[:1].upper()
-        media = (f'<span class="dir-card__media dir-card__media--ph" aria-hidden="true">'
-                 f'<span class="dir-card__monogram">{_esc(initial)}</span></span>')
+        media = (f'<span class="dir-card__media dir-card__media--ph" '
+                 f'data-monogram="{_esc(initial)}" aria-hidden="true"></span>')
     return (f'      <a class="dir-card" href="{_esc(href)}">{media}'
             f'<span class="dir-card__name">{_esc(name)}</span>'
             f'<span class="dir-card__meta">{_esc(meta)}</span></a>')

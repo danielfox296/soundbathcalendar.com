@@ -373,8 +373,36 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=9054b17d">
+  <link rel="stylesheet" href="../styles.css?v=8d326f4b">
   
+
+  <!-- Systemic image fallback: external listing images (operator CDNs,
+       Eventbrite, wsimg…) expire and hotlink-block routinely. Any <img> that
+       fails to load is removed and its parent gets .img-broken, which each
+       tile context styles as a designed placeholder (styles.css) — never the
+       browser's broken-image glyph. Inline + in <head> so the capture-phase
+       listener exists before the parser reaches the first <img>; the
+       DOMContentLoaded sweep catches anything that failed even earlier
+       (e.g. cached failures resolving instantly). -->
+  <script>
+    (function () {
+      function fail(img) {
+        var p = img.parentElement;
+        if (!p) return;
+        p.classList.add('img-broken');
+        img.remove();
+      }
+      addEventListener('error', function (e) {
+        var t = e.target;
+        if (t && t.tagName === 'IMG') fail(t);
+      }, true);
+      document.addEventListener('DOMContentLoaded', function () {
+        Array.prototype.slice.call(document.images).forEach(function (img) {
+          if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
+        });
+      });
+    })();
+  </script>
 </head>
 <body>
   <header class="masthead">
@@ -446,7 +474,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1188688367%2F151207764676%2F1%2Foriginal.20260712-050617?crop=focalpoint&amp;fit=crop&amp;w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=0783a6b11e6f1da050489294fcfc3c29" alt="45-Minute Reset: Sound, Movement, Breath &amp; Laughter — Kochun-Ra at Inca Street Collective, La Alma - Lincoln Park" loading="lazy" decoding="async">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1188688367%2F151207764676%2F1%2Foriginal.20260712-050617?crop=focalpoint&amp;fit=crop&amp;w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=0783a6b11e6f1da050489294fcfc3c29" alt="45-Minute Reset: Sound, Movement, Breath &amp; Laughter — Kochun-Ra at Inca Street Collective, La Alma - Lincoln Park" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -467,7 +495,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://secure.meetupstatic.com/photos/event/e/8/a/2/600_534299554.jpeg" alt="Colorado Salt Cave w/Sound Healing — Essential Wellness Society of Colorado at Colorado Salt Cave, Colorado Springs" loading="lazy" decoding="async">
+      <img src="https://secure.meetupstatic.com/photos/event/e/8/a/2/600_534299554.jpeg" alt="Colorado Salt Cave w/Sound Healing — Essential Wellness Society of Colorado at Colorado Salt Cave, Colorado Springs" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -493,7 +521,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1170352253%2F1717123237503%2F1%2Foriginal.20251106-205809?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.508&amp;fp-y=0.463&amp;s=5b1948a987dc266472f80d80234128c3" alt="Breathwork + Sound Healing Immersion — Soul Growth Network at 1545 S Pearl St, Platt Park" loading="lazy" decoding="async">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1170352253%2F1717123237503%2F1%2Foriginal.20251106-205809?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.508&amp;fp-y=0.463&amp;s=5b1948a987dc266472f80d80234128c3" alt="Breathwork + Sound Healing Immersion — Soul Growth Network at 1545 S Pearl St, Platt Park" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -519,7 +547,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="http://static1.squarespace.com/static/54e612e0e4b0fbb3ebf7262b/t/683cde636708fc15e1a08843/1748819555879/parkclassedit.jpg?format=1500w" alt="Kundalini in the Park — Pavanjeet at North Boulder Park, Boulder" loading="lazy" decoding="async">
+      <img src="http://static1.squarespace.com/static/54e612e0e4b0fbb3ebf7262b/t/683cde636708fc15e1a08843/1748819555879/parkclassedit.jpg?format=1500w" alt="Kundalini in the Park — Pavanjeet at North Boulder Park, Boulder" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -541,7 +569,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188993500%2F365104895489%2F1%2Foriginal.20260716-120121?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=626b91e5a015d7f2da8aad5bdaca9b04" alt="Somatic BreathWork &amp; Sound Bath — Singing Bowls of the Rockies, Colorado Springs" loading="lazy" decoding="async">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188993500%2F365104895489%2F1%2Foriginal.20260716-120121?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=626b91e5a015d7f2da8aad5bdaca9b04" alt="Somatic BreathWork &amp; Sound Bath — Singing Bowls of the Rockies, Colorado Springs" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
@@ -616,7 +644,7 @@
           </div>
           <div class="digest-preview__row">
             <span class="digest-preview__time">5:30 PM</span>
-            <span class="digest-preview__thumb"><img src="https://images.squarespace-cdn.com/content/v1/661980168a4a1d082549c6b0/1764796815449-E1R3KVLG1RAUECW8U2EE/instruments+photo+caley+gardens.jpg" alt="" loading="lazy"></span>
+            <span class="digest-preview__thumb"><img src="https://images.squarespace-cdn.com/content/v1/661980168a4a1d082549c6b0/1764796815449-E1R3KVLG1RAUECW8U2EE/instruments+photo+caley+gardens.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></span>
             <span class="digest-preview__text">
               <span class="digest-preview__city">Denver</span>
               <span class="digest-preview__name">Midweek Harmony Reset - Sound Bath</span>
@@ -625,7 +653,7 @@
           </div>
           <div class="digest-preview__row">
             <span class="digest-preview__time">6:00 PM</span>
-            <span class="digest-preview__thumb"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1185167628%2F41374558650%2F1%2Foriginal.20260521-202636?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.52&amp;fp-y=0.771&amp;s=570dee5a036894bc1649730048f89af6" alt="" loading="lazy"></span>
+            <span class="digest-preview__thumb"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1185167628%2F41374558650%2F1%2Foriginal.20260521-202636?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.52&amp;fp-y=0.771&amp;s=570dee5a036894bc1649730048f89af6" alt="" loading="lazy" referrerpolicy="no-referrer"></span>
             <span class="digest-preview__text">
               <span class="digest-preview__city">Colorado Springs</span>
               <span class="digest-preview__name">Community Sound Bath</span>
@@ -634,7 +662,7 @@
           </div>
           <div class="digest-preview__row">
             <span class="digest-preview__time">6:30 PM</span>
-            <span class="digest-preview__thumb"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1187032162%2F362102452485%2F1%2Foriginal.20260616-145844?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=826d362a6dd40f4bf081d9243427625f" alt="" loading="lazy"></span>
+            <span class="digest-preview__thumb"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1187032162%2F362102452485%2F1%2Foriginal.20260616-145844?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=826d362a6dd40f4bf081d9243427625f" alt="" loading="lazy" referrerpolicy="no-referrer"></span>
             <span class="digest-preview__text">
               <span class="digest-preview__city">Colorado Springs</span>
               <span class="digest-preview__name">Floating Sound Bath - Elise Nicole</span>

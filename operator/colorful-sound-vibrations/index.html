@@ -103,7 +103,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../../styles.css?v=9054b17d">
+  <link rel="stylesheet" href="../../styles.css?v=8d326f4b">
   <style>
     .operator__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
     .operator__crumbs a { color: var(--accent-on-light); text-decoration: none; }
@@ -125,6 +125,34 @@
     .operator__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
     .operator__back a { color: var(--accent-on-light); text-decoration: none; }
   </style>
+
+  <!-- Systemic image fallback: external listing images (operator CDNs,
+       Eventbrite, wsimg…) expire and hotlink-block routinely. Any <img> that
+       fails to load is removed and its parent gets .img-broken, which each
+       tile context styles as a designed placeholder (styles.css) — never the
+       browser's broken-image glyph. Inline + in <head> so the capture-phase
+       listener exists before the parser reaches the first <img>; the
+       DOMContentLoaded sweep catches anything that failed even earlier
+       (e.g. cached failures resolving instantly). -->
+  <script>
+    (function () {
+      function fail(img) {
+        var p = img.parentElement;
+        if (!p) return;
+        p.classList.add('img-broken');
+        img.remove();
+      }
+      addEventListener('error', function (e) {
+        var t = e.target;
+        if (t && t.tagName === 'IMG') fail(t);
+      }, true);
+      document.addEventListener('DOMContentLoaded', function () {
+        Array.prototype.slice.call(document.images).forEach(function (img) {
+          if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
+        });
+      });
+    })();
+  </script>
 </head>
 <body>
   <header class="masthead">
@@ -183,7 +211,7 @@
   </div>
   <div class="cal-row__body">
     <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1185167628%2F41374558650%2F1%2Foriginal.20260521-202636?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.52&amp;fp-y=0.771&amp;s=570dee5a036894bc1649730048f89af6" alt="Community Sound Bath — Colorful Sound Vibrations at The Next Us, Colorado Springs" loading="lazy" decoding="async">
+      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1185167628%2F41374558650%2F1%2Foriginal.20260521-202636?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.52&amp;fp-y=0.771&amp;s=570dee5a036894bc1649730048f89af6" alt="Community Sound Bath — Colorful Sound Vibrations at The Next Us, Colorado Springs" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="cal-row__text">
       <div class="cal-row__marks">
