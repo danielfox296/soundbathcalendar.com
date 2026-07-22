@@ -146,7 +146,7 @@ def render_map_page(pins, nav_prefix, updated_str, cal_rows=None, now=None, geoc
     out.append('    <div class="map-intro">')
     out.append('      <span class="eyebrow">Front Range calendar</span>')
     out.append('      <h1 class="cal-h1">Sound baths on the map</h1>')
-    out.append('      <p class="cal-summary">Every upcoming session, pinned by room, '
+    out.append('      <p class="cal-summary">Every upcoming session, pinned by venue, '
                'beside the list. Tap a marker for what is on there and when.</p>')
     out.append(f'      <p class="cal-updated">Last updated {_esc(updated_str)}.</p>')
     out.append('    </div>')

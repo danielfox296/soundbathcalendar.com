@@ -225,7 +225,7 @@ def render_index(posts, nav_prefix):
     <p class="cal-crumbs"><a href="{nav_prefix}">Calendar</a> &rsaquo; Roundups</p>
     <span class="eyebrow">Roundups</span>
     <h1 class="cal-h1">Roundups</h1>
-    <p class="cal-summary">Occasional, human-edited cuts of the calendar: which rooms are busy, what costs nothing, what only happens once. Built from the listings, kept honest.</p>
+    <p class="cal-summary">Occasional, human-edited cuts of the calendar: which venues are busy, what costs nothing, what only happens once. Built from the listings, kept honest.</p>
     <ul class="rup-list">
 {listing}
     </ul>

@@ -826,7 +826,7 @@ def _safe_ext_url(v):
 
 # Register-passable PLACEHOLDER empty-state lines. Flagged for Daniel.
 # Per-city (reserved for the Track B city pages, B.2):
-EMPTY_STATE = 'No rooms on the calendar in {city} this week.'
+EMPTY_STATE = 'No sound baths on the calendar in {city} this week.'
 # Whole calendar (feed entirely dry — rare; the committed cache holds weeks):
 ALL_EMPTY = 'No sound baths on the Front Range calendar right now. Check back soon.'
 
@@ -932,7 +932,7 @@ def render_empty_state(nav_prefix, lead):
         f'<a href="{nav_prefix}">Browse this week’s calendar</a> '
         f'<span aria-hidden="true">·</span> '
         f'<a href="{nav_prefix}map/">See the map</a></p>\n'
-        '      <p class="cal-emptystate__seed">Run a room or lead sessions? '
+        '      <p class="cal-emptystate__seed">Run a venue or lead sessions? '
         '<a href="mailto:hello@soundbathcalendar.com?subject='
         'A%20listing%20for%20the%20calendar">Get listed</a>.</p>\n'
         '    </div>')
@@ -1040,7 +1040,7 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None):
             parts.append(f'        <span class="cal-row__modality">{_mlabel}</span>')
     if is_fw:
         parts.append('        <span class="cal-row__tag">Firstwater</span>')
-        parts.append('        <span class="cal-row__ours">Our room</span>')
+        parts.append('        <span class="cal-row__ours">Our session</span>')
     parts.append('      </div>')
 
     # Name links to the event's page: external -> its calendar permalink (our
@@ -1704,8 +1704,8 @@ def render_digest_preview(rows, now=None):
         out.append('          <p class="digest-preview__h1">No sound baths are on '
                    'the Front Range calendar for the next seven days yet.</p>')
     else:
-        out.append('          <p class="digest-preview__h1">This week&rsquo;s rooms '
-                   'on the Front Range</p>')
+        out.append('          <p class="digest-preview__h1">This week&rsquo;s sound '
+                   'baths on the Front Range</p>')
         current_day = None
         for r in shown:
             ts = r['starts_at']
@@ -1744,7 +1744,7 @@ def render_digest_preview(rows, now=None):
             out.append('            </span>')
             out.append('          </div>')
         if remaining > 0:
-            noun = 'room' if remaining == 1 else 'rooms'
+            noun = 'sound bath' if remaining == 1 else 'sound baths'
             out.append(f'          <p class="digest-preview__more">&hellip;and '
                        f'{remaining} more {noun} in Thursday&rsquo;s email</p>')
 
@@ -1774,7 +1774,7 @@ def render_digest_block(selected_city='all', rows=None, now=None):
     return f'''<div class="digest-block" id="digest">
     <div class="digest-pitch">
       <span class="eyebrow">The digest</span>
-      <h2 class="digest-h2">The week&rsquo;s rooms, Thursday mornings.</h2>
+      <h2 class="digest-h2">The week&rsquo;s sound baths, Thursday mornings.</h2>
       <!-- HUMAN REVIEW -->
       <p class="form-note">One email a week: every sound bath on the Front Range
       calendar for the seven days ahead, grouped by day. Unsubscribe any time.</p>
@@ -1857,8 +1857,8 @@ def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
     out.append('    ' + _render_faq(city_faq(city)))
     out.append('    ' + render_digest_block(selected_city=slug, rows=rows, now=now))
 
-    out.append('    <p class="cal-submit">Running a room we should know about? '
-               '<a href="mailto:hello@soundbathcalendar.com?subject=A%20room%20for%20the%20calendar">Send it our way.</a></p>')
+    out.append('    <p class="cal-submit">Running a venue we should know about? '
+               '<a href="mailto:hello@soundbathcalendar.com?subject=A%20venue%20for%20the%20calendar">Send it our way.</a></p>')
 
     out.append('  </div>')
     out.append('</section>')

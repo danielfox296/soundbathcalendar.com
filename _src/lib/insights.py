@@ -269,7 +269,7 @@ def render_report(agg, nav_prefix, other_editions):
       <p>It's tempting to report which <em>kinds</em> of sound healing dominate — gong baths versus crystal bowls versus breathwork-with-sound. We're choosing not to, yet.</p>
       <div class="soh-note">
         <h3>Why this figure is deferred</h3>
-        <p>Nearly half of sessions ({mod['only_base_pct']:.0f}%) are currently tagged only with the general "sound bath" label. Any modality breakdown would reflect how thoroughly listings have been tagged, not what's happening in the rooms. As the calendar's tagging matures, this becomes a genuinely interesting figure — and a natural addition to the next edition.</p>
+        <p>Nearly half of sessions ({mod['only_base_pct']:.0f}%) are currently tagged only with the general "sound bath" label. Any modality breakdown would reflect how thoroughly listings have been tagged, not what's happening in the sessions themselves. As the calendar's tagging matures, this becomes a genuinely interesting figure — and a natural addition to the next edition.</p>
       </div>
     </div>
   </section>

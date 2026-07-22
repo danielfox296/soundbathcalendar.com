@@ -209,7 +209,7 @@ def render_operator_page(o, session_rows, nav_prefix, site_url, now=None):
         rooms_n = len(_venue_names(session_rows))
         fallback = (
             f'{name} runs sound baths on the Front Range calendar'
-            + (f' across {rooms_n} rooms' if rooms_n > 1 else '')
+            + (f' across {rooms_n} venues' if rooms_n > 1 else '')
             + ('. ' + f'{n} upcoming session{"s" if n != 1 else ""} listed — '
                f'dates, prices, and ticket links below.' if n else
                '. Nothing is listed right now — the full calendar has every '
@@ -240,7 +240,7 @@ def render_operator_page(o, session_rows, nav_prefix, site_url, now=None):
         rooms_dd = ', '.join(shown)
         if len(rooms) > len(shown):
             rooms_dd += f' + {len(rooms) - len(shown)} more'
-        facts.append(f'      <dt>Rooms</dt><dd>{rooms_dd}</dd>')
+        facts.append(f'      <dt>Venues</dt><dd>{rooms_dd}</dd>')
     next_up = X.entity_next_up(session_rows, nav_prefix)
     if next_up:
         facts.append(f'      <dt>Next up</dt><dd>{next_up}</dd>')
@@ -320,7 +320,7 @@ def render_index(operators, count_by_slug, nav_prefix, art_by_slug=None):
         out.append(X.render_empty_state(
             nav_prefix,
             'The first organizer profiles are being written — the collectives and '
-            'studios running these rooms, with every session they host in one place. '
+            'studios running these sessions, with every session they host in one place. '
             'For now, browse them by session on the calendar.'))
     else:
         out.append('    <div class="dir-grid">')

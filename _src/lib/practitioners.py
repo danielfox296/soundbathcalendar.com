@@ -262,7 +262,7 @@ def render_practitioner_page(pract, session_rows, nav_prefix, site_url, now=None
         rooms_dd = ', '.join(shown)
         if len(rooms) > len(shown):
             rooms_dd += f' + {len(rooms) - len(shown)} more'
-        facts.append(f'      <dt>Rooms</dt><dd>{rooms_dd}</dd>')
+        facts.append(f'      <dt>Venues</dt><dd>{rooms_dd}</dd>')
     next_up = X.entity_next_up(session_rows, nav_prefix)
     if next_up:
         facts.append(f'      <dt>Next up</dt><dd>{next_up}</dd>')
@@ -363,7 +363,7 @@ def render_index(practs, count_by_slug, nav_prefix, art_by_slug=None):
         out.append(X.render_empty_state(
             nav_prefix,
             'The first facilitator profiles are being written — who they are, the '
-            'instruments they play, and when they are next leading a room. Until then, '
+            'instruments they play, and when they are next leading a session. Until then, '
             'find them by session on the calendar.'))
     else:
         out.append('    <div class="dir-grid">')

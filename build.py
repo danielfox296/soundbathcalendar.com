@@ -72,8 +72,8 @@ FIRSTWATER_URL = 'https://thefirstwater.co'
 # approved calendar meta description verbatim — no new copy.
 SITE_DESCRIPTION = (
     'A curated, weekly-updated calendar of sound baths across Denver and the '
-    'Front Range: Boulder, Fort Collins, and Colorado Springs. Every room '
-    'worth knowing.'
+    'Front Range: Boulder, Fort Collins, and Colorado Springs. Every sound '
+    'bath worth knowing.'
 )
 
 # The publisher entity for every page on this site: the calendar itself,
@@ -956,7 +956,7 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
         description = (desc_body[:157].rstrip() + '…') if len(desc_body) > 158 else (
             desc_body or
             f'{name}{" in " + where if where else ""}: directions, what to expect, '
-            f'and upcoming sound baths at this room.')
+            f'and upcoming sound baths at this venue.')
         meta_desc = (f'<meta name="description" '
                      f'content="{html_mod.escape(description, quote=True)}">')
 
@@ -1013,7 +1013,7 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
     index_canonical = f'{SITE_URL}/venues/'
     indexable = len(venue_list) >= INDEX_MIN_INDEXED
     robots_value = 'index, follow' if indexable else 'noindex, follow'
-    index_desc = ('The rooms hosting sound baths across Denver and the Colorado '
+    index_desc = ('The venues hosting sound baths across Denver and the Colorado '
                   'Front Range: where they are, what to expect, and what is on next.')
     index_meta = (f'<meta name="description" '
                   f'content="{html_mod.escape(index_desc, quote=True)}">')
@@ -1420,7 +1420,7 @@ def build_roundup_pages(base, header, footer, now):
     _emit('roundups/index.html', '../',
           f'Roundups | {SITE_NAME}',
           ('Human-edited cuts of the Front Range sound bath calendar: which '
-           'rooms are busy, what costs nothing, what only happens once.'),
+           'venues are busy, what costs nothing, what only happens once.'),
           'index, follow' if indexable else 'noindex, follow',
           roundups_lib.render_index(posts, '../'),
           (ORG_SCHEMA, collection, index_breadcrumb),
@@ -1632,7 +1632,7 @@ def build_map_page(base, header, footer, cal_rows, now, geocode=None):
     canonical_url = f'{SITE_URL}/map/'
     title = f'Map of sound baths on the Front Range | {SITE_NAME}'
     description = ('An interactive map of every upcoming sound bath across Denver '
-                  'and the Colorado Front Range — pinned by room, with dates and '
+                  'and the Colorado Front Range — pinned by venue, with dates and '
                   'ticket links.')
     meta_desc = (f'<meta name="description" '
                  f'content="{html_mod.escape(description, quote=True)}">')
