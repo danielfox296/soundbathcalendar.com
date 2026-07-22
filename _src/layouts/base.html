@@ -12,6 +12,10 @@
   {{meta_description}}
   <meta name="theme-color" content="#F5F7FA">
 
+  <!-- RSS feed discovery (CAL-05). Root feed by default; city pages override
+       {{feed_link}} with their own region feed. -->
+  <link rel="alternate" type="application/rss+xml" title="Sound Bath Calendar" href="{{feed_link}}">
+
   <!-- Open Graph -->
   {{og_tags}}
 

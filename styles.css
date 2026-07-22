@@ -91,7 +91,20 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-filters__field select { background: transparent; border: 1px solid rgba(10,11,13,0.25); padding: 0.4rem 0.7rem; font: 400 0.9rem var(--font-body); color: var(--ink); }
 .cal-filters__check { display: inline-flex; align-items: center; gap: 0.45rem; font: 600 0.86rem var(--font-body); color: var(--ink); cursor: pointer; }
 .cal-filters__check input { width: 1rem; height: 1rem; accent-color: var(--accent-on-light); }
-.cal-filters[hidden], .cal-row[hidden], .cal-band[hidden] { display: none; }
+/* .cal-jump/.cal-nearme carry display:flex/inline styles, so the UA [hidden]
+   rule (a low-specificity display:none) loses to them — restate it here. */
+.cal-filters[hidden], .cal-row[hidden], .cal-band[hidden], .cal-jump[hidden], .cal-filters__nearme[hidden] { display: none; }
+
+/* ---- near-me distance sort (CAL-05): a toggle in the primary controls +
+        a per-row distance chip. The button carries `hidden` until filters.js
+        reveals it (only when rows are located), so no-JS visitors never see it.
+        Radius 0 per DESIGN.md. ---- */
+.cal-filters__nearme { background: transparent; border: 1px solid rgba(10,11,13,0.25); padding: 0.4rem 0.9rem; font: 600 0.82rem var(--font-body); color: var(--accent-on-light); cursor: pointer; }
+.cal-filters__nearme:hover { border-color: var(--accent-on-light); }
+.cal-filters__nearme[aria-pressed="true"] { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+.cal-filters__nearme:disabled { color: rgba(10,11,13,0.45); cursor: default; }
+.cal-nearnote { padding: 0.3rem 0 0; font-size: 0.9rem; }
+.cal-row__dist { font: 600 0.66rem var(--font-body); letter-spacing: 0.05em; color: var(--ink); border: 1px solid rgba(10,11,13,0.25); padding: 0.05rem 0.4rem; line-height: 1.5; }
 
 /* ---- filter facet: primary controls (area + free) stacked over the tag
         chips (CAL-01). The bar becomes a column so the tags wrap below. ---- */

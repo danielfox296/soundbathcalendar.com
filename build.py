@@ -57,6 +57,7 @@ from _src.lib import external_events
 from _src.lib import practitioners as practitioners_lib
 from _src.lib import venues as venues_lib
 from _src.lib import mapview as mapview_lib
+from _src.lib import rss as rss_lib
 
 SITE_URL = 'https://soundbathcalendar.com'
 SITE_NAME = 'Sound Bath Calendar'
@@ -168,6 +169,10 @@ def _assemble(base, mapping):
     for key, value in mapping.items():
         html = html.replace('{{' + key + '}}', value)
     html = html.replace('{{css_path}}', mapping.get('css_path', ''))
+    # RSS discovery link — defaults to the root feed for any page that does not
+    # set its own (city pages point at their own feed via mapping).
+    html = html.replace('{{feed_link}}',
+                        mapping.get('feed_link', f'{SITE_URL}/feed.xml'))
     return html
 
 
@@ -194,6 +199,13 @@ def build():
         _styles_ver = hashlib.md5(_f.read()).hexdigest()[:8]
     base = base.replace('styles.css"', f'styles.css?v={_styles_ver}"')
 
+    # Same content-fingerprint cache-bust for filters.js so a behaviour change
+    # (e.g. the CAL-05 near-me sort) reaches visitors immediately, not after a
+    # stale cached copy expires.
+    with open(os.path.join(REPO, 'filters.js'), 'rb') as _f:
+        _filters_ver = hashlib.md5(_f.read()).hexdigest()[:8]
+    base = base.replace('filters.js"', f'filters.js?v={_filters_ver}"')
+
     pages_built = []
 
     # Both feeds: external events are the calendar's body; the sessions feed
@@ -219,6 +231,9 @@ def build():
     venue_feed = venues_lib.load_feed(REPO)
     venue_list = venues_lib.published_venues(venue_feed)
     print()
+    # Venue coordinates (CAL-04 cache) — shared by the map AND the CAL-05 near-me
+    # distance sort, which attaches data-lat/lng to each row that has one.
+    geocode = mapview_lib.load_geocode(REPO)
 
     page_dirs = []
     for root, dirs, files in os.walk(PAGES):
@@ -294,7 +309,7 @@ def build():
         # ---------------------------------------------------------------
         if output == 'index.html':
             _cal_body = external_events.render_calendar_body(
-                cal_rows, nav_prefix, now=cal_now)
+                cal_rows, nav_prefix, now=cal_now, geocode=geocode)
             content = content.replace('<!-- CALENDAR_BODY -->', _cal_body)
             content = content.replace(
                 '<!-- CALENDAR_SUMMARY -->',
@@ -410,7 +425,7 @@ def build():
 
     # --- City pages (/denver/ etc.) — Track B B.2 ---
     _city_outputs, _city_sitemap = build_city_pages(
-        base, header, footer, cal_rows, cal_now)
+        base, header, footer, cal_rows, cal_now, geocode)
     pages_built.extend(_city_outputs)
 
     # --- Per-event permalink pages (/event/<slug>/) ---
@@ -430,11 +445,14 @@ def build():
 
     # --- Map view (/map/) — CAL-04 ---
     _map_outputs, _map_sitemap = build_map_page(
-        base, header, footer, cal_rows, cal_now)
+        base, header, footer, cal_rows, cal_now, geocode)
     pages_built.extend(_map_outputs)
 
     # --- ICS feeds (/front-range.ics, /<city>.ics) — Track B B.4 ---
     build_ics_feeds(cal_rows, cal_now)
+
+    # --- RSS feeds (/feed.xml, /<city>/feed.xml) — CAL-05 ---
+    build_rss_feeds(cal_rows, cal_now)
 
     print(f'\nBuilt {len(pages_built)} pages.')
 
@@ -467,7 +485,36 @@ def build_ics_feeds(cal_rows, now):
     print(f'  ✓ {len(written)} ICS feed(s): ' + ', '.join(written))
 
 
-def build_city_pages(base, header, footer, cal_rows, now):
+def build_rss_feeds(cal_rows, now):
+    """Write the static RSS 2.0 feeds (CAL-05): the whole-calendar feed at the
+    site root plus one per city, at <city>/feed.xml, from the same rows the pages
+    render. Mirrors build_ics_feeds — feeds are generated output (CI regenerates
+    them), never a source file."""
+    print('\nGenerating RSS feeds...')
+    written = []
+
+    def _write(name, text):
+        out_path = os.path.join(REPO, name)
+        os.makedirs(os.path.dirname(out_path) or REPO, exist_ok=True)
+        with open(out_path, 'w', encoding='utf-8') as f:
+            f.write(text)
+        written.append(name)
+
+    _write('feed.xml', rss_lib.build_rss(
+        cal_rows, SITE_URL, f'{SITE_URL}/feed.xml', SITE_NAME,
+        f'{SITE_URL}/', SITE_DESCRIPTION, now))
+    for city in external_events.CITIES:
+        slug = external_events.city_slug(city)
+        _write(f'{slug}/feed.xml', rss_lib.build_rss(
+            external_events.city_rows(cal_rows, city), SITE_URL,
+            f'{SITE_URL}/{slug}/feed.xml', f'Sound baths in {city} · {SITE_NAME}',
+            external_events.city_page_url(city, SITE_URL),
+            external_events.CITY_META[city], now))
+
+    print(f'  ✓ {len(written)} RSS feed(s): ' + ', '.join(written))
+
+
+def build_city_pages(base, header, footer, cal_rows, now, geocode=None):
     """Emit the four city pages (/denver/ etc.) — Track B B.2. Each is the same
     temporal bands as the root, filtered to one city, with its own H1, summary,
     FAQ, OG image, and CollectionPage/ItemList/FAQPage/Breadcrumb schema. All
@@ -527,7 +574,8 @@ def build_city_pages(base, header, footer, cal_rows, now):
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{json.dumps(breadcrumb_schema, indent=2)}\n  </script>')
 
-        content = external_events.render_city_page(cal_rows, city, nav_prefix, now=now)
+        content = external_events.render_city_page(
+            cal_rows, city, nav_prefix, now=now, geocode=geocode)
         page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
         page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
 
@@ -544,6 +592,8 @@ def build_city_pages(base, header, footer, cal_rows, now):
             'header':           page_header,
             'content':          content,
             'footer':           page_footer,
+            # City pages advertise their own region feed for discovery (CAL-05).
+            'feed_link':        f'{SITE_URL}/{slug}/feed.xml',
         })
 
         if not _write_page(output, html, built):
@@ -958,12 +1008,14 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
     return built, sitemap_entries
 
 
-def build_map_page(base, header, footer, cal_rows, now):
+def build_map_page(base, header, footer, cal_rows, now, geocode=None):
     """Emit /map/ — an interactive Leaflet map of every upcoming session, pinned
-    by venue (CAL-04). Coordinates come from the committed data/geocode.json;
-    venues without one simply have no pin. Returns (built_outputs, sitemap)."""
+    by venue (CAL-04). Coordinates come from the committed data/geocode.json
+    (loaded once in build() and shared with the near-me sort); venues without
+    one simply have no pin. Returns (built_outputs, sitemap)."""
     print('\nGenerating map page...')
-    geocode = mapview_lib.load_geocode(REPO)
+    if geocode is None:
+        geocode = mapview_lib.load_geocode(REPO)
     nav_prefix = '../'
     pins = mapview_lib.build_pins(cal_rows, geocode, nav_prefix)
 

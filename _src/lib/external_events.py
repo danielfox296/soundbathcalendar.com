@@ -893,7 +893,7 @@ def add_to_calendar_urls(row, site_url, now=None):
     return {'google': google, 'outlook': outlook, 'apple': 'event.ics'}
 
 
-def _render_row(row, show_date=True, nav_prefix=''):
+def _render_row(row, show_date=True, nav_prefix='', geocode=None):
     is_fw = row['kind'] == 'firstwater'
     cls = 'cal-row cal-row--firstwater' if is_fw else 'cal-row'
     # Filter hooks: area + free/donation (B.5) + tags (CAL-01), read by
@@ -902,6 +902,12 @@ def _render_row(row, show_date=True, nav_prefix=''):
     data = (f' data-city="{_esc(city_slug(row["city"]))}"'
             f' data-free="{"1" if _is_free_or_donation(row) else "0"}"'
             f' data-tags="{_esc(" ".join(_slugs))}"')
+    # CAL-05 near-me sort: venue coordinates from the committed geocode cache
+    # (same source as the map). A row whose venue isn't located carries no
+    # coords — filters.js sorts it last and gives it no distance chip.
+    coord = (geocode or {}).get((row.get('venue') or '').strip())
+    if coord:
+        data += f' data-lat="{coord["lat"]}" data-lng="{coord["lng"]}"'
     parts = [f'<article class="{cls}"{data}>']
     # Tear-off date rail: weekday over numeral over time. The Today/Tonight band
     # omits the date (its heading already says "today"); every other band spans
@@ -1072,13 +1078,14 @@ def today_band_label(today_rows, now=None):
     return 'Today'
 
 
-def _render_rows(rows, show_date, nav_prefix):
+def _render_rows(rows, show_date, nav_prefix, geocode=None):
     inner = '\n'.join(
-        _render_row(r, show_date=show_date, nav_prefix=nav_prefix) for r in rows)
+        _render_row(r, show_date=show_date, nav_prefix=nav_prefix, geocode=geocode)
+        for r in rows)
     return f'<div class="cal-rows">\n{inner}\n</div>'
 
 
-def _render_bands(rows, nav_prefix='', now=None):
+def _render_bands(rows, nav_prefix='', now=None, geocode=None):
     """The temporal jump-nav + the four bands in fixed order (each drawn only
     when it has rooms). Shared by the root and the city pages; the caller
     appends its own FAQ. An empty weekend band simply isn't drawn — 'This week'
@@ -1109,7 +1116,7 @@ def _render_bands(rows, nav_prefix='', now=None):
     for bid, label, brows, show_date in bands:
         out.append(f'<section class="cal-band" id="{bid}">')
         out.append(f'  <h2 class="cal-band__h2">{_esc(label)}</h2>')
-        out.append('  ' + _render_rows(brows, show_date, nav_prefix))
+        out.append('  ' + _render_rows(brows, show_date, nav_prefix, geocode))
         out.append('</section>')
 
     return '\n'.join(out)
@@ -1138,6 +1145,11 @@ def render_filters(rows=None, include_city=True):
     out.append('    <label class="cal-filters__check">'
                '<input type="checkbox" data-filter-free> '
                '<span>Free / donation only</span></label>')
+    # CAL-05 near-me sort. Rendered hidden and only revealed by filters.js when
+    # at least one row on the page carries coordinates (and geolocation exists),
+    # so no-JS visitors never see a dead control.
+    out.append('    <button type="button" class="cal-filters__nearme" '
+               'data-nearme aria-pressed="false" hidden>Sort by distance</button>')
     out.append('  </div>')
 
     present = present_tag_slugs(rows or [])
@@ -1168,14 +1180,14 @@ def _render_noresults():
     return f'<p class="cal-empty" data-cal-noresults hidden>{_esc(NO_RESULTS)}</p>'
 
 
-def render_calendar_body(rows, nav_prefix='', now=None):
+def render_calendar_body(rows, nav_prefix='', now=None, geocode=None):
     """The dynamic middle of the root: filter bar + nav + bands + no-results +
     FAQ. Static scaffold (H1, stamp, summary, digest, submission line) lives in
     the section file; this returns everything that depends on the feed."""
     # FAQ — a GEO/AIO citation surface (FAQPage JSON-LD emitted by build.py).
     return '\n'.join([
         render_filters(rows, include_city=True),
-        _render_bands(rows, nav_prefix, now),
+        _render_bands(rows, nav_prefix, now, geocode),
         _render_noresults(),
         render_faq_html(),
     ])
@@ -1494,7 +1506,7 @@ def render_digest_block(selected_city='all'):
     </div>'''
 
 
-def render_city_page(rows, city, nav_prefix, now=None):
+def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
     """The <main> body for one city page: crumb · H1 · stamp · summary · the
     temporal bands (this city only) · other-areas nav · city FAQ · digest ·
     submission line."""
@@ -1517,7 +1529,7 @@ def render_city_page(rows, city, nav_prefix, now=None):
     # City is fixed here, so the bar carries the free/donation chip + the tags
     # present in this city.
     out.append('    ' + render_filters(crows, include_city=False))
-    out.append('    ' + _render_bands(crows, nav_prefix, now))
+    out.append('    ' + _render_bands(crows, nav_prefix, now, geocode))
     out.append('    ' + _render_noresults())
     out.append('    ' + render_city_switcher(city, nav_prefix))
     out.append('    ' + _render_faq(city_faq(city)))
