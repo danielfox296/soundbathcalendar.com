@@ -107,6 +107,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .form-field input, .form-field select { width: 100%; background: transparent; border: 1px solid rgba(var(--ink-rgb),0.25); padding: 0.85rem 1rem; font: 400 1rem var(--font-body); color: var(--ink); }
 .form-field input:focus, .form-field select:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
 .form-note { max-width: 34rem; color: rgba(var(--ink-rgb),0.65); margin: 0 0 1.4rem; }
+
 /* ---- digest signup + live preview (CAL-18). The pitch + form pair with a
         build-time mini-render of this week's ACTUAL Thursday email — the
         digest.ts tear-off-rail look (desk tint, paper sheet, day rail, accent
@@ -155,17 +156,25 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 /* ---- calendar root: answer-first head (no hero, no image, no animation) */
 .cal-h1 { font-size: clamp(1.7rem, 3.6vw, 2.7rem); font-weight: 500; margin: 0.6rem 0 0.9rem; letter-spacing: -0.01em; }
 .cal-updated { color: rgba(var(--ink-rgb),0.55); font-size: 0.85rem; letter-spacing: 0.03em; margin: 0 0 1rem; }
+/* CAL-23 phase A: the centered identity block on listing pages (root + city).
+   The narrow text caps (summary 44rem etc.) read as a left-hugging stripe
+   inside the 1140 container — the design-research P1 finding the detail
+   shell fixed everywhere except here. Centering the identity mass squares
+   the top of the page; the LIST below keeps the full container width. */
+.cal-hero { text-align: center; }
+.cal-hero .cal-summary { margin-left: auto; margin-right: auto; }
+.cal-hero .cal-ics { justify-content: center; }
 /* Answer-first, machine-extractable summary (speakable via schema). */
 .cal-summary { font: 500 1.12rem var(--font-display); color: var(--ink); max-width: 44rem; margin: 0 0 1.6rem; line-height: 1.45; }
 
 .cal-jump { display: flex; flex-wrap: wrap; gap: 0.7rem 1.5rem; margin: 0 0 2.2rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line); }
 .cal-jump a { color: var(--accent-on-light); text-decoration: none; font: 600 0.76rem var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; }
 .cal-jump a:hover { text-decoration: underline; }
-
 /* CAL-16 bands-as-filters: the pressed chip fills ink-on-paper. The negative
    margins cancel the padding exactly, so toggling never shifts the nav's
    layout. Tokens flip in dark mode, so the pressed fill flips with them. */
 .cal-jump a[aria-pressed="true"] { background: var(--ink); color: var(--paper); padding: 0.3em 0.55em; margin: -0.3em -0.55em; text-decoration: none; }
+
 /* ---- filters (Track B B.5, progressive enhancement) — the bar is hidden
         until filters.js reveals it, so no-JS visitors see every row. The
         [hidden] rules override .cal-row's display:grid / .cal-band's block. */

@@ -1765,11 +1765,15 @@ def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
                f'<span>{_esc(city)}</span>')
     out.append('    </nav>')
 
+    # Centered identity block (CAL-23 phase A), matching the root; the crumbs
+    # stay left (chrome, not identity) and the list keeps the full width.
+    out.append('    <div class="cal-hero">')
     out.append(f'    <h1 class="cal-h1">{_esc(CITY_H1[city])}</h1>')
     out.append(f'    <p class="cal-updated">Last updated {_esc(fmt_stamp_date(now))}.</p>')
     out.append(f'    <p class="cal-summary" id="cal-summary">'
                f'{_esc(build_city_summary_sentence(rows, city, now))}</p>')
     out.append('    ' + render_ics_subscribe(f'{slug}.ics'))
+    out.append('    </div>')
 
     # Warm band (CAL-22, WARMTH RULE): a slim strip of the same photograph as
     # this city's OG card, between the answer-first block and the list. The
