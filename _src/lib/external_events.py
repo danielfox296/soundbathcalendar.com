@@ -1572,11 +1572,110 @@ def render_city_switcher(current_city, nav_prefix):
     return '\n'.join(out)
 
 
-def render_digest_block(selected_city='all'):
-    """The Thursday-digest capture form, with one area preselected. Posts to the
-    events service /digest/subscribe (Track C) — a plain form + 303 redirect back
-    to /thanks/; the service sets the list flag + area and source server-side.
-    Mirrors the root form in sections/01-content.html."""
+# CAL-18: how many rooms the digest preview shows before the fade. Small on
+# purpose — the preview is a glimpse of the email, not a second calendar.
+_PREVIEW_MAX_ROWS = 4
+
+
+def _digest_preview_meta(row):
+    """operator · venue · price, de-duplicated — mirrors renderDigestEventRow in
+    digest.ts (operator and venue are frequently the same string in the feed,
+    and printing it twice is a display defect, not an extra fact)."""
+    parts = []
+    for part in (row.get('operator'), row.get('venue')):
+        t = (part or '').strip()
+        if t and t not in parts:
+            parts.append(t)
+    price = (row.get('price') or '').strip()
+    if price:
+        parts.append(price)
+    return ' · '.join(parts)
+
+
+def render_digest_preview(rows, now=None):
+    """A REAL mini-preview of this week's Thursday digest (CAL-18), rendered at
+    build time from the same rows the calendar shows — the email's tear-off-rail
+    look (soundbathcalendar-admin digest.ts) recreated in site CSS: paper sheet
+    on a desk tint, day rail, the first few rooms, then a soft fade and an
+    honest count of the rest. An empty week renders the email's actual empty
+    state — never fabricated events. The sheet is a picture of the email
+    (aria-hidden; the figcaption carries the meaning), so nothing inside it
+    links or duplicates the page's interactive list."""
+    week = week_rows(rows, now)
+    shown = week[:_PREVIEW_MAX_ROWS]
+    remaining = len(week) - len(shown)
+    # Reserve the thumbnail column for the whole preview when any shown room
+    # has an image — the email's showThumb rule, so text columns share an edge.
+    show_thumb = any(r.get('image_url') for r in shown)
+
+    out = ['<figure class="digest-preview">',
+           '      <figcaption class="digest-preview__caption">This is what lands '
+           'in your inbox Thursday.</figcaption>',
+           '      <div class="digest-preview__frame" aria-hidden="true">',
+           '        <div class="digest-preview__sheet">',
+           '          <span class="digest-preview__brand">Sound Bath Calendar</span>']
+
+    if not shown:
+        out.append('          <p class="digest-preview__h1">No sound baths are on '
+                   'the Front Range calendar for the next seven days yet.</p>')
+    else:
+        out.append('          <p class="digest-preview__h1">This week&rsquo;s rooms '
+                   'on the Front Range</p>')
+        current_day = None
+        for r in shown:
+            ts = r['starts_at']
+            d = _denver(ts)
+            day_key = d.strftime('%Y-%m-%d')
+            if day_key != current_day:
+                divider = '' if current_day is None else ' digest-preview__day--next'
+                out.append(f'          <div class="digest-preview__day{divider}">')
+                out.append(f'            <span class="digest-preview__dow">{_esc(d.strftime("%A"))}</span>')
+                out.append(f'            <span class="digest-preview__date">'
+                           f'{_esc(d.strftime("%B"))} {_day(d.strftime("%d"))}</span>')
+                out.append('          </div>')
+                current_day = day_key
+            thumb = ''
+            if show_thumb:
+                u = r.get('image_url') or ''
+                thumb = (f'<span class="digest-preview__thumb">'
+                         f'<img src="{_esc(u)}" alt="" loading="lazy"></span>'
+                         if u else
+                         '<span class="digest-preview__thumb digest-preview__thumb--empty"></span>')
+            city = (r.get('city') or '').strip()
+            chip = (f'<span class="digest-preview__city">{_esc(city)}</span>'
+                    if city else '')
+            out.append('          <div class="digest-preview__row">')
+            out.append(f'            <span class="digest-preview__time">{_esc(fmt_time(ts))}</span>')
+            if thumb:
+                out.append(f'            {thumb}')
+            out.append('            <span class="digest-preview__text">')
+            if chip:
+                out.append(f'              {chip}')
+            out.append(f'              <span class="digest-preview__name">{_esc(r.get("name", ""))}</span>')
+            meta = _digest_preview_meta(r)
+            if meta:
+                out.append(f'              <span class="digest-preview__meta">{_esc(meta)}</span>')
+            out.append('            </span>')
+            out.append('          </div>')
+        if remaining > 0:
+            noun = 'room' if remaining == 1 else 'rooms'
+            out.append(f'          <p class="digest-preview__more">&hellip;and '
+                       f'{remaining} more {noun} in Thursday&rsquo;s email</p>')
+
+    out.append('        </div>')
+    out.append('      </div>')
+    out.append('    </figure>')
+    return '\n'.join(out)
+
+
+def render_digest_block(selected_city='all', rows=None, now=None):
+    """The Thursday-digest signup section (CAL-18): the pitch + capture form,
+    paired with a live build-time preview of this week's actual email when
+    `rows` is given. The form seam is unchanged from Track C — a plain POST to
+    the events service /digest/subscribe + 303 redirect back to /thanks/; the
+    service sets the list flag + area and source server-side. One area is
+    preselected. Used by the root (via the <!-- DIGEST_BLOCK --> marker in
+    sections/01-content.html), the city pages, and the tag pages."""
     opts = [('all', 'Everywhere on the Front Range')]
     opts += [(city_slug(c), c) for c in CITIES]
     option_html = '\n'.join(
@@ -1584,9 +1683,15 @@ def render_digest_block(selected_city='all'):
         f'{_esc(label)}</option>'
         for v, label in opts
     )
+    preview = render_digest_preview(rows, now) if rows is not None else ''
+    preview_html = f'\n    {preview}' if preview else ''
     return f'''<div class="digest-block" id="digest">
+    <div class="digest-pitch">
       <span class="eyebrow">The digest</span>
-      <p class="form-note">The week's rooms, Thursday mornings.</p>
+      <h2 class="digest-h2">The week&rsquo;s rooms, Thursday mornings.</h2>
+      <!-- HUMAN REVIEW -->
+      <p class="form-note">One email a week: every sound bath on the Front Range
+      calendar for the seven days ahead, grouped by day. Unsubscribe any time.</p>
       <form class="contact-form" action="https://admin.soundbathcalendar.com/digest/subscribe" method="POST">
         <input type="hidden" name="next" value="https://soundbathcalendar.com/thanks/">
         <label class="form-field">
@@ -1601,6 +1706,7 @@ def render_digest_block(selected_city='all'):
         </label>
         <button type="submit" class="btn btn-primary">Get the digest</button>
       </form>
+    </div>{preview_html}
     </div>'''
 
 
@@ -1631,7 +1737,7 @@ def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
     out.append('    ' + _render_noresults())
     out.append('    ' + render_city_switcher(city, nav_prefix))
     out.append('    ' + _render_faq(city_faq(city)))
-    out.append('    ' + render_digest_block(selected_city=slug))
+    out.append('    ' + render_digest_block(selected_city=slug, rows=rows, now=now))
 
     out.append('    <p class="cal-submit">Running a room we should know about? '
                '<a href="mailto:hello@soundbathcalendar.com?subject=A%20room%20for%20the%20calendar">Send it our way.</a></p>')

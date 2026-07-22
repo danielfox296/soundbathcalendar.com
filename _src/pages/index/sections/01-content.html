@@ -12,28 +12,9 @@
 
     <!-- CALENDAR_BODY -->
 
-    <div class="digest-block" id="digest">
-      <span class="eyebrow">The digest</span>
-      <p class="form-note">The week's rooms, Thursday mornings.</p>
-      <form class="contact-form" action="https://admin.soundbathcalendar.com/digest/subscribe" method="POST">
-        <input type="hidden" name="next" value="https://soundbathcalendar.com/thanks/">
-        <label class="form-field">
-          <span>Email</span>
-          <input type="email" name="email" autocomplete="email" required>
-        </label>
-        <label class="form-field">
-          <span>Which areas?</span>
-          <select name="cities">
-            <option value="all" selected>Everywhere on the Front Range</option>
-            <option value="denver">Denver</option>
-            <option value="boulder">Boulder</option>
-            <option value="fort-collins">Fort Collins</option>
-            <option value="colorado-springs">Colorado Springs</option>
-          </select>
-        </label>
-        <button type="submit" class="btn btn-primary">Get the digest</button>
-      </form>
-    </div>
+    <!-- DIGEST_BLOCK: filled at build time by external_events.render_digest_block
+         (the signup + this week's live email preview, CAL-18). -->
+    <!-- DIGEST_BLOCK -->
 
     <p class="cal-submit">Running a room we should know about?
     <a href="mailto:hello@soundbathcalendar.com?subject=A%20room%20for%20the%20calendar">Send it our way.</a></p>

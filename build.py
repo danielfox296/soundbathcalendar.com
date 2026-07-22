@@ -341,6 +341,10 @@ def build():
             content = content.replace(
                 '<!-- CALENDAR_LAST_UPDATED -->',
                 html_mod.escape(external_events.fmt_stamp_date(cal_now)))
+            # CAL-18: the digest signup + this week's live email preview.
+            content = content.replace(
+                '<!-- DIGEST_BLOCK -->',
+                external_events.render_digest_block(rows=cal_rows, now=cal_now))
 
         robots_value = config.get('robots', 'index, follow')
 
