@@ -1,0 +1,85 @@
+/* /what-to-expect/ — first-timer guide (CAL-07). Page-only styles; leans on
+   the shared tokens and section/eyebrow/cal-h1/btn classes in styles.css.
+   Radius 0 per the design law. */
+
+/* A single reading column for the whole page. */
+.wte-narrow { max-width: 48rem; }
+
+/* Trim the stacked-section rhythm: the intro sets the top, the following
+   sections butt up under it rather than re-padding a full section top. */
+.wte--questions { padding-top: 0.6rem; }
+.wte--next { padding-top: 1rem; }
+
+.wte-cta { margin: 1.8rem 0 0; }
+
+/* Q&A blocks. Each <h2> question is a scannable landmark; answers sit in a
+   comfortable measure and a slightly quieted ink, like the site FAQ. */
+.wte-qa { margin: 0 0 2.4rem; }
+.wte-qa:last-child { margin-bottom: 0; }
+.wte-q {
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.6rem;
+}
+.wte-a {
+  color: rgba(10, 11, 13, 0.74);
+  font-size: 1rem;
+  line-height: 1.68;
+  margin: 0 0 0.9rem;
+}
+.wte-a:last-child { margin-bottom: 0; }
+
+/* The links inside "how do I choose" — quiet, readable list. */
+.wte-links { list-style: none; margin: 0.4rem 0 0; padding: 0; }
+.wte-links li {
+  color: rgba(10, 11, 13, 0.74);
+  font-size: 1rem;
+  line-height: 1.6;
+  padding: 0.35rem 0 0.35rem 1rem;
+  border-left: 1px solid var(--line);
+  margin: 0 0 0.35rem;
+}
+.wte-links a { font-weight: 600; }
+
+/* Health note — set apart with a quiet accent rule, no alarm, no red. */
+.wte-a--note {
+  border-left: 3px solid var(--accent);
+  padding: 0.15rem 0 0.15rem 1rem;
+  background: rgba(98, 182, 232, 0.06);
+}
+
+/* "Ready to find one?" — a small directory of the site's other surfaces. */
+.wte-next {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  margin: 1.6rem 0 0;
+}
+.wte-next__card {
+  display: block;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color .15s, background .15s;
+}
+.wte-next__card:hover { border-color: var(--accent-on-light); background: rgba(98, 182, 232, 0.05); }
+.wte-next__label {
+  display: block;
+  font: 600 0.72rem var(--font-body);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent-on-light);
+  margin-bottom: 0.3rem;
+}
+.wte-next__desc {
+  display: block;
+  color: rgba(10, 11, 13, 0.68);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 560px) {
+  .wte-next { grid-template-columns: 1fr; }
+}
