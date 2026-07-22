@@ -233,6 +233,8 @@ def event_schema(s, event_title, page_url, site_url, description='', image=''):
         'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
         'location': place,
         'organizer': {'@type': 'LocalBusiness', 'name': 'Firstwater', 'url': site_url},
+        # CAL-15: the practice is the named performer of its own sessions.
+        'performer': {'@type': 'Person', 'name': 'Firstwater', 'url': site_url},
         'url': page_url,
     }
     if description:

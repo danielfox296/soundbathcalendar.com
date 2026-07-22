@@ -1308,7 +1308,10 @@ def _external_offer(row):
     known; price only when it can be read accurately from the price string.
     [port] isAccessibleForFree moved OFF the Offer (validator.schema.org
     warning: not a recognized Offer property) and onto the Event, where
-    schema.org defines it; price:0 already says free here."""
+    schema.org defines it; price:0 already says free here.
+    availability (CAL-15): InStock only when we link live tickets — the link
+    already asserts availability; rows without a ticket url stay silent rather
+    than guess (same stance as price)."""
     kind = _parse_price(row['price'])
     url = _safe_ext_url(row['ticket_url']) or None
     if kind[0] == 'fixed':
@@ -1326,6 +1329,7 @@ def _external_offer(row):
         return None
     if url:
         offer['url'] = url
+        offer['availability'] = 'https://schema.org/InStock'
     return offer
 
 
