@@ -76,6 +76,27 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .btn-secondary:hover { border-color: var(--accent-on-light); }
 .btn-slim { padding: 0.5rem 1rem; font-size: 0.82rem; }
 
+/* ---- detail shell (CAL-10): the reclaimed horizontal space. Detail pages
+        (event + entity: venue/practitioner/operator) lay out as a reading column
+        plus a sticky decision aside on wide screens, collapsing to one column
+        below 900px. Reading prose stays within --measure; the shell spans the
+        container. One primitive, shared by every detail template. ---- */
+:root { --measure: 68ch; --aside: 340px; }
+.detail-shell { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.2rem; }
+@media (min-width: 900px) {
+  .detail-shell { grid-template-columns: minmax(0, 1fr) var(--aside); gap: 3rem; align-items: start; }
+  .detail-aside { position: sticky; top: 90px; }
+}
+.detail-main { min-width: 0; }
+.detail-main > p { max-width: var(--measure); }
+.detail-aside { min-width: 0; }
+/* the aside decision card */
+.detail-card { border: 1px solid var(--line); padding: 1.25rem 1.4rem; }
+.detail-card + .detail-card { margin-top: 1.2rem; }
+.detail-card__map { display: block; width: 100%; aspect-ratio: 4 / 3; border: 0; margin-top: 1.1rem; background: rgba(10,11,13,0.05); }
+.detail-card .cal-event__facts, .detail-card .cal-event__cta { margin: 0; max-width: none; }
+.detail-card .cal-event__cta { margin-top: 1.1rem; }
+
 /* ---- forms (digest capture) ---- */
 .contact-form { max-width: 34rem; }
 .form-field { display: block; margin-bottom: 1.6rem; }

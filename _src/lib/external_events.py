@@ -1795,6 +1795,11 @@ def render_event_page(row, nav_prefix, site_url, now=None):
             '    <p class="cal-past-banner">This session has passed. '
             f'<a href="{nav_prefix}">See what’s on now →</a></p>')
 
+    # Two-column detail shell (CAL-10): identity + narrative in the reading
+    # column, the decision card (facts · map · tickets · add-to-calendar) in the
+    # sticky aside. Collapses to one column below 900px via styles.css.
+    out.append('    <div class="detail-shell">')
+    out.append('      <div class="detail-main">')
     out.append('    <span class="eyebrow">Front Range calendar</span>')
     out.append(f'    <h1 class="cal-event__h1">{esc(row["name"])}</h1>')
 
@@ -1816,6 +1821,11 @@ def render_event_page(row, nav_prefix, site_url, now=None):
             f'loading="lazy" decoding="async">')
         out.append(f'      <figcaption>{esc(alt_text(row))}</figcaption>')
         out.append('    </figure>')
+
+    # End the reading column; open the sticky decision aside + card.
+    out.append('      </div>')  # .detail-main
+    out.append('      <aside class="detail-aside">')
+    out.append('        <div class="detail-card">')
 
     # Facts block
     out.append('    <dl class="cal-event__facts">')
@@ -1867,6 +1877,16 @@ def render_event_page(row, nav_prefix, site_url, now=None):
         out.append(f'      <dt>Operator</dt><dd>{esc(row["operator"])}</dd>')
     out.append('    </dl>')
 
+    # Embedded venue mini-map (CAL-10) — the no-key Google embed the venue pages
+    # use (CAL-03), keyed on this session's address. Upcoming events only; a
+    # room with no address simply gets no map (the "Open in Maps" link remains).
+    if row.get('address'):
+        mq = quote_plus(f'{row["address"]}, {row["city"]}, CO')
+        out.append(
+            f'    <iframe class="detail-card__map" loading="lazy" title="Map"'
+            f' src="https://maps.google.com/maps?q={mq}&amp;z=15&amp;output=embed"'
+            f' referrerpolicy="no-referrer-when-downgrade"></iframe>')
+
     # Links: operator tickets + operator/venue own page + a maps link.
     links = []
     safe = _safe_ext_url(row['ticket_url'])
@@ -1912,6 +1932,10 @@ def render_event_page(row, nav_prefix, site_url, now=None):
             'download>Download .ics</a>')
         out.append('      </div>')
         out.append('    </details>')
+
+    out.append('        </div>')  # .detail-card
+    out.append('      </aside>')  # .detail-aside
+    out.append('    </div>')      # .detail-shell
 
     out.append(
         f'    <p class="cal-event__back"><a href="{nav_prefix}">'
