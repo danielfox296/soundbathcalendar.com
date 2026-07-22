@@ -633,7 +633,7 @@ def build_city_pages(base, header, footer, cal_rows, now, geocode=None):
             'meta_description': meta_desc,
             'canonical_url':    canonical_url,
             'css_path':         nav_prefix,
-            'page_style':       '',
+            'page_style':       external_events.CITY_WARM_STYLE,
             'og_tags':          og_tags,
             'twitter_tags':     twitter_tags,
             'schema_json':      schema_json,

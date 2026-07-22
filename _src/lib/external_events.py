@@ -1508,6 +1508,25 @@ def faqpage_schema():
 
 # PLACEHOLDER per-city display + search copy (flagged for Daniel).
 CITY_H1 = {c: f'Sound baths in {c}' for c in CITIES}
+
+# CAL-22 warm bands: per-city strip under img/warm/<slug>-{800,1600}.jpg
+# (generated LOCALLY by scripts/warm.py from the OG-card stock; committed).
+# Alt text describes only what the photograph shows — it is stock, not a
+# Front Range room, so it never claims a place.
+CITY_WARM = {
+    'Denver': {'alt': 'Singing bowls on a candlelit floor, mid-session'},
+    'Boulder': {'alt': 'Two practitioners playing singing bowls together in a sunlit studio'},
+    'Fort Collins': {'alt': 'A hammered singing bowl up close'},
+    'Colorado Springs': {'alt': 'Large singing bowls ringed by tea lights, a mallet in hand'},
+}
+
+# Page-local style for the band (city pages have no page directory, so the
+# builder passes this as page_style rather than touching styles.css).
+CITY_WARM_STYLE = """<style>
+    .cal-warmband { margin: 0 0 2rem; }
+    .cal-warmband img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 5; object-fit: cover; }
+    @media (prefers-color-scheme: dark) { .cal-warmband img { filter: brightness(0.82); } }
+  </style>"""
 CITY_META = {
     c: (f'A weekly-updated calendar of sound baths in {c}, Colorado: dates, '
         f'times, venues, prices, and ticket links for every listed session. '
@@ -1751,6 +1770,24 @@ def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
     out.append(f'    <p class="cal-summary" id="cal-summary">'
                f'{_esc(build_city_summary_sentence(rows, city, now))}</p>')
     out.append('    ' + render_ics_subscribe(f'{slug}.ics'))
+
+    # Warm band (CAL-22, WARMTH RULE): a slim strip of the same photograph as
+    # this city's OG card, between the answer-first block and the list. The
+    # ROOT listing stays utilitarian — warmth lives on city/content pages.
+    # Stock photography (provenance: img/og/SOURCES.md), so the alt describes
+    # only what is pictured — never a claim about a Front Range room.
+    band = CITY_WARM.get(city)
+    if band:
+        alt = band['alt']
+        out.append('    <figure class="cal-warmband">')
+        out.append(
+            f'      <img src="{nav_prefix}img/warm/{slug}-1600.jpg"'
+            f' srcset="{nav_prefix}img/warm/{slug}-800.jpg 800w,'
+            f' {nav_prefix}img/warm/{slug}-1600.jpg 1600w"'
+            f' sizes="(max-width: 900px) 100vw, 900px"'
+            f' width="1600" height="500" loading="lazy" decoding="async"'
+            f' alt="{_esc(alt)}">')
+        out.append('    </figure>')
 
     # City is fixed here, so the bar carries the free/donation chip + the tags
     # present in this city.

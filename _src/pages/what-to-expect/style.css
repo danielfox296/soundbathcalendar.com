@@ -83,3 +83,9 @@
 @media (max-width: 560px) {
   .wte-next { grid-template-columns: 1fr; }
 }
+
+/* Warm hero (CAL-22, WARMTH RULE). Natural photo, no scrim; the dark scheme
+   dims it slightly so it sits on the ink ground like the report photos. */
+.wte-hero { margin: 2.4rem 0 0; }
+.wte-hero img { display: block; width: 100%; height: auto; }
+@media (prefers-color-scheme: dark) { .wte-hero img { filter: brightness(0.82); } }
