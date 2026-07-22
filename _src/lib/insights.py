@@ -358,8 +358,17 @@ _SCRIPT = """
 # ---------------------------------------------------------------------------
 INSIGHTS_HEAD = """<style>
   .soh { --soh-white: #fff; --soh-dim: #5d6570; --soh-wash: rgba(98,182,232,0.14);
+         --soh-line: var(--line);
          --soh-ink-bg: #0A0B0D; --soh-ink-text: #F5F7FA;
          --soh-ink-dim: rgba(245,247,250,0.62); --soh-ink-line: rgba(245,247,250,0.14); }
+  /* Dark scheme: the site swaps --ink/--paper/--accent-on-light (styles.css),
+     so the prose adapts on its own — these keep the report's OWN surfaces in
+     step: "white" bands become an elevated dark card, dims lighten, and the
+     hairlines flip light (--line is a static dark rgba and would vanish). */
+  @media (prefers-color-scheme: dark) {
+    .soh { --soh-white: #16191E; --soh-dim: rgba(245,247,250,0.62);
+           --soh-wash: rgba(98,182,232,0.17); --soh-line: rgba(245,247,250,0.14); }
+  }
   .soh :is(h1,h2,h3) { font-family: var(--font-display); }
   .soh p { line-height: 1.7; }
   .soh a { color: var(--accent-on-light); text-underline-offset: 3px; }
@@ -367,7 +376,7 @@ INSIGHTS_HEAD = """<style>
   /* ---- Bands: full-bleed rooms with a generous shared rhythm ---- */
   .soh-band { padding: clamp(3.5rem, 7vw, 6rem) 0; }
   .soh-band--paper { background: var(--paper); }
-  .soh-band--white { background: var(--soh-white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .soh-band--white { background: var(--soh-white); border-top: 1px solid var(--soh-line); border-bottom: 1px solid var(--soh-line); }
   .soh-band--ink { background: var(--soh-ink-bg); color: var(--soh-ink-text); }
   .soh-band--ink a { color: var(--accent); }
   .soh-wrap { max-width: 71rem; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
@@ -383,7 +392,7 @@ INSIGHTS_HEAD = """<style>
     max-width: 46rem; margin: 0 0 34px; }
   .soh-dek em { font-style: normal; border-bottom: 3px solid var(--accent); }
   .soh-meta { display: flex; flex-wrap: wrap; gap: 10px 26px; font-size: 13.5px;
-    color: var(--soh-dim); padding-top: 24px; border-top: 1px solid var(--line); }
+    color: var(--soh-dim); padding-top: 24px; border-top: 1px solid var(--soh-line); }
   .soh-meta b { color: var(--ink); font-weight: 600; }
 
   /* ---- Full-bleed hero photo ---- */
@@ -399,7 +408,7 @@ INSIGHTS_HEAD = """<style>
   .soh-kicker { font: 500 12.5px/1 var(--font-display); letter-spacing: .18em;
     text-transform: uppercase; color: var(--accent-on-light); margin: 0 0 14px;
     display: flex; align-items: baseline; gap: 14px; }
-  .soh-kicker::after { content:""; flex: 1; height: 1px; background: var(--line); }
+  .soh-kicker::after { content:""; flex: 1; height: 1px; background: var(--soh-line); }
   .soh-band--ink .soh-kicker { color: var(--accent); }
   .soh-band--ink .soh-kicker::after { background: var(--soh-ink-line); }
   .soh-h2 { font-size: clamp(25px, 3.6vw, 36px); line-height: 1.1; font-weight: 700;
@@ -436,9 +445,9 @@ INSIGHTS_HEAD = """<style>
 
   /* ---- Table ---- */
   .soh-tbl-scroll { overflow-x: auto; margin-top: 30px; background: var(--soh-white);
-    border: 1px solid var(--line); border-radius: 14px; }
+    border: 1px solid var(--soh-line); border-radius: 14px; }
   .soh-tbl { border-collapse: collapse; width: 100%; min-width: 360px; font-size: 15.5px; }
-  .soh-tbl th, .soh-tbl td { text-align: left; padding: 14px 20px; border-bottom: 1px solid var(--line); }
+  .soh-tbl th, .soh-tbl td { text-align: left; padding: 14px 20px; border-bottom: 1px solid var(--soh-line); }
   .soh-tbl th { font: 500 11.5px var(--font-display); letter-spacing: .12em;
     text-transform: uppercase; color: var(--soh-dim); }
   .soh-num { text-align: right; font-family: var(--font-display); font-weight: 500;
@@ -453,12 +462,12 @@ INSIGHTS_HEAD = """<style>
   @media (min-width: 780px) { .soh-split { grid-template-columns: 1.05fr 1fr; } }
   .soh-split__fig { margin: 0; }
   .soh-split__fig img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2;
-    object-fit: cover; border-radius: 14px; border: 1px solid var(--line); }
+    object-fit: cover; border-radius: 14px; border: 1px solid var(--soh-line); }
   .soh-split__body > p:first-child { margin-top: 0; }
   .soh-credit { font-size: 11.5px; color: var(--soh-dim); margin-top: 8px; }
 
   /* ---- Note / callout ---- */
-  .soh-note { background: var(--paper); border: 1px solid var(--line);
+  .soh-note { background: var(--paper); border: 1px solid var(--soh-line);
     border-left: 3px solid var(--accent); border-radius: 12px; padding: 22px 26px;
     margin-top: 30px; max-width: 44rem; }
   .soh-band--paper .soh-note { background: var(--soh-white); }
@@ -480,7 +489,7 @@ INSIGHTS_HEAD = """<style>
     width: 9px; height: 9px; border: 1.5px solid var(--accent); border-radius: 50%; }
   .soh-list li b { color: var(--ink); }
   .soh-cite { font-size: 13.5px; line-height: 1.7; color: var(--soh-dim);
-    background: var(--paper); border: 1px dashed var(--line); border-radius: 12px;
+    background: var(--paper); border: 1px dashed var(--soh-line); border-radius: 12px;
     padding: 18px 22px; margin-top: 28px; max-width: 46rem; }
   .soh-cite b { color: var(--ink); }
   .soh-archive { padding-top: 42px; }
