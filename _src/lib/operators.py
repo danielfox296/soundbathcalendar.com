@@ -155,11 +155,17 @@ OPERATOR_PAGE_STYLE = """<style>
     .operator__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .operator__crumbs a:hover { text-decoration: underline; }
     .operator__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.4rem; }
-    .operator__where { font-size: 1.05rem; color: rgba(var(--ink-rgb),0.72); margin: 0 0 1.2rem; }
-    .operator__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 0 0 1.6rem; }
+    .operator__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 1.1rem 0 0; }
     .operator__links a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .operator__links a:hover { text-decoration: underline; }
-    .operator__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); max-width: 42rem; margin: 0 0 1rem; }
+    .operator__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); max-width: var(--measure); margin: 0 0 1rem; }
+    /* CAL-13/CAL-21: decision facts in the sticky aside card. */
+    .operator__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.2rem; margin: 0; }
+    .operator__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); align-self: baseline; }
+    .operator__facts dd { margin: 0; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
+    .operator__facts a { color: var(--accent-on-light); text-decoration: none; font-weight: 600; }
+    .operator__facts a:hover { text-decoration: underline; }
+    @media (max-width: 640px) { .operator__facts { grid-template-columns: 1fr; gap: 0.2rem; } .operator__facts dd { margin-bottom: 0.8rem; } }
     .operator__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
     .operator__empty { color: rgba(var(--ink-rgb),0.55); }
     .operator__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
@@ -184,26 +190,80 @@ def render_operator_page(o, session_rows, nav_prefix, site_url, now=None):
         f'<span aria-hidden="true">/</span> <span>{_esc(name)}</span>')
     out.append('    </nav>')
 
+    # Two-column detail shell (CAL-10 primitive, CAL-13/21 adoption): identity
+    # + narrative in the reading column; rooms · next session · website in the
+    # sticky aside card. Collapses <900px.
+    out.append('    <div class="detail-shell">')
+    out.append('      <div class="detail-main">')
     out.append('    <span class="eyebrow">Organizer</span>')
     out.append(f'    <h1 class="operator__h1">{_esc(name)}</h1>')
 
-    rooms = _venue_names(session_rows)
+    # The reading column always carries a paragraph: the curated description
+    # when written, else an honest factual line (most operators are
+    # import-seeded and description-less).
+    out.append('    <div class="operator__desc">')
+    if (o.get('description') or '').strip():
+        out.append(_paras(o['description']))
+    else:
+        n = len(session_rows)
+        rooms_n = len(_venue_names(session_rows))
+        fallback = (
+            f'{name} runs sound baths on the Front Range calendar'
+            + (f' across {rooms_n} rooms' if rooms_n > 1 else '')
+            + ('. ' + f'{n} upcoming session{"s" if n != 1 else ""} listed — '
+               f'dates, prices, and ticket links below.' if n else
+               '. Nothing is listed right now — the full calendar has every '
+               'upcoming session in the area.'))
+        out.append(f'      <p>{_esc(fallback)}</p>')
+    out.append('    </div>')
+
+    # End the reading column; open the sticky decision aside.
+    out.append('      </div>')  # .detail-main
+
+    # Rooms: linked to their venue page when the session rows carry a published
+    # venue_ref (CAL-03), plain names otherwise — the entity-trio cross-link.
+    rooms, seen = [], set()
+    for r in session_rows:
+        vname = (r.get('venue') or '').strip()
+        if not vname or vname.lower() in seen:
+            continue
+        seen.add(vname.lower())
+        vr = r.get('venue_ref') or {}
+        slug = vr.get('slug') if isinstance(vr, dict) else None
+        if slug:
+            rooms.append(f'<a href="{_esc(f"{nav_prefix}venue/{slug}/")}">{_esc(vname)}</a>')
+        else:
+            rooms.append(_esc(vname))
+    facts = []
     if rooms:
-        shown = rooms[:4]
-        where = 'Runs sessions at ' + ', '.join(shown)
+        shown = rooms[:6]
+        rooms_dd = ', '.join(shown)
         if len(rooms) > len(shown):
-            where += f' + {len(rooms) - len(shown)} more'
-        out.append(f'    <p class="operator__where">{_esc(where)}.</p>')
+            rooms_dd += f' + {len(rooms) - len(shown)} more'
+        facts.append(f'      <dt>Rooms</dt><dd>{rooms_dd}</dd>')
+    next_up = X.entity_next_up(session_rows, nav_prefix)
+    if next_up:
+        facts.append(f'      <dt>Next up</dt><dd>{next_up}</dd>')
+    if len(session_rows) > 1:
+        facts.append(f'      <dt>Upcoming</dt><dd>{len(session_rows)} sessions</dd>')
 
     web = X._safe_ext_url(o.get('website_url') or '')
-    if web:
-        out.append('    <p class="operator__links">'
-                   f'<a href="{_esc(web)}" target="_blank" rel="noopener">Website</a></p>')
 
-    if (o.get('description') or '').strip():
-        out.append('    <div class="operator__desc">')
-        out.append(_paras(o['description']))
-        out.append('    </div>')
+    # An organizer with nothing upcoming and no website gets no card at all —
+    # never an empty bordered box in the aside.
+    if facts or web:
+        out.append('      <aside class="detail-aside">')
+        out.append('        <div class="detail-card">')
+        if facts:
+            out.append('    <dl class="operator__facts">')
+            out.extend(facts)
+            out.append('    </dl>')
+        if web:
+            out.append('    <p class="operator__links">'
+                       f'<a href="{_esc(web)}" target="_blank" rel="noopener">Website</a></p>')
+        out.append('        </div>')  # .detail-card
+        out.append('      </aside>')  # .detail-aside
+    out.append('    </div>')      # .detail-shell
 
     out.append('    <h2 class="operator__section-h">Upcoming sessions</h2>')
     if session_rows:

@@ -676,6 +676,25 @@ def event_permalink_url(row, site_url):
     return f'{site_url}/{event_permalink_path(row)}'
 
 
+def entity_next_up(session_rows, nav_prefix):
+    """The entity aside's "Next up" value (CAL-13 two-column adoption): the
+    soonest upcoming session, linked — external rows to their permalink page,
+    Firstwater rows to their own session page on thefirstwater.co. Returns ''
+    when the entity has nothing upcoming. Callers style the bare <a> via their
+    page-local sheet."""
+    if not session_rows:
+        return ''
+    r = session_rows[0]
+    if r['kind'] == 'firstwater':
+        href = _esc(r['ticket_url'])
+        extra = ' target="_blank" rel="noopener"'
+    else:
+        href = _esc(f'{nav_prefix}{event_permalink_path(r)}')
+        extra = ''
+    date = sessions_feed.fmt_date_short(r['starts_at'])
+    return f'<a href="{href}"{extra}>{_esc(date)} · {_esc(r["name"])}</a>'
+
+
 def _price_span(rows):
     """(low_label, high_num) across rows' readable prices, or ('', None).
     Free counts as 0; unreadable/donation prices are skipped."""

@@ -165,21 +165,23 @@ VENUE_PAGE_STYLE = """<style>
     .venue__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .venue__crumbs a:hover { text-decoration: underline; }
     .venue__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.4rem; }
-    .venue__where { font-size: 1.05rem; color: rgba(var(--ink-rgb),0.72); margin: 0 0 1.2rem; }
     .venue__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 0 0 1.6rem; }
+    .detail-card .venue__links { margin: 1.1rem 0 0; }
     .venue__links a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .venue__links a:hover { text-decoration: underline; }
     .venue__photo { width: 100%; max-width: 640px; aspect-ratio: 3 / 2; object-fit: cover; background: rgba(var(--ink-rgb),0.06); display: block; margin: 0 0 1.6rem; }
-    .venue__map { width: 100%; max-width: 640px; aspect-ratio: 16 / 9; border: 1px solid rgba(var(--ink-rgb),0.14); margin: 0 0 1.6rem; }
-    .venue__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); max-width: 42rem; margin: 0 0 1rem; }
-    .venue__notes { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.6rem; margin: 1.6rem 0; max-width: 42rem; }
-    .venue__notes dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); align-self: baseline; }
-    .venue__notes dd { margin: 0; color: var(--ink); }
+    .venue__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); max-width: var(--measure); margin: 0 0 1rem; }
+    /* CAL-13/CAL-21: the decision facts live in the sticky aside card. */
+    .venue__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.2rem; margin: 0; }
+    .venue__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); align-self: baseline; }
+    .venue__facts dd { margin: 0; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
+    .venue__facts a { color: var(--accent-on-light); text-decoration: none; font-weight: 600; }
+    .venue__facts a:hover { text-decoration: underline; }
     .venue__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
     .venue__empty { color: rgba(var(--ink-rgb),0.55); }
     .venue__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
     .venue__back a { color: var(--accent-on-light); text-decoration: none; }
-    @media (max-width: 640px) { .venue__notes { grid-template-columns: 1fr; gap: 0.2rem; } .venue__notes dd { margin-bottom: 0.8rem; } }
+    @media (max-width: 640px) { .venue__facts { grid-template-columns: 1fr; gap: 0.2rem; } .venue__facts dd { margin-bottom: 0.8rem; } }
   </style>"""
 
 
@@ -200,14 +202,81 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None):
         f'<span aria-hidden="true">/</span> <span>{_esc(name)}</span>')
     out.append('    </nav>')
 
+    # Two-column detail shell (CAL-10 primitive, CAL-13/21 adoption): identity
+    # + narrative in the reading column; the decision card (address · notes ·
+    # map · next session · links) in the sticky aside. Collapses <900px.
+    out.append('    <div class="detail-shell">')
+    out.append('      <div class="detail-main">')
     out.append('    <span class="eyebrow">Venue</span>')
     out.append(f'    <h1 class="venue__h1">{_esc(name)}</h1>')
 
     place = v['neighborhood'] if v.get('city') == 'Denver' and v.get('neighborhood') else None
     area = f'{place}, {v["city"]}' if place else v.get('city', '')
-    where = ' · '.join(x for x in (v.get('address'), area) if x)
-    if where:
-        out.append(f'    <p class="venue__where">{_esc(where)}</p>')
+
+    photo = X._safe_ext_url(v.get('photo_url') or '')
+    if photo:
+        out.append(
+            f'    <img class="venue__photo" src="{_esc(photo)}" alt="{_esc(name)}" '
+            f'loading="lazy" decoding="async" referrerpolicy="no-referrer">')
+
+    # The reading column always carries a paragraph: the curated description
+    # when Daniel has written one, else an honest factual line — most of the
+    # published set is import-seeded, and a bare H1 next to a full aside would
+    # read as a broken column.
+    out.append('    <div class="venue__desc">')
+    if (v.get('description') or '').strip():
+        out.append(_paras(v['description']))
+    else:
+        n = len(session_rows)
+        fallback = (
+            f'{name} is one of the rooms on the Front Range sound bath '
+            f'calendar{" in " + area if area else ""}. '
+            + (f'It has {n} upcoming session{"s" if n != 1 else ""} listed — '
+               f'dates, prices, and ticket links below.' if n else
+               'Nothing is listed here right now — the calendar below has '
+               'every upcoming session in the area.'))
+        out.append(f'      <p>{_esc(fallback)}</p>')
+    out.append('    </div>')
+
+    # End the reading column; open the sticky decision aside.
+    out.append('      </div>')  # .detail-main
+    out.append('      <aside class="detail-aside">')
+    out.append('        <div class="detail-card">')
+
+    out.append('    <dl class="venue__facts">')
+    if v.get('address'):
+        out.append(f'      <dt>Address</dt><dd>{_esc(v["address"])}</dd>')
+    if area:
+        out.append(f'      <dt>Area</dt><dd>{_esc(area)}</dd>')
+    if (v.get('parking_notes') or '').strip():
+        out.append(f'      <dt>Getting there</dt><dd>{_esc(v["parking_notes"])}</dd>')
+    if (v.get('accessibility_notes') or '').strip():
+        out.append(f'      <dt>Accessibility</dt><dd>{_esc(v["accessibility_notes"])}</dd>')
+    next_up = X.entity_next_up(session_rows, nav_prefix)
+    if next_up:
+        out.append(f'      <dt>Next up</dt><dd>{next_up}</dd>')
+    if len(session_rows) > 1:
+        out.append(f'      <dt>Upcoming</dt><dd>{len(session_rows)} sessions</dd>')
+    # Cross-link the entity trio (CAL-13): the published practitioners who
+    # play this room, from its own session rows. Dormant until profiles publish.
+    practs = {}
+    for r in session_rows:
+        pr = r.get('practitioner') or {}
+        if isinstance(pr, dict) and pr.get('slug') and pr.get('name'):
+            practs.setdefault(pr['slug'], pr['name'])
+    if practs:
+        links = ', '.join(
+            f'<a href="{_esc(f"{nav_prefix}practitioner/{s}/")}">{_esc(n_)}</a>'
+            for s, n_ in sorted(practs.items(), key=lambda kv: kv[1].lower()))
+        out.append(f'      <dt>Facilitators</dt><dd>{links}</dd>')
+    out.append('    </dl>')
+
+    map_src = _map_embed_src(v)
+    if map_src:
+        out.append(
+            f'    <iframe class="detail-card__map" src="{_esc(map_src)}" loading="lazy" '
+            f'referrerpolicy="no-referrer-when-downgrade" '
+            f'title="Map of {_esc(name)}"></iframe>')
 
     links = []
     map_link = _map_link(v)
@@ -219,34 +288,9 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None):
     if links:
         out.append('    <p class="venue__links">' + ' '.join(links) + '</p>')
 
-    photo = X._safe_ext_url(v.get('photo_url') or '')
-    if photo:
-        out.append(
-            f'    <img class="venue__photo" src="{_esc(photo)}" alt="{_esc(name)}" '
-            f'loading="lazy" decoding="async" referrerpolicy="no-referrer">')
-
-    map_src = _map_embed_src(v)
-    if map_src:
-        out.append(
-            f'    <iframe class="venue__map" src="{_esc(map_src)}" loading="lazy" '
-            f'referrerpolicy="no-referrer-when-downgrade" '
-            f'title="Map of {_esc(name)}"></iframe>')
-
-    if (v.get('description') or '').strip():
-        out.append('    <div class="venue__desc">')
-        out.append(_paras(v['description']))
-        out.append('    </div>')
-
-    notes = []
-    if (v.get('parking_notes') or '').strip():
-        notes.append(('Getting there', v['parking_notes']))
-    if (v.get('accessibility_notes') or '').strip():
-        notes.append(('Accessibility', v['accessibility_notes']))
-    if notes:
-        out.append('    <dl class="venue__notes">')
-        for dt, dd in notes:
-            out.append(f'      <dt>{_esc(dt)}</dt><dd>{_esc(dd)}</dd>')
-        out.append('    </dl>')
+    out.append('        </div>')  # .detail-card
+    out.append('      </aside>')  # .detail-aside
+    out.append('    </div>')      # .detail-shell
 
     out.append('    <h2 class="venue__section-h">Upcoming sessions here</h2>')
     if session_rows:

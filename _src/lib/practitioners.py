@@ -164,10 +164,17 @@ PRACTITIONER_PAGE_STYLE = """<style>
     .pract__photo { flex: 0 0 auto; width: 132px; height: 132px; object-fit: cover; background: rgba(var(--ink-rgb),0.06); }
     .pract__headtext { flex: 1 1 16rem; min-width: 14rem; }
     .pract__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.6rem; }
-    .pract__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 0.4rem 0 0; }
+    .pract__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 1.1rem 0 0; }
     .pract__links a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .pract__links a:hover { text-decoration: underline; }
-    .pract__bio, .pract__interview { max-width: 42rem; }
+    /* CAL-13/CAL-21: decision facts in the sticky aside card. */
+    .pract__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.2rem; margin: 0; }
+    .pract__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); align-self: baseline; }
+    .pract__facts dd { margin: 0; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
+    .pract__facts a { color: var(--accent-on-light); text-decoration: none; font-weight: 600; }
+    .pract__facts a:hover { text-decoration: underline; }
+    @media (max-width: 640px) { .pract__facts { grid-template-columns: 1fr; gap: 0.2rem; } .pract__facts dd { margin-bottom: 0.8rem; } }
+    .pract__bio, .pract__interview { max-width: var(--measure); }
     .pract__bio p, .pract__interview p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); margin: 0 0 1rem; }
     .pract__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
     .pract__empty { color: rgba(var(--ink-rgb),0.55); }
@@ -197,6 +204,11 @@ def render_practitioner_page(pract, session_rows, nav_prefix, site_url, now=None
         f'<span aria-hidden="true">/</span> <span>{_esc(name)}</span>')
     out.append('    </nav>')
 
+    # Two-column detail shell (CAL-10 primitive, CAL-13/21 adoption): identity
+    # + bio/interview in the reading column; socials · rooms · next session in
+    # the sticky aside card. Collapses <900px.
+    out.append('    <div class="detail-shell">')
+    out.append('      <div class="detail-main">')
     out.append('    <div class="pract__head">')
     photo = X._safe_ext_url(pract.get('photo_url') or '')
     if photo:
@@ -213,16 +225,6 @@ def render_practitioner_page(pract, session_rows, nav_prefix, site_url, now=None
         chips = ''.join(
             f'<span class="cal-tag">{_esc(taxonomy.label_for(s))}</span>' for s in tag_slugs)
         out.append(f'        <p class="cal-event__tags">{chips}</p>')
-    # External links.
-    links = []
-    web = X._safe_ext_url(pract.get('website_url') or '')
-    if web:
-        links.append(f'<a href="{_esc(web)}" target="_blank" rel="noopener">Website</a>')
-    ig = X._safe_ext_url(pract.get('instagram_url') or '')
-    if ig:
-        links.append(f'<a href="{_esc(ig)}" target="_blank" rel="noopener">Instagram</a>')
-    if links:
-        out.append('        <p class="pract__links">' + ' '.join(links) + '</p>')
     out.append('      </div>')  # headtext
     out.append('    </div>')  # head
 
@@ -236,6 +238,60 @@ def render_practitioner_page(pract, session_rows, nav_prefix, site_url, now=None
         out.append('    <div class="pract__interview">')
         out.append(_paras(pract['interview']))
         out.append('    </div>')
+
+    # End the reading column; open the sticky decision aside.
+    out.append('      </div>')  # .detail-main
+
+    # Rooms they play, linked when the session carries a published venue_ref
+    # (CAL-03) — the entity-trio cross-link.
+    rooms, seen = [], set()
+    for r in session_rows:
+        vname = (r.get('venue') or '').strip()
+        if not vname or vname.lower() in seen:
+            continue
+        seen.add(vname.lower())
+        vr = r.get('venue_ref') or {}
+        slug = vr.get('slug') if isinstance(vr, dict) else None
+        if slug:
+            rooms.append(f'<a href="{_esc(f"{nav_prefix}venue/{slug}/")}">{_esc(vname)}</a>')
+        else:
+            rooms.append(_esc(vname))
+    facts = []
+    if rooms:
+        shown = rooms[:6]
+        rooms_dd = ', '.join(shown)
+        if len(rooms) > len(shown):
+            rooms_dd += f' + {len(rooms) - len(shown)} more'
+        facts.append(f'      <dt>Rooms</dt><dd>{rooms_dd}</dd>')
+    next_up = X.entity_next_up(session_rows, nav_prefix)
+    if next_up:
+        facts.append(f'      <dt>Next up</dt><dd>{next_up}</dd>')
+    if len(session_rows) > 1:
+        facts.append(f'      <dt>Upcoming</dt><dd>{len(session_rows)} sessions</dd>')
+
+    # External links (the "follow them" decision).
+    links = []
+    web = X._safe_ext_url(pract.get('website_url') or '')
+    if web:
+        links.append(f'<a href="{_esc(web)}" target="_blank" rel="noopener">Website</a>')
+    ig = X._safe_ext_url(pract.get('instagram_url') or '')
+    if ig:
+        links.append(f'<a href="{_esc(ig)}" target="_blank" rel="noopener">Instagram</a>')
+
+    # A profile with nothing upcoming and no links gets no card at all —
+    # never an empty bordered box in the aside.
+    if facts or links:
+        out.append('      <aside class="detail-aside">')
+        out.append('        <div class="detail-card">')
+        if facts:
+            out.append('    <dl class="pract__facts">')
+            out.extend(facts)
+            out.append('    </dl>')
+        if links:
+            out.append('    <p class="pract__links">' + ' '.join(links) + '</p>')
+        out.append('        </div>')  # .detail-card
+        out.append('      </aside>')  # .detail-aside
+    out.append('    </div>')      # .detail-shell
 
     # Upcoming sessions this person leads.
     out.append('    <h2 class="pract__section-h">Upcoming sessions</h2>')
