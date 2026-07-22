@@ -18,6 +18,15 @@
 // bands into a single "Nearest first" list with a distance chip on each located
 // row. Toggling off restores the date-ordered bands. Denial / no-geolocation
 // degrades to the default date order with a short inline note.
+//
+// Bands-as-filters (CAL-16): with JS, the temporal jump links (Today/Tonight ·
+// This weekend · …) double as single-select filter chips — tap one to show only
+// that window, tap it again to clear. Each row records its band id up front
+// (before near-me ever moves DOM nodes), so the band filter keeps working
+// inside the flat "Nearest first" list, and the jump-nav now stays visible in
+// near mode (the chips are filters there, not jumps). The FAQ link carries no
+// data-band and keeps its plain jump behaviour; with JS off every link is a
+// plain in-page anchor, unchanged.
 (function () {
   'use strict';
   var bar = document.querySelector('[data-cal-filters]');
@@ -31,6 +40,19 @@
   var rows = [].slice.call(document.querySelectorAll('.cal-row'));
   var bands = [].slice.call(document.querySelectorAll('.cal-band'));
   var jump = document.querySelector('.cal-jump');
+
+  // CAL-16 bands-as-filters. Record each row's band id NOW, while every row
+  // still sits inside its original band — near-me reparents rows later.
+  var bandChips = jump
+    ? [].slice.call(jump.querySelectorAll('a[data-band]')) : [];
+  var bandFilter = '';
+  function bandOf(el) {
+    for (var n = el.parentNode; n && n !== document; n = n.parentNode) {
+      if (n.classList && n.classList.contains('cal-band')) return n.id || '';
+    }
+    return '';
+  }
+  rows.forEach(function (r) { r._bandId = bandOf(r); });
 
   function selectedTags() {
     var out = [];
@@ -58,7 +80,8 @@
       var okCity = !city || row.getAttribute('data-city') === city;
       var okFree = !freeOnly || row.getAttribute('data-free') === '1';
       var okTags = rowHasAnyTag(row, tags);
-      row.hidden = !(okCity && okFree && okTags);
+      var okBand = !bandFilter || row._bandId === bandFilter;
+      row.hidden = !(okCity && okFree && okTags && okBand);
     });
 
     // In near mode the rows live in the flat list, so the (now-empty) bands stay
@@ -76,6 +99,39 @@
   if (citySel) citySel.addEventListener('change', apply);
   if (freeChk) freeChk.addEventListener('change', apply);
   tagChks.forEach(function (chk) { chk.addEventListener('change', apply); });
+
+  // ---- Bands as filter chips (CAL-16) -------------------------------------
+  // Single-select: the bands partition time, so only one window can be active.
+  // Tapping the active chip clears it. The chips stay plain jump anchors with
+  // JS off (this handler never runs), so preventDefault is safe here.
+  function setBandFilter(id) {
+    bandFilter = id;
+    bandChips.forEach(function (chip) {
+      chip.setAttribute('aria-pressed',
+        chip.getAttribute('data-band') === id ? 'true' : 'false');
+    });
+    apply();
+  }
+
+  if (bandChips.length) {
+    jump.setAttribute('aria-label', 'Filter by time');
+    bandChips.forEach(function (chip) {
+      chip.setAttribute('role', 'button');
+      chip.setAttribute('aria-pressed', 'false');
+      chip.addEventListener('click', function (e) {
+        e.preventDefault();
+        var id = chip.getAttribute('data-band');
+        setBandFilter(bandFilter === id ? '' : id);
+      });
+      // role="button" promises Space activation; anchors only get Enter free.
+      chip.addEventListener('keydown', function (e) {
+        if (e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          chip.click();
+        }
+      });
+    });
+  }
 
   // ---- Near-me distance sort (CAL-05) -------------------------------------
   var nearBtn = bar.querySelector('[data-nearme]');
@@ -158,7 +214,8 @@
     // Located rows nearest-first with a chip; unlocated rows trail, no chip.
     located.forEach(function (r) { setChip(r, r._distMi); nearList.appendChild(r); });
     unlocated.forEach(function (r) { nearList.appendChild(r); });
-    if (jump) jump.hidden = true;
+    // CAL-16: the jump-nav stays visible in near mode — its band links are
+    // filter chips now, and they still apply inside the flat list.
     nearWrap.hidden = false;
     nearBtn.setAttribute('aria-pressed', 'true');
     nearBtn.textContent = 'Sort by distance';
@@ -174,7 +231,6 @@
     rows.forEach(function (r) { r._origParent.appendChild(r); });
     clearChips();
     if (nearWrap) nearWrap.hidden = true;
-    if (jump) jump.hidden = false;
     nearBtn.setAttribute('aria-pressed', 'false');
     nearBtn.textContent = 'Sort by distance';
     note('');

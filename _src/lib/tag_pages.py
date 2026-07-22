@@ -32,8 +32,9 @@ _esc = X._esc
 BUILD_MIN = 2
 INDEX_MIN = 4
 
-# The /tags/ directory stays out of the index until it has a few real pages.
-TAGS_INDEX_MIN = 3
+# The /browse/ hub stays out of the index until it LINKS a few real tag pages
+# (doorway discipline — CAL-16; /tags/ now 301-stubs to /browse/).
+BROWSE_INDEX_MIN = 3
 
 
 # ---------------------------------------------------------------------------
@@ -49,7 +50,7 @@ RESERVED_ROOT_SLUGS = frozenset({
     'operators', 'operator',
     # Other built surfaces
     'map', 'event', 'thanks', 'what-to-expect', 'state-of-sound-healing',
-    'summer-2026', 'tags', 'tag',
+    'summer-2026', 'tags', 'tag', 'browse',
     # Root files / asset dirs (defensive — a slug is a directory name)
     'feed', 'feed.xml', 'sitemap', 'sitemap.xml', 'robots', 'robots.txt',
     'llms', 'llms.txt', 'styles', 'filters', 'index',
@@ -336,7 +337,7 @@ def tag_faq(rows, slug):
 
 def _render_related(slug, built_map, nav_prefix):
     """A small 'related' nav: sibling tag pages (same axis first, then others),
-    plus the /tags/ index. Only ever links to pages that exist."""
+    plus the /browse/ hub. Only ever links to pages that exist."""
     axis = taxonomy.AXIS_BY_SLUG.get(slug)
     others = [s for s in built_map if s != slug]
     # Same-axis siblings first, then the rest — both in vocabulary order.
@@ -347,7 +348,7 @@ def _render_related(slug, built_map, nav_prefix):
     for s in ordered[:8]:
         out.append(f'  <a href="{nav_prefix}{tag_page_path(s)}">'
                    f'{_esc(taxonomy.label_for(s))}</a>')
-    out.append(f'  <a href="{nav_prefix}tags/">All tags</a>')
+    out.append(f'  <a href="{nav_prefix}browse/">Browse all</a>')
     out.append(f'  <a href="{nav_prefix}map/">Map</a>')
     out.append('</nav>')
     return '\n'.join(out)
@@ -364,7 +365,7 @@ def render_tag_page(rows, slug, nav_prefix, built_map, now=None, geocode=None):
 
     out.append('    <nav class="cal-crumbs" aria-label="Breadcrumb">')
     out.append(f'      <a href="{nav_prefix}">Calendar</a> <span aria-hidden="true">/</span> '
-               f'<a href="{nav_prefix}tags/">Tags</a> <span aria-hidden="true">/</span> '
+               f'<a href="{nav_prefix}browse/">Browse</a> <span aria-hidden="true">/</span> '
                f'<span>{_esc(label)}</span>')
     out.append('    </nav>')
 
@@ -448,81 +449,122 @@ def tag_faqpage_schema(rows, slug):
 
 
 # ---------------------------------------------------------------------------
-# /tags/ index — the live tag pages grouped by axis. Noindex until it has a few
-# (doorway discipline); the individual tag pages still rank on their own.
+# /browse/ — the category hub (CAL-16, Insight-Timer style). ONE page listing
+# the ENTIRE canonical taxonomy grouped by axis, each category with its live
+# upcoming count. Three states per category (doorway discipline in miniature):
+#
+#   linked   — the tag cleared BUILD_MIN, its landing page exists → a card
+#              linking /<slug>/ with its count
+#   counted  — real inventory but below the page threshold → the same card,
+#              unlinked (no page to send anyone to; the count is still true)
+#   tracked  — zero upcoming right now → named in one quiet line per axis, so
+#              the hub shows the full vocabulary without a wall of zeros
+#
+# The hub itself stays noindex until it LINKS a few real pages (BROWSE_INDEX_MIN).
+# /tags/ (the CAL-09 index this replaces) is a redirect stub to /browse/.
 # ---------------------------------------------------------------------------
 
-INDEX_STYLE = """<style>
-    .tags__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
-    .tags__crumbs a { color: var(--accent-on-light); text-decoration: none; }
-    .tags__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.8rem; }
-    .tags__lede { font-size: 1.1rem; color: rgba(var(--ink-rgb),0.75); max-width: 42rem; margin: 0 0 2.4rem; }
-    .tags__axis { margin: 0 0 2rem; }
-    .tags__axis-h2 { font: 600 0.78rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.6); margin: 0 0 0.9rem; }
-    .tags__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.9rem; }
-    .tags__card { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; text-decoration: none; color: inherit; border: 1px solid rgba(var(--ink-rgb),0.14); padding: 0.8rem 0.95rem; }
-    .tags__card:hover { border-color: var(--accent-on-light); }
-    .tags__name { font: 500 1.02rem var(--font-display); color: var(--ink); }
-    .tags__count { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.6); white-space: nowrap; }
-    .tags__empty { color: rgba(var(--ink-rgb),0.7); }
+BROWSE_STYLE = """<style>
+    .browse__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
+    .browse__crumbs a { color: var(--accent-on-light); text-decoration: none; }
+    .browse__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.8rem; }
+    .browse__lede { font-size: 1.1rem; color: rgba(var(--ink-rgb),0.75); max-width: 42rem; margin: 0 0 2.4rem; }
+    .browse__axis { margin: 0 0 2.4rem; }
+    .browse__axis-h2 { font: 600 0.78rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.6); margin: 0 0 0.9rem; }
+    .browse__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.9rem; }
+    .browse__card { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; text-decoration: none; color: inherit; border: 1px solid rgba(var(--ink-rgb),0.14); padding: 0.8rem 0.95rem; }
+    a.browse__card:hover { border-color: var(--accent-on-light); }
+    a.browse__card .browse__name { color: var(--accent-on-light); }
+    .browse__name { font: 500 1.02rem var(--font-display); color: var(--ink); }
+    .browse__count { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.6); white-space: nowrap; }
+    .browse__tracked { font-size: 0.9rem; color: rgba(var(--ink-rgb),0.55); max-width: 46rem; margin: 0.9rem 0 0; line-height: 1.55; }
+    .browse__foot { font-size: 0.95rem; color: rgba(var(--ink-rgb),0.7); max-width: 42rem; margin: 0.4rem 0 0; }
   </style>"""
 
 
-def render_index(built_tags, nav_prefix):
-    """The <main> for /tags/ — the live tag pages grouped by axis, in vocabulary
-    order. `built_tags` is qualifying_tags(rows) output."""
-    by_slug = {t['slug']: t for t in built_tags}
-    out = ['<section class="section section--light tags">', '  <div class="container">']
-    out.append('    <nav class="tags__crumbs" aria-label="Breadcrumb">')
+def browse_entries(rows):
+    """Every canonical tag, in vocabulary order, annotated for the hub:
+    {slug, label, axis, count, linked, path}. `linked` mirrors qualifying_tags
+    (count >= BUILD_MIN → a landing page exists at `path`)."""
+    counts = tag_counts(rows)
+    out = []
+    for slug, label, axis in taxonomy.TAGS:
+        n = counts.get(slug, 0)
+        out.append({
+            'slug': slug, 'label': label, 'axis': axis, 'count': n,
+            'linked': n >= BUILD_MIN, 'path': tag_page_path(slug),
+        })
+    return out
+
+
+def render_browse(entries, nav_prefix):
+    """The <main> for /browse/ — the full taxonomy grouped by axis. `entries` is
+    browse_entries(rows) output."""
+    out = ['<section class="section section--light browse">', '  <div class="container">']
+    out.append('    <nav class="browse__crumbs" aria-label="Breadcrumb">')
     out.append(f'      <a href="{nav_prefix}">Calendar</a> <span aria-hidden="true">/</span> '
-               '<span>Tags</span>')
+               '<span>Browse</span>')
     out.append('    </nav>')
     out.append('    <span class="eyebrow">Front Range calendar</span>')
-    out.append('    <h1 class="tags__h1">Browse by tag</h1>')
-    out.append('    <p class="tags__lede">Sound baths grouped by what makes the '
-               'sound, why people come, the setting, and who they are for — every '
-               'tag here has upcoming sessions on the calendar.</p>')
+    out.append('    <h1 class="browse__h1">Browse sound baths</h1>')
+    out.append('    <!-- HUMAN REVIEW -->')
+    out.append('    <p class="browse__lede">Every kind of session the calendar '
+               'tracks — by what makes the sound, why people come, the setting, '
+               'and who it’s for. Counts are live; a linked category has its '
+               'own page of upcoming sessions.</p>')
 
-    if not built_tags:
-        out.append('    <p class="tags__empty">Tag pages open up as the calendar '
-                   'fills in. Check back soon.</p>')
-    else:
-        for axis_key, axis_label in taxonomy.TAG_AXES:
-            axis_tags = [by_slug[s] for s, _l, a in taxonomy.TAGS
-                         if a == axis_key and s in by_slug]
-            if not axis_tags:
-                continue
-            out.append('    <div class="tags__axis">')
-            out.append(f'      <h2 class="tags__axis-h2">{_esc(axis_label)}</h2>')
-            out.append('      <div class="tags__grid">')
-            for t in axis_tags:
-                href = f'{nav_prefix}{tag_page_path(t["slug"])}'
-                n = t['count']
+    for axis_key, axis_label in taxonomy.TAG_AXES:
+        axis_entries = [e for e in entries if e['axis'] == axis_key]
+        if not axis_entries:
+            continue
+        with_count = [e for e in axis_entries if e['count'] > 0]
+        tracked = [e for e in axis_entries if e['count'] == 0]
+        out.append('    <div class="browse__axis">')
+        out.append(f'      <h2 class="browse__axis-h2">{_esc(axis_label)}</h2>')
+        if with_count:
+            out.append('      <div class="browse__grid">')
+            for e in with_count:
+                n = e['count']
                 cnt = f'{n} upcoming'
-                out.append(
-                    f'        <a class="tags__card" href="{_esc(href)}">'
-                    f'<span class="tags__name">{_esc(t["label"])}</span>'
-                    f'<span class="tags__count">{_esc(cnt)}</span></a>')
+                inner = (f'<span class="browse__name">{_esc(e["label"])}</span>'
+                         f'<span class="browse__count">{_esc(cnt)}</span>')
+                if e['linked']:
+                    href = f'{nav_prefix}{e["path"]}'
+                    out.append(f'        <a class="browse__card" '
+                               f'href="{_esc(href)}">{inner}</a>')
+                else:
+                    out.append(f'        <span class="browse__card">{inner}</span>')
             out.append('      </div>')
-            out.append('    </div>')
+        if tracked:
+            names = ' · '.join(_esc(e['label']) for e in tracked)
+            out.append('      <p class="browse__tracked">Also tracked — '
+                       f'nothing on the calendar right now: {names}.</p>')
+        out.append('    </div>')
 
+    out.append('    <!-- HUMAN REVIEW -->')
+    out.append(f'    <p class="browse__foot">Categories open their own page as '
+               f'sessions come onto the calendar. Everything above is also a '
+               f'filter on <a href="{nav_prefix}">the calendar itself</a>, and '
+               f'every session is pinned on <a href="{nav_prefix}map/">the map</a>.</p>')
     out.append('  </div>')
     out.append('</section>')
     return '\n'.join(out)
 
 
-def index_itemlist(built_tags, site_url):
-    """ItemList of the live tag pages for the /tags/ index (or None when empty)."""
-    if not built_tags:
+def browse_itemlist(entries, site_url):
+    """ItemList of the LINKED category pages (or None when none) — the hub only
+    asserts list membership for pages that exist."""
+    linked = [e for e in entries if e['linked']]
+    if not linked:
         return None
     items = []
-    for i, t in enumerate(built_tags, start=1):
+    for i, e in enumerate(linked, start=1):
         items.append({'@type': 'ListItem', 'position': i,
-                      'name': t['label'],
-                      'url': tag_page_url(t['slug'], site_url)})
+                      'name': e['label'],
+                      'url': tag_page_url(e['slug'], site_url)})
     return {
         '@context': 'https://schema.org',
         '@type': 'ItemList',
-        'name': 'Sound baths by tag on the Front Range',
+        'name': 'Sound bath categories on the Front Range',
         'itemListElement': items,
     }

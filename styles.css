@@ -162,6 +162,10 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-jump a { color: var(--accent-on-light); text-decoration: none; font: 600 0.76rem var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; }
 .cal-jump a:hover { text-decoration: underline; }
 
+/* CAL-16 bands-as-filters: the pressed chip fills ink-on-paper. The negative
+   margins cancel the padding exactly, so toggling never shifts the nav's
+   layout. Tokens flip in dark mode, so the pressed fill flips with them. */
+.cal-jump a[aria-pressed="true"] { background: var(--ink); color: var(--paper); padding: 0.3em 0.55em; margin: -0.3em -0.55em; text-decoration: none; }
 /* ---- filters (Track B B.5, progressive enhancement) — the bar is hidden
         until filters.js reveals it, so no-JS visitors see every row. The
         [hidden] rules override .cal-row's display:grid / .cal-band's block. */

@@ -475,7 +475,7 @@ def build():
         base, header, footer, operator_list, cal_rows, cal_now)
     pages_built.extend(_operator_outputs)
 
-    # --- Tag landing pages (/<tag-slug>/) + /tags/ index — CAL-09 ---
+    # --- Tag landing pages (/<tag-slug>/) — CAL-09 — + /browse/ hub — CAL-16 ---
     _tag_outputs, _tag_sitemap = build_tag_pages(
         base, header, footer, cal_rows, cal_now, geocode)
     pages_built.extend(_tag_outputs)
@@ -1293,9 +1293,10 @@ def build_insights_pages(base, header, footer, now):
 
 def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
     """Emit a curated landing page per canonical tag that clears BUILD_MIN
-    upcoming events (/<tag-slug>/, e.g. /gong-bath/) plus the /tags/ index —
-    CAL-09. SITE-ONLY: pages derive from the CAL-01 taxonomy + the rows the
-    calendar already renders (no admin, no feed, no DB).
+    upcoming events (/<tag-slug>/, e.g. /gong-bath/) — CAL-09 — plus the
+    /browse/ category hub (CAL-16, replacing the /tags/ index, which now
+    redirect-stubs to /browse/). SITE-ONLY: pages derive from the CAL-01
+    taxonomy + the rows the calendar already renders (no admin, no feed, no DB).
 
     Doorway discipline: a tag page is indexed only at/above INDEX_MIN; thinner
     ones (BUILD_MIN..INDEX_MIN-1) are built but noindexed; below BUILD_MIN there
@@ -1359,8 +1360,8 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
             "itemListElement": [
                 {"@type": "ListItem", "position": 1, "name": "Calendar",
                  "item": SITE_URL + "/"},
-                {"@type": "ListItem", "position": 2, "name": "Tags",
-                 "item": SITE_URL + "/tags/"},
+                {"@type": "ListItem", "position": 2, "name": "Browse",
+                 "item": SITE_URL + "/browse/"},
                 {"@type": "ListItem", "position": 3, "name": label,
                  "item": canonical_url},
             ],
@@ -1395,27 +1396,43 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
         if t['indexable']:
             sitemap_entries.append((canonical_url, lastmod))
 
-    # --- index page (/tags/) ---
-    # Doorway discipline: keep the directory out of the index until it has a few
-    # real tag pages; the individual pages still rank on their own.
-    index_output = 'tags/index.html'
+    # --- category hub (/browse/) — CAL-16 ---
+    # The full canonical taxonomy grouped by axis with live counts: linked cards
+    # for tags whose landing page exists, unlinked counts below the threshold,
+    # zero-count categories in one quiet line per axis. Doorway discipline: the
+    # hub stays noindex until it LINKS a few real pages; /tags/ (the CAL-09
+    # index this replaces) is a redirect stub via _src/pages/tags/config.json.
+    index_output = 'browse/index.html'
     index_nav = '../'
-    index_canonical = f'{SITE_URL}/tags/'
-    indexable = len(tags) >= tag_pages_lib.TAGS_INDEX_MIN
+    index_canonical = f'{SITE_URL}/browse/'
+    entries = tag_pages_lib.browse_entries(cal_rows)
+    linked_n = sum(1 for e in entries if e['linked'])
+    indexable = linked_n >= tag_pages_lib.BROWSE_INDEX_MIN
     robots_value = 'index, follow' if indexable else 'noindex, follow'
-    index_title = f'Browse sound baths by tag | {SITE_NAME}'
-    index_desc = ('Sound baths on the Colorado Front Range grouped by tag — what '
-                  'makes the sound, why people come, the setting, and who they '
-                  'are for.')
+    index_title = f'Browse sound baths by category | {SITE_NAME}'
+    index_desc = ('Every kind of sound bath on the Colorado Front Range, with '
+                  'live counts — gong baths, crystal bowls, breathwork, full '
+                  'moon, free or donation, and more.')
     index_meta = (f'<meta name="description" '
                   f'content="{html_mod.escape(index_desc, quote=True)}">')
     og_tags, twitter_tags = _og_twitter_tags(
-        'Browse by tag', index_desc, index_canonical,
+        'Browse by category', index_desc, index_canonical,
         _og_asset('img/og/tags.jpg'))
 
     schema_json = (f'<script type="application/ld+json">\n'
                    f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
-    _il = tag_pages_lib.index_itemlist(tags, SITE_URL)
+    index_collectionpage = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Browse sound baths by category",
+        "url": index_canonical,
+        "description": index_desc,
+        "dateModified": lastmod,
+        "isPartOf": {"@type": "WebSite", "name": SITE_NAME, "url": SITE_URL},
+    }
+    schema_json += (f'\n  <script type="application/ld+json">\n'
+                    f'{json.dumps(index_collectionpage, indent=2)}\n  </script>')
+    _il = tag_pages_lib.browse_itemlist(entries, SITE_URL)
     if _il:
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(_il)}\n  </script>')
@@ -1425,14 +1442,14 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Calendar",
              "item": SITE_URL + "/"},
-            {"@type": "ListItem", "position": 2, "name": "Tags",
+            {"@type": "ListItem", "position": 2, "name": "Browse",
              "item": index_canonical},
         ],
     }
     schema_json += (f'\n  <script type="application/ld+json">\n'
                     f'{json.dumps(index_breadcrumb, indent=2)}\n  </script>')
 
-    index_content = tag_pages_lib.render_index(tags, index_nav)
+    index_content = tag_pages_lib.render_browse(entries, index_nav)
     page_header = header.strip().replace('{{nav_prefix}}', index_nav)
     page_footer = footer.strip().replace('{{nav_prefix}}', index_nav)
     html = _assemble(base, {
@@ -1441,7 +1458,7 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
         'meta_description': index_meta,
         'canonical_url':    index_canonical,
         'css_path':         index_nav,
-        'page_style':       tag_pages_lib.INDEX_STYLE,
+        'page_style':       tag_pages_lib.BROWSE_STYLE,
         'og_tags':          og_tags,
         'twitter_tags':     twitter_tags,
         'schema_json':      schema_json,
@@ -1450,8 +1467,8 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
         'footer':           page_footer,
     })
     if _write_page(index_output, html, built):
-        print(f'  ✓ {index_output} ({len(tags)} tag page(s), '
-              f'{"indexed" if indexable else "noindex until %d" % tag_pages_lib.TAGS_INDEX_MIN})')
+        print(f'  ✓ {index_output} ({linked_n} linked categor(y/ies), '
+              f'{"indexed" if indexable else "noindex until %d linked" % tag_pages_lib.BROWSE_INDEX_MIN})')
         if indexable:
             sitemap_entries.append((index_canonical, lastmod))
 

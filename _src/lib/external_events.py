@@ -1186,10 +1186,13 @@ def _render_bands(rows, nav_prefix='', now=None, geocode=None):
 
     out = []
 
-    # Temporal jump-nav — only the bands that exist, plus the FAQ.
+    # Temporal jump-nav — only the bands that exist, plus the FAQ. With JS,
+    # filters.js upgrades each data-band anchor into a toggleable band FILTER
+    # chip (CAL-16); without JS they stay plain jump anchors. The FAQ link
+    # carries no data-band, so it always just jumps.
     out.append('<nav class="cal-jump" aria-label="Jump to a time">')
     for bid, label, _brows, _sd in bands:
-        out.append(f'  <a href="#{bid}">{_esc(label)}</a>')
+        out.append(f'  <a href="#{bid}" data-band="{bid}">{_esc(label)}</a>')
     out.append('  <a href="#faq">FAQ</a>')
     out.append('</nav>')
 
