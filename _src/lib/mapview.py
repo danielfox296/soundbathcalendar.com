@@ -91,19 +91,19 @@ MAP_HEAD = """<link rel="stylesheet" href="{{css_path}}vendor/leaflet/leaflet.cs
   <style>
     .map-wrap { margin: 0; }
     .map-intro { margin: 0 0 1.4rem; }
-    .map-intro .cal-updated { color: rgba(10,11,13,0.55); font-size: 0.85rem; margin: 0.2rem 0 0; }
+    .map-intro .cal-updated { color: rgba(var(--ink-rgb),0.55); font-size: 0.85rem; margin: 0.2rem 0 0; }
     /* Fixed px height (not vh): guarantees the container is sized before Leaflet
        inits, so fitBounds sees real dimensions in every context. */
-    #sbc-map { width: 100%; height: 560px; border: 1px solid var(--line); background: #e8ecf0; }
+    #sbc-map { width: 100%; height: 560px; border: 1px solid var(--line); background: var(--paper); }
     @media (max-width: 640px) { #sbc-map { height: 460px; } }
     .sbc-pop__name { font: 600 0.98rem var(--font-body); margin: 0 0 0.3rem; }
     .sbc-pop__name a { color: var(--accent-on-light); text-decoration: none; }
     .sbc-pop__list { margin: 0; padding-left: 1.05rem; }
     .sbc-pop__list li { font-size: 0.86rem; line-height: 1.5; }
     .sbc-pop__list a { color: var(--ink); }
-    .sbc-pop__more { list-style: none; margin-left: -1.05rem; color: rgba(10,11,13,0.55); }
+    .sbc-pop__more { list-style: none; margin-left: -1.05rem; color: rgba(var(--ink-rgb),0.55); }
     .leaflet-container { font: inherit; }
-    .map-empty { color: rgba(10,11,13,0.55); }
+    .map-empty { color: rgba(var(--ink-rgb),0.55); }
   </style>"""
 
 

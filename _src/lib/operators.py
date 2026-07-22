@@ -151,18 +151,18 @@ def _venue_names(session_rows):
 # ---------------------------------------------------------------------------
 
 OPERATOR_PAGE_STYLE = """<style>
-    .operator__crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 2rem; }
+    .operator__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
     .operator__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .operator__crumbs a:hover { text-decoration: underline; }
     .operator__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.4rem; }
-    .operator__where { font-size: 1.05rem; color: rgba(10,11,13,0.72); margin: 0 0 1.2rem; }
+    .operator__where { font-size: 1.05rem; color: rgba(var(--ink-rgb),0.72); margin: 0 0 1.2rem; }
     .operator__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 0 0 1.6rem; }
     .operator__links a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .operator__links a:hover { text-decoration: underline; }
-    .operator__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(10,11,13,0.82); max-width: 42rem; margin: 0 0 1rem; }
+    .operator__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); max-width: 42rem; margin: 0 0 1rem; }
     .operator__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
-    .operator__empty { color: rgba(10,11,13,0.55); }
-    .operator__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(10,11,13,0.14); }
+    .operator__empty { color: rgba(var(--ink-rgb),0.55); }
+    .operator__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
     .operator__back a { color: var(--accent-on-light); text-decoration: none; }
   </style>"""
 
@@ -244,15 +244,15 @@ def organization_schema(o, canonical_url):
 # ---------------------------------------------------------------------------
 
 INDEX_STYLE = """<style>
-    .operators__crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 2rem; }
+    .operators__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
     .operators__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .operators__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.8rem; }
-    .operators__lede { font-size: 1.1rem; color: rgba(10,11,13,0.75); max-width: 40rem; margin: 0 0 2rem; }
+    .operators__lede { font-size: 1.1rem; color: rgba(var(--ink-rgb),0.75); max-width: 40rem; margin: 0 0 2rem; }
     .operators__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.4rem; }
-    .operators__card { display: block; text-decoration: none; color: inherit; border: 1px solid rgba(10,11,13,0.14); padding: 1rem; }
+    .operators__card { display: block; text-decoration: none; color: inherit; border: 1px solid rgba(var(--ink-rgb),0.14); padding: 1rem; }
     .operators__card:hover { border-color: var(--accent-on-light); }
     .operators__name { font: 500 1.1rem var(--font-display); color: var(--ink); }
-    .operators__meta { font-size: 0.85rem; color: rgba(10,11,13,0.6); margin-top: 0.2rem; }
+    .operators__meta { font-size: 0.85rem; color: rgba(var(--ink-rgb),0.6); margin-top: 0.2rem; }
   </style>"""
 
 

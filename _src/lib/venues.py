@@ -161,23 +161,23 @@ def _venue_tag_slugs(session_rows):
 # ---------------------------------------------------------------------------
 
 VENUE_PAGE_STYLE = """<style>
-    .venue__crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 2rem; }
+    .venue__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
     .venue__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .venue__crumbs a:hover { text-decoration: underline; }
     .venue__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.4rem; }
-    .venue__where { font-size: 1.05rem; color: rgba(10,11,13,0.72); margin: 0 0 1.2rem; }
+    .venue__where { font-size: 1.05rem; color: rgba(var(--ink-rgb),0.72); margin: 0 0 1.2rem; }
     .venue__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 0 0 1.6rem; }
     .venue__links a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .venue__links a:hover { text-decoration: underline; }
-    .venue__photo { width: 100%; max-width: 640px; aspect-ratio: 3 / 2; object-fit: cover; background: rgba(10,11,13,0.06); display: block; margin: 0 0 1.6rem; }
-    .venue__map { width: 100%; max-width: 640px; aspect-ratio: 16 / 9; border: 1px solid rgba(10,11,13,0.14); margin: 0 0 1.6rem; }
-    .venue__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(10,11,13,0.82); max-width: 42rem; margin: 0 0 1rem; }
+    .venue__photo { width: 100%; max-width: 640px; aspect-ratio: 3 / 2; object-fit: cover; background: rgba(var(--ink-rgb),0.06); display: block; margin: 0 0 1.6rem; }
+    .venue__map { width: 100%; max-width: 640px; aspect-ratio: 16 / 9; border: 1px solid rgba(var(--ink-rgb),0.14); margin: 0 0 1.6rem; }
+    .venue__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); max-width: 42rem; margin: 0 0 1rem; }
     .venue__notes { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.6rem; margin: 1.6rem 0; max-width: 42rem; }
     .venue__notes dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); align-self: baseline; }
     .venue__notes dd { margin: 0; color: var(--ink); }
     .venue__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
-    .venue__empty { color: rgba(10,11,13,0.55); }
-    .venue__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(10,11,13,0.14); }
+    .venue__empty { color: rgba(var(--ink-rgb),0.55); }
+    .venue__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
     .venue__back a { color: var(--accent-on-light); text-decoration: none; }
     @media (max-width: 640px) { .venue__notes { grid-template-columns: 1fr; gap: 0.2rem; } .venue__notes dd { margin-bottom: 0.8rem; } }
   </style>"""
@@ -298,15 +298,15 @@ def place_schema(v, canonical_url, session_rows):
 # ---------------------------------------------------------------------------
 
 INDEX_STYLE = """<style>
-    .venues__crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 2rem; }
+    .venues__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
     .venues__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .venues__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.8rem; }
-    .venues__lede { font-size: 1.1rem; color: rgba(10,11,13,0.75); max-width: 40rem; margin: 0 0 2rem; }
+    .venues__lede { font-size: 1.1rem; color: rgba(var(--ink-rgb),0.75); max-width: 40rem; margin: 0 0 2rem; }
     .venues__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.4rem; }
-    .venues__card { display: block; text-decoration: none; color: inherit; border: 1px solid rgba(10,11,13,0.14); padding: 1rem; }
+    .venues__card { display: block; text-decoration: none; color: inherit; border: 1px solid rgba(var(--ink-rgb),0.14); padding: 1rem; }
     .venues__card:hover { border-color: var(--accent-on-light); }
     .venues__name { font: 500 1.1rem var(--font-display); color: var(--ink); }
-    .venues__meta { font-size: 0.85rem; color: rgba(10,11,13,0.6); margin-top: 0.2rem; }
+    .venues__meta { font-size: 0.85rem; color: rgba(var(--ink-rgb),0.6); margin-top: 0.2rem; }
   </style>"""
 
 

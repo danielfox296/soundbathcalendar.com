@@ -453,18 +453,18 @@ def tag_faqpage_schema(rows, slug):
 # ---------------------------------------------------------------------------
 
 INDEX_STYLE = """<style>
-    .tags__crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 2rem; }
+    .tags__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
     .tags__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .tags__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.8rem; }
-    .tags__lede { font-size: 1.1rem; color: rgba(10,11,13,0.75); max-width: 42rem; margin: 0 0 2.4rem; }
+    .tags__lede { font-size: 1.1rem; color: rgba(var(--ink-rgb),0.75); max-width: 42rem; margin: 0 0 2.4rem; }
     .tags__axis { margin: 0 0 2rem; }
-    .tags__axis-h2 { font: 600 0.78rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(10,11,13,0.6); margin: 0 0 0.9rem; }
+    .tags__axis-h2 { font: 600 0.78rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.6); margin: 0 0 0.9rem; }
     .tags__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.9rem; }
-    .tags__card { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; text-decoration: none; color: inherit; border: 1px solid rgba(10,11,13,0.14); padding: 0.8rem 0.95rem; }
+    .tags__card { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; text-decoration: none; color: inherit; border: 1px solid rgba(var(--ink-rgb),0.14); padding: 0.8rem 0.95rem; }
     .tags__card:hover { border-color: var(--accent-on-light); }
     .tags__name { font: 500 1.02rem var(--font-display); color: var(--ink); }
-    .tags__count { font-size: 0.82rem; color: rgba(10,11,13,0.6); white-space: nowrap; }
-    .tags__empty { color: rgba(10,11,13,0.7); }
+    .tags__count { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.6); white-space: nowrap; }
+    .tags__empty { color: rgba(var(--ink-rgb),0.7); }
   </style>"""
 
 

@@ -157,21 +157,21 @@ def _practitioner_tag_slugs(session_rows):
 
 PRACTITIONER_PAGE_STYLE = """<style>
     .pract { }
-    .pract__crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 2rem; }
+    .pract__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
     .pract__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .pract__crumbs a:hover { text-decoration: underline; }
     .pract__head { display: flex; gap: 1.6rem; align-items: flex-start; flex-wrap: wrap; margin: 0 0 1.6rem; }
-    .pract__photo { flex: 0 0 auto; width: 132px; height: 132px; object-fit: cover; background: rgba(10,11,13,0.06); }
+    .pract__photo { flex: 0 0 auto; width: 132px; height: 132px; object-fit: cover; background: rgba(var(--ink-rgb),0.06); }
     .pract__headtext { flex: 1 1 16rem; min-width: 14rem; }
     .pract__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.6rem; }
     .pract__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 0.4rem 0 0; }
     .pract__links a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .pract__links a:hover { text-decoration: underline; }
     .pract__bio, .pract__interview { max-width: 42rem; }
-    .pract__bio p, .pract__interview p { font-size: 1.08rem; line-height: 1.7; color: rgba(10,11,13,0.82); margin: 0 0 1rem; }
+    .pract__bio p, .pract__interview p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); margin: 0 0 1rem; }
     .pract__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
-    .pract__empty { color: rgba(10,11,13,0.55); }
-    .pract__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(10,11,13,0.14); }
+    .pract__empty { color: rgba(var(--ink-rgb),0.55); }
+    .pract__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
     .pract__back a { color: var(--accent-on-light); text-decoration: none; }
     .pract__back a:hover { text-decoration: underline; }
     @media (max-width: 560px) { .pract__photo { width: 96px; height: 96px; } }
@@ -290,16 +290,16 @@ def person_schema(pract, canonical_url, session_rows):
 # ---------------------------------------------------------------------------
 
 INDEX_STYLE = """<style>
-    .practs__crumbs { font-size: 0.82rem; color: rgba(10,11,13,0.55); margin: 0 0 2rem; }
+    .practs__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
     .practs__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .practs__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.8rem; }
-    .practs__lede { font-size: 1.1rem; color: rgba(10,11,13,0.75); max-width: 40rem; margin: 0 0 2rem; }
+    .practs__lede { font-size: 1.1rem; color: rgba(var(--ink-rgb),0.75); max-width: 40rem; margin: 0 0 2rem; }
     .practs__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.4rem; }
-    .practs__card { display: flex; gap: 0.9rem; align-items: center; text-decoration: none; color: inherit; border: 1px solid rgba(10,11,13,0.14); padding: 0.9rem; }
+    .practs__card { display: flex; gap: 0.9rem; align-items: center; text-decoration: none; color: inherit; border: 1px solid rgba(var(--ink-rgb),0.14); padding: 0.9rem; }
     .practs__card:hover { border-color: var(--accent-on-light); }
-    .practs__thumb { flex: 0 0 auto; width: 56px; height: 56px; object-fit: cover; background: rgba(10,11,13,0.06); }
+    .practs__thumb { flex: 0 0 auto; width: 56px; height: 56px; object-fit: cover; background: rgba(var(--ink-rgb),0.06); }
     .practs__name { font: 500 1.05rem var(--font-display); color: var(--ink); }
-    .practs__meta { font-size: 0.85rem; color: rgba(10,11,13,0.6); }
+    .practs__meta { font-size: 0.85rem; color: rgba(var(--ink-rgb),0.6); }
   </style>"""
 
 
