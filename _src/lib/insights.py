@@ -368,6 +368,11 @@ INSIGHTS_HEAD = """<style>
   @media (prefers-color-scheme: dark) {
     .soh { --soh-white: #16191E; --soh-dim: rgba(245,247,250,0.62);
            --soh-wash: rgba(98,182,232,0.17); --soh-line: rgba(245,247,250,0.14); }
+    /* Photos are the one surface tokens can't fix: a daylight landscape and a
+       white-tabletop still-life read as glowing blocks on the dark ground.
+       Pull them down toward the page instead of letting them blast through. */
+    .soh-hero img { filter: brightness(.8) saturate(.95); }
+    .soh-split__fig img { filter: brightness(.68) saturate(.9); }
   }
   .soh :is(h1,h2,h3) { font-family: var(--font-display); }
   .soh p { line-height: 1.7; }
