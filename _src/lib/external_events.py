@@ -1187,11 +1187,9 @@ def _render_rows(rows, show_date, nav_prefix, geocode=None):
     return f'<div class="cal-rows">\n{inner}\n</div>'
 
 
-def _render_bands(rows, nav_prefix='', now=None, geocode=None):
-    """The temporal jump-nav + the four bands in fixed order (each drawn only
-    when it has rooms). Shared by the root and the city pages; the caller
-    appends its own FAQ. An empty weekend band simply isn't drawn — 'This week'
-    carries the near term — so a page never prints 'nothing this weekend'."""
+def _band_list(rows, now=None):
+    """The four temporal bands in fixed order (each present only when it has
+    rooms): [(id, label, rows, show_date)]."""
     today_b, weekend_b, week_b, ahead_b = band_assignments(rows, now)
     bands = []
     if today_b:
@@ -1202,18 +1200,24 @@ def _render_bands(rows, nav_prefix='', now=None, geocode=None):
         bands.append(('this-week', 'This week', week_b, True))
     if ahead_b:
         bands.append(('weeks-ahead', 'The weeks ahead', ahead_b, True))
+    return bands
+
+
+def _render_bands(rows, nav_prefix='', now=None, geocode=None,
+                  include_jump=True):
+    """The temporal jump-nav + the four bands in fixed order (each drawn only
+    when it has rooms). Shared by the root and the city pages; the caller
+    appends its own FAQ. An empty weekend band simply isn't drawn — 'This week'
+    carries the near term — so a page never prints 'nothing this weekend'.
+    include_jump=False leaves the jump-nav to the caller (the CAL-23 rail
+    renders it in the aside via render_jump); tag/map callers keep the
+    default inline nav."""
+    bands = _band_list(rows, now)
 
     out = []
 
-    # Temporal jump-nav — only the bands that exist, plus the FAQ. With JS,
-    # filters.js upgrades each data-band anchor into a toggleable band FILTER
-    # chip (CAL-16); without JS they stay plain jump anchors. The FAQ link
-    # carries no data-band, so it always just jumps.
-    out.append('<nav class="cal-jump" aria-label="Jump to a time">')
-    for bid, label, _brows, _sd in bands:
-        out.append(f'  <a href="#{bid}" data-band="{bid}">{_esc(label)}</a>')
-    out.append('  <a href="#faq">FAQ</a>')
-    out.append('</nav>')
+    if include_jump:
+        out.append(render_jump(rows, now))
 
     if not bands:
         out.append(f'<p class="cal-empty cal-empty--all">{_esc(ALL_EMPTY)}</p>')
@@ -1225,6 +1229,36 @@ def _render_bands(rows, nav_prefix='', now=None, geocode=None):
         out.append('</section>')
 
     return '\n'.join(out)
+
+
+def render_jump(rows, now=None):
+    """The temporal jump-nav — only the bands that exist, plus the FAQ. With
+    JS, filters.js upgrades each data-band anchor into a toggleable band
+    FILTER chip (CAL-16); without JS they stay plain jump anchors. The FAQ
+    link carries no data-band, so it always just jumps. Standalone since
+    CAL-23 phase B, so the rail can hold it beside the list."""
+    out = ['<nav class="cal-jump" aria-label="Jump to a time">']
+    for bid, label, _brows, _sd in _band_list(rows, now):
+        out.append(f'  <a href="#{bid}" data-band="{bid}">{_esc(label)}</a>')
+    out.append('  <a href="#faq">FAQ</a>')
+    out.append('</nav>')
+    return '\n'.join(out)
+
+
+def render_rail_links(nav_prefix, ics_filename, feed_path):
+    """The rail's standing links (CAL-23 phase B): subscribe + map + digest.
+    Server-rendered, JS-free — the rail is never dead chrome without JS."""
+    return '\n'.join([
+        '<div class="cal-rail__links">',
+        f'  <a href="webcal://soundbathcalendar.com/{ics_filename}">'
+        'Subscribe in your calendar</a>',
+        f'  <a href="https://soundbathcalendar.com/{ics_filename}">'
+        'Download .ics</a>',
+        f'  <a href="{nav_prefix}{feed_path}">RSS</a>',
+        f'  <a href="{nav_prefix}map/">See the map</a>',
+        '  <a href="#digest">Get the Thursday digest</a>',
+        '</div>',
+    ])
 
 
 # Register-passable PLACEHOLDER no-results line (B.5 filters). Flagged for Daniel.
@@ -1286,14 +1320,24 @@ def _render_noresults():
 
 
 def render_calendar_body(rows, nav_prefix='', now=None, geocode=None):
-    """The dynamic middle of the root: filter bar + nav + bands + no-results +
-    FAQ. Static scaffold (H1, stamp, summary, digest, submission line) lives in
-    the section file; this returns everything that depends on the feed."""
+    """The dynamic middle of the root: the CAL-23 rail/list split (sticky
+    utility rail — filters + jump chips + standing links — beside the band
+    list at >=1200px; a single stack below), then the full-width FAQ. Static
+    scaffold (H1, stamp, summary, digest, submission line) lives in the
+    section file; this returns everything that depends on the feed."""
     # FAQ — a GEO/AIO citation surface (FAQPage JSON-LD emitted by build.py).
     return '\n'.join([
+        '<div class="cal-split">',
+        '<aside class="cal-rail"><div class="cal-rail__inner">',
         render_filters(rows, include_city=True),
-        _render_bands(rows, nav_prefix, now, geocode),
+        render_jump(rows, now),
+        render_rail_links(nav_prefix, 'front-range.ics', 'feed.xml'),
+        '</div></aside>',
+        '<div class="cal-list">',
+        _render_bands(rows, nav_prefix, now, geocode, include_jump=False),
         _render_noresults(),
+        '</div>',
+        '</div>',
         render_faq_html(),
     ])
 
@@ -1772,7 +1816,6 @@ def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
     out.append(f'    <p class="cal-updated">Last updated {_esc(fmt_stamp_date(now))}.</p>')
     out.append(f'    <p class="cal-summary" id="cal-summary">'
                f'{_esc(build_city_summary_sentence(rows, city, now))}</p>')
-    out.append('    ' + render_ics_subscribe(f'{slug}.ics'))
     out.append('    </div>')
 
     # Warm band (CAL-22, WARMTH RULE): a slim strip of the same photograph as
@@ -1793,11 +1836,22 @@ def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
             f' alt="{_esc(alt)}">')
         out.append('    </figure>')
 
-    # City is fixed here, so the bar carries the free/donation chip + the tags
-    # present in this city.
+    # CAL-23 rail/list split. City is fixed here, so the bar carries the
+    # free/donation chip + the tags present in this city; the subscribe links
+    # (formerly in the hero) live in the rail with the map/digest links.
+    out.append('    <div class="cal-split">')
+    out.append('    <aside class="cal-rail"><div class="cal-rail__inner">')
     out.append('    ' + render_filters(crows, include_city=False))
-    out.append('    ' + _render_bands(crows, nav_prefix, now, geocode))
+    out.append('    ' + render_jump(crows, now))
+    out.append('    ' + render_rail_links(nav_prefix, f'{slug}.ics',
+                                          f'{slug}/feed.xml'))
+    out.append('    </div></aside>')
+    out.append('    <div class="cal-list">')
+    out.append('    ' + _render_bands(crows, nav_prefix, now, geocode,
+                                      include_jump=False))
     out.append('    ' + _render_noresults())
+    out.append('    </div>')
+    out.append('    </div>')
     out.append('    ' + render_city_switcher(city, nav_prefix))
     out.append('    ' + _render_faq(city_faq(city)))
     out.append('    ' + render_digest_block(selected_city=slug, rows=rows, now=now))

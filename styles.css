@@ -42,6 +42,33 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.
 /* The masthead keeps the tight padding — chrome wants the full line so the
    nav + digest form don't wrap at laptop widths. */
 .masthead-inner { padding: 0 24px; }
+
+/* ---- CAL-23 phase B: the utility rail (the RA/Songkick convention).
+        At >=1200px listing pages split into a sticky rail (filters · jump
+        chips · standing links) beside the dominant band list — the width is
+        used with intent instead of centered around a void. Below 1200px the
+        wrappers are inert blocks and the page is the phase-A stack. The
+        rail is a build-time RELOCATION of the same markup filters.js already
+        binds (selector-based, position-agnostic); its nearest-first list
+        mounts before the first .cal-band, i.e. inside .cal-list. ---- */
+.cal-rail__links { display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
+.cal-rail__links a { color: var(--accent-on-light); font: 600 0.86rem var(--font-body); text-decoration: none; }
+.cal-rail__links a:hover { text-decoration: underline; }
+@media (max-width: 1199px) {
+  /* Stacked mode: the rail links read as the old subscribe row. */
+  .cal-rail__links { flex-direction: row; flex-wrap: wrap; gap: 0.5rem 1.3rem; border-top: 0; padding-top: 0; margin: 0 0 2rem; }
+}
+@media (min-width: 1200px) {
+  .cal-main .container { max-width: 1320px; }
+  .cal-split { display: grid; grid-template-columns: 272px minmax(0, 1fr); gap: 3.4rem; align-items: start; }
+  .cal-rail__inner { position: sticky; top: 80px; }
+  /* Vertical variants of the relocated chrome. */
+  .cal-rail .cal-filters { flex-direction: column; align-items: stretch; gap: 1rem; margin: 0 0 1.6rem; border-top: 0; padding-top: 0; }
+  .cal-rail .cal-filters__primary { display: flex; flex-direction: column; align-items: stretch; gap: 0.9rem; }
+  .cal-rail .cal-filters__field select { width: 100%; }
+  .cal-rail .cal-filters__nearme { align-self: flex-start; }
+  .cal-rail .cal-jump { flex-direction: column; align-items: flex-start; gap: 0.7rem; margin: 0 0 1.6rem; }
+}
 .eyebrow { font: 600 0.75rem var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); display: block; margin-bottom: 1.2rem; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent-on-light); outline-offset: 2px; }
