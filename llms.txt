@@ -15,3 +15,7 @@ Each city page is the same time-grouped calendar filtered to one area, with its 
 - [Boulder](https://soundbathcalendar.com/boulder/): Sound baths in Boulder, grouped by time.
 - [Fort Collins](https://soundbathcalendar.com/fort-collins/): Sound baths in Fort Collins, grouped by time.
 - [Colorado Springs](https://soundbathcalendar.com/colorado-springs/): Sound baths in Colorado Springs, grouped by time.
+
+## Original data (free to cite)
+
+- [State of Sound Healing on the Front Range](https://soundbathcalendar.com/state-of-sound-healing/): An original-data snapshot of the Front Range sound bath scene, derived from every session on the calendar and updated as a recurring report. The Summer 2026 edition: ~22 sessions per week across four metros, a $40 median ticket price, about one in three sessions free or by donation, and 71% starting after 5 p.m. Every figure is reproducible; the report is free to cite (please attribute "Sound Bath Calendar"). Dated editions are archived at https://soundbathcalendar.com/state-of-sound-healing/<edition>/.

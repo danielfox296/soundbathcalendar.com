@@ -58,6 +58,7 @@ from _src.lib import practitioners as practitioners_lib
 from _src.lib import venues as venues_lib
 from _src.lib import mapview as mapview_lib
 from _src.lib import rss as rss_lib
+from _src.lib import insights as insights_lib
 
 SITE_URL = 'https://soundbathcalendar.com'
 SITE_NAME = 'Sound Bath Calendar'
@@ -448,6 +449,11 @@ def build():
         base, header, footer, cal_rows, cal_now, geocode)
     pages_built.extend(_map_outputs)
 
+    # --- State of Sound Healing report (/state-of-sound-healing/) — CAL-06 ---
+    _insights_outputs, _insights_sitemap = build_insights_pages(
+        base, header, footer, cal_now)
+    pages_built.extend(_insights_outputs)
+
     # --- ICS feeds (/front-range.ics, /<city>.ics) — Track B B.4 ---
     build_ics_feeds(cal_rows, cal_now)
 
@@ -458,7 +464,8 @@ def build():
 
     generate_sitemap(page_dirs, cal_now,
                      extra_urls=(_city_sitemap + _event_sitemap
-                                 + _pract_sitemap + _venue_sitemap + _map_sitemap))
+                                 + _pract_sitemap + _venue_sitemap + _map_sitemap
+                                 + _insights_sitemap))
 
 
 def build_ics_feeds(cal_rows, now):
@@ -1005,6 +1012,106 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
     if not venue_list:
         print('  (no published venues yet)')
 
+    return built, sitemap_entries
+
+
+def build_insights_pages(base, header, footer, now):
+    """Emit the "State of Sound Healing on the Front Range" data report (CAL-06).
+
+      /state-of-sound-healing/            — hub: the latest edition + archive
+      /state-of-sound-healing/<slug>/     — each frozen edition permalink
+
+    A DISCOVERY-LAYER asset (search/AI/press citation) — linked from the footer,
+    llms.txt, and the sitemap, but NOT the primary participant nav. Editions are
+    FROZEN JSONs under data/insights/ emitted by the marketing analysis script;
+    the build only renders them (no recompute), so a cited stat never drifts and
+    CI stays hermetic. Gated on there being at least one valid edition. Returns
+    (built_outputs, sitemap_entries)."""
+    print('\nGenerating State of Sound Healing report...')
+    editions = insights_lib.load_editions(REPO)
+    built, sitemap_entries = [], []
+    if not editions:
+        print('  ⚠ no valid insights editions — skipping (page not built)')
+        return built, sitemap_entries
+
+    latest = editions[0]
+
+    def _emit(output, nav_prefix, agg, others, is_hub):
+        ed = agg['edition']
+        window = insights_lib._fmt_window(ed)
+        canonical = (f'{SITE_URL}/state-of-sound-healing/' if is_hub
+                     else f'{SITE_URL}/state-of-sound-healing/{ed["slug"]}/')
+        title = (f'State of Sound Healing on the Front Range — {ed["label"]} '
+                 f'| {SITE_NAME}')
+        description = (f'An original-data snapshot of the Front Range sound bath '
+                       f'scene, {ed["label"]}: {agg["volume"]["sessions"]} sessions, '
+                       f'a ${agg["price"]["median"]:g} median price, '
+                       f'{agg["timing"]["evening_pct"]:.0f}% in the evening, across '
+                       f'{agg["volume"]["cities"]} metros. Free to cite.')
+        og_image = f'{SITE_URL}/img/insights/og-{ed["slug"]}.jpg'
+        meta_desc = (f'<meta name="description" '
+                     f'content="{html_mod.escape(description, quote=True)}">')
+        og_tags, twitter_tags = _og_twitter_tags(
+            f'State of Sound Healing — {ed["label"]}', description, canonical, og_image)
+
+        # Dataset (the GEO payload) + Article + BreadcrumbList.
+        dataset = {
+            "@context": "https://schema.org", "@type": "Dataset",
+            "name": f"State of Sound Healing on the Front Range — {ed['label']}",
+            "description": description,
+            "url": canonical,
+            "temporalCoverage": f"{ed['window_start']}/{ed['window_end']}",
+            "spatialCoverage": {
+                "@type": "Place",
+                "name": "Front Range, Colorado (Denver, Boulder, Fort Collins, Colorado Springs)",
+            },
+            "isAccessibleForFree": True,
+            "license": "https://creativecommons.org/licenses/by/4.0/",
+            "creator": {"@type": "Organization", "name": SITE_NAME, "url": SITE_URL},
+            "dateModified": ed["generated_at"][:10],
+        }
+        article = {
+            "@context": "https://schema.org", "@type": "Report",
+            "headline": f"The Front Range Sound Bath Scene: A {ed['label']} Snapshot",
+            "about": "Sound baths and sound healing sessions on Colorado's Front Range",
+            "isPartOf": {"@type": "WebSite", "name": SITE_NAME, "url": SITE_URL},
+            "publisher": {"@type": "Organization", "name": SITE_NAME, "url": SITE_URL},
+            "url": canonical,
+        }
+        crumbs = [{"@type": "ListItem", "position": 1, "name": "Calendar",
+                   "item": SITE_URL + "/"},
+                  {"@type": "ListItem", "position": 2, "name": "State of Sound Healing",
+                   "item": SITE_URL + "/state-of-sound-healing/"}]
+        if not is_hub:
+            crumbs.append({"@type": "ListItem", "position": 3, "name": ed["label"],
+                           "item": canonical})
+        breadcrumb = {"@context": "https://schema.org", "@type": "BreadcrumbList",
+                      "itemListElement": crumbs}
+        schema_json = '\n  '.join(
+            f'<script type="application/ld+json">\n{_ldjson(obj)}\n  </script>'
+            for obj in (ORG_SCHEMA, dataset, article, breadcrumb))
+
+        content = insights_lib.render_report(agg, nav_prefix, others)
+        page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
+        page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
+        html = _assemble(base, {
+            'title': title, 'robots': 'index, follow', 'meta_description': meta_desc,
+            'canonical_url': canonical, 'css_path': nav_prefix,
+            'page_style': insights_lib.INSIGHTS_HEAD,
+            'og_tags': og_tags, 'twitter_tags': twitter_tags,
+            'schema_json': schema_json, 'header': page_header,
+            'content': content, 'footer': page_footer,
+        })
+        if _write_page(output, html, built):
+            print(f'  ✓ {output}')
+            sitemap_entries.append((canonical, external_events.stamp_date_iso(now)))
+
+    # Hub = latest edition inline, with the rest listed as archive.
+    _emit('state-of-sound-healing/index.html', '../', latest, editions[1:], True)
+    # Each edition also gets a stable dated permalink.
+    for i, ed in enumerate(editions):
+        _emit(f'state-of-sound-healing/{ed["edition"]["slug"]}/index.html', '../../',
+              ed, editions[:i] + editions[i + 1:], False)
     return built, sitemap_entries
 
 

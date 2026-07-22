@@ -1,0 +1,143 @@
+{
+  "edition": {
+    "slug": "summer-2026",
+    "label": "Summer 2026",
+    "generated_at": "2026-07-21T23:40:42.423Z",
+    "window_start": "2026-07-19",
+    "window_end": "2026-08-11",
+    "span_days": 24,
+    "weeks": 3.4
+  },
+  "volume": {
+    "sessions": 75,
+    "per_week": 21.9,
+    "venues": 41,
+    "operators": 41,
+    "cities": 4,
+    "busiest_venues": [
+      {
+        "venue": "Singing Bowls of the Rockies",
+        "city": "Colorado Springs",
+        "count": 9
+      },
+      {
+        "venue": "Sacred Society",
+        "city": "Denver",
+        "count": 5
+      },
+      {
+        "venue": "1545 S Pearl St",
+        "city": "Denver",
+        "count": 4
+      },
+      {
+        "venue": "Harmonist Sanctuary",
+        "city": "Denver",
+        "count": 4
+      },
+      {
+        "venue": "Rocky Mountain Restore & Stretch LLC",
+        "city": "Fort Collins",
+        "count": 4
+      }
+    ]
+  },
+  "price": {
+    "known_model": 41,
+    "free_or_flex": 13,
+    "free_or_flex_pct": 32.0,
+    "unpriced": 34,
+    "unpriced_pct": 45.0,
+    "paid_parseable": 28,
+    "median": 40.0,
+    "mean": 42.29,
+    "low": 25.0,
+    "high": 70.0,
+    "q1": 39.0,
+    "q3": 45.0
+  },
+  "geography": {
+    "metros": [
+      [
+        "Denver",
+        30,
+        40.0
+      ],
+      [
+        "Boulder",
+        12,
+        16.0
+      ],
+      [
+        "Fort Collins",
+        15,
+        20.0
+      ],
+      [
+        "Colorado Springs",
+        18,
+        24.0
+      ]
+    ],
+    "located": 63,
+    "total": 75,
+    "north": 40.5885,
+    "south": 38.8283,
+    "corridor_miles": 121
+  },
+  "timing": {
+    "dow": [
+      [
+        "Monday",
+        8
+      ],
+      [
+        "Tuesday",
+        8
+      ],
+      [
+        "Wednesday",
+        13
+      ],
+      [
+        "Thursday",
+        8
+      ],
+      [
+        "Friday",
+        15
+      ],
+      [
+        "Saturday",
+        9
+      ],
+      [
+        "Sunday",
+        14
+      ]
+    ],
+    "weekend_pct": 31.0,
+    "morning_pct": 10.7,
+    "afternoon_pct": 18.7,
+    "evening_pct": 70.7,
+    "top_times": [
+      [
+        "7:00 PM",
+        20
+      ],
+      [
+        "6:00 PM",
+        11
+      ],
+      [
+        "6:30 PM",
+        8
+      ]
+    ]
+  },
+  "modality": {
+    "only_base": 37,
+    "only_base_pct": 49.0,
+    "deferred": true
+  }
+}
