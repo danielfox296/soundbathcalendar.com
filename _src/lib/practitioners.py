@@ -315,7 +315,11 @@ def render_index(practs, count_by_slug, nav_prefix):
     out.append('    <p class="practs__lede">The facilitators leading sound baths across '
                'the Front Range — who they are, and where to find them next.</p>')
     if not practs:
-        out.append('    <p class="pract__empty">Profiles are on the way.</p>')
+        out.append(X.render_empty_state(
+            nav_prefix,
+            'The first facilitator profiles are being written — who they are, the '
+            'instruments they play, and when they are next leading a room. Until then, '
+            'find them by session on the calendar.'))
     else:
         out.append('    <div class="practs__grid">')
         for p in practs:

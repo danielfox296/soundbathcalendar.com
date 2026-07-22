@@ -896,6 +896,25 @@ def render_tag_chips(row, cls='cal-tags', nav_prefix='', skip=None):
     return f'<p class="{cls}">{"".join(parts)}</p>'
 
 
+def render_empty_state(nav_prefix, lead):
+    """A first-class empty state (CAL-13) for an entity index with no published
+    instances: a quiet mark, one honest line of what the section will hold, two
+    redirects (calendar + map), and a get-listed seed — never a bare
+    '…on the way.' line floating above the footer."""
+    return (
+        '    <div class="cal-emptystate">\n'
+        '      <p class="cal-emptystate__glyph" aria-hidden="true">∿</p>\n'
+        f'      <p class="cal-emptystate__lead">{_esc(lead)}</p>\n'
+        f'      <p class="cal-emptystate__links">'
+        f'<a href="{nav_prefix}">Browse this week’s calendar</a> '
+        f'<span aria-hidden="true">·</span> '
+        f'<a href="{nav_prefix}map/">See the map</a></p>\n'
+        '      <p class="cal-emptystate__seed">Run a room or lead sessions? '
+        '<a href="mailto:hello@soundbathcalendar.com?subject='
+        'A%20listing%20for%20the%20calendar">Get listed</a>.</p>\n'
+        '    </div>')
+
+
 def present_tag_slugs(rows):
     """The canonical slugs actually present across rows, in vocabulary order —
     so the filter facet only ever offers a tag that will match something."""

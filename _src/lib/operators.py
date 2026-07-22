@@ -268,7 +268,11 @@ def render_index(operators, count_by_slug, nav_prefix):
                'across Denver and the Front Range — who they are, and where you can catch them '
                'next.</p>')
     if not operators:
-        out.append('    <p class="operator__empty">Organizers are on the way.</p>')
+        out.append(X.render_empty_state(
+            nav_prefix,
+            'The first organizer profiles are being written — the collectives and '
+            'studios running these rooms, with every session they host in one place. '
+            'For now, browse them by session on the calendar.'))
     else:
         out.append('    <div class="operators__grid">')
         for o in operators:

@@ -321,7 +321,11 @@ def render_index(venues, count_by_slug, nav_prefix):
     out.append('    <p class="venues__lede">The rooms hosting sound baths across Denver and '
                'the Front Range — where they are, what to expect, and what is on there next.</p>')
     if not venues:
-        out.append('    <p class="venue__empty">Rooms are on the way.</p>')
+        out.append(X.render_empty_state(
+            nav_prefix,
+            'The first venue profiles are being written — where each room is, how to '
+            'get there, and what it is like inside. Every room is already on the '
+            'calendar and the map.'))
     else:
         out.append('    <div class="venues__grid">')
         for v in venues:
