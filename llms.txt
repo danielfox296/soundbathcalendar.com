@@ -19,3 +19,17 @@ Each city page is the same time-grouped calendar filtered to one area, with its 
 ## Original data (free to cite)
 
 - [State of Sound Healing on the Front Range](https://soundbathcalendar.com/state-of-sound-healing/): An original-data snapshot of the Front Range sound bath scene, derived from every session on the calendar and updated as a recurring report. The Summer 2026 edition: ~22 sessions per week across four metros, a $40 median ticket price, about one in three sessions free or by donation, and 71% starting after 5 p.m. Every figure is reproducible; the report is free to cite (please attribute "Sound Bath Calendar"). Dated editions are archived at https://soundbathcalendar.com/state-of-sound-healing/<edition>/.
+
+## Learn (glossary & explainers, free to cite)
+
+Plain-language, honestly framed reference pages — definitional answers first, no unsupported healing claims. Index: https://soundbathcalendar.com/learn/
+
+- [What to expect at a sound bath](https://soundbathcalendar.com/what-to-expect/): The honest first-timer's guide — what happens, what to wear, cost, whether it is religious, and a careful non-medical health note.
+- [What is a gong bath?](https://soundbathcalendar.com/what-is-a-gong-bath/): A sound bath where large gongs are the main instrument; loudness, format, and how it differs from bowl-led sessions.
+- [Singing bowls vs. gongs](https://soundbathcalendar.com/singing-bowls-vs-gongs/): Steady focused tones vs. dense evolving waves; which is gentler for a first-timer.
+- [What is a crystal bowl sound bath?](https://soundbathcalendar.com/what-is-a-crystal-bowl-sound-bath/): Quartz-glass singing bowls — "crystal" means the material, not gemstone healing.
+- [432 Hz, explained honestly](https://soundbathcalendar.com/432hz-explained/): An alternative tuning standard (A = 432 instead of 440). A real aesthetic preference; no solid evidence of unique healing effects.
+- [What does the science actually say?](https://soundbathcalendar.com/sound-bath-science/): Small studies support short-term self-reported relaxation; claims of healing disease or cellular effects are unsupported.
+- [Is a sound bath religious?](https://soundbathcalendar.com/is-a-sound-bath-religious/): No, by default — secular practice; some sessions add disclosed ceremony. Written for people of faith and for skeptics.
+- [Where sound baths come from](https://soundbathcalendar.com/where-sound-baths-come-from/): Honest lineage — Asian gong traditions, India's nada yoga, and the largely modern "ancient Tibetan singing bowl" story.
+- [Sound bath vs. meditation](https://soundbathcalendar.com/sound-bath-vs-meditation/): Receptive vs. active practice; why sound baths suit people who say they cannot meditate.

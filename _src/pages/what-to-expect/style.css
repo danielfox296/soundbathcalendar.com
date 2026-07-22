@@ -23,7 +23,7 @@
   margin: 0 0 0.6rem;
 }
 .wte-a {
-  color: rgba(10, 11, 13, 0.74);
+  color: rgba(var(--ink-rgb), 0.74);
   font-size: 1rem;
   line-height: 1.68;
   margin: 0 0 0.9rem;
@@ -33,7 +33,7 @@
 /* The links inside "how do I choose" — quiet, readable list. */
 .wte-links { list-style: none; margin: 0.4rem 0 0; padding: 0; }
 .wte-links li {
-  color: rgba(10, 11, 13, 0.74);
+  color: rgba(var(--ink-rgb), 0.74);
   font-size: 1rem;
   line-height: 1.6;
   padding: 0.35rem 0 0.35rem 1rem;
@@ -75,7 +75,7 @@
 }
 .wte-next__desc {
   display: block;
-  color: rgba(10, 11, 13, 0.68);
+  color: rgba(var(--ink-rgb), 0.68);
   font-size: 0.92rem;
   line-height: 1.5;
 }
