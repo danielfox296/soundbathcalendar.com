@@ -28,7 +28,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # Build is stdlib-only Python — no pip install step needed.
       - name: Build site
@@ -43,13 +43,13 @@ jobs:
             --exclude '*.md' ./ _site/
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
       # Tell IndexNow-participating engines (Bing, etc.) the site changed.
       # The script swallows its own errors, so a dead endpoint never fails a deploy.
