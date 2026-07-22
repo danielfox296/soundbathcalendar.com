@@ -846,14 +846,37 @@ def row_tag_slugs(row):
     return taxonomy.normalize_tags(row.get('tags'))
 
 
-def render_tag_chips(row, cls='cal-tags'):
-    """Tag chips for a row/page, or '' when the row carries no known tags."""
+# CAL-09: slugs that have a live tag landing page → {slug: site-relative path}.
+# Set once per build (build.py, before any chip renders) so a chip links to
+# /<slug>/ when that page exists and stays an inert <span> otherwise. Empty by
+# default, so any caller that doesn't set it renders plain chips (no regression).
+_LINKED_TAG_PAGES = {}
+
+
+def set_linked_tag_pages(mapping):
+    """Register the tag→page-path map used to turn chips into links (CAL-09)."""
+    global _LINKED_TAG_PAGES
+    _LINKED_TAG_PAGES = dict(mapping or {})
+
+
+def render_tag_chips(row, cls='cal-tags', nav_prefix=''):
+    """Tag chips for a row/page, or '' when the row carries no known tags. A tag
+    with a live landing page (CAL-09) renders as a link; the rest stay inert
+    <span>s. nav_prefix resolves the link from the caller's depth."""
     slugs = row_tag_slugs(row)
     if not slugs:
         return ''
-    chips = ''.join(
-        f'<span class="cal-tag">{_esc(taxonomy.label_for(s))}</span>' for s in slugs)
-    return f'<p class="{cls}">{chips}</p>'
+    parts = []
+    for s in slugs:
+        label = _esc(taxonomy.label_for(s))
+        path = _LINKED_TAG_PAGES.get(s)
+        if path:
+            parts.append(
+                f'<a class="cal-tag cal-tag--link" '
+                f'href="{_esc(nav_prefix + path)}">{label}</a>')
+        else:
+            parts.append(f'<span class="cal-tag">{label}</span>')
+    return f'<p class="{cls}">{"".join(parts)}</p>'
 
 
 def present_tag_slugs(rows):
@@ -994,7 +1017,7 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None):
     # Tag chips (CAL-01) — external rows only; the canonical vocabulary, or
     # nothing when the row carries no known tag (a bare row is the honest default).
     if not is_fw:
-        chips = render_tag_chips(row, cls='cal-row__tags')
+        chips = render_tag_chips(row, cls='cal-row__tags', nav_prefix=nav_prefix)
         if chips:
             parts.append('      ' + chips)
 
@@ -1744,7 +1767,7 @@ def render_event_page(row, nav_prefix, site_url, now=None):
         out.append(f'    <p class="cal-event__note">{esc(note)}</p>')
 
     # Tag chips (CAL-01) — the canonical vocabulary for this session, or nothing.
-    chips = render_tag_chips(row, cls='cal-event__tags')
+    chips = render_tag_chips(row, cls='cal-event__tags', nav_prefix=nav_prefix)
     if chips:
         out.append('    ' + chips)
 

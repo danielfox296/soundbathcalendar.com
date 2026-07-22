@@ -120,8 +120,19 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-tag--toggle { cursor: pointer; }
 .cal-tag--toggle input { width: 0.85rem; height: 0.85rem; accent-color: var(--accent-on-light); margin: 0; }
 .cal-tag--toggle:hover { border-color: var(--accent-on-light); }
+/* A chip that links to its tag landing page (CAL-09) — same chip, clickable. */
+.cal-tag--link { text-decoration: none; cursor: pointer; }
+.cal-tag--link:hover { border-color: var(--accent-on-light); background: rgba(31,111,168,0.06); }
 .cal-row__tags, .cal-event__tags { display: flex; flex-wrap: wrap; gap: 0.3rem 0.4rem; margin: 0.5rem 0 0; padding: 0; }
 .cal-event__tags { margin: 0.4rem 0 1.4rem; }
+
+/* ---- tag landing pages (CAL-09): the audience-first intro + a related-tags
+        nav below the list. ---- */
+.cal-intro { font-size: 1.02rem; color: rgba(10,11,13,0.8); max-width: 42rem; margin: 0 0 1.2rem; line-height: 1.55; }
+.cal-related { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; margin: 1.8rem 0 2.4rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
+.cal-related__label { font: 600 0.66rem var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: rgba(10,11,13,0.45); }
+.cal-related a { color: var(--accent-on-light); text-decoration: none; font: 600 0.9rem var(--font-body); }
+.cal-related a:hover { text-decoration: underline; }
 
 /* ---- add-to-calendar menu (CAL-01): a no-JS <details> disclosure on the
         event page offering Google/Apple/Outlook/.ics launch links. ---- */

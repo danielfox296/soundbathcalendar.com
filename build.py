@@ -59,6 +59,7 @@ from _src.lib import venues as venues_lib
 from _src.lib import mapview as mapview_lib
 from _src.lib import rss as rss_lib
 from _src.lib import insights as insights_lib
+from _src.lib import tag_pages as tag_pages_lib
 
 SITE_URL = 'https://soundbathcalendar.com'
 SITE_NAME = 'Sound Bath Calendar'
@@ -223,6 +224,10 @@ def build():
     # Future, de-duplicated, chronological rows — shared by the root injection,
     # the ItemList schema, and the city pages (Track B B.2).
     cal_rows = external_events.build_rows(cal_feed, feed, now=cal_now)
+    # CAL-09: which tags have earned a landing page (>= BUILD_MIN upcoming). Set
+    # BEFORE any chip renders (root injection below, then city/event pages) so
+    # every tag chip links to /<slug>/ when that page exists.
+    external_events.set_linked_tag_pages(tag_pages_lib.linked_tag_map(cal_rows))
     print()
     print('Loading practitioners feed...')
     pract_feed = practitioners_lib.load_feed(REPO)
@@ -444,6 +449,11 @@ def build():
         base, header, footer, venue_list, cal_rows, cal_now)
     pages_built.extend(_venue_outputs)
 
+    # --- Tag landing pages (/<tag-slug>/) + /tags/ index — CAL-09 ---
+    _tag_outputs, _tag_sitemap = build_tag_pages(
+        base, header, footer, cal_rows, cal_now, geocode)
+    pages_built.extend(_tag_outputs)
+
     # --- Map view (/map/) — CAL-04 ---
     _map_outputs, _map_sitemap = build_map_page(
         base, header, footer, cal_rows, cal_now, geocode)
@@ -465,7 +475,7 @@ def build():
     generate_sitemap(page_dirs, cal_now,
                      extra_urls=(_city_sitemap + _event_sitemap
                                  + _pract_sitemap + _venue_sitemap + _map_sitemap
-                                 + _insights_sitemap))
+                                 + _tag_sitemap + _insights_sitemap))
 
 
 def build_ics_feeds(cal_rows, now):
@@ -1112,6 +1122,176 @@ def build_insights_pages(base, header, footer, now):
     for i, ed in enumerate(editions):
         _emit(f'state-of-sound-healing/{ed["edition"]["slug"]}/index.html', '../../',
               ed, editions[:i] + editions[i + 1:], False)
+    return built, sitemap_entries
+
+
+def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
+    """Emit a curated landing page per canonical tag that clears BUILD_MIN
+    upcoming events (/<tag-slug>/, e.g. /gong-bath/) plus the /tags/ index —
+    CAL-09. SITE-ONLY: pages derive from the CAL-01 taxonomy + the rows the
+    calendar already renders (no admin, no feed, no DB).
+
+    Doorway discipline: a tag page is indexed only at/above INDEX_MIN; thinner
+    ones (BUILD_MIN..INDEX_MIN-1) are built but noindexed; below BUILD_MIN there
+    is no page at all. Root-level unless a slug would collide with a reserved
+    path, in which case /tag/<slug>/. Today only ~2 tags qualify (gong-bath,
+    breathwork-sound) — EXPECTED; the machinery lets pages appear as Daniel
+    curates per-event tags. Returns (built_outputs, sitemap_entries).
+    """
+    import shutil
+    # The /tag/<slug>/ collision-fallback dir is ours alone — clear stale ones.
+    # Root-level tag dirs aren't blanket-removed (can't safely); CI builds clean.
+    shutil.rmtree(os.path.join(REPO, 'tag'), ignore_errors=True)
+
+    print('\nGenerating tag pages...')
+    built, sitemap_entries = [], []
+    lastmod = external_events.stamp_date_iso(now)
+
+    tags = tag_pages_lib.qualifying_tags(cal_rows)
+    built_map = tag_pages_lib.linked_tag_map(cal_rows)  # {slug: page path}
+
+    for t in tags:
+        slug = t['slug']
+        label = t['label']
+        output = tag_pages_lib.tag_page_output(slug)
+        nav_prefix = tag_pages_lib.tag_nav_prefix(slug)
+        canonical_url = tag_pages_lib.tag_page_url(slug, SITE_URL)
+
+        title = f'{label} sound baths on the Front Range | {SITE_NAME}'
+        description = (f'Upcoming {label.lower()} sound baths across Denver, '
+                       f'Boulder, Fort Collins, and Colorado Springs: dates, '
+                       f'times, venues, prices, and ticket links.')
+        meta_desc = (f'<meta name="description" '
+                     f'content="{html_mod.escape(description, quote=True)}">')
+
+        # Doorway discipline: index only the pages with real depth.
+        robots_value = 'index, follow' if t['indexable'] else 'noindex, follow'
+
+        og_image = f'{SITE_URL}/img/og-default.png'
+        og_tags, twitter_tags = _og_twitter_tags(
+            label, description, canonical_url, og_image)
+
+        # Organization (publisher) + CollectionPage + ItemList + FAQPage +
+        # BreadcrumbList. The ItemList carries external-operator strings, so it
+        # routes through _ldjson (breakout-safe); the rest are our own.
+        schema_json = (f'<script type="application/ld+json">\n'
+                       f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+        _cp = tag_pages_lib.tag_collectionpage_schema(
+            slug, canonical_url, SITE_URL, description, lastmod)
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(_cp)}\n  </script>')
+        _il = tag_pages_lib.tag_itemlist(cal_rows, slug, SITE_URL)
+        if _il:
+            schema_json += (f'\n  <script type="application/ld+json">\n'
+                            f'{_ldjson(_il)}\n  </script>')
+        _faq = tag_pages_lib.tag_faqpage_schema(cal_rows, slug)
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(_faq)}\n  </script>')
+        breadcrumb_schema = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Calendar",
+                 "item": SITE_URL + "/"},
+                {"@type": "ListItem", "position": 2, "name": "Tags",
+                 "item": SITE_URL + "/tags/"},
+                {"@type": "ListItem", "position": 3, "name": label,
+                 "item": canonical_url},
+            ],
+        }
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{json.dumps(breadcrumb_schema, indent=2)}\n  </script>')
+
+        content = tag_pages_lib.render_tag_page(
+            cal_rows, slug, nav_prefix, built_map, now=now, geocode=geocode)
+        page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
+        page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
+
+        html = _assemble(base, {
+            'title':            title,
+            'robots':           robots_value,
+            'meta_description': meta_desc,
+            'canonical_url':    canonical_url,
+            'css_path':         nav_prefix,
+            'page_style':       '',
+            'og_tags':          og_tags,
+            'twitter_tags':     twitter_tags,
+            'schema_json':      schema_json,
+            'header':           page_header,
+            'content':          content,
+            'footer':           page_footer,
+        })
+
+        if not _write_page(output, html, built):
+            continue
+        print(f'  ✓ {output} ({t["count"]} upcoming, '
+              f'{"indexed" if t["indexable"] else "noindex until %d" % tag_pages_lib.INDEX_MIN})')
+        if t['indexable']:
+            sitemap_entries.append((canonical_url, lastmod))
+
+    # --- index page (/tags/) ---
+    # Doorway discipline: keep the directory out of the index until it has a few
+    # real tag pages; the individual pages still rank on their own.
+    index_output = 'tags/index.html'
+    index_nav = '../'
+    index_canonical = f'{SITE_URL}/tags/'
+    indexable = len(tags) >= tag_pages_lib.TAGS_INDEX_MIN
+    robots_value = 'index, follow' if indexable else 'noindex, follow'
+    index_title = f'Browse sound baths by tag | {SITE_NAME}'
+    index_desc = ('Sound baths on the Colorado Front Range grouped by tag — what '
+                  'makes the sound, why people come, the setting, and who they '
+                  'are for.')
+    index_meta = (f'<meta name="description" '
+                  f'content="{html_mod.escape(index_desc, quote=True)}">')
+    og_tags, twitter_tags = _og_twitter_tags(
+        'Browse by tag', index_desc, index_canonical,
+        f'{SITE_URL}/img/og-default.png')
+
+    schema_json = (f'<script type="application/ld+json">\n'
+                   f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+    _il = tag_pages_lib.index_itemlist(tags, SITE_URL)
+    if _il:
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(_il)}\n  </script>')
+    index_breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Calendar",
+             "item": SITE_URL + "/"},
+            {"@type": "ListItem", "position": 2, "name": "Tags",
+             "item": index_canonical},
+        ],
+    }
+    schema_json += (f'\n  <script type="application/ld+json">\n'
+                    f'{json.dumps(index_breadcrumb, indent=2)}\n  </script>')
+
+    index_content = tag_pages_lib.render_index(tags, index_nav)
+    page_header = header.strip().replace('{{nav_prefix}}', index_nav)
+    page_footer = footer.strip().replace('{{nav_prefix}}', index_nav)
+    html = _assemble(base, {
+        'title':            index_title,
+        'robots':           robots_value,
+        'meta_description': index_meta,
+        'canonical_url':    index_canonical,
+        'css_path':         index_nav,
+        'page_style':       tag_pages_lib.INDEX_STYLE,
+        'og_tags':          og_tags,
+        'twitter_tags':     twitter_tags,
+        'schema_json':      schema_json,
+        'header':           page_header,
+        'content':          index_content,
+        'footer':           page_footer,
+    })
+    if _write_page(index_output, html, built):
+        print(f'  ✓ {index_output} ({len(tags)} tag page(s), '
+              f'{"indexed" if indexable else "noindex until %d" % tag_pages_lib.TAGS_INDEX_MIN})')
+        if indexable:
+            sitemap_entries.append((index_canonical, lastmod))
+
+    if not tags:
+        print('  (no tags clear the inventory threshold yet)')
+
     return built, sitemap_entries
 
 
