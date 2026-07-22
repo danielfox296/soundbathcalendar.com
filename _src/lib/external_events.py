@@ -35,6 +35,8 @@ FEED CONTRACT (GET {CALENDAR_FEED_URL}), shape:
     "neighborhood": <str|null>,
     "price","ticket_url","source_url","tags":[...],
     "confidence": <0..1>, "dedup_key","status","note","rejection_note",
+    "first_seen_at",   # CAL-15: when the pull first surfaced the listing (row
+                       # createdAt) — becomes offers.validFrom in Event schema.
     # v2 (all optional; "" when unknown):
     "image_url",       # listing image / flyer (og:image). http(s) only, scrubbed.
     "facilitator",     # the PERSON leading the session (distinct from operator).
@@ -355,6 +357,8 @@ def _external_row(e):
         'operator_url': _safe_ext_url(e.get('operator_url', '')),
         'venue_url': _safe_ext_url(e.get('venue_url', '')),
         'description': (e.get('description', '') or '').strip(),
+        # CAL-15: when the pull first surfaced the listing (ISO, Denver offset).
+        'first_seen_at': e.get('first_seen_at', '') or '',
         # CAL-02: {slug, name} of the linked PUBLISHED practitioner, or None. The
         # feed only ever carries a published practitioner here (drafts stay in
         # the service), so a slug present means /practitioner/<slug>/ exists.
@@ -1292,7 +1296,13 @@ def _parse_price(price):
         return (None,)
     nums = [float(x) for x in _PRICE_NUM_RE.findall(price)]
     if not nums:
-        is_free = bool(_FREE_RE.search(price)) and not _DONATION_RE.search(price)
+        # CAL-15: "Free (donations appreciated)" IS free — admission stated
+        # free, donation parenthetical. "Free-will donation" is NOT (that's
+        # pay-what-you-want, price unknown), so the donation guard stands
+        # unless the string literally opens "Free (".
+        is_free = bool(_FREE_RE.search(price)) and (
+            not _DONATION_RE.search(price)
+            or bool(re.match(r'free\s*\(', price, re.I)))
         return ('free',) if is_free else (None,)
     if len(nums) == 1:
         return ('fixed', nums[0])
@@ -1330,6 +1340,11 @@ def _external_offer(row):
     if url:
         offer['url'] = url
         offer['availability'] = 'https://schema.org/InStock'
+    # CAL-15: validFrom = when the pull first surfaced the listing — the honest
+    # "tickets observed on sale since" claim (never the true on-sale date,
+    # which we don't know).
+    if row.get('first_seen_at'):
+        offer['validFrom'] = row['first_seen_at']
     return offer
 
 
