@@ -363,6 +363,9 @@ def _external_row(e):
         # CAL-03: {slug, name} of the linked PUBLISHED venue, or None.
         'venue_ref': (e.get('venue_ref')
                       if isinstance(e.get('venue_ref'), dict) else None),
+        # CAL-08: {slug, name} of the linked PUBLISHED operator (org/host), or None.
+        'operator_ref': (e.get('operator_ref')
+                         if isinstance(e.get('operator_ref'), dict) else None),
         '_ext': e,
         '_sess': None,
         '_event_title': None,
@@ -1817,7 +1820,16 @@ def render_event_page(row, nav_prefix, site_url, now=None):
             f'href="{esc(pr_href)}">{esc(pr.get("name") or row.get("facilitator") or "")}</a></dd>')
     elif row.get('facilitator'):
         out.append(f'      <dt>Facilitator</dt><dd>{esc(row["facilitator"])}</dd>')
-    if row.get('operator'):
+    # Operator: link to the organizer profile when this session is linked to a
+    # published one (CAL-08); otherwise the plain listing string.
+    orf = row.get('operator_ref') or {}
+    orf_slug = orf.get('slug') if isinstance(orf, dict) else None
+    if orf_slug:
+        orf_href = f'{nav_prefix}operator/{orf_slug}/'
+        out.append(
+            f'      <dt>Operator</dt><dd><a class="cal-event__link" '
+            f'href="{esc(orf_href)}">{esc(orf.get("name") or row.get("operator") or "")}</a></dd>')
+    elif row.get('operator'):
         out.append(f'      <dt>Operator</dt><dd>{esc(row["operator"])}</dd>')
     out.append('    </dl>')
 

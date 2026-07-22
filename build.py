@@ -56,6 +56,7 @@ from _src.lib import sessions_feed
 from _src.lib import external_events
 from _src.lib import practitioners as practitioners_lib
 from _src.lib import venues as venues_lib
+from _src.lib import operators as operators_lib
 from _src.lib import mapview as mapview_lib
 from _src.lib import rss as rss_lib
 from _src.lib import insights as insights_lib
@@ -236,6 +237,10 @@ def build():
     print('Loading venues feed...')
     venue_feed = venues_lib.load_feed(REPO)
     venue_list = venues_lib.published_venues(venue_feed)
+    print()
+    print('Loading operators feed...')
+    operator_feed = operators_lib.load_feed(REPO)
+    operator_list = operators_lib.published_operators(operator_feed)
     print()
     # Venue coordinates (CAL-04 cache) — shared by the map AND the CAL-05 near-me
     # distance sort, which attaches data-lat/lng to each row that has one.
@@ -449,6 +454,11 @@ def build():
         base, header, footer, venue_list, cal_rows, cal_now)
     pages_built.extend(_venue_outputs)
 
+    # --- Operator pages (/operator/<slug>/) + index — CAL-08 ---
+    _operator_outputs, _operator_sitemap = build_operator_pages(
+        base, header, footer, operator_list, cal_rows, cal_now)
+    pages_built.extend(_operator_outputs)
+
     # --- Tag landing pages (/<tag-slug>/) + /tags/ index — CAL-09 ---
     _tag_outputs, _tag_sitemap = build_tag_pages(
         base, header, footer, cal_rows, cal_now, geocode)
@@ -474,7 +484,8 @@ def build():
 
     generate_sitemap(page_dirs, cal_now,
                      extra_urls=(_city_sitemap + _event_sitemap
-                                 + _pract_sitemap + _venue_sitemap + _map_sitemap
+                                 + _pract_sitemap + _venue_sitemap
+                                 + _operator_sitemap + _map_sitemap
                                  + _tag_sitemap + _insights_sitemap))
 
 
@@ -1021,6 +1032,148 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
 
     if not venue_list:
         print('  (no published venues yet)')
+
+    return built, sitemap_entries
+
+
+def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
+    """Emit /operator/<slug>/ pages for every PUBLISHED operator + the
+    /operators/ index (CAL-08). Individual pages are curated (Daniel publishes
+    only the multi-venue organizers worth a distinct page — the owner-operated
+    single-room duplicates stay drafts), so they're indexed; the index is
+    noindexed until it has a few (doorway-page discipline). Returns
+    (built_outputs, sitemap_entries)."""
+    import shutil
+    shutil.rmtree(os.path.join(REPO, 'operator'), ignore_errors=True)
+
+    print('\nGenerating operator pages...')
+    built, sitemap_entries = [], []
+    lastmod = external_events.stamp_date_iso(now)
+
+    count_by_slug = {}
+    for o in operator_list:
+        count_by_slug[o['slug']] = len(operators_lib.sessions_for(o['slug'], cal_rows))
+
+    for o in operator_list:
+        slug = o['slug']
+        output = f'operator/{slug}/index.html'
+        nav_prefix = '../../'
+        canonical_url = operators_lib.operator_url(slug, SITE_URL)
+        name = o['name']
+        sessions = operators_lib.sessions_for(slug, cal_rows)
+
+        title = f'{html_mod.escape(name)} · Sound bath organizer | {SITE_NAME}'
+        desc_body = ' '.join((o.get('description') or '').split())
+        description = (desc_body[:157].rstrip() + '…') if len(desc_body) > 158 else (
+            desc_body or
+            f'{name}: the sound baths they run across Denver and the Front Range, '
+            f'and where to catch them next.')
+        meta_desc = (f'<meta name="description" '
+                     f'content="{html_mod.escape(description, quote=True)}">')
+
+        og_image = f'{SITE_URL}/img/og-default.png'
+        og_tags, twitter_tags = _og_twitter_tags(
+            name, description, canonical_url, og_image)
+
+        schema_json = (f'<script type="application/ld+json">\n'
+                       f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+        _org = operators_lib.organization_schema(o, canonical_url)
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(_org)}\n  </script>')
+        breadcrumb_schema = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Calendar",
+                 "item": SITE_URL + "/"},
+                {"@type": "ListItem", "position": 2, "name": "Organizers",
+                 "item": SITE_URL + "/operators/"},
+                {"@type": "ListItem", "position": 3, "name": name},
+            ],
+        }
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(breadcrumb_schema)}\n  </script>')
+
+        content = operators_lib.render_operator_page(o, sessions, nav_prefix, SITE_URL, now=now)
+        page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
+        page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
+
+        html = _assemble(base, {
+            'title': title,
+            'robots': 'index, follow',
+            'meta_description': meta_desc,
+            'canonical_url': canonical_url,
+            'css_path': nav_prefix,
+            'page_style': operators_lib.OPERATOR_PAGE_STYLE,
+            'og_tags': og_tags,
+            'twitter_tags': twitter_tags,
+            'schema_json': schema_json,
+            'header': page_header,
+            'content': content,
+            'footer': page_footer,
+        })
+        if _write_page(output, html, built):
+            print(f'  ✓ {output} ({count_by_slug.get(slug, 0)} upcoming)')
+            sitemap_entries.append((canonical_url, lastmod))
+
+    # --- index (/operators/) ---
+    INDEX_MIN_INDEXED = 3
+    index_output = 'operators/index.html'
+    index_nav = '../'
+    index_canonical = f'{SITE_URL}/operators/'
+    indexable = len(operator_list) >= INDEX_MIN_INDEXED
+    robots_value = 'index, follow' if indexable else 'noindex, follow'
+    index_desc = ('The collectives and studios running sound baths across Denver and '
+                  'the Colorado Front Range: who they are, and where to catch them next.')
+    index_meta = (f'<meta name="description" '
+                  f'content="{html_mod.escape(index_desc, quote=True)}">')
+    og_tags, twitter_tags = _og_twitter_tags(
+        'Organizers', index_desc, index_canonical, f'{SITE_URL}/img/og-default.png')
+
+    schema_json = (f'<script type="application/ld+json">\n'
+                   f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+    _il = operators_lib.index_itemlist(operator_list, SITE_URL)
+    if _il:
+        schema_json += (f'\n  <script type="application/ld+json">\n'
+                        f'{_ldjson(_il)}\n  </script>')
+    index_breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Calendar",
+             "item": SITE_URL + "/"},
+            {"@type": "ListItem", "position": 2, "name": "Organizers",
+             "item": index_canonical},
+        ],
+    }
+    schema_json += (f'\n  <script type="application/ld+json">\n'
+                    f'{json.dumps(index_breadcrumb, indent=2)}\n  </script>')
+
+    index_content = operators_lib.render_index(operator_list, count_by_slug, index_nav)
+    page_header = header.strip().replace('{{nav_prefix}}', index_nav)
+    page_footer = footer.strip().replace('{{nav_prefix}}', index_nav)
+    html = _assemble(base, {
+        'title': f'Organizers | {SITE_NAME}',
+        'robots': robots_value,
+        'meta_description': index_meta,
+        'canonical_url': index_canonical,
+        'css_path': index_nav,
+        'page_style': operators_lib.INDEX_STYLE,
+        'og_tags': og_tags,
+        'twitter_tags': twitter_tags,
+        'schema_json': schema_json,
+        'header': page_header,
+        'content': index_content,
+        'footer': page_footer,
+    })
+    if _write_page(index_output, html, built):
+        print(f'  ✓ {index_output} ({len(operator_list)} listed, '
+              f'{"indexed" if indexable else "noindex until 3"})')
+        if indexable:
+            sitemap_entries.append((index_canonical, lastmod))
+
+    if not operator_list:
+        print('  (no published operators yet)')
 
     return built, sitemap_entries
 
