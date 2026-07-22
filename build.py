@@ -165,6 +165,18 @@ def _og_twitter_tags(title, description, canonical_url, og_image):
     return og, tw
 
 
+def _og_asset(*rels):
+    """Absolute URL for the first committed OG card that exists, else the
+    default card. Cards are generated LOCALLY by scripts/og.py (CAL-17) and
+    committed under img/og/ — CI never regenerates them — so a card that
+    hasn't been generated yet must fall back rather than 404 (e.g. a new tag
+    page falls back tag-<slug>.jpg -> tags.jpg -> og-default.jpg)."""
+    for rel in rels:
+        if os.path.exists(os.path.join(REPO, rel)):
+            return f'{SITE_URL}/{rel}'
+    return f'{SITE_URL}/img/og-default.jpg'
+
+
 def _assemble(base, mapping):
     """Substitute {{placeholders}} into the base layout. Two passes on
     css_path: content/header/footer may themselves use {{css_path}}."""
@@ -352,7 +364,7 @@ def build():
 
         canonical_url = page_url(output)
 
-        og_image = f'{SITE_URL}/img/og-default.png'
+        og_image = f'{SITE_URL}/img/og-default.jpg'
         if config.get('og_image'):
             og_image = (config['og_image'] if config['og_image'].startswith('http')
                         else f'{SITE_URL}/{config["og_image"].lstrip("/")}')
@@ -566,10 +578,7 @@ def build_city_pages(base, header, footer, cal_rows, now, geocode=None):
         meta_desc = (f'<meta name="description" '
                      f'content="{html_mod.escape(description, quote=True)}">')
 
-        og_rel = f'img/og/{slug}.png'
-        og_image = (f'{SITE_URL}/{og_rel}'
-                    if os.path.exists(os.path.join(REPO, og_rel))
-                    else f'{SITE_URL}/img/og-default.png')
+        og_image = _og_asset(f'img/og/{slug}.jpg')
         og_tags, twitter_tags = _og_twitter_tags(
             external_events.CITY_H1[city], description, canonical_url, og_image)
 
@@ -683,7 +692,7 @@ def build_event_pages(base, header, footer, cal_feed, now):
         meta_desc = (f'<meta name="description" '
                      f'content="{html_mod.escape(description, quote=True)}">')
 
-        og_image = row.get('image_url') or f'{SITE_URL}/img/og-default.png'
+        og_image = row.get('image_url') or _og_asset('img/og-default.jpg')
         og_tags, twitter_tags = _og_twitter_tags(
             name, description, canonical_url, og_image)
 
@@ -780,7 +789,7 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
                      f'content="{html_mod.escape(description, quote=True)}">')
 
         og_image = (external_events._safe_ext_url(p.get('photo_url') or '')
-                    or f'{SITE_URL}/img/og-default.png')
+                    or _og_asset('img/og/practitioners.jpg'))
         og_tags, twitter_tags = _og_twitter_tags(
             name, description, canonical_url, og_image)
 
@@ -844,7 +853,7 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
                   f'content="{html_mod.escape(index_desc, quote=True)}">')
     og_tags, twitter_tags = _og_twitter_tags(
         'Practitioners', index_desc, index_canonical,
-        f'{SITE_URL}/img/og-default.png')
+        _og_asset('img/og/practitioners.jpg'))
 
     schema_json = (f'<script type="application/ld+json">\n'
                    f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
@@ -929,7 +938,7 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
                      f'content="{html_mod.escape(description, quote=True)}">')
 
         og_image = (external_events._safe_ext_url(v.get('photo_url') or '')
-                    or f'{SITE_URL}/img/og-default.png')
+                    or _og_asset('img/og/venues.jpg'))
         og_tags, twitter_tags = _og_twitter_tags(
             name, description, canonical_url, og_image)
 
@@ -986,7 +995,7 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
     index_meta = (f'<meta name="description" '
                   f'content="{html_mod.escape(index_desc, quote=True)}">')
     og_tags, twitter_tags = _og_twitter_tags(
-        'Venues', index_desc, index_canonical, f'{SITE_URL}/img/og-default.png')
+        'Venues', index_desc, index_canonical, _og_asset('img/og/venues.jpg'))
 
     schema_json = (f'<script type="application/ld+json">\n'
                    f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
@@ -1071,7 +1080,7 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
         meta_desc = (f'<meta name="description" '
                      f'content="{html_mod.escape(description, quote=True)}">')
 
-        og_image = f'{SITE_URL}/img/og-default.png'
+        og_image = _og_asset('img/og/operators.jpg')
         og_tags, twitter_tags = _og_twitter_tags(
             name, description, canonical_url, og_image)
 
@@ -1128,7 +1137,7 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
     index_meta = (f'<meta name="description" '
                   f'content="{html_mod.escape(index_desc, quote=True)}">')
     og_tags, twitter_tags = _og_twitter_tags(
-        'Organizers', index_desc, index_canonical, f'{SITE_URL}/img/og-default.png')
+        'Organizers', index_desc, index_canonical, _og_asset('img/og/operators.jpg'))
 
     schema_json = (f'<script type="application/ld+json">\n'
                    f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
@@ -1320,7 +1329,7 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
         # Doorway discipline: index only the pages with real depth.
         robots_value = 'index, follow' if t['indexable'] else 'noindex, follow'
 
-        og_image = f'{SITE_URL}/img/og-default.png'
+        og_image = _og_asset(f'img/og/tag-{slug}.jpg', 'img/og/tags.jpg')
         og_tags, twitter_tags = _og_twitter_tags(
             label, description, canonical_url, og_image)
 
@@ -1398,7 +1407,7 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
                   f'content="{html_mod.escape(index_desc, quote=True)}">')
     og_tags, twitter_tags = _og_twitter_tags(
         'Browse by tag', index_desc, index_canonical,
-        f'{SITE_URL}/img/og-default.png')
+        _og_asset('img/og/tags.jpg'))
 
     schema_json = (f'<script type="application/ld+json">\n'
                    f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
@@ -1469,7 +1478,7 @@ def build_map_page(base, header, footer, cal_rows, now, geocode=None):
                  f'content="{html_mod.escape(description, quote=True)}">')
     og_tags, twitter_tags = _og_twitter_tags(
         'Sound baths on the map', description, canonical_url,
-        f'{SITE_URL}/img/og-default.png')
+        _og_asset('img/og/map.jpg'))
 
     schema_json = (f'<script type="application/ld+json">\n'
                    f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
