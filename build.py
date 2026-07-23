@@ -35,6 +35,7 @@ Notes:
 
 import os
 import posixpath
+import subprocess
 import sys
 import json
 import glob
@@ -580,6 +581,9 @@ def build_city_pages(base, header, footer, cal_rows, now, geocode=None):
     """
     print('\nGenerating city pages...')
     built, sitemap_entries = [], []
+    # Build date is the HONEST lastmod here (unlike the evergreen pages —
+    # CAL-SEO-2): city pages render temporal bands and a visible 'Last
+    # updated {today}' stamp, so their content really does change every build.
     lastmod = external_events.stamp_date_iso(now)
     nav_prefix = '../'
 
@@ -680,14 +684,16 @@ def build_event_pages(base, header, footer, cal_feed, now):
         return [], []
 
     import datetime as _dt
-    # lastmod = the feed's own generated_at date (when the listing data was
-    # last refreshed), falling back to today.
+    # Fallback lastmod only: the feed's generated_at date, then today. The
+    # real per-page value is the row's own date (_row_date_iso — CAL-15
+    # first_seen_at); generated_at is stamped per FETCH, so using it for
+    # every page restamped the whole /event/ set on every build (CAL-SEO-2).
     gen = (cal_feed or {}).get('generated_at')
     try:
-        lastmod = sessions_feed.parse_iso(gen).astimezone(
+        feed_lastmod = sessions_feed.parse_iso(gen).astimezone(
             sessions_feed.DENVER).date().isoformat()
     except Exception:
-        lastmod = _dt.date.today().isoformat()
+        feed_lastmod = _dt.date.today().isoformat()
 
     built, sitemap_entries = [], []
     for row in rows:
@@ -763,7 +769,8 @@ def build_event_pages(base, header, footer, cal_feed, now):
             continue
         print(f'  ✓ {output} ({"past/noindex" if is_past else "upcoming"})')
         if not is_past:
-            sitemap_entries.append((canonical_url, lastmod))
+            sitemap_entries.append(
+                (canonical_url, _row_date_iso(row) or feed_lastmod))
             # Per-event .ics beside the page (Track B B.4). newline='' keeps the
             # explicit CRLF endings untranslated. Upcoming events only.
             ics_path = os.path.join(REPO, 'event', slug, 'event.ics')
@@ -787,7 +794,10 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
 
     print('\nGenerating practitioner pages...')
     built, sitemap_entries = [], []
-    lastmod = external_events.stamp_date_iso(now)
+    # Per-page lastmod comes from _entity_lastmod (the newest row-own date
+    # among the profile's sessions); _index_rows collects every profile's
+    # rows so the index page can carry the newest date across all of them.
+    _index_rows = []
 
     # Upcoming-session counts + card art per practitioner (for the index cards):
     # curated photo first, else the next session's listing image.
@@ -861,7 +871,9 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
         })
         if _write_page(output, html, built):
             print(f'  ✓ {output} ({count_by_slug.get(slug, 0)} upcoming)')
-            sitemap_entries.append((canonical_url, lastmod))
+            _index_rows.extend(sessions)
+            sitemap_entries.append(
+                (canonical_url, _entity_lastmod(sessions, now)))
 
     # --- index page (/practitioners/) ---
     # Doorway-page discipline: keep the directory out of the index until it has
@@ -922,7 +934,8 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
         print(f'  ✓ {index_output} ({len(practs)} listed, '
               f'{"indexed" if indexable else "noindex until 3"})')
         if indexable:
-            sitemap_entries.append((index_canonical, lastmod))
+            sitemap_entries.append(
+                (index_canonical, _entity_lastmod(_index_rows, now)))
 
     if not practs:
         print('  (no published practitioners yet)')
@@ -944,7 +957,9 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
     # many upcoming sessions (CAL-SEO-1 doorway discipline).
     ENTITY_MIN_UPCOMING = 2
     indexed_count = 0
-    lastmod = external_events.stamp_date_iso(now)
+    # Per-page lastmod from _entity_lastmod; _index_rows collects the indexed
+    # profiles' rows so the /venues/ index carries the newest date among them.
+    _index_rows = []
 
     # Counts + card art (curated photo, else the next session's listing image).
     count_by_slug, art_by_slug = {}, {}
@@ -1024,7 +1039,9 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
                   f'{"indexed" if page_indexable else "noindex"})')
             if page_indexable:
                 indexed_count += 1
-                sitemap_entries.append((canonical_url, lastmod))
+                _index_rows.extend(sessions)
+                sitemap_entries.append(
+                    (canonical_url, _entity_lastmod(sessions, now)))
 
     # --- index (/venues/) ---
     INDEX_MIN_INDEXED = 3
@@ -1081,7 +1098,8 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
         print(f'  ✓ {index_output} ({len(venue_list)} listed, '
               f'{"indexed" if indexable else "noindex until 3"})')
         if indexable:
-            sitemap_entries.append((index_canonical, lastmod))
+            sitemap_entries.append(
+                (index_canonical, _entity_lastmod(_index_rows, now)))
 
     if not venue_list:
         print('  (no published venues yet)')
@@ -1104,7 +1122,9 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
     # Same doorway gate as venues (CAL-SEO-1).
     ENTITY_MIN_UPCOMING = 2
     indexed_count = 0
-    lastmod = external_events.stamp_date_iso(now)
+    # Per-page lastmod from _entity_lastmod; _index_rows collects the indexed
+    # profiles' rows so the /operators/ index carries the newest date among them.
+    _index_rows = []
 
     # Counts + card art (operators carry no curated photo; the next session's
     # listing image stands in).
@@ -1182,7 +1202,9 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
                   f'{"indexed" if page_indexable else "noindex"})')
             if page_indexable:
                 indexed_count += 1
-                sitemap_entries.append((canonical_url, lastmod))
+                _index_rows.extend(sessions)
+                sitemap_entries.append(
+                    (canonical_url, _entity_lastmod(sessions, now)))
 
     # --- index (/operators/) ---
     INDEX_MIN_INDEXED = 3
@@ -1239,7 +1261,8 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
         print(f'  ✓ {index_output} ({len(operator_list)} listed, '
               f'{"indexed" if indexable else "noindex until 3"})')
         if indexable:
-            sitemap_entries.append((index_canonical, lastmod))
+            sitemap_entries.append(
+                (index_canonical, _entity_lastmod(_index_rows, now)))
 
     if not operator_list:
         print('  (no published operators yet)')
@@ -1336,7 +1359,18 @@ def build_insights_pages(base, header, footer, now):
         })
         if _write_page(output, html, built):
             print(f'  ✓ {output}')
-            sitemap_entries.append((canonical, external_events.stamp_date_iso(now)))
+            # Sitemap lastmod: the edition JSONs are FROZEN, so generated_at
+            # IS the content date (it already feeds the Dataset dateModified
+            # above). The hub re-renders when any edition lands, so it takes
+            # the newest across all of them; build date only if a frozen file
+            # somehow lacks the stamp (CAL-SEO-2: never the build date just
+            # because the build ran).
+            _pool = [agg] + list(others) if is_hub else [agg]
+            _stamps = [a['edition']['generated_at'][:10] for a in _pool
+                       if a['edition'].get('generated_at')]
+            sitemap_entries.append(
+                (canonical,
+                 max(_stamps) if _stamps else external_events.stamp_date_iso(now)))
 
     # Hub = latest edition inline, with the rest listed as archive.
     _emit('state-of-sound-healing/index.html', '../', latest, editions[1:], True)
@@ -1456,7 +1490,12 @@ def build_roundup_pages(base, header, footer, now):
           'index, follow' if indexable else 'noindex, follow',
           roundups_lib.render_index(posts, '../'),
           (ORG_SCHEMA, collection, index_breadcrumb),
-          external_events.stamp_date_iso(now))
+          # The index lists exactly the committed posts, so it last changed
+          # when the newest post landed — not whenever the build ran
+          # (CAL-SEO-2). Build date only on the no-posts edge (noindex then
+          # anyway).
+          max((p['date'] for p in posts),
+              default=external_events.stamp_date_iso(now)))
     print(f'  ({len(posts)} post(s); index '
           f'{"indexed" if indexable else "noindex until " + str(roundups_lib.INDEX_MIN)})')
     return built, sitemap_entries
@@ -1483,6 +1522,10 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
 
     print('\nGenerating tag pages...')
     built, sitemap_entries = [], []
+    # Build date is the HONEST lastmod here (unlike the evergreen pages —
+    # CAL-SEO-2): tag pages render a visible 'Last updated {today}' stamp
+    # (and their listings roll as events pass), and this value also feeds the
+    # CollectionPage dateModified below — sitemap and schema must agree.
     lastmod = external_events.stamp_date_iso(now)
 
     tags = tag_pages_lib.qualifying_tags(cal_rows)
@@ -1719,8 +1762,84 @@ def build_map_page(base, header, footer, cal_rows, now, geocode=None):
     built, sitemap_entries = [], []
     if _write_page(output, html, built):
         print(f'  ✓ {output} ({len(pins)} pins from {len(cal_rows)} rows)')
+        # Build date is honest here (CAL-SEO-2): the map renders a visible
+        # 'Last updated {today}' stamp and its pins roll with the calendar.
         sitemap_entries.append((canonical_url, external_events.stamp_date_iso(now)))
     return built, sitemap_entries
+
+
+def _git_lastmod(*paths):
+    """YYYY-MM-DD of the newest commit touching any of `paths` (committer
+    date — %cI sliced to the date; %cs would be neater but needs git >= 2.25,
+    and an unknown token comes back LITERALLY, which would land '%cs' in the
+    sitemap). None when git can't answer — no git binary, not a repo, or the
+    paths have no history yet (a fresh page dir before its first commit). CI
+    checks out with fetch-depth: 0 (deploy.yml) so every committed source
+    carries its real history there; a shallow checkout would date everything
+    at the deploy commit — the exact every-URL-restamped defect this exists
+    to fix (audit CAL-SEO-2)."""
+    existing = [p for p in paths if p and os.path.exists(p)]
+    if not existing:
+        return None
+    try:
+        proc = subprocess.run(
+            ['git', '-C', REPO, 'log', '-1', '--format=%cI', '--', *existing],
+            capture_output=True, text=True, timeout=15)
+    except Exception:
+        return None
+    if proc.returncode != 0:
+        return None
+    date = proc.stdout.strip()[:10]
+    # Belt and braces: only a real date may reach the sitemap.
+    return date if re.fullmatch(r'\d{4}-\d{2}-\d{2}', date) else None
+
+
+def _page_lastmod(page_path, now):
+    """YYYY-MM-DD an evergreen page's content last changed: git history of the
+    page dir (config.json + sections/ — the sources that feed the page) first,
+    then newest source mtime for local not-yet-committed pages, then the build
+    date. Git first because CI builds from a fresh checkout where every file's
+    mtime is the checkout time — mtime there would stamp every URL with the
+    deploy date on every push and daily cron run (audit CAL-SEO-2)."""
+    from_git = _git_lastmod(page_path)
+    if from_git:
+        return from_git
+    candidates = [os.path.join(page_path, 'config.json')]
+    candidates += glob.glob(os.path.join(page_path, 'sections', '*.html'))
+    mtimes = [os.path.getmtime(p) for p in candidates if os.path.exists(p)]
+    if not mtimes:
+        return external_events.stamp_date_iso(now)
+    import datetime as _dt
+    return _dt.date.fromtimestamp(max(mtimes)).isoformat()
+
+
+def _row_date_iso(row):
+    """The row's own change date (America/Denver, YYYY-MM-DD) or None. Prefers
+    `updated_at` (not in the feed contract today — joins automatically if the
+    service ever adds it), else `first_seen_at` (CAL-15: when the pull first
+    surfaced the listing). The feed-level generated_at is stamped per FETCH,
+    not per change, so it can never date a single row honestly."""
+    for key in ('updated_at', 'first_seen_at'):
+        ts = row.get(key)
+        if not ts:
+            continue
+        try:
+            return sessions_feed.parse_iso(ts).astimezone(
+                sessions_feed.DENVER).date().isoformat()
+        except Exception:
+            continue
+    return None
+
+
+def _entity_lastmod(sessions, now):
+    """Sitemap lastmod for a directory profile page (practitioner/venue/
+    operator): the newest row-own date among the entity's upcoming sessions —
+    a real 'this page gained a listing' timestamp — else the build date.
+    Directory rows carry no edit timestamp of their own and their feeds'
+    generated_at is stamped per fetch, so a profile edit alone can't move
+    this; understating is the safe direction for lastmod (audit CAL-SEO-2)."""
+    dates = [d for d in (_row_date_iso(row) for row in sessions) if d]
+    return max(dates) if dates else external_events.stamp_date_iso(now)
 
 
 def _sitemap_url_entry(loc, lastmod):
@@ -1735,8 +1854,10 @@ def _sitemap_url_entry(loc, lastmod):
 
 def generate_sitemap(page_dirs, cal_now, extra_urls=None):
     """Generate sitemap.xml: the root (lastmod = build date — the calendar
-    changes every build), any other indexable page, then the upcoming event
-    permalink pages by loc. noindex pages and redirect stubs are excluded.
+    changes every build: temporal bands + visible stamp), any other indexable
+    page (lastmod from config `lastmod`, else the page dir's git history —
+    see _page_lastmod; CAL-SEO-2), then the upcoming event permalink pages by
+    loc. noindex pages and redirect stubs are excluded.
     """
     print('\nGenerating sitemap...')
 
@@ -1754,12 +1875,19 @@ def generate_sitemap(page_dirs, cal_now, extra_urls=None):
         robots_value = config.get('robots', 'index, follow')
         if 'noindex' in robots_value:
             continue
-        lastmod = config.get('lastmod') or external_events.stamp_date_iso(cal_now)
-        xml = _sitemap_url_entry(page_url(output), lastmod)
         if output == 'index.html':
-            homepage_entry = xml
+            # The root is the live calendar — its content really does change
+            # every build (temporal bands, visible stamp), so build date is
+            # its honest lastmod.
+            lastmod = config.get('lastmod') or external_events.stamp_date_iso(cal_now)
+            homepage_entry = _sitemap_url_entry(page_url(output), lastmod)
         else:
-            root_entries.append((output, xml))
+            # Evergreen pages: date from their sources' git history, not the
+            # build (CAL-SEO-2 — mtime/build-date restamped every URL on
+            # every push and daily cron run).
+            lastmod = config.get('lastmod') or _page_lastmod(page_path, cal_now)
+            root_entries.append(
+                (output, _sitemap_url_entry(page_url(output), lastmod)))
 
     root_entries.sort(key=lambda x: x[0])
     event_entries = sorted(
