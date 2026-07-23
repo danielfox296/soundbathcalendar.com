@@ -85,12 +85,15 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .masthead { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 1px solid var(--line); }
 .masthead-inner { display: flex; align-items: center; gap: 1.4rem 2rem; padding-top: 0.7rem; padding-bottom: 0.7rem; flex-wrap: wrap; }
 .wordmark { font: 700 0.95rem var(--font-display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-decoration: none; white-space: nowrap; }
-.masthead-cities { display: flex; gap: 1.3rem; flex: 1 1 auto; min-width: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+/* CAL-UX-9: the sixth nav link (Learn) is paid for by a hair off the nav gap
+   and the digest input below — six links + the inline form still fit on one
+   line inside the 1140 container (was 6.6px over at 1.3rem/15.5rem). */
+.masthead-cities { display: flex; gap: 1.2rem; flex: 1 1 auto; min-width: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .masthead-cities::-webkit-scrollbar { display: none; }
 .masthead-cities a { color: rgba(var(--ink-rgb),0.62); text-decoration: none; font: 600 0.82rem var(--font-body); white-space: nowrap; }
 .masthead-cities a:hover { color: var(--ink); }
 .masthead-digest { display: flex; gap: 0.5rem; align-items: center; }
-.masthead-digest input[type="email"] { width: 15.5rem; max-width: 38vw; background: transparent; border: 1px solid rgba(var(--ink-rgb),0.25); padding: 0.45rem 0.7rem; font: 400 0.85rem var(--font-body); color: var(--ink); }
+.masthead-digest input[type="email"] { width: 14.5rem; max-width: 38vw; background: transparent; border: 1px solid rgba(var(--ink-rgb),0.25); padding: 0.45rem 0.7rem; font: 400 0.85rem var(--font-body); color: var(--ink); }
 .masthead-digest-link { display: none; font: 600 0.82rem var(--font-body); color: var(--accent-on-light); text-decoration: none; white-space: nowrap; }
 .masthead-digest-link:hover { text-decoration: underline; }
 @media (max-width: 900px) {

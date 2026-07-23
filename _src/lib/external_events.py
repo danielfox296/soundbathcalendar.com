@@ -1284,7 +1284,8 @@ def render_jump(rows, now=None):
 
 
 def render_rail_links(nav_prefix, ics_filename, feed_path):
-    """The rail's standing links (CAL-23 phase B): subscribe + map + digest.
+    """The rail's standing links (CAL-23 phase B): subscribe + map + digest,
+    plus a first-timer doorway into the learn layer (CAL-UX-9).
     Server-rendered, JS-free — the rail is never dead chrome without JS.
     Subscribe is three quiet options (CAL-UX-4): webcal for Apple, an
     add-by-URL link for Google Calendar (which silently fails on webcal),
@@ -1301,6 +1302,8 @@ def render_rail_links(nav_prefix, ics_filename, feed_path):
         f'  <a href="{nav_prefix}{feed_path}">RSS</a>',
         f'  <a href="{nav_prefix}map/">See the map</a>',
         '  <a href="#digest">Get the Thursday digest</a>',
+        f'  <a href="{nav_prefix}what-to-expect/">'
+        'New to sound baths? What to expect</a>',
         '</div>',
     ])
 
@@ -2085,6 +2088,7 @@ EVENT_PAGE_STYLE = """<style>
     .cal-event__cta { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; margin: 2rem 0; }
     .cal-event__link { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .cal-event__link:hover { text-decoration: underline; }
+    .cal-event__firsttime { margin: 1.4rem 0 0; font-size: 0.88rem; color: rgba(var(--ink-rgb),0.65); }
     .cal-event__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
     .cal-event__back a { color: var(--accent-on-light); text-decoration: none; }
     .cal-event__back a:hover { text-decoration: underline; }
@@ -2251,6 +2255,14 @@ def render_event_page(row, nav_prefix, site_url, now=None):
             'download>Download .ics</a>')
         out.append('      </div>')
         out.append('    </details>')
+
+    # First-timer doorway (CAL-UX-9): a quiet line beside the ticket links
+    # into the learn layer — the decision card answers "what am I walking
+    # into?" as well as "how do I go?".
+    out.append(
+        f'    <p class="cal-event__firsttime">First time? '
+        f'<a class="cal-event__link" href="{nav_prefix}what-to-expect/">'
+        'Read what to expect</a></p>')
 
     out.append('        </div>')  # .detail-card
     out.append('      </aside>')  # .detail-aside
