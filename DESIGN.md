@@ -77,7 +77,7 @@ Drift converged 2026-07-22: `.cal-row__ours` (was 0.5, under AA at its size) and
 
 The pattern: identity/answer surfaces run display **500** (utility register); entity and event names carry the base **700**. Rows are a scan surface — their leading (1.25–1.45) is deliberately tighter than page prose (1.65); don't "fix" it up.
 
-Reading measure: two conventions coexist — `--measure: 68ch` (`styles.css:124`) caps detail-shell prose (`.detail-main > p`, entity bio/desc paragraphs); fixed rem caps (38–48rem) govern listing and answer surfaces (`.cal-summary` 44, `.cal-row__meta` 42, `.cal-intro` 42, `.cal-faq__item` 44, `.cal-emptystate` 40, `.rup-narrow` 48…). **OPEN — D-13, §9.**
+Reading measure (D-13, ratified 2026-07-22): one physical family, two roles. `--measure: 44rem` (`styles.css:143`; was `68ch` — the same width at shipped font sizes) caps long-form prose in shells (`.detail-main > p`, entity bio/desc paragraphs, `/privacy/`); fixed rem caps (38–48rem, centered on 42–44rem) govern listing and answer surfaces whose font sizes intentionally differ (`.cal-summary` 44, `.cal-row__meta` 42, `.cal-intro` 42, `.cal-faq__item` 44, `.cal-emptystate` 40, `.rup-narrow` 48…). RULE: new prose columns pick from this family — `var(--measure)` for long-form, an existing rem cap otherwise; no new bespoke widths.
 
 ### 1.4 Spacing & chrome offsets
 
@@ -94,7 +94,7 @@ RULE: `border-radius: 0` on all chrome — buttons, chips, cards, inputs, the mo
 1. **2px on photographic tiles only** — `.cal-row__media`, `.dir-card__media`, `.digest-preview__thumb`. A hairline round reads better on photos; it never applies to non-photo boxes.
 2. **Map pins are circles** (`.sbc-pin`, 50%) — a designed marker shape, not a rounded rectangle.
 
-The state-of-sound report's 14px/999px family is a sub-brand question — **OPEN — D-14, §9.**
+The state-of-sound report's 14px/999px family is the sanctioned editorial register — **ratified, D-14, §9.**
 
 ---
 
@@ -141,7 +141,7 @@ One shared card design (`_src/lib/directory.py`): `.dir-grid` auto-fill `minmax(
 
 ### 2.6 Masthead & footer
 
-Masthead (`_src/partials/header.html`): sticky, compact — wordmark · scrolling city anchors · slim digest capture (inline form ≥900px, anchor link below). Footer: brand column + three link columns over a fine-print bar; footer links ride the muted-ink ramp, **not** accent — reference furniture, not a call to action.
+Masthead (`_src/partials/header.html`): sticky, compact — wordmark · scrolling city anchors · slim digest capture (inline form ≥900px, anchor link below). Footer: brand column + three link columns over a fine-print bar (`Sound Bath Calendar` · `Denver, Colorado · Privacy` — the `/privacy/` link rides every page); footer links ride the muted-ink ramp, **not** accent — reference furniture, not a call to action.
 
 ### 2.7 Digest block (CAL-18)
 
@@ -250,15 +250,19 @@ Commits `0330c4c` (D-17) and `d57d296` (D-20). Applies to all public copy: pages
 
 ---
 
-## 9 · OPEN — Daniel's call
+## 9 · Rulings — Daniel's call
 
-**D-13 · Reading measure: ratify the shipped rem family, or collapse to `--measure`?**
-Two conventions coexist (§1.3): `--measure: 68ch` on detail-shell prose; fixed rem caps (38–48rem, centered on 42–44rem) on listing/answer surfaces. At shipped font sizes 68ch ≈ 41–44rem — physically near-equal; the difference is abstraction, not width. **Recommendation: ratify the shipped state as roles** — `--measure` for long-form prose inside shells, fixed rem caps for listing/answer surfaces whose font sizes intentionally differ — and stop there; a unification sweep buys no reader-visible change.
+### Ratified
 
-**D-14 · The state-of-sound report's sub-brand.**
-`/state-of-sound-healing/` (`.soh-*`, `_src/lib/insights.py`) deviates deliberately: 14px radii on stat tiles/tables/figures, a 999px credit pill with backdrop blur (technically brushing the no-glassmorphism doctrine), its own `--soh-*` surface palette (white and ink full-bleed bands), a px type scale up to 66px, count-up motion. It is fully namespaced — nothing leaks into `styles.css` — and carries its own dark handling. **Recommendation: ratify as the editorial register for report-class pages** — a published artifact meant to be cited reads differently from calendar chrome — under three constraints: stays namespaced, sources root tokens where possible, never leaks into listing/chrome surfaces.
+**D-13 · Reading measure (2026-07-22): the shipped roomier 42–44rem family is the law.**
+`--measure` is restated as `44rem` (was `68ch` — the same physical width at shipped font sizes, so no reader-visible change) and the fixed rem caps on listing/answer surfaces stand as shipped. Two roles, one family; the full spec lives in §1.3. No unification sweep — it buys no reader-visible change.
 
-**Open tension · The masthead primary.**
+**D-14 · The editorial register (2026-07-22): the State of Sound report look is blessed.**
+The `/state-of-sound-healing/` "report look" (`.soh-*`, `_src/lib/insights.py`) — rounded (14px radii on stat tiles/tables/figures, the 999px credit pill), the softer `--soh-*` surface palette (white and ink full-bleed bands), a px type scale up to 66px, count-up motion — is the official editorial/data sub-style. **When it applies:** report-class pages only — published, citable data artifacts (State of Sound Healing editions, and future reports of that class) where reading as a *document* beats reading as calendar chrome. **Never** on listing, entity, or chrome surfaces: the calendar proper keeps radius 0 and the utility register (§1.5). Constraints carried into the ruling: stays fully namespaced (its own `--soh-*`-style token prefix and dark block), sources root tokens where it can, and nothing leaks into `styles.css`.
+
+### Open
+
+**The masthead primary.**
 The masthead ships `.btn-primary.btn-slim` "Get the digest" on every page (`_src/partials/header.html:18`). On event pages the aside's Tickets is also `.btn-primary` (`external_events.py:2165`) — two ink fills in view, against §3.1's one-primary rule. Candidate fixes: demote the masthead button to `.btn-secondary` sitewide, or scope the demotion to detail pages. Unresolved; the rule stands and the violation is known.
 
 ---
@@ -282,3 +286,5 @@ The masthead ships `.btn-primary.btn-slim` "Get the digest" on every page (`_src
 | CAL-DES-2 og:image never rots | §5 |
 | CAL-UX-2 month marker | §2.3 |
 | D-17/D-20 vocabulary | §7 |
+| D-13 reading measure ratified | §1.3, §9 |
+| D-14 editorial register ratified | §1.5, §9 |

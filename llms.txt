@@ -1,6 +1,6 @@
 # Sound Bath Calendar
 
-> A curated, weekly-updated calendar of sound baths across Denver and the Front Range: Boulder, Fort Collins, and Colorado Springs. Dates, times, venues, prices, and ticket links for every listed session. Kept by Firstwater (thefirstwater.co).
+> A curated, weekly-updated calendar of sound baths across Denver and the Front Range: Boulder, Fort Collins, and Colorado Springs. Dates, times, venues, prices, and ticket links for every listed session.
 
 ## Pages
 
@@ -21,9 +21,9 @@ Each city page is the same time-grouped calendar filtered to one area, with its 
 - [Browse](https://soundbathcalendar.com/browse/): Every kind of session the calendar tracks — by modality, intention, setting, and access — with live counts. Categories with enough upcoming sessions have their own landing page (e.g. https://soundbathcalendar.com/gong-bath/).
 - [Map](https://soundbathcalendar.com/map/): Every upcoming session pinned by venue on one map of the Front Range.
 - [Practitioners](https://soundbathcalendar.com/practitioners/): Profiles of the facilitators who lead sessions on the calendar, each with a bio and upcoming dates.
-- [Venues](https://soundbathcalendar.com/venues/): The rooms that host sound baths — address, what the space is like, and each venue's upcoming sessions.
+- [Venues](https://soundbathcalendar.com/venues/): The places that host sound baths — address, what the space is like, and each venue's upcoming sessions.
 - [Organizers](https://soundbathcalendar.com/operators/): The studios and collectives running the listed sessions, each with its upcoming dates.
-- [Roundups](https://soundbathcalendar.com/roundups/): Editorial shortlists from the calendar's own data — e.g. rooms worth knowing — refreshed as the scene changes.
+- [Roundups](https://soundbathcalendar.com/roundups/): Editorial shortlists from the calendar's own data — e.g. venues worth knowing — refreshed as the scene changes.
 - [Learn](https://soundbathcalendar.com/learn/): The glossary and explainer index; the individual pages are listed under Learn below.
 
 ## Original data (free to cite)

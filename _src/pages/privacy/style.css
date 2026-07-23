@@ -1,0 +1,20 @@
+/* /privacy/ — quiet prose page, one reading column. Page-only styles; leans on
+   the shared tokens + section/eyebrow/cal-h1/cal-summary/cal-crumbs classes in
+   styles.css. Radius 0 per the design law; secondary ink rides
+   rgba(var(--ink-rgb), a) so dark mode inverts it for free; nothing sits below
+   the 0.62 muted-ink floor (DESIGN.md §1.2). Column width is var(--measure) —
+   the D-13 ratified 44rem reading family. */
+
+.prv-narrow { max-width: var(--measure); }
+
+.prv-h2 { font-size: 1.22rem; margin: 2.4rem 0 0.7rem; }
+
+.prv-p, .prv-list {
+  color: rgba(var(--ink-rgb), 0.74);
+  font-size: 1rem;
+  line-height: 1.68;
+  margin: 0 0 0.9rem;
+}
+
+.prv-list { padding-left: 1.2rem; }
+.prv-list li + li { margin-top: 0.6rem; }

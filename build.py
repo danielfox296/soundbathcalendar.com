@@ -67,7 +67,6 @@ from _src.lib import roundups as roundups_lib
 
 SITE_URL = 'https://soundbathcalendar.com'
 SITE_NAME = 'Sound Bath Calendar'
-FIRSTWATER_URL = 'https://thefirstwater.co'
 
 # Sitewide description used in Organization + WebSite JSON-LD. Reuses the
 # approved calendar meta description verbatim — no new copy.
@@ -78,14 +77,13 @@ SITE_DESCRIPTION = (
 )
 
 # The publisher entity for every page on this site: the calendar itself,
-# bridged to the keeper via sameAs (Organization replaces the Firstwater
-# LocalBusiness block from the parent chassis).
+# standing alone (venture separation, 2026-07-22 — no sameAs bridge to any
+# other venture; Organization replaced the parent chassis's LocalBusiness).
 ORG_SCHEMA = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": SITE_NAME,
     "url": SITE_URL,
-    "sameAs": [FIRSTWATER_URL],
     "description": SITE_DESCRIPTION,
     "areaServed": {
         "@type": "AdministrativeArea",
@@ -401,8 +399,7 @@ def build():
                 "publisher": {
                     "@type": "Organization",
                     "name": SITE_NAME,
-                    "url": SITE_URL,
-                    "sameAs": [FIRSTWATER_URL]
+                    "url": SITE_URL
                 }
             }
             schema_json += (f'\n  <script type="application/ld+json">\n'

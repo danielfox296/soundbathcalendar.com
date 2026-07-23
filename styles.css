@@ -140,7 +140,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
         plus a sticky decision aside on wide screens, collapsing to one column
         below 900px. Reading prose stays within --measure; the shell spans the
         container. One primitive, shared by every detail template. ---- */
-:root { --measure: 68ch; --aside: 340px; }
+:root { --measure: 44rem; --aside: 340px; } /* D-13: 68ch → the ratified 42–44rem reading family (same physical width at shipped sizes) */
 .detail-shell { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.2rem; }
 @media (min-width: 900px) {
   .detail-shell { grid-template-columns: minmax(0, 1fr) var(--aside); gap: 3rem; align-items: start; }
