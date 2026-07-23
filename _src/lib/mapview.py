@@ -92,7 +92,7 @@ MAP_HEAD = """<link rel="stylesheet" href="{{css_path}}vendor/leaflet/leaflet.cs
   <style>
     .map-wrap { margin: 0; }
     .map-intro { margin: 0 0 1.4rem; }
-    .map-intro .cal-updated { color: rgba(var(--ink-rgb),0.55); font-size: 0.85rem; margin: 0.2rem 0 0; }
+    .map-intro .cal-updated { color: rgba(var(--ink-rgb),0.62); font-size: 0.85rem; margin: 0.2rem 0 0; }
     /* List + map split (CAL-10 phase C): the list flows with the page scroll, the
        map sits sticky beside it. Below 900px they stack, map band on top. With JS
        blocked the list is fully usable and the map box simply never initializes. */
@@ -125,9 +125,9 @@ MAP_HEAD = """<link rel="stylesheet" href="{{css_path}}vendor/leaflet/leaflet.cs
     .sbc-pop__list { margin: 0; padding-left: 1.05rem; }
     .sbc-pop__list li { font-size: 0.86rem; line-height: 1.5; }
     .sbc-pop__list a { color: var(--ink); }
-    .sbc-pop__more { list-style: none; margin-left: -1.05rem; color: rgba(var(--ink-rgb),0.55); }
+    .sbc-pop__more { list-style: none; margin-left: -1.05rem; color: rgba(var(--ink-rgb),0.62); }
     .leaflet-container { font: inherit; }
-    .map-empty { color: rgba(var(--ink-rgb),0.55); }
+    .map-empty { color: rgba(var(--ink-rgb),0.62); }
     /* Dark mode (CAL-14 polish): the light OSM raster tiles are inverted +
        hue-rotated into a dark basemap. Only .leaflet-tile is filtered — markers,
        popups, and controls live in other panes and stay untouched. */

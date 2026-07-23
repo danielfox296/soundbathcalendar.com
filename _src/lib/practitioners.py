@@ -157,7 +157,7 @@ def _practitioner_tag_slugs(session_rows):
 
 PRACTITIONER_PAGE_STYLE = """<style>
     .pract { }
-    .pract__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
+    .pract__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
     .pract__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .pract__crumbs a:hover { text-decoration: underline; }
     .pract__head { display: flex; gap: 1.6rem; align-items: flex-start; flex-wrap: wrap; margin: 0 0 1.6rem; }
@@ -169,7 +169,7 @@ PRACTITIONER_PAGE_STYLE = """<style>
     .pract__links a:hover { text-decoration: underline; }
     /* CAL-13/CAL-21: decision facts in the sticky aside card. */
     .pract__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.2rem; margin: 0; }
-    .pract__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); align-self: baseline; }
+    .pract__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); align-self: baseline; }
     .pract__facts dd { margin: 0; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
     .pract__facts a { color: var(--accent-on-light); text-decoration: none; font-weight: 600; }
     .pract__facts a:hover { text-decoration: underline; }
@@ -177,7 +177,7 @@ PRACTITIONER_PAGE_STYLE = """<style>
     .pract__bio, .pract__interview { max-width: var(--measure); }
     .pract__bio p, .pract__interview p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); margin: 0 0 1rem; }
     .pract__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
-    .pract__empty { color: rgba(var(--ink-rgb),0.55); }
+    .pract__empty { color: rgba(var(--ink-rgb),0.62); }
     .pract__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
     .pract__back a { color: var(--accent-on-light); text-decoration: none; }
     .pract__back a:hover { text-decoration: underline; }

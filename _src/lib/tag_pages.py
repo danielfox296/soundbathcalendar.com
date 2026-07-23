@@ -467,7 +467,7 @@ def tag_faqpage_schema(rows, slug):
 # ---------------------------------------------------------------------------
 
 BROWSE_STYLE = """<style>
-    .browse__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
+    .browse__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
     .browse__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .browse__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.8rem; }
     .browse__lede { font-size: 1.1rem; color: rgba(var(--ink-rgb),0.75); max-width: 42rem; margin: 0 0 2.4rem; }
@@ -479,7 +479,7 @@ BROWSE_STYLE = """<style>
     a.browse__card .browse__name { color: var(--accent-on-light); }
     .browse__name { font: 500 1.02rem var(--font-display); color: var(--ink); }
     .browse__count { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.6); white-space: nowrap; }
-    .browse__tracked { font-size: 0.9rem; color: rgba(var(--ink-rgb),0.55); max-width: 46rem; margin: 0.9rem 0 0; line-height: 1.55; }
+    .browse__tracked { font-size: 0.9rem; color: rgba(var(--ink-rgb),0.62); max-width: 46rem; margin: 0.9rem 0 0; line-height: 1.55; }
     .browse__foot { font-size: 0.95rem; color: rgba(var(--ink-rgb),0.7); max-width: 42rem; margin: 0.4rem 0 0; }
   </style>"""
 

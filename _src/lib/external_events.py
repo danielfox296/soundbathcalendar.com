@@ -2011,7 +2011,7 @@ def render_ics_subscribe(ics_filename):
 # injected). Design tokens come from the sitewide styles.css every page loads.
 EVENT_PAGE_STYLE = """<style>
     .cal-event { }
-    .cal-event__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
+    .cal-event__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
     .cal-event__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .cal-event__crumbs a:hover { text-decoration: underline; }
     .cal-past-banner { background: rgba(var(--ink-rgb),0.05); border-left: 3px solid var(--gray); padding: 0.9rem 1.2rem; margin: 0 0 2rem; font-size: 0.95rem; }
@@ -2021,9 +2021,9 @@ EVENT_PAGE_STYLE = """<style>
     .cal-event__note { font: 500 1.2rem var(--font-display); color: var(--ink); max-width: 40rem; line-height: 1.4; margin: 0 0 1.6rem; }
     .cal-event__figure { margin: 2rem 0; max-width: 640px; }
     .cal-event__figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: rgba(var(--ink-rgb),0.06); }
-    .cal-event__figure figcaption { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin-top: 0.6rem; }
+    .cal-event__figure figcaption { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin-top: 0.6rem; }
     .cal-event__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.6rem; margin: 2rem 0; max-width: 40rem; }
-    .cal-event__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); align-self: baseline; }
+    .cal-event__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); align-self: baseline; }
     .cal-event__facts dd { margin: 0; color: var(--ink); }
     .cal-event__cta { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; margin: 2rem 0; }
     .cal-event__link { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }

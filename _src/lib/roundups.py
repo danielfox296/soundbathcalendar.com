@@ -238,7 +238,7 @@ def render_index(posts, nav_prefix):
 # (CAL-14 token flip) holds.
 ROUNDUPS_HEAD = '''<style>
 .rup-narrow { max-width: 48rem; }
-.rup-meta { font-size: 0.85rem; color: rgba(var(--ink-rgb), 0.55); margin: 0 0 2.2rem; }
+.rup-meta { font-size: 0.85rem; color: rgba(var(--ink-rgb), 0.62); margin: 0 0 2.2rem; }
 .rup-body h2 {
   font-size: clamp(1.25rem, 2.4vw, 1.6rem);
   font-weight: 500;
@@ -262,5 +262,5 @@ ROUNDUPS_HEAD = '''<style>
 .rup-item { border-top: 1px solid var(--line); padding: 1.1rem 0 1.2rem; }
 .rup-item__title { font: 500 1.2rem var(--font-display); letter-spacing: -0.01em; }
 .rup-item__dek { color: rgba(var(--ink-rgb), 0.74); line-height: 1.6; margin: 0.35rem 0 0; }
-.rup-item__meta { font-size: 0.82rem; color: rgba(var(--ink-rgb), 0.55); margin: 0.35rem 0 0; }
+.rup-item__meta { font-size: 0.82rem; color: rgba(var(--ink-rgb), 0.62); margin: 0.35rem 0 0; }
 </style>'''

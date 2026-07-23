@@ -151,7 +151,7 @@ def _venue_names(session_rows):
 # ---------------------------------------------------------------------------
 
 OPERATOR_PAGE_STYLE = """<style>
-    .operator__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
+    .operator__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
     .operator__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .operator__crumbs a:hover { text-decoration: underline; }
     .operator__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.4rem; }
@@ -161,13 +161,13 @@ OPERATOR_PAGE_STYLE = """<style>
     .operator__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); max-width: var(--measure); margin: 0 0 1rem; }
     /* CAL-13/CAL-21: decision facts in the sticky aside card. */
     .operator__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.2rem; margin: 0; }
-    .operator__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); align-self: baseline; }
+    .operator__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); align-self: baseline; }
     .operator__facts dd { margin: 0; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
     .operator__facts a { color: var(--accent-on-light); text-decoration: none; font-weight: 600; }
     .operator__facts a:hover { text-decoration: underline; }
     @media (max-width: 640px) { .operator__facts { grid-template-columns: 1fr; gap: 0.2rem; } .operator__facts dd { margin-bottom: 0.8rem; } }
     .operator__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
-    .operator__empty { color: rgba(var(--ink-rgb),0.55); }
+    .operator__empty { color: rgba(var(--ink-rgb),0.62); }
     .operator__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
     .operator__back a { color: var(--accent-on-light); text-decoration: none; }
   </style>"""

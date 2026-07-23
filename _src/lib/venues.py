@@ -161,7 +161,7 @@ def _venue_tag_slugs(session_rows):
 # ---------------------------------------------------------------------------
 
 VENUE_PAGE_STYLE = """<style>
-    .venue__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
+    .venue__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
     .venue__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .venue__crumbs a:hover { text-decoration: underline; }
     .venue__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.4rem; }
@@ -173,12 +173,12 @@ VENUE_PAGE_STYLE = """<style>
     .venue__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); max-width: var(--measure); margin: 0 0 1rem; }
     /* CAL-13/CAL-21: the decision facts live in the sticky aside card. */
     .venue__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.2rem; margin: 0; }
-    .venue__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); align-self: baseline; }
+    .venue__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); align-self: baseline; }
     .venue__facts dd { margin: 0; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
     .venue__facts a { color: var(--accent-on-light); text-decoration: none; font-weight: 600; }
     .venue__facts a:hover { text-decoration: underline; }
     .venue__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
-    .venue__empty { color: rgba(var(--ink-rgb),0.55); }
+    .venue__empty { color: rgba(var(--ink-rgb),0.62); }
     .venue__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
     .venue__back a { color: var(--accent-on-light); text-decoration: none; }
     @media (max-width: 640px) { .venue__facts { grid-template-columns: 1fr; gap: 0.2rem; } .venue__facts dd { margin-bottom: 0.8rem; } }
