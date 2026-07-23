@@ -1800,12 +1800,15 @@ _PREVIEW_MAX_ROWS = 3
 
 def _digest_preview_meta(row):
     """operator · venue · price, de-duplicated — mirrors renderDigestEventRow in
-    digest.ts (operator and venue are frequently the same string in the feed,
-    and printing it twice is a display defect, not an extra fact)."""
+    digest.ts, sameEntity fold included: operator and venue are frequently the
+    same entity in the feed — the same string, or one name under a legal suffix
+    ("X" vs "X LLC", _same_entity) — and printing it twice is a display defect,
+    not an extra fact. §2.7 requires the preview to show the actual email, so
+    this compare stays in lockstep with the email side's."""
     parts = []
     for part in (row.get('operator'), row.get('venue')):
         t = (part or '').strip()
-        if t and t not in parts:
+        if t and not any(_same_entity(t, p) for p in parts):
             parts.append(t)
     price = (row.get('price') or '').strip()
     if price:
