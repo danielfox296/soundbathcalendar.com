@@ -1511,9 +1511,10 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
     Doorway discipline: a tag page is indexed only at/above INDEX_MIN; thinner
     ones (BUILD_MIN..INDEX_MIN-1) are built but noindexed; below BUILD_MIN there
     is no page at all. Root-level unless a slug would collide with a reserved
-    path, in which case /tag/<slug>/. Today only ~2 tags qualify (gong-bath,
-    breathwork-sound) — EXPECTED; the machinery lets pages appear as Daniel
-    curates per-event tags. Returns (built_outputs, sitemap_entries).
+    path, in which case /tag/<slug>/. Today ~3 tags qualify (gong-bath,
+    breathwork-sound, and price-derived free-donation — CAL-UX-7) — EXPECTED;
+    the machinery lets pages appear as Daniel curates per-event tags.
+    Returns (built_outputs, sitemap_entries).
     """
     import shutil
     # The /tag/<slug>/ collision-fallback dir is ours alone — clear stale ones.

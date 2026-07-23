@@ -13,9 +13,10 @@ A tag page is EARNED by real inventory, never spun up for content's sake:
   BUILD_MIN <= count  → build + noindex         (live, but too thin to index)
   count <  BUILD_MIN  → skip entirely           (no page at all)
 
-Today only ~2 tags clear the bar (gong-bath, breathwork-sound) — that's
-EXPECTED. This module is the machinery; pages appear on their own as Daniel
-curates per-event tags in the admin and inventory crosses the threshold.
+Today ~3 tags clear the bar (gong-bath, breathwork-sound, plus free-donation,
+which is PRICE-derived — CAL-UX-7) — that's EXPECTED. This module is the
+machinery; pages appear on their own as Daniel curates per-event tags in the
+admin and inventory crosses the threshold.
 
 Assembly (base layout, <head>, publisher schema) is build.py's job; this module
 returns the <main> body + the page-specific CollectionPage/ItemList/FAQPage
@@ -85,18 +86,52 @@ def tag_nav_prefix(slug):
 # Row selection + qualification
 # ---------------------------------------------------------------------------
 
+# CAL-UX-7 (decision D-10): free-donation is PRICE-DERIVED, not tag-derived.
+# Rows rarely carry the tag in the admin, but the calendar already knows which
+# sessions are free/donation from their price strings — the same
+# X._is_free_or_donation predicate behind each row's data-free hook, the
+# 'Free / donation only' filter chip, and the schema's price reading. Deriving
+# this slug's row set from tags alone left /browse/ claiming 'nothing right
+# now' while the filter found plenty.
+FREE_DONATION_SLUG = 'free-donation'
+
+
+def free_donation_rows(rows):
+    """The free-donation row set: the UNION of rows priced free/donation
+    (X._is_free_or_donation) and any row explicitly tagged free-donation.
+    Price is the working truth — no row needs the tag to count; the union
+    keeps the CAL-16 invariant that a tagged row is never missing from its
+    own tag page."""
+    return [r for r in rows
+            if X._is_free_or_donation(r)
+            or FREE_DONATION_SLUG in X.row_tag_slugs(r)]
+
+
 def tag_rows(rows, slug):
     """The subset of rows carrying `slug`, in the incoming (chronological) order.
-    `rows` is build_rows output — already future, de-duplicated, and sorted."""
+    `rows` is build_rows output — already future, de-duplicated, and sorted.
+    free-donation is price-derived (CAL-UX-7): its set comes from the price
+    predicate, so the tag page always agrees with the calendar's filter."""
+    if slug == FREE_DONATION_SLUG:
+        return free_donation_rows(rows)
     return [r for r in rows if slug in X.row_tag_slugs(r)]
 
 
 def tag_counts(rows):
-    """{slug: upcoming count} across the canonical vocabulary (present tags only)."""
+    """{slug: upcoming count} across the canonical vocabulary (present tags only).
+    free-donation is overridden with the price-derived set (CAL-UX-7) so every
+    consumer — qualifying_tags, linked_tag_map, browse_entries — agrees with
+    tag_rows and the calendar's free/donation filter. Invariant:
+    counts[slug] == len(tag_rows(rows, slug)) for every present slug."""
     counts = {}
     for r in rows:
         for s in X.row_tag_slugs(r):
             counts[s] = counts.get(s, 0) + 1
+    # Union ⊇ tagged, so an empty union means no tagged rows either — the slug
+    # is simply absent (and /browse/ names it in the zero-count line, truly).
+    n_free = len(free_donation_rows(rows))
+    if n_free:
+        counts[FREE_DONATION_SLUG] = n_free
     return counts
 
 
@@ -250,9 +285,13 @@ def tag_summary_sentence(rows, slug):
     verb = 'is' if n == 1 else 'are'
     noun = 'session' if n == 1 else 'sessions'
     sent = (f'{n} {label_l} {noun} {verb} on the Front Range calendar right now')
-    lo_label, hi = X._price_span(trows)
-    if hi is not None:
-        sent += f', priced {lo_label} to ${X._fmt_price_num(hi)}'
+    # No dollar span on the free/donation page — a sliding-scale ceiling would
+    # read as a ticket price ('free … priced free to $44'). The FAQ carries the
+    # donation/sliding nuance; every listing shows its own price line.
+    if slug != FREE_DONATION_SLUG:
+        lo_label, hi = X._price_span(trows)
+        if hi is not None:
+            sent += f', priced {lo_label} to ${X._fmt_price_num(hi)}'
     return sent + '.'
 
 
@@ -319,7 +358,20 @@ def tag_faq(rows, slug):
                       'bath is as easy as any other.'),
             },
         ]
-    # Price is always useful and always current.
+    # Price is always useful and always current. On the free/donation page the
+    # generic span ('Some are offered by donation or free' — here it's ALL of
+    # them) would misread, so that slug gets its own honest answer.
+    if slug == FREE_DONATION_SLUG:
+        items.append({
+            'q': 'How much do these sessions cost?',
+            'a': ('Every session listed here is free to attend or priced by '
+                  'donation, pay-what-you-can, or sliding scale, from the '
+                  'organizer\'s own listing. Where a dollar figure appears it '
+                  'is the organizer\'s suggested or sliding-scale amount. Each '
+                  'listing shows its own price, and the ticket link goes '
+                  'straight to the organizer.'),
+        })
+        return tuple(items)
     lo_label, hi = X._price_span(tag_rows(rows, slug))
     if hi is not None:
         span = (f'{lo_label} to ${X._fmt_price_num(hi)}' if lo_label != f'${X._fmt_price_num(hi)}'
