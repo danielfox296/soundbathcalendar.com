@@ -2079,6 +2079,28 @@ def render_ics_subscribe(ics_filename):
 # <main> content only, consonant with the section-file pipeline.
 # ---------------------------------------------------------------------------
 
+# <title> budget for event permalinks (CAL-SEO-5). SERPs display ~60 chars and
+# operator listing names regularly blow past it, so the NAME — never the H1 or
+# the Event schema name — is cut at a word boundary to keep the whole tag
+# inside the budget. Geography rides the meta description, not the title.
+EVENT_TITLE_MAX = 65
+
+
+def event_title_tag(name, site_name):
+    """'{name} | {site_name}' for an event permalink <title>: the full name
+    when the composition fits EVENT_TITLE_MAX, else the name cut at a word
+    boundary + '…'. Measures the raw string — the caller HTML-escapes."""
+    full = f'{name} | {site_name}'
+    if len(full) <= EVENT_TITLE_MAX:
+        return full
+    budget = EVENT_TITLE_MAX - len(f'… | {site_name}')
+    prefix = name[:budget + 1]
+    cut = prefix[:prefix.rfind(' ')] if ' ' in prefix else name[:budget]
+    # A cut can land after joiner punctuation ('Sound Bath &') — drop it.
+    cut = cut.rstrip(' ·-–—,.:;&+|/') or name[:budget].rstrip()
+    return f'{cut}… | {site_name}'
+
+
 # Inline style for event pages (they have no _src/pages dir, so no style.css is
 # injected). Design tokens come from the sitewide styles.css every page loads.
 EVENT_PAGE_STYLE = """<style>
@@ -2116,11 +2138,17 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     out = ['<section class="section section--light cal-event">', '  <div class="container">']
 
     # Breadcrumb (visible) — mirrors the BreadcrumbList schema build.py emits.
-    # [port] The calendar IS the home page here, so the trail is two levels.
+    # [port] The calendar IS the home page here, so the trail is Calendar >
+    # {City} > Event, the city level linking its city page — present only when
+    # the row's city is canonical, so schema and crumbs agree (CAL-SEO-9).
     out.append('    <nav class="cal-event__crumbs" aria-label="Breadcrumb">')
-    out.append(
-        f'      <a href="{nav_prefix}">Calendar</a> <span aria-hidden="true">/</span> '
-        f'<span>{esc(row["name"])}</span>')
+    crumb = (f'      <a href="{nav_prefix}">Calendar</a> '
+             '<span aria-hidden="true">/</span> ')
+    if row['city'] in CITIES:
+        crumb += (f'<a href="{nav_prefix}{city_page_path(row["city"])}">'
+                  f'{esc(row["city"])}</a> <span aria-hidden="true">/</span> ')
+    crumb += f'<span>{esc(row["name"])}</span>'
+    out.append(crumb)
     out.append('    </nav>')
 
     # Past session: page stays live (build.py sets robots=noindex + drops it from

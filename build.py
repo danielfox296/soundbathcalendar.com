@@ -708,9 +708,12 @@ def build_event_pages(base, header, footer, cal_feed, now):
         canonical_url = external_events.event_permalink_url(row, SITE_URL)
 
         name = row['name']
-        # Permalink title pattern: {Event} · {City} | Sound Bath Calendar
-        # (pipes, not em dashes, in title tags).
-        title = f'{html_mod.escape(name)} · {row["city"]} | {SITE_NAME}'
+        # Permalink title pattern: {Event} | Sound Bath Calendar (pipes, not
+        # em dashes, in title tags), the NAME cut at a word boundary when the
+        # whole tag would overrun ~65 chars (CAL-SEO-5). The city rides the
+        # meta description; the H1 and Event schema keep the full name.
+        title = html_mod.escape(
+            external_events.event_title_tag(name, SITE_NAME))
         description = external_events.factual_description(row)
         meta_desc = (f'<meta name="description" '
                      f'content="{html_mod.escape(description, quote=True)}">')
@@ -734,14 +737,21 @@ def build_event_pages(base, header, footer, cal_feed, now):
         _ev = external_events.event_jsonld(row, SITE_URL)
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(_ev)}\n  </script>')
+        # Calendar > {City} > Event (CAL-SEO-9): the city level links its city
+        # page, present only when the row's city is canonical — mirroring the
+        # visible crumbs render_event_page draws under the same condition.
+        crumbs = [{"@type": "ListItem", "position": 1, "name": "Calendar",
+                   "item": SITE_URL + "/"}]
+        if row['city'] in external_events.CITIES:
+            crumbs.append(
+                {"@type": "ListItem", "position": 2, "name": row['city'],
+                 "item": external_events.city_page_url(row['city'], SITE_URL)})
+        crumbs.append({"@type": "ListItem", "position": len(crumbs) + 1,
+                       "name": name})
         breadcrumb_schema = {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
-            "itemListElement": [
-                {"@type": "ListItem", "position": 1, "name": "Calendar",
-                 "item": SITE_URL + "/"},
-                {"@type": "ListItem", "position": 2, "name": name},
-            ],
+            "itemListElement": crumbs,
         }
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(breadcrumb_schema)}\n  </script>')
@@ -1539,8 +1549,12 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
         nav_prefix = tag_pages_lib.tag_nav_prefix(slug)
         canonical_url = tag_pages_lib.tag_page_url(slug, SITE_URL)
 
-        title = f'{label} sound baths on the Front Range | {SITE_NAME}'
-        description = (f'Upcoming {label.lower()} sound baths across Denver, '
+        # tag_phrase composes '{label} sound baths' without doubling a word
+        # across the seam (CAL-SEO-6): 'Gong baths', 'Breathwork + sound
+        # baths' — never 'Gong bath sound baths'.
+        phrase = tag_pages_lib.tag_phrase(slug)
+        title = f'{phrase} on the Front Range | {SITE_NAME}'
+        description = (f'Upcoming {phrase.lower()} across Denver, '
                        f'Boulder, Fort Collins, and Colorado Springs: dates, '
                        f'times, venues, prices, and ticket links.')
         meta_desc = (f'<meta name="description" '

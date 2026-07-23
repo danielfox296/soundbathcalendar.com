@@ -82,6 +82,27 @@ def tag_nav_prefix(slug):
     return '../' * tag_page_path(slug).count('/')
 
 
+def tag_phrase(slug, plural=True):
+    """Query-language phrase for a tag — '{label} sound baths' composed without
+    doubling a word across the seam (CAL-SEO-6). The rule is general, keyed on
+    the label's own words, never on slugs: a label that already names the bath
+    ('Gong bath') pluralizes in place ('Gong baths'); a label ending in 'sound'
+    ('Breathwork + sound') takes 'baths' alone ('Breathwork + sound baths');
+    everything else takes the full ' sound baths'."""
+    label = taxonomy.label_for(slug)
+    words = [w.lower() for w in label.split()]
+    if 'bath' in words or 'baths' in words:
+        if words[-1] == 'bath':
+            return f'{label}s' if plural else label
+        if words[-1] == 'baths':
+            return label if plural else label[:-1]
+        return label  # 'bath' mid-label: it already names the session type
+    tail = 'baths' if plural else 'bath'
+    if words[-1] == 'sound':
+        return f'{label} {tail}'
+    return f'{label} sound {tail}'
+
+
 # ---------------------------------------------------------------------------
 # Row selection + qualification
 # ---------------------------------------------------------------------------
@@ -280,8 +301,8 @@ def tag_summary_sentence(rows, slug):
     label_l = taxonomy.label_for(slug).lower()
     n = len(trows)
     if n == 0:
-        return (f'No {label_l} sound baths are on the Front Range calendar right '
-                f'now; new dates are added every week.')
+        return (f'No {tag_phrase(slug).lower()} are on the Front Range calendar '
+                f'right now; new dates are added every week.')
     verb = 'is' if n == 1 else 'are'
     noun = 'session' if n == 1 else 'sessions'
     sent = (f'{n} {label_l} {noun} {verb} on the Front Range calendar right now')
@@ -341,10 +362,9 @@ def tag_faq(rows, slug):
     if slug in _TAG_FAQ:
         items = list(_TAG_FAQ[slug])
     else:
-        label_l = taxonomy.label_for(slug).lower()
         items = [
             {
-                'q': f'What is a {label_l} sound bath?',
+                'q': f'What is a {tag_phrase(slug, plural=False).lower()}?',
                 'a': ('A sound bath is a session where you lie down, usually on a '
                       'mat, while a facilitator plays instruments such as gongs, '
                       'singing bowls, and chimes. Most run 45 to 75 minutes, and '
@@ -456,11 +476,10 @@ def render_tag_page(rows, slug, nav_prefix, built_map, now=None, geocode=None):
 # ---------------------------------------------------------------------------
 
 def tag_collectionpage_schema(slug, page_url, site_url, description, date_modified):
-    label = taxonomy.label_for(slug)
     return {
         '@context': 'https://schema.org',
         '@type': 'CollectionPage',
-        'name': f'{label} sound baths on the Colorado Front Range',
+        'name': f'{tag_phrase(slug)} on the Colorado Front Range',
         'url': page_url,
         'description': description,
         'dateModified': date_modified,
@@ -484,7 +503,7 @@ def tag_itemlist(rows, slug, site_url):
     return {
         '@context': 'https://schema.org',
         '@type': 'ItemList',
-        'name': f'{taxonomy.label_for(slug)} sound baths on the Front Range',
+        'name': f'{tag_phrase(slug)} on the Front Range',
         'itemListElement': items,
     }
 

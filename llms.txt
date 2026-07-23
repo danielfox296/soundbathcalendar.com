@@ -16,6 +16,16 @@ Each city page is the same time-grouped calendar filtered to one area, with its 
 - [Fort Collins](https://soundbathcalendar.com/fort-collins/): Sound baths in Fort Collins, grouped by time.
 - [Colorado Springs](https://soundbathcalendar.com/colorado-springs/): Sound baths in Colorado Springs, grouped by time.
 
+## Directories & discovery
+
+- [Browse](https://soundbathcalendar.com/browse/): Every kind of session the calendar tracks — by modality, intention, setting, and access — with live counts. Categories with enough upcoming sessions have their own landing page (e.g. https://soundbathcalendar.com/gong-bath/).
+- [Map](https://soundbathcalendar.com/map/): Every upcoming session pinned by venue on one map of the Front Range.
+- [Practitioners](https://soundbathcalendar.com/practitioners/): Profiles of the facilitators who lead sessions on the calendar, each with a bio and upcoming dates.
+- [Venues](https://soundbathcalendar.com/venues/): The rooms that host sound baths — address, what the space is like, and each venue's upcoming sessions.
+- [Organizers](https://soundbathcalendar.com/operators/): The studios and collectives running the listed sessions, each with its upcoming dates.
+- [Roundups](https://soundbathcalendar.com/roundups/): Editorial shortlists from the calendar's own data — e.g. rooms worth knowing — refreshed as the scene changes.
+- [Learn](https://soundbathcalendar.com/learn/): The glossary and explainer index; the individual pages are listed under Learn below.
+
 ## Original data (free to cite)
 
 - [State of Sound Healing on the Front Range](https://soundbathcalendar.com/state-of-sound-healing/): An original-data snapshot of the Front Range sound bath scene, derived from every session on the calendar and updated as a recurring report. The Summer 2026 edition: ~22 sessions per week across four metros, a $40 median ticket price, about one in three sessions free or by donation, and 71% starting after 5 p.m. Every figure is reproducible; the report is free to cite (please attribute "Sound Bath Calendar"). Dated editions are archived at https://soundbathcalendar.com/state-of-sound-healing/<edition>/.
@@ -33,3 +43,10 @@ Plain-language reference pages — definitional answers first, no unsupported he
 - [Is a sound bath religious?](https://soundbathcalendar.com/is-a-sound-bath-religious/): Mostly no — most sessions ask nothing of your beliefs; some add ceremony, and the honest answer has more texture than a yes or a no. Written for people of faith and for skeptics.
 - [Where sound baths come from](https://soundbathcalendar.com/where-sound-baths-come-from/): The real lineage — Asian gong traditions, India's nada yoga, and the largely modern "ancient Tibetan singing bowl" story.
 - [Sound bath vs. meditation](https://soundbathcalendar.com/sound-bath-vs-meditation/): Receptive vs. active practice; why sound baths suit people who say they cannot meditate.
+
+## Machine-readable endpoints
+
+- [sitemap.xml](https://soundbathcalendar.com/sitemap.xml): Every indexable page, with per-page lastmod dates.
+- [feed.xml](https://soundbathcalendar.com/feed.xml): RSS feed of upcoming sessions. Per-city feeds at https://soundbathcalendar.com/<city-slug>/feed.xml (denver, boulder, fort-collins, colorado-springs).
+- [front-range.ics](https://soundbathcalendar.com/front-range.ics): Subscribable iCalendar feed of every upcoming session. Per-city calendars at https://soundbathcalendar.com/<city-slug>.ics, and each event page serves its own event.ics alongside it.
+- Raw JSON under https://soundbathcalendar.com/data/: external-events.json (every listed session), sessions-cache.json (Firstwater's own sessions), practitioners.json / venues.json / operators.json (the curated directories), geocode.json (venue coordinates), and insights/summer-2026.json (the State of Sound Healing dataset).
