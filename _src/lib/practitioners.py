@@ -296,7 +296,7 @@ def render_practitioner_page(pract, session_rows, nav_prefix, site_url, now=None
     # Upcoming sessions this person leads.
     out.append('    <h2 class="pract__section-h">Upcoming sessions</h2>')
     if session_rows:
-        out.append('    ' + X._render_rows(session_rows, True, nav_prefix))
+        out.append('    ' + X._render_rows(session_rows, True, nav_prefix, now=now))
     else:
         out.append(
             f'    <p class="pract__empty">No upcoming sessions listed right now. '

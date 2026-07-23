@@ -975,7 +975,7 @@ def add_to_calendar_urls(row, site_url, now=None):
     return {'google': google, 'outlook': outlook, 'apple': 'event.ics'}
 
 
-def _render_row(row, show_date=True, nav_prefix='', geocode=None):
+def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None):
     is_fw = row['kind'] == 'firstwater'
     cls = 'cal-row cal-row--firstwater' if is_fw else 'cal-row'
     # Filter hooks: area + free/donation (B.5) + tags (CAL-01), read by
@@ -998,6 +998,14 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None):
     if show_date:
         parts.append(f'    <span class="cal-row__dow">{_esc(fmt_row_dow(row["starts_at"]))}</span>')
         parts.append(f'    <span class="cal-row__dnum">{_esc(fmt_row_daynum(row["starts_at"]))}</span>')
+        # CAL-UX-2: a bare "Wed 29" is ambiguous once the weeks-ahead band
+        # crosses a month boundary — stamp the month abbreviation on any row
+        # outside the build month. Per-row, so it survives client filtering.
+        if now is not None:
+            _d = _denver(row['starts_at'])
+            _n = now.astimezone(sessions_feed.DENVER)
+            if (_d.year, _d.month) != (_n.year, _n.month):
+                parts.append(f'    <span class="cal-row__mo">{_esc(_d.strftime("%b"))}</span>')
     parts.append(f'    <span class="cal-row__time">{_esc(fmt_time(row["starts_at"]))}</span>')
     parts.append('  </div>')
     parts.append('  <div class="cal-row__body">')
@@ -1180,9 +1188,9 @@ def today_band_label(today_rows, now=None):
     return 'Today'
 
 
-def _render_rows(rows, show_date, nav_prefix, geocode=None):
+def _render_rows(rows, show_date, nav_prefix, geocode=None, now=None):
     inner = '\n'.join(
-        _render_row(r, show_date=show_date, nav_prefix=nav_prefix, geocode=geocode)
+        _render_row(r, show_date=show_date, nav_prefix=nav_prefix, geocode=geocode, now=now)
         for r in rows)
     return f'<div class="cal-rows">\n{inner}\n</div>'
 
@@ -1225,7 +1233,7 @@ def _render_bands(rows, nav_prefix='', now=None, geocode=None,
     for bid, label, brows, show_date in bands:
         out.append(f'<section class="cal-band" id="{bid}">')
         out.append(f'  <h2 class="cal-band__h2">{_esc(label)}</h2>')
-        out.append('  ' + _render_rows(brows, show_date, nav_prefix, geocode))
+        out.append('  ' + _render_rows(brows, show_date, nav_prefix, geocode, now=now))
         out.append('</section>')
 
     return '\n'.join(out)

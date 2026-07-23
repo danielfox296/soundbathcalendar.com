@@ -267,7 +267,7 @@ def render_operator_page(o, session_rows, nav_prefix, site_url, now=None):
 
     out.append('    <h2 class="operator__section-h">Upcoming sessions</h2>')
     if session_rows:
-        out.append('    ' + X._render_rows(session_rows, True, nav_prefix))
+        out.append('    ' + X._render_rows(session_rows, True, nav_prefix, now=now))
     else:
         out.append(
             f'    <p class="operator__empty">No upcoming sessions listed right now. '

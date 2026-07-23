@@ -294,7 +294,7 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None):
 
     out.append('    <h2 class="venue__section-h">Upcoming sessions here</h2>')
     if session_rows:
-        out.append('    ' + X._render_rows(session_rows, True, nav_prefix))
+        out.append('    ' + X._render_rows(session_rows, True, nav_prefix, now=now))
     else:
         out.append(
             f'    <p class="venue__empty">No upcoming sessions listed here right now. '
