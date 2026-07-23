@@ -144,6 +144,8 @@ The list is gone on listing surfaces (root, city, tag). The four temporal bands 
 
 **The editorial band** (`.cal-edband`): full-width what-to-expect promo inserted after the second-or-third day monument (root + city) — treated stock (generic-editorial only), 1300×406 duotone with the coral hover layer, 2px ink frame, underlined caption title.
 
+**One entity, one name** (CAL-UX-12, ratified 2026-07-22; ported to the grid 2026-07-25): when operator and venue name the same entity, a surface says the name once. The caption prevents the doubling by construction (its single place term is venue-else-operator); the live compare site is `alt_text` — `_same_entity` (`external_events.py`) folds one trailing legal suffix (llc/inc/ltd/co), so "X" vs "X LLC" is one entity in ALT/caption text. RULE: the fold is presentation-only — it never enters `normalize()`/`dedup_key` (byte-identical service contract) or entity counts (insights stays flag-not-merge).
+
 First-viewport budget (mobile): summary + the live slab head above the fold.
 
 ### 2.4 List + map (`/map/`, CAL-10 phase C)
@@ -313,6 +315,7 @@ The masthead's `.btn-primary` digest form is retired for an underlined text link
 | CAL-DES-1 muted-ink floor | §1.2 |
 | CAL-DES-2 og:image never rots | §5 |
 | CAL-UX-2 month marker | §2.3 |
+| CAL-UX-12 own-room single name | §2.3 |
 | D-17/D-20 vocabulary | §7 |
 | D-13 reading measure ratified | §1.3, §9 |
 | D-14 editorial register ratified | §1.5, §9 |

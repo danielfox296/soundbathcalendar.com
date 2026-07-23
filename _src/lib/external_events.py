@@ -152,6 +152,28 @@ def make_dedup_key(name, date_yyyy_mm_dd, venue):
     return f'{normalize(name)}|{date_yyyy_mm_dd}|{normalize(venue)}'
 
 
+# Legal-suffix tokens folded ONLY inside _same_entity below. A scrape can
+# register one entity twice — "Rocky Mountain Restore & Stretch" as operator,
+# "Rocky Mountain Restore & Stretch LLC" as venue — and a strict compare then
+# renders the same name near-doubled on a row. NEVER fold these in normalize()
+# or make_dedup_key(): the dedup key must stay byte-identical to the
+# authoritative TS service impl (docstring above), and entity counts keep
+# near-duplicate variants distinct on purpose (insights.py flags them rather
+# than silently merging). Deliberately minimal set.
+_LEGAL_SUFFIX_RE = re.compile(r' (?:llc|inc|ltd|co)$')
+
+
+def _same_entity(a, b):
+    """CAL-UX-12: do these two names refer to one entity? normalize-equal,
+    ignoring a single trailing legal suffix on either side. Presentation-layer
+    comparison only (the own-room test: meta line, CTA label, ALT text) —
+    never a dedup input. Empty on either side is never a match."""
+    na, nb = normalize(a), normalize(b)
+    if not na or not nb:
+        return False
+    return _LEGAL_SUFFIX_RE.sub('', na) == _LEGAL_SUFFIX_RE.sub('', nb)
+
+
 def map_city(text):
     """Fold a free-text city/address to one canonical section key.
 
@@ -541,7 +563,7 @@ def alt_text(row):
     place = (place or row.get('city') or '').strip()
     loc = op
     # An operator running its own room (operator == venue) shows the name once.
-    if venue and normalize(venue) != normalize(op):
+    if venue and not _same_entity(venue, op):
         loc = f'{loc} at {venue}' if loc else venue
     if place:
         loc = f'{loc}, {place}' if loc else place
