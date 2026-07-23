@@ -210,7 +210,7 @@ def render_practitioner_page(pract, session_rows, nav_prefix, site_url, now=None
     out.append('    <div class="detail-shell">')
     out.append('      <div class="detail-main">')
     out.append('    <div class="pract__head">')
-    photo = X._safe_ext_url(pract.get('photo_url') or '')
+    photo = X._safe_image_url(pract.get('photo_url') or '')
     if photo:
         out.append(
             f'      <img class="pract__photo" src="{_esc(photo)}" '
@@ -322,7 +322,7 @@ def person_schema(pract, canonical_url, session_rows):
     bio = (pract.get('bio') or '').strip()
     if bio:
         person['description'] = ' '.join(bio.split())
-    photo = X._safe_ext_url(pract.get('photo_url') or '')
+    photo = X._safe_image_url(pract.get('photo_url') or '')
     if photo:
         person['image'] = photo
     same_as = [X._safe_ext_url(pract.get('website_url') or ''),

@@ -17,7 +17,7 @@ def art_for(entity, session_rows):
     """The card image URL for one entity: its curated photo first, else the
     first upcoming session that carries a listing image (same scrubbed
     image_url the calendar rows and digest already show), else ''."""
-    photo = X._safe_ext_url((entity or {}).get('photo_url') or '')
+    photo = X._safe_image_url((entity or {}).get('photo_url') or '')
     if photo:
         return photo
     for r in session_rows or []:

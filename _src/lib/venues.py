@@ -213,7 +213,7 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None):
     place = v['neighborhood'] if v.get('city') == 'Denver' and v.get('neighborhood') else None
     area = f'{place}, {v["city"]}' if place else v.get('city', '')
 
-    photo = X._safe_ext_url(v.get('photo_url') or '')
+    photo = X._safe_image_url(v.get('photo_url') or '')
     if photo:
         out.append(
             f'    <img class="venue__photo" src="{_esc(photo)}" alt="{_esc(name)}" '
@@ -326,7 +326,7 @@ def place_schema(v, canonical_url, session_rows):
     mp = _map_link(v)
     if mp:
         place['hasMap'] = mp
-    photo = X._safe_ext_url(v.get('photo_url') or '')
+    photo = X._safe_image_url(v.get('photo_url') or '')
     if photo:
         place['photo'] = photo
     if (v.get('description') or '').strip():

@@ -38,7 +38,8 @@ FEED CONTRACT (GET {CALENDAR_FEED_URL}), shape:
     "first_seen_at",   # CAL-15: when the pull first surfaced the listing (row
                        # createdAt) — becomes offers.validFrom in Event schema.
     # v2 (all optional; "" when unknown):
-    "image_url",       # listing image / flyer (og:image). http(s) only, scrubbed.
+    "image_url",       # listing image / flyer (on-page <img> + schema image;
+                       # og:image stays a committed card). https only, scrubbed.
     "facilitator",     # the PERSON leading the session (distinct from operator).
     "operator_url",    # the operator's OWN page. http(s) only, scrubbed.
     "venue_url",       # the venue's OWN page, when distinct. http(s) only, scrubbed.
@@ -352,7 +353,9 @@ def _external_row(e):
         'dedup_key': e.get('dedup_key', ''),
         # v2 fields — the three URLs are scheme-scrubbed exactly like ticket_url
         # (attacker-influenced third-party listing data on a public page).
-        'image_url': _safe_ext_url(e.get('image_url', '')),
+        # The image additionally upgrades http->https (it embeds; see
+        # _safe_image_url).
+        'image_url': _safe_image_url(e.get('image_url', '')),
         'facilitator': (e.get('facilitator', '') or '').strip(),
         'operator_url': _safe_ext_url(e.get('operator_url', '')),
         'venue_url': _safe_ext_url(e.get('venue_url', '')),
@@ -820,8 +823,30 @@ def _safe_ext_url(v):
     if not v:
         return ''
     s = str(v).strip()
+    # CAL-SEO-4: some scraped values arrive with their HTML-attribute escaping
+    # still on ('&amp;' between query params). A URL is not HTML — collapse
+    # that residue (however many layers deep: '&amp;amp;' -> '&amp;' -> '&')
+    # so the template's single escape is the only escape and the JSON-LD
+    # carries the true URL. A query value that genuinely needs '&' as data is
+    # percent-encoded (%26), so only escaping residue matches here. This is
+    # de-escaping, not re-serialization: the query (and its signature) stays.
+    while '&amp;' in s:
+        s = s.replace('&amp;', '&')
     probe = _SAFE_URL_PROBE_RE.sub('', s).lower()
     return s if probe.startswith(('http://', 'https://')) else ''
+
+
+def _safe_image_url(v):
+    """_safe_ext_url for IMAGE URLs, additionally upgrading http:// to https://.
+
+    Images embed as page resources (<img>, og:image, schema ImageObject),
+    where a plain-http URL is mixed content — modern browsers block it
+    outright on our https pages, so the image was never going to render
+    (CAL-UX-6). Worst case an https-less host breaks an image that was
+    already blocked. Plain LINKS (ticket/operator/venue hrefs) stay on
+    _safe_ext_url untouched: navigation is not mixed content, and forcing
+    https there could break a genuinely http-only site."""
+    return re.sub(r'^http://', 'https://', _safe_ext_url(v), flags=re.IGNORECASE)
 
 
 # Register-passable PLACEHOLDER empty-state lines. Flagged for Daniel.

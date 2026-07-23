@@ -709,7 +709,14 @@ def build_event_pages(base, header, footer, cal_feed, now):
         meta_desc = (f'<meta name="description" '
                      f'content="{html_mod.escape(description, quote=True)}">')
 
-        og_image = row.get('image_url') or _og_asset('img/og-default.jpg')
+        # CAL-DES-2/CAL-SEO-3: the share card is ALWAYS one of our committed
+        # assets — the event's city card, else og-default.jpg (via _og_asset's
+        # fallback). Never the organizer's listing image: those are signed CDN
+        # URLs (img.evbuc.com) that expire, and a dead og:image breaks every
+        # share preview from then on. The listing image still renders on-page
+        # and in the Event JSON-LD, where rot degrades gracefully.
+        og_image = _og_asset(
+            f'img/og/{external_events.city_slug(row["city"])}.jpg')
         og_tags, twitter_tags = _og_twitter_tags(
             name, description, canonical_url, og_image)
 
@@ -807,7 +814,7 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
         meta_desc = (f'<meta name="description" '
                      f'content="{html_mod.escape(description, quote=True)}">')
 
-        og_image = (external_events._safe_ext_url(p.get('photo_url') or '')
+        og_image = (external_events._safe_image_url(p.get('photo_url') or '')
                     or _og_asset('img/og/practitioners.jpg'))
         og_tags, twitter_tags = _og_twitter_tags(
             name, description, canonical_url, og_image)
@@ -964,7 +971,7 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
         meta_desc = (f'<meta name="description" '
                      f'content="{html_mod.escape(description, quote=True)}">')
 
-        og_image = (external_events._safe_ext_url(v.get('photo_url') or '')
+        og_image = (external_events._safe_image_url(v.get('photo_url') or '')
                     or _og_asset('img/og/venues.jpg'))
         og_tags, twitter_tags = _og_twitter_tags(
             name, description, canonical_url, og_image)
