@@ -1242,20 +1242,22 @@ def _band_list(rows, now=None):
 
 
 def _render_bands(rows, nav_prefix='', now=None, geocode=None,
-                  include_jump=True):
+                  include_jump=True, include_faq=True):
     """The temporal jump-nav + the four bands in fixed order (each drawn only
     when it has rooms). Shared by the root and the city pages; the caller
     appends its own FAQ. An empty weekend band simply isn't drawn — 'This week'
     carries the near term — so a page never prints 'nothing this weekend'.
     include_jump=False leaves the jump-nav to the caller (the CAL-23 rail
     renders it in the aside via render_jump); tag/map callers keep the
-    default inline nav."""
+    default inline nav. include_faq=False drops the FAQ pill for callers
+    that render no FAQ section (the map page) — a jump pill only exists
+    where its anchor does."""
     bands = _band_list(rows, now)
 
     out = []
 
     if include_jump:
-        out.append(render_jump(rows, now))
+        out.append(render_jump(rows, now, include_faq=include_faq))
 
     if not bands:
         out.append(f'<p class="cal-empty cal-empty--all">{_esc(ALL_EMPTY)}</p>')
@@ -1269,16 +1271,19 @@ def _render_bands(rows, nav_prefix='', now=None, geocode=None,
     return '\n'.join(out)
 
 
-def render_jump(rows, now=None):
+def render_jump(rows, now=None, include_faq=True):
     """The temporal jump-nav — only the bands that exist, plus the FAQ. With
     JS, filters.js upgrades each data-band anchor into a toggleable band
     FILTER chip (CAL-16); without JS they stay plain jump anchors. The FAQ
-    link carries no data-band, so it always just jumps. Standalone since
-    CAL-23 phase B, so the rail can hold it beside the list."""
+    link carries no data-band, so it always just jumps — which is why
+    include_faq=False exists: on a page with no FAQ section that pill
+    would be a dead anchor dressed like its working siblings. Standalone
+    since CAL-23 phase B, so the rail can hold it beside the list."""
     out = ['<nav class="cal-jump" aria-label="Jump to a time">']
     for bid, label, _brows, _sd in _band_list(rows, now):
         out.append(f'  <a href="#{bid}" data-band="{bid}">{_esc(label)}</a>')
-    out.append('  <a href="#faq">FAQ</a>')
+    if include_faq:
+        out.append('  <a href="#faq">FAQ</a>')
     out.append('</nav>')
     return '\n'.join(out)
 

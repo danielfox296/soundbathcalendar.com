@@ -97,6 +97,9 @@ MAP_HEAD = """<link rel="stylesheet" href="{{css_path}}vendor/leaflet/leaflet.cs
        map sits sticky beside it. Below 900px they stack, map band on top. With JS
        blocked the list is fully usable and the map box simply never initializes. */
     .map-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+    /* Anchors the touch-gesture hint overlay. The ≥900px sticky rule below
+       overrides this — sticky positions absolute children just the same. */
+    .map-split__map { position: relative; }
     @media (min-width: 900px) {
       .map-split { grid-template-columns: minmax(340px, 5fr) 7fr; gap: 2.4rem; align-items: start; }
       .map-split__map { position: sticky; top: 90px; }
@@ -109,6 +112,15 @@ MAP_HEAD = """<link rel="stylesheet" href="{{css_path}}vendor/leaflet/leaflet.cs
        inits, so fitBounds sees real dimensions in every context. */
     #sbc-map { width: 100%; height: 680px; border: 1px solid var(--line); background: var(--paper); }
     @media (max-width: 899px) { #sbc-map { height: 440px; } }
+    /* Two-finger hint (CAL-UX-8): on touch devices one-finger dragging is off,
+       so Leaflet's own .leaflet-touch-zoom rule leaves touch-action: pan-x pan-y
+       and a thumb-scroll moves the PAGE, not the map. This overlay teaches the
+       two-finger gesture when a one-finger drag is attempted. JS-created (no-JS
+       pages never carry it), pointer-events:none so it can never trap a scroll
+       itself. Token colors — they flip in dark. */
+    .map-hint { position: absolute; inset: 0; z-index: 1200; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 1.4rem; background: rgba(var(--ink-rgb),0.45); opacity: 0; transition: opacity .25s; pointer-events: none; }
+    .map-hint--on { opacity: 1; }
+    .map-hint span { background: var(--paper); color: var(--ink); border: 1px solid var(--line); padding: 0.6rem 1rem; font: 600 0.9rem var(--font-body); }
     /* Count-carrying pins (CAL-10): a venue pin shows its session count; a
        cluster sums the sessions inside it. Token colors — they flip in dark. */
     .sbc-pin { width: 100%; height: 100%; background: var(--ink); color: var(--paper);
@@ -155,8 +167,10 @@ def render_map_page(pins, nav_prefix, updated_str, cal_rows=None, now=None, geoc
         out.append('    <p class="map-empty">The map is filling in. '
                    f'<a href="{nav_prefix}">See the full calendar →</a></p>')
         if cal_rows:
+            # include_faq=False: this page renders no FAQ section, so the
+            # jump nav must not offer a pill whose anchor doesn't exist.
             out.append(X._render_bands(cal_rows, nav_prefix=nav_prefix, now=now,
-                                       geocode=geocode))
+                                       geocode=geocode, include_faq=False))
         out.append('  </div>')
         out.append('</section>')
         return '\n'.join(out)
@@ -164,8 +178,10 @@ def render_map_page(pins, nav_prefix, updated_str, cal_rows=None, now=None, geoc
     out.append('    <div class="map-split">')
     out.append('      <div class="map-split__list">')
     if cal_rows:
+        # include_faq=False: this page renders no FAQ section, so the
+        # jump nav must not offer a pill whose anchor doesn't exist.
         out.append(X._render_bands(cal_rows, nav_prefix=nav_prefix, now=now,
-                                   geocode=geocode))
+                                   geocode=geocode, include_faq=False))
     out.append('      </div>')
     out.append('      <div class="map-split__map">')
     out.append('        <div id="sbc-map" role="application" '
@@ -195,7 +211,16 @@ def render_map_page(pins, nav_prefix, updated_str, cal_rows=None, now=None, geoc
                'popupAnchor: [0, -size/2 - 2]});')
     out.append('  }')
     out.append('  function init(){')
-    out.append('    var map = L.map("sbc-map", {scrollWheelZoom:false})'
+    # Cooperative gestures (CAL-UX-8): on phones the map opens above the list,
+    # and a one-finger drag that pans the MAP traps the thumb-scroll — the list
+    # below becomes unreachable. So on touch devices one-finger dragging is off:
+    # Leaflet's own .leaflet-touch-zoom CSS then sets touch-action: pan-x pan-y,
+    # the page scrolls natively, and two fingers pan/zoom the map (the pinch
+    # handler follows the midpoint, so it pans too). Desktop drag is unchanged,
+    # and the keyboard handler (focus + arrow keys) is independent of dragging.
+    out.append('    var coop = L.Browser.mobile;')
+    out.append('    var map = L.map("sbc-map", '
+               '{scrollWheelZoom:false, dragging:!coop})'
                '.setView([39.74,-104.99], 9);')
     out.append('    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", '
                '{maxZoom:19, attribution:"&copy; OpenStreetMap contributors"}).addTo(map);')
@@ -228,6 +253,38 @@ def render_map_page(pins, nav_prefix, updated_str, cal_rows=None, now=None, geoc
                '{maxZoom:12, animate:false}); } };')
     out.append('    fit();')
     out.append('    setTimeout(fit, 250);')
+    # The two-finger hint: shown when a one-finger drag is attempted over the
+    # map (>10px of travel — a plain tap never flashes it), gone ~1.1s after
+    # the last such move or the moment a second finger lands. Passive listeners
+    # and pointer-events:none throughout: the hint only ever narrates, it never
+    # intercepts the scroll it exists to protect.
+    out.append('    if (coop) {')
+    out.append('      var mapEl = document.getElementById("sbc-map");')
+    out.append('      var hint = document.createElement("div");')
+    out.append('      hint.className = "map-hint";')
+    out.append('      hint.setAttribute("aria-hidden", "true");')
+    out.append('      hint.innerHTML = '
+               '"<span>Use two fingers to move the map</span>";')
+    out.append('      mapEl.parentNode.appendChild(hint);')
+    out.append('      var hintT = null, sx = 0, sy = 0;')
+    out.append('      var show = function(){ hint.classList.add("map-hint--on");')
+    out.append('        clearTimeout(hintT);')
+    out.append('        hintT = setTimeout(function(){ '
+               'hint.classList.remove("map-hint--on"); }, 1100); };')
+    out.append('      var hide = function(){ clearTimeout(hintT); '
+               'hint.classList.remove("map-hint--on"); };')
+    out.append('      mapEl.addEventListener("touchstart", function(e){')
+    out.append('        if (e.touches.length === 1) { '
+               'sx = e.touches[0].clientX; sy = e.touches[0].clientY; }')
+    out.append('        else { hide(); }')
+    out.append('      }, {passive:true});')
+    out.append('      mapEl.addEventListener("touchmove", function(e){')
+    out.append('        if (e.touches.length !== 1) return;')
+    out.append('        var dx = e.touches[0].clientX - sx, '
+               'dy = e.touches[0].clientY - sy;')
+    out.append('        if (dx*dx + dy*dy > 100) show();')
+    out.append('      }, {passive:true});')
+    out.append('    }')
     # Row → pin hover sync: rows carry data-lat/lng (CAL-05), pins are keyed by
     # coordinate. A marker folded into a cluster has no element — no-op then.
     out.append('    var rows = [].slice.call('
