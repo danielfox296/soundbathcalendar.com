@@ -27,6 +27,14 @@
 // near mode (the chips are filters there, not jumps). The FAQ link carries no
 // data-band and keeps its plain jump behaviour; with JS off every link is a
 // plain in-page anchor, unchanged.
+//
+// Clear-all + off-screen indicator (CAL-UX-10): a "Clear filters" button in
+// the bar (revealed only while any filter or the near-me sort is active)
+// resets every facet at once. Below the rail breakpoint the bar is inline and
+// scrolls away, so a fixed "Filters on · Clear" chip surfaces whenever
+// filters are active AND the bar is off-viewport — otherwise a filtered-down
+// list reads as a quiet page with sound baths missing. The no-results line is
+// an aria-live status region so the empty state is announced, not just shown.
 (function () {
   'use strict';
   var bar = document.querySelector('[data-cal-filters]');
@@ -37,6 +45,7 @@
   var freeChk = bar.querySelector('[data-filter-free]');
   var tagChks = [].slice.call(bar.querySelectorAll('[data-filter-tag]'));
   var noResults = document.querySelector('[data-cal-noresults]');
+  var noResultsText = noResults ? noResults.textContent : '';
   var rows = [].slice.call(document.querySelectorAll('.cal-row'));
   var bands = [].slice.call(document.querySelectorAll('.cal-band'));
   var jump = document.querySelector('.cal-jump');
@@ -92,8 +101,18 @@
     });
 
     if (noResults) {
-      noResults.hidden = rows.some(function (r) { return !r.hidden; });
+      var anyShown = rows.some(function (r) { return !r.hidden; });
+      if (anyShown) {
+        noResults.hidden = true;
+      } else if (noResults.hidden) {
+        // Becoming visible: rewrite the text too, so the aria-live region
+        // sees a fresh node — some screen readers skip a bare hidden-flip.
+        noResults.hidden = false;
+        noResults.textContent = noResultsText;
+      }
     }
+
+    syncClear();  // CAL-UX-10: every path that changes filter state ends here
   }
 
   if (citySel) citySel.addEventListener('change', apply);
@@ -268,6 +287,76 @@
       });
     }
   }
+
+  // ---- Clear-all + off-screen indicator (CAL-UX-10) -----------------------
+  // anyActive() is the single "is anything filtering/sorting?" predicate; the
+  // bar's clear button and the floating chip both key off it via syncClear(),
+  // which rides on the end of apply() — every state change funnels through.
+  var clearBtn = bar.querySelector('[data-filter-clear]');
+
+  // The floating chip is JS-created (like the near-me note): it can only ever
+  // matter with JS running, so no-JS pages never carry the markup. It lands
+  // right after the bar, so its tab-order slot is beside the controls it
+  // clears. position:fixed via .cal-filterpill; CSS hides it at >=1080px,
+  // where the CAL-23 rail keeps the bar sticky-visible anyway.
+  var pill = document.createElement('button');
+  pill.type = 'button';
+  pill.className = 'cal-filterpill';
+  pill.hidden = true;
+  pill.textContent = 'Filters on · Clear';
+  bar.parentNode.insertBefore(pill, bar.nextSibling);
+
+  // Off-viewport tracking. The sticky masthead covers the top of the screen,
+  // so shrink the observed area to match (the 90px is the house
+  // scroll-margin-top): a bar sitting under the masthead is off-screen for
+  // this purpose. No IntersectionObserver → the chip just never shows; the
+  // bar's own clear button still works.
+  var barOffscreen = false;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      barOffscreen = !entries[entries.length - 1].isIntersecting;
+      syncPill();
+    }, { rootMargin: '-90px 0px 0px 0px' }).observe(bar);
+  }
+
+  function anyActive() {
+    return !!(citySel && citySel.value) || !!(freeChk && freeChk.checked)
+      || selectedTags().length > 0 || !!bandFilter || nearActive;
+  }
+
+  function syncPill() {
+    pill.hidden = !(anyActive() && barOffscreen);
+  }
+
+  function syncClear() {
+    if (clearBtn) clearBtn.hidden = !anyActive();
+    syncPill();
+  }
+
+  function clearAll() {
+    if (citySel) citySel.value = '';
+    if (freeChk) freeChk.checked = false;
+    tagChks.forEach(function (chk) { chk.checked = false; });
+    if (nearActive) deactivate();
+    setBandFilter('');  // re-applies; syncClear() rides on apply()
+    // Hand focus to the bar's first control — the affordance just clicked
+    // hides itself. preventScroll, then jump the bar into view INSTANTLY
+    // (only when it's actually off-screen, i.e. a chip tap): restoring 50+
+    // rows re-anchors the scroll position, and a several-thousand-px smooth
+    // scroll through a reflowed list is disorienting. "Clear" returns the
+    // seeker to the head of the restored full list.
+    var first = bar.querySelector('select, input');
+    if (first) {
+      try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); }
+    }
+    if (barOffscreen) {
+      try { bar.scrollIntoView({ behavior: 'instant', block: 'start' }); }
+      catch (e2) { bar.scrollIntoView(true); }
+    }
+  }
+
+  if (clearBtn) clearBtn.addEventListener('click', clearAll);
+  pill.addEventListener('click', clearAll);
 
   apply();
 })();

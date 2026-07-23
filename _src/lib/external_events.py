@@ -1341,6 +1341,10 @@ def render_filters(rows=None, include_city=True):
     # so no-JS visitors never see a dead control.
     out.append('    <button type="button" class="cal-filters__nearme" '
                'data-nearme aria-pressed="false" hidden>Sort by distance</button>')
+    # CAL-UX-10 clear-all. Ships hidden; filters.js reveals it only while any
+    # filter (or the near-me sort) is active, and it resets every facet.
+    out.append('    <button type="button" class="cal-filters__clear" '
+               'data-filter-clear hidden>Clear filters</button>')
     out.append('  </div>')
 
     present = present_tag_slugs(rows or [])
@@ -1367,8 +1371,11 @@ def render_filters(rows=None, include_city=True):
 
 
 def _render_noresults():
-    """The 'nothing matches your filters' line — hidden until filters.js shows it."""
-    return f'<p class="cal-empty" data-cal-noresults hidden>{_esc(NO_RESULTS)}</p>'
+    """The 'nothing matches your filters' line — hidden until filters.js shows
+    it. role=status + aria-live so the reveal is ANNOUNCED to screen readers,
+    not just shown (CAL-UX-10); present from load so the region registers."""
+    return ('<p class="cal-empty" data-cal-noresults role="status" '
+            f'aria-live="polite" hidden>{_esc(NO_RESULTS)}</p>')
 
 
 def render_calendar_body(rows, nav_prefix='', now=None, geocode=None):

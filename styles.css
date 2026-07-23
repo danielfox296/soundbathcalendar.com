@@ -63,12 +63,17 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.
 @media (min-width: 1080px) {
   .cal-main .container { max-width: 1320px; }
   .cal-split { display: grid; grid-template-columns: clamp(232px, 19vw, 272px) minmax(0, 1fr); gap: clamp(2.4rem, 3vw, 3.4rem); align-items: start; }
+  /* CAL-UX-10: the aside must STRETCH to the row (i.e. the list's height) or
+     the sticky inner has zero travel and the "sticky rail" never sticks —
+     align-items:start above was sizing it to its own content. */
+  .cal-rail { align-self: stretch; }
   .cal-rail__inner { position: sticky; top: 80px; }
   /* Vertical variants of the relocated chrome. */
   .cal-rail .cal-filters { flex-direction: column; align-items: stretch; gap: 1rem; margin: 0 0 1.6rem; border-top: 0; padding-top: 0; }
   .cal-rail .cal-filters__primary { display: flex; flex-direction: column; align-items: stretch; gap: 0.9rem; }
   .cal-rail .cal-filters__field select { width: 100%; }
   .cal-rail .cal-filters__nearme { align-self: flex-start; }
+  .cal-rail .cal-filters__clear { align-self: flex-start; }
   .cal-rail .cal-jump { flex-direction: column; align-items: flex-start; gap: 0.7rem; margin: 0 0 1.6rem; }
 }
 .eyebrow { font: 600 0.75rem var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); display: block; margin-bottom: 1.2rem; }
@@ -239,6 +244,24 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-filters__nearme[aria-pressed="true"] { background: var(--accent); color: var(--ink); border-color: var(--accent); }
 .cal-filters__nearme:disabled { color: rgba(var(--ink-rgb),0.45); cursor: default; }
 .cal-nearnote { padding: 0.3rem 0 0; font-size: 0.9rem; }
+
+/* ---- clear-all + off-screen indicator (CAL-UX-10). The bar's "Clear
+        filters" is a quiet link-button in the rail-links register — filters.js
+        reveals it only while something is active. The floating chip borrows
+        the pressed-chip language (.cal-jump ink fill, radius 0 per DESIGN.md)
+        and appears only when filters are active AND the bar is off-viewport;
+        at >=1080px the CAL-23 rail keeps the bar sticky-visible, so the chip
+        stays off there. Tokens flip both in dark mode. ---- */
+.cal-filters__clear { background: transparent; border: 0; padding: 0; font: 600 0.86rem var(--font-body); color: var(--accent-on-light); cursor: pointer; }
+.cal-filters__clear:hover { text-decoration: underline; }
+.cal-filters__clear[hidden] { display: none; }
+.cal-filterpill { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px)); z-index: 40; background: var(--ink); color: var(--paper); border: 0; font: 600 0.72rem var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; padding: 0.6rem 1.05rem; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 14px rgba(0,0,0,0.22); }
+.cal-filterpill[hidden] { display: none; }
+@media (min-width: 1080px) { .cal-filterpill { display: none; } }
+/* Scroll-target offset: clearing from the chip scrolls the bar back into
+   view (and tab-focus can scroll to a control) — both must clear the sticky
+   masthead (the house 90px, matching .cal-band's scroll-margin-top). */
+.cal-filters, .cal-filters select, .cal-filters input, .cal-filters button { scroll-margin-top: 90px; }
 .cal-row__dist { font: 600 0.66rem var(--font-body); letter-spacing: 0.05em; color: var(--ink); border: 1px solid rgba(var(--ink-rgb),0.25); padding: 0.05rem 0.4rem; line-height: 1.5; }
 
 /* ---- filter facet: primary controls (area + free) stacked over the tag
