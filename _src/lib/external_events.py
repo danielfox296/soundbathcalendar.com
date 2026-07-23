@@ -66,7 +66,7 @@ import unicodedata
 import urllib.request
 from collections import OrderedDict
 from datetime import datetime, timedelta, timezone
-from urllib.parse import quote_plus, urlencode
+from urllib.parse import quote, quote_plus, urlencode
 
 from _src.lib import ics as ics_lib
 from _src.lib import taxonomy
@@ -981,11 +981,16 @@ def add_to_calendar_urls(row, site_url, now=None):
     end_utc = ics_lib.ics_utc(ev['end'])
     iso_start = ev['start'].astimezone(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
     iso_end = ev['end'].astimezone(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    # The event's own page rides in the launch-link details (the TEMPLATE URL
+    # has no url param), matching the Thursday digest's googleCalUrl. The .ics
+    # carries it as a proper URL property instead — event_ics_input is shared,
+    # so the append happens here, never upstream.
+    details = f'{ev["description"]}\n\n{ev["url"]}'
     google = 'https://calendar.google.com/calendar/render?' + urlencode({
         'action': 'TEMPLATE',
         'text': ev['title'],
         'dates': f'{start_utc}/{end_utc}',
-        'details': ev['description'],
+        'details': details,
         'location': ev['location'],
     })
     outlook = 'https://outlook.live.com/calendar/0/deeplink/compose?' + urlencode({
@@ -995,7 +1000,7 @@ def add_to_calendar_urls(row, site_url, now=None):
         'startdt': iso_start,
         'enddt': iso_end,
         'location': ev['location'],
-        'body': ev['description'],
+        'body': details,
     })
     return {'google': google, 'outlook': outlook, 'apple': 'event.ics'}
 
@@ -1280,12 +1285,18 @@ def render_jump(rows, now=None):
 
 def render_rail_links(nav_prefix, ics_filename, feed_path):
     """The rail's standing links (CAL-23 phase B): subscribe + map + digest.
-    Server-rendered, JS-free — the rail is never dead chrome without JS."""
+    Server-rendered, JS-free — the rail is never dead chrome without JS.
+    Subscribe is three quiet options (CAL-UX-4): webcal for Apple, an
+    add-by-URL link for Google Calendar (which silently fails on webcal),
+    and the raw .ics download."""
     return '\n'.join([
         '<div class="cal-rail__links">',
-        f'  <a href="webcal://soundbathcalendar.com/{ics_filename}">'
-        'Subscribe in your calendar</a>',
-        f'  <a href="https://soundbathcalendar.com/{ics_filename}">'
+        '  <span class="cal-rail__subhead">Subscribe: '
+        f'<a href="{ics_webcal_url(ics_filename)}">Apple / webcal</a> '
+        '<span aria-hidden="true">·</span> '
+        f'<a href="{gcal_subscribe_url(ics_filename)}">Google Calendar</a>'
+        '</span>',
+        f'  <a href="{ics_https_url(ics_filename)}">'
         'Download .ics</a>',
         f'  <a href="{nav_prefix}{feed_path}">RSS</a>',
         f'  <a href="{nav_prefix}map/">See the map</a>',
@@ -2023,12 +2034,25 @@ def ics_https_url(ics_filename):
     return f'https://{CALENDAR_ORIGIN}/{ics_filename}'
 
 
+def gcal_subscribe_url(ics_filename):
+    """Google Calendar add-by-URL subscribe link (CAL-UX-4). Google Calendar
+    and Android silently fail on a bare webcal:// href — the pattern Google
+    honors is its own /calendar/r page with the whole webcal URL, percent-
+    encoded, as cid=."""
+    return ('https://calendar.google.com/calendar/r?cid='
+            + quote(ics_webcal_url(ics_filename), safe=''))
+
+
 def render_ics_subscribe(ics_filename):
-    """The subscribe + download line for a root or city page. PLACEHOLDER copy."""
+    """The subscribe + download line for a root or city page. PLACEHOLDER copy.
+    (Unused since the CAL-23 rail took over; kept in step with it — three
+    options, not webcal-only — so a revival doesn't strand Google users.)"""
     return (
         '<p class="cal-ics">'
         f'<a class="cal-ics__sub" href="{ics_webcal_url(ics_filename)}">'
-        'Subscribe in your calendar</a> '
+        'Apple / webcal</a> '
+        f'<a class="cal-ics__sub" href="{gcal_subscribe_url(ics_filename)}">'
+        'Google Calendar</a> '
         f'<a class="cal-ics__dl" href="{ics_https_url(ics_filename)}">'
         'Download .ics</a></p>'
     )
