@@ -15,10 +15,13 @@
          match. Stock (provenance: img/og/SOURCES.md); the alt describes
          only what is pictured. -->
     <figure class="cal-warmband">
+      <!-- CAL-UX-11: the band is the page's likely LCP — eager + high
+           priority; row thumbs below stay lazy. -->
       <img src="img/warm/front-range-1600.jpg"
            srcset="img/warm/front-range-800.jpg 800w, img/warm/front-range-1600.jpg 1600w"
            sizes="(max-width: 900px) 100vw, 900px"
-           width="1600" height="500" loading="lazy" decoding="async"
+           width="1600" height="500" loading="eager" fetchpriority="high"
+           decoding="async"
            alt="Hands settling a mallet among singing bowls by candlelight">
     </figure>
 

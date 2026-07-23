@@ -1051,8 +1051,12 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None):
     if not is_fw:
         if img:
             parts.append('    <div class="cal-row__media">')
+            # CAL-UX-11: empty alt — the row text beside the thumb already
+            # carries name/operator/venue, so a descriptive alt made screen
+            # readers hear every event twice. The event PAGE hero keeps its
+            # factual alt_text (there the image stands alone).
             parts.append(
-                f'      <img src="{_esc(img)}" alt="{_esc(alt_text(row))}" '
+                f'      <img src="{_esc(img)}" alt="" '
                 f'loading="lazy" decoding="async" referrerpolicy="no-referrer">'
             )
             parts.append('    </div>')
@@ -1156,6 +1160,16 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None):
             )
         link_url, link_label = _facil_venue_link(row)
         if link_url:
+            # CAL-UX-12: an operator running its own room (operator == venue,
+            # the meta line's normalize-compare) puts exactly ONE entity name
+            # on the row — repeating it as this link's label directly under
+            # that meta line reads as a defect, not a fact. Label the link by
+            # its function instead. Rows naming two entities keep the name
+            # label (it says WHOSE site opens).
+            if (row.get('venue') and
+                    normalize(row['venue']) == normalize(row.get('operator') or '') and
+                    normalize(link_label) == normalize(row['venue'])):
+                link_label = 'Website'
             cta.append(
                 f'<a class="cal-row__link" href="{_esc(link_url)}" '
                 f'target="_blank" rel="noopener">{_esc(link_label)}</a>'
@@ -1887,13 +1901,15 @@ def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
     if band:
         alt = band['alt']
         out.append('    <figure class="cal-warmband">')
+        # CAL-UX-11: the band is the page's likely LCP — fetch it eagerly and
+        # first. Row thumbs further down stay lazy.
         out.append(
             f'      <img src="{nav_prefix}img/warm/{slug}-1600.jpg"'
             f' srcset="{nav_prefix}img/warm/{slug}-800.jpg 800w,'
             f' {nav_prefix}img/warm/{slug}-1600.jpg 1600w"'
             f' sizes="(max-width: 900px) 100vw, 900px"'
-            f' width="1600" height="500" loading="lazy" decoding="async"'
-            f' alt="{_esc(alt)}">')
+            f' width="1600" height="500" loading="eager" fetchpriority="high"'
+            f' decoding="async" alt="{_esc(alt)}">')
         out.append('    </figure>')
 
     # CAL-23 rail/list split. City is fixed here, so the bar carries the

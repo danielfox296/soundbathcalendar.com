@@ -10,7 +10,11 @@
   <meta name="robots" content="{{robots}}">
   <title>{{title}}</title>
   {{meta_description}}
-  <meta name="theme-color" content="#F5F7FA">
+  <!-- CAL-UX-11: paired theme-colors so mobile browser chrome follows the
+       scheme instead of fighting it — light = --paper, dark = the CAL-14
+       dark ground (#101216, styles.css dark flip). -->
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F5F7FA">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101216">
 
   <!-- RSS feed discovery (CAL-05). Root feed by default; city pages override
        {{feed_link}} with their own region feed. -->
@@ -73,7 +77,10 @@
 <body>
   {{header}}
 
-  <main>
+  <!-- CAL-UX-11: #main is the skip link's target (masthead partial).
+       tabindex="-1" so fragment navigation reliably moves focus into the
+       landmark; no visible ring (the focus-visible rule scopes to controls). -->
+  <main id="main" tabindex="-1">
   {{content}}
   </main>
 
