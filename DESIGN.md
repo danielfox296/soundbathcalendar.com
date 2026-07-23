@@ -55,7 +55,7 @@ RULE: functional text never sits below `rgba(var(--ink-rgb), 0.62)`. Uppercase l
 
 Exempt (not functional text): disabled controls (`.cal-filters__nearme:disabled`, 0.45); the digest-preview miniature (`.digest-preview__brand`/`__dow` at 0.5 — a scaled depiction of the email, not page UI); decorative glyphs and monograms (`.cal-row__media--empty::after` 0.16, `.cal-emptystate__glyph` 0.18, `.dir-card__media--ph::before` 0.32).
 
-Known drift, converge on touch: `.cal-row__ours` at 0.5 (`styles.css:330`, under AA at its size) and a 0.60 family (`.cal-row__time`, `.cal-row__with`, `.cal-emptystate__seed`, `.footer-tag`, `.browse__axis-h2`, `.browse__count`) that clears AA (~5.36:1) but sits under the stated floor.
+Drift converged 2026-07-22: `.cal-row__ours` (was 0.5, under AA at its size) and `.browse__axis-h2` (was 0.60) joined the uppercase-label family at 0.65; the rest of the 0.60 family (`.cal-row__time`, `.cal-row__with`, `.cal-emptystate__seed`, `.footer-tag`, `.browse__count`) sits at the 0.62 floor. No functional text below the floor remains.
 
 ### 1.3 Type
 
