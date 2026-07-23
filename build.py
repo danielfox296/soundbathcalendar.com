@@ -933,6 +933,10 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
 
     print('\nGenerating venue pages...')
     built, sitemap_entries = [], []
+    # Index a page only when it has a curated description or at least this
+    # many upcoming sessions (CAL-SEO-1 doorway discipline).
+    ENTITY_MIN_UPCOMING = 2
+    indexed_count = 0
     lastmod = external_events.stamp_date_iso(now)
 
     # Counts + card art (curated photo, else the next session's listing image).
@@ -988,9 +992,15 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
         page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
         page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
 
+        # CAL-SEO-1 doorway gate: a venue page earns index + a sitemap slot
+        # with a curated description OR real upcoming activity; thin stubs
+        # stay live and linked but noindex,follow until enrichment or
+        # activity flips them (self-healing on rebuild).
+        page_indexable = bool(desc_body) or len(sessions) >= ENTITY_MIN_UPCOMING
+
         html = _assemble(base, {
             'title': title,
-            'robots': 'index, follow',
+            'robots': 'index, follow' if page_indexable else 'noindex, follow',
             'meta_description': meta_desc,
             'canonical_url': canonical_url,
             'css_path': nav_prefix,
@@ -1003,15 +1013,18 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
             'footer': page_footer,
         })
         if _write_page(output, html, built):
-            print(f'  ✓ {output} ({count_by_slug.get(slug, 0)} upcoming)')
-            sitemap_entries.append((canonical_url, lastmod))
+            print(f'  ✓ {output} ({count_by_slug.get(slug, 0)} upcoming, '
+                  f'{"indexed" if page_indexable else "noindex"})')
+            if page_indexable:
+                indexed_count += 1
+                sitemap_entries.append((canonical_url, lastmod))
 
     # --- index (/venues/) ---
     INDEX_MIN_INDEXED = 3
     index_output = 'venues/index.html'
     index_nav = '../'
     index_canonical = f'{SITE_URL}/venues/'
-    indexable = len(venue_list) >= INDEX_MIN_INDEXED
+    indexable = indexed_count >= INDEX_MIN_INDEXED
     robots_value = 'index, follow' if indexable else 'noindex, follow'
     index_desc = ('The venues hosting sound baths across Denver and the Colorado '
                   'Front Range: where they are, what to expect, and what is on next.')
@@ -1081,6 +1094,9 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
 
     print('\nGenerating operator pages...')
     built, sitemap_entries = [], []
+    # Same doorway gate as venues (CAL-SEO-1).
+    ENTITY_MIN_UPCOMING = 2
+    indexed_count = 0
     lastmod = external_events.stamp_date_iso(now)
 
     # Counts + card art (operators carry no curated photo; the next session's
@@ -1135,9 +1151,14 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
         page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
         page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
 
+        # CAL-SEO-1 doorway gate (same rule as venues): curated description
+        # OR real upcoming activity earns index + sitemap; thin stubs stay
+        # live and linked but noindex,follow.
+        page_indexable = bool(desc_body) or len(sessions) >= ENTITY_MIN_UPCOMING
+
         html = _assemble(base, {
             'title': title,
-            'robots': 'index, follow',
+            'robots': 'index, follow' if page_indexable else 'noindex, follow',
             'meta_description': meta_desc,
             'canonical_url': canonical_url,
             'css_path': nav_prefix,
@@ -1150,15 +1171,18 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
             'footer': page_footer,
         })
         if _write_page(output, html, built):
-            print(f'  ✓ {output} ({count_by_slug.get(slug, 0)} upcoming)')
-            sitemap_entries.append((canonical_url, lastmod))
+            print(f'  ✓ {output} ({count_by_slug.get(slug, 0)} upcoming, '
+                  f'{"indexed" if page_indexable else "noindex"})')
+            if page_indexable:
+                indexed_count += 1
+                sitemap_entries.append((canonical_url, lastmod))
 
     # --- index (/operators/) ---
     INDEX_MIN_INDEXED = 3
     index_output = 'operators/index.html'
     index_nav = '../'
     index_canonical = f'{SITE_URL}/operators/'
-    indexable = len(operator_list) >= INDEX_MIN_INDEXED
+    indexable = indexed_count >= INDEX_MIN_INDEXED
     robots_value = 'index, follow' if indexable else 'noindex, follow'
     index_desc = ('The collectives and studios running sound baths across Denver and '
                   'the Colorado Front Range: who they are, and where to catch them next.')
