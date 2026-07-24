@@ -32,13 +32,16 @@ Defined at `:root` in `styles.css:5`. Dark mode flips the same names (§6).
 | `--ink-rgb` | `10, 11, 13` | `245, 247, 250` | powers every `rgba(var(--ink-rgb), a)` |
 | `--accent` | `#62B6E8` | unchanged | ice — a MARK color (waveform, rules, small toggles) |
 | `--accent-on-light` | `#1F6FA8` (5.02:1 on paper) | `#7CC3EC` (AA on `#101216`) | link/text blue |
-| `--line` | `rgba(var(--ink-rgb), 0.14)` | follows the flip | hairlines |
+| `--line` | `rgba(var(--ink-rgb), 0.14)` | follows the flip | hairlines **between blocks** — never a control edge |
+| `--field-line` | `rgba(var(--ink-rgb), 0.46)` (3.20:1 on paper) | follows the flip (4.41:1 on the desk) | the edge of anything a person types or clicks into |
 | `--gray` | `#98A1AB` | unchanged | **borders/accents only — retired as a text color** (CAL-DES-1) |
 | body bg | `--paper` | `#08090B` | dark adds the desk behind the sheet |
 
 RULE: every secondary text color, border, and tint is written as `rgba(var(--ink-rgb), a)` — never a hardcoded gray, never `--gray`. This single convention is what makes dark mode a one-token flip (§6). A hex gray in a component is a defect.
 
-RULE: `--accent` (ice) is never a text color and never a text-bearing button fill (ice under ink text is ~1.9:1 — the v1 washed-CTA defect, CAL-11). Text-blue is always `--accent-on-light`.
+RULE: `--accent` (ice) is never a text color and never a text-bearing button fill (ice under ink text is ~1.9:1 — the v1 washed-CTA defect, CAL-11). Text-blue is always `--accent-on-light`. **Nor is ice ever a focus ring**: #62B6E8 is 2.09:1 on paper, so a focus outline drawn in it fails 2.4.11 on the light ground — the same CAL-11 defect wearing a different hat. Focus rings are `--accent-on-light` (5.02:1 light / 10.31:1 dark).
+
+RULE: form-control borders use `--field-line`, not `--line`. WCAG 1.4.11 asks 3:1 for the *visual boundary of a control*; the 0.14 hairline is a decorative divider between blocks (exempt) and lands at 1.2:1. The two are not interchangeable, and a control edge on `--line` — or on the old 0.25 literal (1.77:1) — is a defect. Decorative borders around already-legible text (e.g. `.cal-row__dist`) are not controls and keep their lighter edge.
 
 ### 1.2 The muted-ink floor (CAL-DES-1, ratified 2026-07-22)
 
