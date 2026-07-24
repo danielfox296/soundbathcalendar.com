@@ -46,7 +46,7 @@ from PIL import Image, ImageDraw
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from _src.lib.sessions_feed import DENVER, fmt_time, parse_iso  # noqa: E402
+from _src.lib.datetime_fmt import DENVER, fmt_time, parse_iso  # noqa: E402
 from scripts.social_theme import (  # noqa: E402
     ACCENT, H, INK, MARGIN, MUTED, RULE, W,
     font, ground, palette_for,

@@ -69,7 +69,7 @@ from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from _src.lib.sessions_feed import DENVER  # noqa: E402
+from _src.lib.datetime_fmt import DENVER  # noqa: E402
 from scripts.social import kind_for  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
