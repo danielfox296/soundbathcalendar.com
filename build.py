@@ -68,6 +68,13 @@ from _src.lib import roundups as roundups_lib
 SITE_URL = 'https://soundbathcalendar.com'
 SITE_NAME = 'Sound Bath Calendar'
 
+# The calendar's own social profiles — surfaced in the footer and declared in
+# the Organization schema's sameAs so search engines and AI resolve these
+# accounts to this site. These are the calendar's OWN accounts, so the
+# venture-separation rule (no sameAs bridge to *other* ventures) is unaffected.
+INSTAGRAM_URL = 'https://www.instagram.com/soundbathcalendar/'
+FACEBOOK_URL  = 'https://www.facebook.com/profile.php?id=61592057895510'
+
 # Sitewide description used in Organization + WebSite JSON-LD. Reuses the
 # approved calendar meta description verbatim — no new copy.
 SITE_DESCRIPTION = (
@@ -95,6 +102,10 @@ ORG_SCHEMA = {
         "sound healing",
         "breathwork with sound",
         "guided meditation with sound"
+    ],
+    "sameAs": [
+        INSTAGRAM_URL,
+        FACEBOOK_URL
     ]
 }
 
