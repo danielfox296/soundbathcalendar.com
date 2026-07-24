@@ -22,6 +22,16 @@ DEFAULT_FEED_URL = 'https://admin.soundbathcalendar.com/feeds/venues.json'
 CACHE_REL_PATH = os.path.join('data', 'venues.json')
 FETCH_TIMEOUT_S = 10
 
+# The venue photos are harvested from each venue's Google listing (CAL-25). The
+# photos shipped before their Google contributor attributions were captured, so
+# the credit is OPTIONAL enrichment: a slug -> {"author", "authorUrl"} map that
+# lives here beside the images (img/venues/<slug>.jpg), not in the feed. When a
+# credit is present the photo renders a caption + schema attribution; when absent
+# the photo still shows, bare. Backfill by running scripts/venue_photo_credits.py
+# (needs a Google Places key) and committing img/venues/credits.json — the render
+# picks it up, no code change or re-sync needed.
+CREDITS_REL_PATH = os.path.join('img', 'venues', 'credits.json')
+
 _esc = X._esc
 
 
@@ -105,6 +115,33 @@ def published_venues(feed):
     return out
 
 
+def load_credits(repo_root, log=print):
+    """The slug -> {"author", "authorUrl"} photo-attribution map, from the
+    committed img/venues/credits.json. Never raises: a missing or malformed file
+    means "no credits", which (by the render gate) means no venue photos ship —
+    the safe direction. Only entries with a non-empty author string are kept, so
+    a blank author can never satisfy the gate."""
+    path = os.path.join(repo_root, CREDITS_REL_PATH)
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            raw = json.load(f)
+    except FileNotFoundError:
+        return {}
+    except Exception as exc:
+        log(f'  ⚠ venue photo credits unusable ({exc.__class__.__name__}: {exc}) — venue photos will not render')
+        return {}
+    out = {}
+    if isinstance(raw, dict):
+        for slug, c in raw.items():
+            if not isinstance(c, dict):
+                continue
+            author = (c.get('author') or '').strip()
+            if not author:
+                continue
+            out[slug] = {'author': author, 'authorUrl': (c.get('authorUrl') or '').strip()}
+    return out
+
+
 # ---------------------------------------------------------------------------
 # URLs + session aggregation
 # ---------------------------------------------------------------------------
@@ -169,7 +206,12 @@ VENUE_PAGE_STYLE = """<style>
     .detail-card .venue__links { margin: 1.1rem 0 0; }
     .venue__links a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .venue__links a:hover { text-decoration: underline; }
-    .venue__photo { width: 100%; max-width: 640px; aspect-ratio: 3 / 2; object-fit: cover; background: rgba(var(--ink-rgb),0.06); display: block; margin: 0 0 1.6rem; }
+    .venue__figure { margin: 0 0 1.6rem; max-width: 640px; }
+    .venue__photo { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: rgba(var(--ink-rgb),0.06); display: block; }
+    /* Google Places attribution (CAL-25): required beside every venue photo. */
+    .venue__credit { margin: 0.4rem 0 0; font-size: 0.74rem; color: rgba(var(--ink-rgb),0.55); }
+    .venue__credit a { color: rgba(var(--ink-rgb),0.62); text-decoration: none; }
+    .venue__credit a:hover { text-decoration: underline; }
     .venue__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); max-width: var(--measure); margin: 0 0 1rem; }
     /* CAL-13/CAL-21: the decision facts live in the sticky aside card. */
     .venue__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.2rem; margin: 0; }
@@ -190,7 +232,28 @@ def _paras(text):
     return '\n'.join(f'      <p>{_esc(b)}</p>' for b in blocks)
 
 
-def render_venue_page(v, session_rows, nav_prefix, site_url, now=None):
+def _has_credit(credit):
+    """True when we hold a usable Google contributor attribution for the photo.
+    The credit is OPTIONAL enrichment (CAL-25 shipped the photos before the
+    attributions were captured): when present it renders as a caption + schema
+    attribution; when absent the photo still shows, bare. Capture credits with
+    scripts/venue_photo_credits.py and commit img/venues/credits.json to backfill
+    them — no code change or re-sync needed, the render picks them up."""
+    return bool(credit and (credit.get('author') or '').strip())
+
+
+def _credit_caption(credit):
+    """The visible 'Photo: <author> · Google Maps' line. The author name links to
+    their Google contributor profile when we have one; the ' · Google Maps' names
+    the source either way."""
+    author = credit['author']
+    url = X._safe_ext_url(credit.get('authorUrl') or '')
+    who = (f'<a href="{_esc(url)}" target="_blank" rel="noopener nofollow">{_esc(author)}</a>'
+           if url else _esc(author))
+    return f'Photo: {who} · Google Maps'
+
+
+def render_venue_page(v, session_rows, nav_prefix, site_url, now=None, credit=None):
     now = X._now_utc(now)
     name = v['name']
     out = ['<section class="section section--light venue">', '  <div class="container">']
@@ -215,9 +278,13 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None):
 
     photo = X._safe_image_url(v.get('photo_url') or '')
     if photo:
+        out.append('    <figure class="venue__figure">')
         out.append(
-            f'    <img class="venue__photo" src="{_esc(photo)}" alt="{_esc(name)}" '
+            f'      <img class="venue__photo" src="{_esc(photo)}" alt="{_esc(name)}" '
             f'loading="lazy" decoding="async" referrerpolicy="no-referrer">')
+        if _has_credit(credit):
+            out.append(f'      <figcaption class="venue__credit">{_credit_caption(credit)}</figcaption>')
+        out.append('    </figure>')
 
     # The reading column always carries a paragraph: the curated description
     # when Daniel has written one, else an honest factual line — most of the
@@ -308,7 +375,7 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None):
     return '\n'.join(out)
 
 
-def place_schema(v, canonical_url, session_rows):
+def place_schema(v, canonical_url, session_rows, credit=None):
     """A Place for the venue (accurate — we don't assert we own the business).
     PostalAddress + hasMap; amenity flags surfaced when curated."""
     place = {
@@ -326,8 +393,18 @@ def place_schema(v, canonical_url, session_rows):
     mp = _map_link(v)
     if mp:
         place['hasMap'] = mp
+    # Mirror the visible page: an ImageObject carrying the Google contributor
+    # credit when we hold one, else the bare photo URL (still shown).
     photo = X._safe_image_url(v.get('photo_url') or '')
-    if photo:
+    if photo and _has_credit(credit):
+        img = {'@type': 'ImageObject', 'url': photo,
+               'creditText': f'{credit["author"]} via Google Maps',
+               'author': {'@type': 'Person', 'name': credit['author']}}
+        au = X._safe_ext_url(credit.get('authorUrl') or '')
+        if au:
+            img['author']['url'] = au
+        place['photo'] = img
+    elif photo:
         place['photo'] = photo
     if (v.get('description') or '').strip():
         place['description'] = ' '.join(v['description'].split())

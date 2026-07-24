@@ -959,6 +959,11 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
     shutil.rmtree(os.path.join(REPO, 'venue'), ignore_errors=True)
 
     print('\nGenerating venue pages...')
+    # Google Places photo attributions (CAL-25) — OPTIONAL enrichment. The photos
+    # shipped before the credits were captured; when img/venues/credits.json holds
+    # a slug's credit it renders as a caption + schema attribution, else the photo
+    # shows bare. Load the map once and pass each venue its own (may be None).
+    credit_by_slug = venues_lib.load_credits(REPO)
     built, sitemap_entries = [], []
     # Index a page only when it has a curated description or at least this
     # many upcoming sessions (CAL-SEO-1 doorway discipline).
@@ -982,6 +987,7 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
         canonical_url = venues_lib.venue_url(slug, SITE_URL)
         name = v['name']
         sessions = venues_lib.sessions_for(slug, cal_rows)
+        credit = credit_by_slug.get(slug)
 
         title = f'{html_mod.escape(name)} · Sound bath venue | {SITE_NAME}'
         where = ', '.join(x for x in (v.get('address'), v.get('city')) if x)
@@ -1000,7 +1006,7 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
 
         schema_json = (f'<script type="application/ld+json">\n'
                        f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
-        _place = venues_lib.place_schema(v, canonical_url, sessions)
+        _place = venues_lib.place_schema(v, canonical_url, sessions, credit)
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(_place)}\n  </script>')
         breadcrumb_schema = {
@@ -1017,7 +1023,7 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(breadcrumb_schema)}\n  </script>')
 
-        content = venues_lib.render_venue_page(v, sessions, nav_prefix, SITE_URL, now=now)
+        content = venues_lib.render_venue_page(v, sessions, nav_prefix, SITE_URL, now=now, credit=credit)
         page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
         page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
 
