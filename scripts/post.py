@@ -226,9 +226,37 @@ def post_facebook(manifest, page_id, token):
     return f'https://www.facebook.com/{post_id}', post_id
 
 
+def post_instagram_single(manifest, ig_user_id, token):
+    """A one-slide post (the quote card). A carousel needs >=2 children, so a
+    single image goes the plain /media -> media_publish path instead."""
+    slide = manifest['slides'][0]
+    res = _graph(f'{ig_user_id}/media', {
+        'image_url': slide['url'],
+        'caption': manifest['caption_instagram'],
+        'access_token': token,
+    }, method='POST')
+    creation_id = res.get('id')
+    if not creation_id:
+        raise PostError(f'no container id in response: {res}')
+    _await_container(creation_id, token, 'single image')
+
+    res = _graph(f'{ig_user_id}/media_publish', {
+        'creation_id': creation_id, 'access_token': token,
+    }, method='POST')
+    media_id = res.get('id')
+    if not media_id:
+        raise PostError(f'no media id in publish response: {res}')
+    permalink = _graph(media_id, {
+        'fields': 'permalink', 'access_token': token,
+    }).get('permalink', '')
+    return permalink, media_id
+
+
 def post_instagram(manifest, ig_user_id, token):
     """Child container per slide -> parent CAROUSEL container -> publish."""
     slides = manifest['slides']
+    if len(slides) == 1:
+        return post_instagram_single(manifest, ig_user_id, token)
     if not 2 <= len(slides) <= 10:
         raise PostError(f'Instagram carousels take 2-10 slides, got {len(slides)}')
 
@@ -284,11 +312,15 @@ def load_manifest(day, kind):
 def _preview(manifest):
     print(f'  date         {manifest["date"]} ({manifest["kind"]})')
     print(f'  palette      {manifest["palette"]}')
-    # Event manifests carry a session count; the practitioner one names a person.
+    # Event manifests carry a session count; the warm kinds name their subject.
     if 'event_count' in manifest:
         print(f'  sessions     {manifest["event_count"]}')
     if 'practitioner' in manifest:
         print(f'  practitioner {manifest["practitioner"]}')
+    if 'title' in manifest:
+        print(f'  essay        {manifest.get("essay", "")} — {manifest["title"]}')
+    if 'quote' in manifest:
+        print(f'  quote        “{manifest["quote"]}”')
     if 'photos_used' in manifest:
         print(f'  photos       {manifest["photos_used"]}/'
               f'{manifest["sessions_on_slides"]} slides with event images')
@@ -306,7 +338,8 @@ def _preview(manifest):
 def main():
     ap = argparse.ArgumentParser(description="Publish the day's social carousel.")
     ap.add_argument('--date', help='YYYY-MM-DD (default: today, Denver)')
-    ap.add_argument('--kind', choices=('daily', 'weekend', 'practitioner', 'auto'),
+    ap.add_argument('--kind', choices=('daily', 'weekend', 'practitioner',
+                                       'blog', 'quote', 'auto'),
                     default='auto')
     ap.add_argument('--live', action='store_true',
                     help='actually publish (default: dry run)')
