@@ -1,0 +1,17 @@
+/* Section headings match the what-to-expect question scale — this page is the
+   same kind of read: a short answer to a question someone actually has. */
+    .about-h2 {
+      font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin: 2.5rem 0 0.6rem;
+    }
+
+    .about-main p {
+      color: rgba(var(--ink-rgb), 0.74);
+      margin: 0 0 0.9rem;
+    }
+
+    .about-main .cal-summary {
+      color: rgba(var(--ink-rgb), 0.86);
+    }
