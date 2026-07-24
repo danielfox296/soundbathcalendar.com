@@ -33,6 +33,7 @@ that is safe to share — it reports on a token without ever printing it.)
 import getpass
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.parse
@@ -80,6 +81,24 @@ def main():
         print('Both the App Secret and the short-lived token are required.')
         return 2
 
+    # Shape check before spending a round trip. A Meta App Secret is exactly
+    # 32 lowercase hex characters. The overwhelmingly common mistake is
+    # grabbing the "Instagram app secret" off the Instagram use-case page, or
+    # copying the masked bullets without clicking Show first — both fail this.
+    if not re.fullmatch(r'[0-9a-f]{32}', secret):
+        print(f'That does not look like an App Secret '
+              f'({len(secret)} chars; expected 32 lowercase hex).\n')
+        print('  - It must come from App settings -> Basic -> App secret -> Show')
+        print('    (Meta re-prompts for your Facebook password to reveal it).')
+        print('  - It is NOT the "Instagram app secret" shown on the Instagram')
+        print('    use-case page. That is a different value and will be rejected.')
+        print('  - Clicking Show is required; copying the masked bullets fails.')
+        return 2
+    if not short.startswith('EAA'):
+        print(f'That does not look like a Graph access token '
+              f'(expected it to start with "EAA").')
+        return 2
+
     print(f'\nApp {app_id}, Graph {API_VERSION}\n')
 
     # 1. short-lived user token -> long-lived user token (~60 days)
@@ -91,8 +110,16 @@ def main():
     })
     if err:
         print(f'FAIL  exchange for a long-lived user token — {err}')
-        print('      Common causes: the App Secret is wrong, or the short')
-        print('      token was already used/expired (generate a fresh one).')
+        if 'client secret' in err.lower():
+            # Meta validates the secret before it even looks at the token, so
+            # this error never means the token is the problem.
+            print('\n      This is the App Secret specifically — the token is fine.')
+            print('      Take it from App settings -> Basic -> App secret -> Show,')
+            print('      NOT the "Instagram app secret" on the Instagram use-case')
+            print(f'      page. Check it belongs to app {app_id}.')
+        else:
+            print('      The short token may be expired — Explorer tokens are')
+            print('      short-lived. Generate a fresh one and re-run.')
         return 1
     user_token = long_lived.get('access_token', '')
     if not user_token:
