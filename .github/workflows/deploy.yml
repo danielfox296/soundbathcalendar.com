@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
     inputs:
       post_social:
-        description: 'Also publish the day card to Facebook + Instagram'
+        description: 'Also publish the day carousel to Facebook + Instagram'
         type: boolean
         default: false
 
