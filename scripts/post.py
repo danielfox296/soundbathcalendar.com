@@ -1,14 +1,14 @@
-"""Publish the day's social card to the Facebook Page and Instagram (CAL-25).
+"""Publish the day's social carousel to the Facebook Page and Instagram (CAL-25).
 
-Reads the manifest scripts/social.py wrote (img/social/<date>.json) and posts
-the card with its caption. DRY RUN BY DEFAULT — it prints exactly what would
-go out and touches nothing. Publishing requires --live.
+Reads the manifest scripts/social.py wrote and posts its slides as one
+carousel. DRY RUN BY DEFAULT — it prints exactly what would go out and
+touches nothing. Publishing requires --live.
 
     python3 scripts/post.py                      # dry run, today
-    python3 scripts/post.py --date 2026-08-02    # dry run, a specific day
+    python3 scripts/post.py --kind weekend       # dry run, the weekend post
     python3 scripts/post.py --live               # actually publish
 
-CREDENTIALS (env; all three needed for --live):
+CREDENTIALS (env; needed for --live):
     META_PAGE_ID      the Facebook Page's numeric id
     META_PAGE_TOKEN   a PAGE access token (see below)
     META_IG_USER_ID   the Instagram professional account's IG user id
@@ -34,10 +34,20 @@ to the Page). One secret, set once, no refresh machinery. Getting it:
 The app stays in Development mode and never needs App Review: it only ever
 touches accounts Daniel has a role on. Going Live is what triggers review.
 
-WHY INSTAGRAM NEEDS A PUBLIC URL: Meta cURLs the image at publish time rather
-than accepting bytes, and takes JPEG only. That is the entire reason the card
-is built into the Pages deploy and this script runs after it — see
---require-live-image, which refuses to publish an image the CDN cannot serve.
+HOW EACH SURFACE TAKES A MULTI-IMAGE POST — they are not symmetrical:
+
+  Instagram  a container per slide with is_carousel_item=true, then a parent
+             container with media_type=CAROUSEL and the children ids, then
+             publish the parent. 2-10 slides. The caption goes on the PARENT;
+             a caption on a child is silently dropped.
+  Facebook   each photo uploaded to /photos with published=false to get a
+             media id, then one /feed post with attached_media. Posting them
+             published=true instead would spray N separate photo posts.
+
+WHY INSTAGRAM NEEDS PUBLIC URLS: Meta cURLs each image at publish time rather
+than accepting bytes, and takes JPEG only. That is the entire reason the
+slides are built into the Pages deploy and this script runs after it — see
+--require-live-image.
 """
 import argparse
 import json
@@ -52,6 +62,7 @@ from datetime import datetime
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from _src.lib.sessions_feed import DENVER  # noqa: E402
+from scripts.social import kind_for  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -60,7 +71,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 API_VERSION = os.environ.get('META_API_VERSION', 'v21.0')
 GRAPH = f'https://graph.facebook.com/{API_VERSION}'
 
-HTTP_TIMEOUT_S = 30
+HTTP_TIMEOUT_S = 45
 IMAGE_POLL_TRIES = 20
 IMAGE_POLL_SLEEP_S = 15
 CONTAINER_POLL_TRIES = 12
@@ -74,9 +85,9 @@ class PostError(RuntimeError):
 # ---------- graph plumbing ----------
 
 def _graph(path, params, method='GET'):
-    """One Graph call. Raises PostError with Meta's own message on failure —
-    its error bodies name the actual problem (expired token, unpermitted
-    scope, unreachable media) far better than a status code does."""
+    """One Graph call. Raises PostError carrying Meta's own message — its
+    error bodies name the actual problem (expired token, unpermitted scope,
+    unreachable media) far better than a status code does."""
     url = f'{GRAPH}/{path.lstrip("/")}'
     data = urllib.parse.urlencode(params).encode()
     if method == 'GET':
@@ -101,21 +112,21 @@ def _graph(path, params, method='GET'):
 
 
 def wait_for_image(url, tries=IMAGE_POLL_TRIES, sleep_s=IMAGE_POLL_SLEEP_S):
-    """Block until the card is actually served as a JPEG.
+    """Block until a slide is actually served as a JPEG.
 
     deploy-pages returning success means the deployment is live, but the CDN
-    edge can lag it by a few seconds. Instagram does not retry a media fetch —
-    it just fails the container — so it is much cheaper to poll here than to
-    debug a 'media could not be downloaded' after the fact.
+    edge can lag it by a few seconds. Meta does not retry a media fetch — it
+    just fails the container — so polling here is far cheaper than debugging
+    a 'media could not be downloaded' after the fact.
     """
+    last = 'no attempt made'
     for attempt in range(1, tries + 1):
         try:
             req = urllib.request.Request(url, method='HEAD')
             with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT_S) as resp:
                 ctype = resp.headers.get('content-type', '')
                 if resp.status == 200 and 'image/jpeg' in ctype:
-                    print(f'  image live ({ctype}) after {attempt} check(s)')
-                    return
+                    return attempt
                 last = f'status {resp.status}, content-type {ctype!r}'
         except urllib.error.HTTPError as exc:
             last = f'status {exc.code}'
@@ -123,49 +134,81 @@ def wait_for_image(url, tries=IMAGE_POLL_TRIES, sleep_s=IMAGE_POLL_SLEEP_S):
             last = str(exc.reason)
         if attempt < tries:
             time.sleep(sleep_s)
-    raise PostError(f'card never became publicly readable at {url} — {last}')
+    raise PostError(f'slide never became publicly readable at {url} — {last}')
 
 
-# ---------- the two surfaces ----------
-
-def post_facebook(manifest, page_id, token):
-    """Photo + caption in one call. `url` is the same public card Instagram
-    will fetch, so the two posts can never drift apart."""
-    res = _graph(f'{page_id}/photos', {
-        'url': manifest['image_url'],
-        'caption': manifest['caption_facebook'],
-        'access_token': token,
-    }, method='POST')
-    post_id = res.get('post_id') or res.get('id')
-    return f'https://www.facebook.com/{post_id}', post_id
-
-
-def post_instagram(manifest, ig_user_id, token):
-    """Two-step publish: build a media container, wait for it to finish, then
-    publish it. The wait matters — publishing an IN_PROGRESS container is the
-    single most common cause of a silent no-post."""
-    container = _graph(f'{ig_user_id}/media', {
-        'image_url': manifest['image_url'],
-        'caption': manifest['caption_instagram'],
-        'access_token': token,
-    }, method='POST')
-    creation_id = container.get('id')
-    if not creation_id:
-        raise PostError(f'no container id in response: {container}')
-
+def _await_container(creation_id, token, label):
+    """Poll a media container to FINISHED. Publishing an IN_PROGRESS container
+    is the single most common cause of a silent no-post."""
     for attempt in range(1, CONTAINER_POLL_TRIES + 1):
         status = _graph(creation_id, {
             'fields': 'status_code,status', 'access_token': token,
         })
         code = status.get('status_code')
         if code == 'FINISHED':
-            break
+            return
         if code == 'ERROR':
-            raise PostError(f'container failed: {status.get("status", code)}')
+            raise PostError(f'{label} container failed: {status.get("status", code)}')
         if attempt == CONTAINER_POLL_TRIES:
-            raise PostError(f'container stuck at {code} after '
+            raise PostError(f'{label} container stuck at {code} after '
                             f'{CONTAINER_POLL_TRIES} checks')
         time.sleep(CONTAINER_POLL_SLEEP_S)
+
+
+# ---------- the two surfaces ----------
+
+def post_facebook(manifest, page_id, token):
+    """Upload each slide unpublished, then one feed post with attached_media."""
+    media_ids = []
+    for i, slide in enumerate(manifest['slides'], start=1):
+        res = _graph(f'{page_id}/photos', {
+            'url': slide['url'], 'published': 'false', 'access_token': token,
+        }, method='POST')
+        ident = res.get('id')
+        if not ident:
+            raise PostError(f'slide {i}: no photo id in response: {res}')
+        media_ids.append(ident)
+
+    params = {'message': manifest['caption_facebook'], 'access_token': token}
+    for i, ident in enumerate(media_ids):
+        params[f'attached_media[{i}]'] = json.dumps({'media_fbid': ident})
+    res = _graph(f'{page_id}/feed', params, method='POST')
+    post_id = res.get('id')
+    if not post_id:
+        raise PostError(f'no post id in feed response: {res}')
+    return f'https://www.facebook.com/{post_id}', post_id
+
+
+def post_instagram(manifest, ig_user_id, token):
+    """Child container per slide -> parent CAROUSEL container -> publish."""
+    slides = manifest['slides']
+    if not 2 <= len(slides) <= 10:
+        raise PostError(f'Instagram carousels take 2-10 slides, got {len(slides)}')
+
+    children = []
+    for i, slide in enumerate(slides, start=1):
+        res = _graph(f'{ig_user_id}/media', {
+            'image_url': slide['url'],
+            'is_carousel_item': 'true',
+            'access_token': token,
+        }, method='POST')
+        ident = res.get('id')
+        if not ident:
+            raise PostError(f'slide {i}: no container id in response: {res}')
+        _await_container(ident, token, f'slide {i}')
+        children.append(ident)
+
+    parent = _graph(f'{ig_user_id}/media', {
+        'media_type': 'CAROUSEL',
+        'children': ','.join(children),
+        # The caption belongs on the PARENT — one set on a child is dropped.
+        'caption': manifest['caption_instagram'],
+        'access_token': token,
+    }, method='POST')
+    creation_id = parent.get('id')
+    if not creation_id:
+        raise PostError(f'no carousel container id in response: {parent}')
+    _await_container(creation_id, token, 'carousel')
 
     res = _graph(f'{ig_user_id}/media_publish', {
         'creation_id': creation_id, 'access_token': token,
@@ -181,8 +224,9 @@ def post_instagram(manifest, ig_user_id, token):
 
 # ---------- driver ----------
 
-def load_manifest(day):
-    path = os.path.join(ROOT, 'img', 'social', f'{day}.json')
+def load_manifest(day, kind):
+    name = f'{day}-weekend.json' if kind == 'weekend' else f'{day}.json'
+    path = os.path.join(ROOT, 'img', 'social', name)
     if not os.path.exists(path):
         return None
     with open(path, encoding='utf-8') as fh:
@@ -190,11 +234,15 @@ def load_manifest(day):
 
 
 def _preview(manifest):
-    print(f'  date         {manifest["date"]}')
-    print(f'  image        {manifest["image_url"]}')
-    print(f'  sessions     {manifest["event_count"]} '
-          f'({manifest["shown_on_card"]} on the card)')
-    print(f'  cities       {", ".join(manifest["cities"]) or "—"}')
+    print(f'  date         {manifest["date"]} ({manifest["kind"]})')
+    print(f'  palette      {manifest["palette"]}')
+    print(f'  sessions     {manifest["event_count"]}')
+    if 'photos_used' in manifest:
+        print(f'  photos       {manifest["photos_used"]}/'
+              f'{manifest["sessions_on_slides"]} slides with event images')
+    print(f'  slides       {len(manifest["slides"])}')
+    for i, slide in enumerate(manifest['slides'], start=1):
+        print(f'    {i:>2}  {slide["url"]}')
     for label, key in (('facebook', 'caption_facebook'),
                        ('instagram', 'caption_instagram')):
         print(f'\n  --- {label} caption ---')
@@ -204,36 +252,40 @@ def _preview(manifest):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Publish the day's social card.")
+    ap = argparse.ArgumentParser(description="Publish the day's social carousel.")
     ap.add_argument('--date', help='YYYY-MM-DD (default: today, Denver)')
+    ap.add_argument('--kind', choices=('daily', 'weekend', 'auto'), default='auto')
     ap.add_argument('--live', action='store_true',
                     help='actually publish (default: dry run)')
     ap.add_argument('--require-live-image', action='store_true',
-                    help='poll the public image URL before publishing')
+                    help='poll every slide URL before publishing')
     ap.add_argument('--allow-stale-date', action='store_true',
                     help="publish a day that isn't today (default: refuse)")
     ap.add_argument('--skip-facebook', action='store_true')
     ap.add_argument('--skip-instagram', action='store_true')
     args = ap.parse_args()
 
-    today = datetime.now(DENVER).date().isoformat()
-    day = args.date or today
+    today = datetime.now(DENVER).date()
+    day = args.date or today.isoformat()
+    kind = args.kind
+    if kind == 'auto':
+        kind = kind_for(datetime.strptime(day, '%Y-%m-%d').date())
 
-    manifest = load_manifest(day)
+    manifest = load_manifest(day, kind)
     if manifest is None:
         # Not an error. social.py writes nothing for a day with no approved
         # sessions, and silence beats posting "nothing on tonight".
-        print(f'no card for {day} — nothing to post')
+        print(f'no {kind} card for {day} — nothing to post')
         return 0
 
-    print(f'{"PUBLISH" if args.live else "DRY RUN"} — {day}')
+    print(f'{"PUBLISH" if args.live else "DRY RUN"} — {day} ({kind})')
     _preview(manifest)
 
     if not args.live:
         print('dry run — nothing published. Pass --live to post.')
         return 0
 
-    if day != today and not args.allow_stale_date:
+    if day != today.isoformat() and not args.allow_stale_date:
         # Guards the obvious footgun: re-running an old workflow and blasting
         # a day that has already happened.
         raise SystemExit(f'refusing to publish {day} on {today} — '
@@ -247,7 +299,9 @@ def main():
                          'META_IG_USER_ID must be set to publish')
 
     if args.require_live_image:
-        wait_for_image(manifest['image_url'])
+        for i, slide in enumerate(manifest['slides'], start=1):
+            tries = wait_for_image(slide['url'])
+            print(f'  slide {i:>2} live after {tries} check(s)')
 
     # Each surface is attempted independently and failures are collected, so
     # an Instagram problem never costs the Facebook post (or the other way).

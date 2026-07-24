@@ -62,16 +62,22 @@ jobs:
       - name: Build site
         run: python3 build.py
 
-      # The daily social card (CAL-25). Pillow is the ONE non-stdlib
+      # The day's social carousel (CAL-25). Pillow is the ONE non-stdlib
       # dependency in this workflow and only this step needs it. Runs after
       # build.py so it reads the same freshly-fetched feed cache the site did.
-      # Three days, not one: Meta ingests its own copy of the image at publish
-      # time, so a card only has to be reachable during the post — rendering a
-      # short buffer just means a retried or manual post still finds one.
-      - name: Render social cards
+      #
+      # Today only: Meta ingests its own copy of every slide at publish time,
+      # so the slides only have to be reachable during the post itself. The
+      # kind is picked from the weekday — Thursday renders the Fri/Sat/Sun
+      # weekend carousel instead of a daily one.
+      #
+      # This step fetches operator event images over the network. Every fetch
+      # failure degrades to a type-only slide inside social.py rather than
+      # raising, so a dead operator CDN can never fail a site deploy.
+      - name: Render social carousel
         run: |
           python3 -m pip install --quiet --disable-pip-version-check Pillow
-          python3 scripts/social.py --days 3
+          python3 scripts/social.py
 
       - name: Stage site
         run: |
@@ -98,11 +104,10 @@ jobs:
       - name: Ping IndexNow (changed URLs only)
         run: python3 scripts/indexnow.py --baseline /tmp/live-sitemap.xml
 
-      # Publish the day's card to the Facebook Page + Instagram (CAL-25).
-      # AFTER the Pages deploy on purpose: Instagram cURLs the image rather
-      # than accepting bytes, so the card has to be live first —
-      # --require-live-image polls the public URL and refuses to publish until
-      # it serves a JPEG.
+      # Publish the day's carousel to the Facebook Page + Instagram (CAL-25).
+      # AFTER the Pages deploy on purpose: Meta cURLs each slide rather than
+      # accepting bytes, so they have to be live first — --require-live-image
+      # polls every slide URL and refuses to publish until each serves a JPEG.
       #
       # Only on the daily cron, or a manual run that explicitly ticks the box.
       # The repository_dispatch trigger fires on EVERY event approval, and
@@ -112,7 +117,7 @@ jobs:
       # passes), so this can merge before the Meta app exists. A red step here
       # means the token died or Meta rejected the post — that failure mail is
       # the whole monitoring story for this job.
-      - name: Post the day card to Meta
+      - name: Post the day carousel to Meta
         if: github.event_name == 'schedule' || inputs.post_social
         env:
           META_PAGE_ID: ${{ secrets.META_PAGE_ID }}
