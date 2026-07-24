@@ -124,7 +124,10 @@
         "slug": "sacred-society"
       },
       "operator_url": "https://www.sacredsociety.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Ray Ringsel",
+        "slug": "ray-ringsel"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.sacredsociety.com/offerings/sound-baths",
@@ -194,7 +197,10 @@
         "slug": "singing-bowls-of-the-rockies"
       },
       "operator_url": "https://www.singingbowlsoftherockies.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Gigi Martins",
+        "slug": "gigi-martins"
+      },
       "price": "$39",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/return-to-self-sound-bath-tea-circle-tickets-1992077334934",
@@ -262,7 +268,10 @@
         "slug": "colorful-sound-vibrations"
       },
       "operator_url": "https://www.eventbrite.com/o/121383640027",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Chavon",
+        "slug": "chavon"
+      },
       "price": "Free",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/community-sound-bath-tickets-1993478398553",
@@ -297,7 +306,10 @@
         "slug": "elise-nicole"
       },
       "operator_url": "https://caminomassage.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Elise Nicole Kirkpatrick",
+        "slug": "elise-nicole-kirkpatrick"
+      },
       "price": "$45",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/floating-sound-bath-elise-nicole-tickets-1991992401897",
@@ -311,39 +323,6 @@
       "venue_ref": {
         "name": "Camino Massage Therapy",
         "slug": "camino-massage-therapy"
-      },
-      "venue_url": ""
-    },
-    {
-      "address": "2855 Folsom St, Boulder, CO 80304",
-      "city": "Boulder",
-      "confidence": 0.6,
-      "dedup_key": "wednesday meditation|2026-07-22|unity of boulder spiritual center",
-      "description": "A weekly guided meditation with a sound bath component (crystal and Tibetan singing bowls, native flute or chanting) led by Norma at Unity of Boulder, Wednesday July 22 at 7:00 PM. Free.",
-      "facilitator": "Norma",
-      "first_seen_at": "2026-07-21T10:35:19-06:00",
-      "image_url": "https://unityofboulder.com/wp-content/uploads/2023/09/Med-with-Norma-Wide.jpg",
-      "name": "Wednesday Meditation",
-      "neighborhood": null,
-      "note": "",
-      "operator": "Unity of Boulder Spiritual Community",
-      "operator_ref": {
-        "name": "Unity of Boulder Spiritual Community",
-        "slug": "unity-of-boulder-spiritual-community"
-      },
-      "operator_url": "https://unityofboulder.com/events/wednesday-meditation/",
-      "practitioner": null,
-      "price": "Free (donations appreciated)",
-      "rejection_note": null,
-      "source_url": "https://unityofboulder.com/events/wednesday-meditation/",
-      "starts_at": "2026-07-22T19:00:00-06:00",
-      "status": "approved",
-      "tags": [],
-      "ticket_url": "",
-      "venue": "Unity of Boulder Spiritual Center",
-      "venue_ref": {
-        "name": "Unity of Boulder Spiritual Center",
-        "slug": "unity-of-boulder-spiritual-center"
       },
       "venue_url": ""
     },
@@ -379,6 +358,42 @@
       "venue_ref": {
         "name": "The Living Room",
         "slug": "the-living-room"
+      },
+      "venue_url": ""
+    },
+    {
+      "address": "2855 Folsom St, Boulder, CO 80304",
+      "city": "Boulder",
+      "confidence": 0.6,
+      "dedup_key": "wednesday meditation|2026-07-22|unity of boulder spiritual center",
+      "description": "A weekly guided meditation with a sound bath component (crystal and Tibetan singing bowls, native flute or chanting) led by Norma at Unity of Boulder, Wednesday July 22 at 7:00 PM. Free.",
+      "facilitator": "Norma",
+      "first_seen_at": "2026-07-21T10:35:19-06:00",
+      "image_url": "https://unityofboulder.com/wp-content/uploads/2023/09/Med-with-Norma-Wide.jpg",
+      "name": "Wednesday Meditation",
+      "neighborhood": null,
+      "note": "",
+      "operator": "Unity of Boulder Spiritual Community",
+      "operator_ref": {
+        "name": "Unity of Boulder Spiritual Community",
+        "slug": "unity-of-boulder-spiritual-community"
+      },
+      "operator_url": "https://unityofboulder.com/events/wednesday-meditation/",
+      "practitioner": {
+        "name": "Norma Groverland",
+        "slug": "norma-groverland"
+      },
+      "price": "Free (donations appreciated)",
+      "rejection_note": null,
+      "source_url": "https://unityofboulder.com/events/wednesday-meditation/",
+      "starts_at": "2026-07-22T19:00:00-06:00",
+      "status": "approved",
+      "tags": [],
+      "ticket_url": "",
+      "venue": "Unity of Boulder Spiritual Center",
+      "venue_ref": {
+        "name": "Unity of Boulder Spiritual Center",
+        "slug": "unity-of-boulder-spiritual-center"
       },
       "venue_url": ""
     },
@@ -448,8 +463,8 @@
       "ticket_url": "https://www.eventbrite.com/e/thursday-mind-body-reset-gong-journey-tickets-1994098983740",
       "venue": "Rocky Mountain Restore & Stretch LLC",
       "venue_ref": {
-        "name": "Rocky Mountain Restore & Stretch LLC",
-        "slug": "rocky-mountain-restore-stretch-llc"
+        "name": "Rocky Mountain Restore & Stretch",
+        "slug": "rocky-mountain-restore-stretch"
       },
       "venue_url": ""
     },
@@ -507,7 +522,10 @@
         "slug": "sacred-society"
       },
       "operator_url": "https://www.sacredsociety.com/offerings/sound-baths",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Christina Epps",
+        "slug": "christina-epps"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://momence.com/s/139248318",
@@ -519,42 +537,6 @@
       "venue_ref": {
         "name": "Sacred Society",
         "slug": "sacred-society"
-      },
-      "venue_url": ""
-    },
-    {
-      "address": "425 Massachusetts Avenue, Berthoud, CO 80513",
-      "city": "Fort Collins",
-      "confidence": 0.85,
-      "dedup_key": "friday recharge a restorative sound journey|2026-07-24|wildfire arts center",
-      "description": "A restorative sound journey with Annmarie of ResoundingWell at Wildfire Arts Center in Fort Collins, Friday evening.",
-      "facilitator": "Annmarie",
-      "first_seen_at": "2026-07-19T12:59:03-06:00",
-      "image_url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F927826293%2F1458112394913%2F1%2Foriginal.20250105-040912?crop=focalpoint&fit=crop&w=940&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.507575757576&fp-y=0.33853354894&s=64ef09bd6e1cb743442c0e0b30d99c11",
-      "name": "Friday Recharge: A Restorative Sound Journey",
-      "neighborhood": null,
-      "note": "",
-      "operator": "Annmarie of ResoundingWell",
-      "operator_ref": {
-        "name": "Annmarie of ResoundingWell",
-        "slug": "annmarie-of-resoundingwell"
-      },
-      "operator_url": "https://resoundingwell.com",
-      "practitioner": null,
-      "price": "",
-      "rejection_note": null,
-      "source_url": "https://www.eventbrite.com/e/friday-recharge-a-restorative-sound-journey-tickets-1992404310928",
-      "starts_at": "2026-07-24T18:30:00-06:00",
-      "status": "approved",
-      "tags": [
-        "sound bath",
-        "gong"
-      ],
-      "ticket_url": "https://www.eventbrite.com/e/friday-recharge-a-restorative-sound-journey-tickets-1992404310928",
-      "venue": "Wildfire Arts Center",
-      "venue_ref": {
-        "name": "Wildfire Arts Center",
-        "slug": "wildfire-arts-center"
       },
       "venue_url": ""
     },
@@ -576,7 +558,10 @@
         "slug": "singing-bowls-of-the-rockies"
       },
       "operator_url": "https://www.singingbowlsoftherockies.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Megan Odom",
+        "slug": "megan-odom"
+      },
       "price": "$45",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/reiki-sound-bath-feat-megan-odom-tickets-1990238643358",
@@ -593,6 +578,45 @@
         "slug": "singing-bowls-of-the-rockies"
       },
       "venue_url": ""
+    },
+    {
+      "address": "425 Massachusetts Avenue, Berthoud, CO 80513",
+      "city": "Fort Collins",
+      "confidence": 0.85,
+      "dedup_key": "friday recharge a restorative sound journey|2026-07-24|wildfire arts center",
+      "description": "A restorative sound journey with Annmarie of ResoundingWell at Wildfire Arts Center in Fort Collins, Friday evening.",
+      "facilitator": "Annmarie",
+      "first_seen_at": "2026-07-19T12:59:03-06:00",
+      "image_url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F927826293%2F1458112394913%2F1%2Foriginal.20250105-040912?crop=focalpoint&fit=crop&w=940&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.507575757576&fp-y=0.33853354894&s=64ef09bd6e1cb743442c0e0b30d99c11",
+      "name": "Friday Recharge: A Restorative Sound Journey",
+      "neighborhood": null,
+      "note": "",
+      "operator": "Annmarie of ResoundingWell",
+      "operator_ref": {
+        "name": "Annmarie of ResoundingWell",
+        "slug": "annmarie-of-resoundingwell"
+      },
+      "operator_url": "https://resoundingwell.com",
+      "practitioner": {
+        "name": "Annmarie Fore",
+        "slug": "annmarie-fore"
+      },
+      "price": "",
+      "rejection_note": null,
+      "source_url": "https://www.eventbrite.com/e/friday-recharge-a-restorative-sound-journey-tickets-1992404310928",
+      "starts_at": "2026-07-24T18:30:00-06:00",
+      "status": "approved",
+      "tags": [
+        "sound bath",
+        "gong"
+      ],
+      "ticket_url": "https://www.eventbrite.com/e/friday-recharge-a-restorative-sound-journey-tickets-1992404310928",
+      "venue": "Wildfire Arts Center",
+      "venue_ref": {
+        "name": "Wildfire Arts Center",
+        "slug": "wildfire-arts-center"
+      },
+      "venue_url": "http://www.wildfirearts.org/"
     },
     {
       "address": "1760 S Broadway, Denver, CO 80210",
@@ -681,7 +705,10 @@
         "slug": "kochun-ra"
       },
       "operator_url": "https://www.eventbrite.com/o/16623167298",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Kochun-Ra",
+        "slug": "kochun-ra"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/45-minute-reset-sound-movement-breath-laughter-tickets-1993978325849",
@@ -706,7 +733,7 @@
       "description": "An outdoor gathering combining a sound bath, medicine wheel, and nature reflection, led by Sharay Fay.",
       "facilitator": "Sharay Fay",
       "first_seen_at": "2026-07-21T10:35:19-06:00",
-      "image_url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1121785743%2F1415215040793%2F1%2Foriginal.20250911-233753?crop=focalpoint&fit=crop&w=940&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.5&fp-y=0.5&s=f3b9bc9d2654a496ad03f3c8c3ab6c94",
+      "image_url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1121785743%2F1415215040793%2F1%2Foriginal.20250911-233753?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=f3b9bc9d2654a496ad03f3c8c3ab6c94",
       "name": "Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections",
       "neighborhood": null,
       "note": "",
@@ -716,7 +743,10 @@
         "slug": "soul-light-llc"
       },
       "operator_url": "https://msha.ke/soullightllc",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Sharay Fay",
+        "slug": "sharay"
+      },
       "price": "$35-$50",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-tickets-1689648747889",
@@ -819,7 +849,10 @@
         "slug": "5-star-salt-caves-wellness-center"
       },
       "operator_url": "https://5starsaltcaves.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Ann Martin",
+        "slug": "ann-martin"
+      },
       "price": "$60",
       "rejection_note": null,
       "source_url": "https://milehighhealingvibe.com/events",
@@ -844,7 +877,7 @@
       "description": "A sound bath framed as a rest ritual at Sacred Society in Denver, Sunday morning.",
       "facilitator": "Deborah Green",
       "first_seen_at": "2026-07-19T12:59:42-06:00",
-      "image_url": "",
+      "image_url": "https://www.sacredsociety.com/og.jpg",
       "name": "Sound Bath: Sacred Rest Ritual",
       "neighborhood": "Highlands",
       "note": "",
@@ -854,7 +887,10 @@
         "slug": "sacred-society"
       },
       "operator_url": "https://www.sacredsociety.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Deborah Green",
+        "slug": "deborah-green"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.sacredsociety.com/offerings/sound-baths",
@@ -889,7 +925,10 @@
         "slug": "camdazco-farm"
       },
       "operator_url": "https://www.camdazcofarm.com/",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Joy Childress",
+        "slug": "joy-childress"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/cosmic-yoga-and-sound-bath-for-a-summer-shift-tickets-1993201502349",
@@ -961,7 +1000,10 @@
         "slug": "the-denver-village"
       },
       "operator_url": "https://www.thedenvervillage.com/events-workshop",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Shelby Moor",
+        "slug": "shelby-moor"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/buck-moon-sound-bath-tickets-1977297110886",
@@ -997,7 +1039,10 @@
         "slug": "resoundingwell"
       },
       "operator_url": "https://resoundingwell.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Annmarie Fore",
+        "slug": "annmarie-fore"
+      },
       "price": "Donation",
       "rejection_note": null,
       "source_url": "https://resoundingwell.com/events",
@@ -1009,6 +1054,44 @@
       "venue_ref": {
         "name": "Old Canal Park",
         "slug": "old-canal-park"
+      },
+      "venue_url": ""
+    },
+    {
+      "address": "8025 US-24, Cascade, CO 80809",
+      "city": "Colorado Springs",
+      "confidence": 0.8,
+      "dedup_key": "dreamtime journeys a shamanic sound journey experience|2026-07-27|soulshines yoga studio healing arts",
+      "description": "A shamanic-style sound journey at Soulshines Yoga Studio & Healing Arts in Colorado Springs, hosted by the Universal Metaphysics group, Monday evening; $40.",
+      "facilitator": "John ThunderHeart Robinson and Thomas Janecek",
+      "first_seen_at": "2026-07-19T12:58:42-06:00",
+      "image_url": "https://secure.meetupstatic.com/photos/event/e/a/3/4/600_527819956.jpeg",
+      "name": "Dreamtime Journeys: A Shamanic Sound Journey Experience",
+      "neighborhood": null,
+      "note": "",
+      "operator": "Universal Metaphysics Meetup Group",
+      "operator_ref": {
+        "name": "Universal Metaphysics Meetup Group",
+        "slug": "universal-metaphysics-meetup-group"
+      },
+      "operator_url": "https://universalmetaphysics.org/",
+      "practitioner": {
+        "name": "John ThunderHeart Robinson",
+        "slug": "john-thunderheart-robinson"
+      },
+      "price": "$40",
+      "rejection_note": null,
+      "source_url": "https://www.meetup.com/universalmetaphysics/events/315684291/",
+      "starts_at": "2026-07-27T19:00:00-06:00",
+      "status": "approved",
+      "tags": [
+        "meditation+sound"
+      ],
+      "ticket_url": "https://www.meetup.com/universalmetaphysics/events/315684291/",
+      "venue": "Soulshines Yoga Studio & Healing Arts",
+      "venue_ref": {
+        "name": "Soulshines Yoga Studio & Healing Arts",
+        "slug": "soulshines-yoga-studio-healing-arts"
       },
       "venue_url": ""
     },
@@ -1049,41 +1132,6 @@
       "venue_url": ""
     },
     {
-      "address": "8025 US-24, Cascade, CO 80809",
-      "city": "Colorado Springs",
-      "confidence": 0.8,
-      "dedup_key": "dreamtime journeys a shamanic sound journey experience|2026-07-27|soulshines yoga studio healing arts",
-      "description": "A shamanic-style sound journey at Soulshines Yoga Studio & Healing Arts in Colorado Springs, hosted by the Universal Metaphysics group, Monday evening; $40.",
-      "facilitator": "John ThunderHeart Robinson and Thomas Janecek",
-      "first_seen_at": "2026-07-19T12:58:42-06:00",
-      "image_url": "https://secure.meetupstatic.com/photos/event/e/a/3/4/600_527819956.jpeg",
-      "name": "Dreamtime Journeys: A Shamanic Sound Journey Experience",
-      "neighborhood": null,
-      "note": "",
-      "operator": "Universal Metaphysics Meetup Group",
-      "operator_ref": {
-        "name": "Universal Metaphysics Meetup Group",
-        "slug": "universal-metaphysics-meetup-group"
-      },
-      "operator_url": "https://universalmetaphysics.org/",
-      "practitioner": null,
-      "price": "$40",
-      "rejection_note": null,
-      "source_url": "https://www.meetup.com/universalmetaphysics/events/315684291/",
-      "starts_at": "2026-07-27T19:00:00-06:00",
-      "status": "approved",
-      "tags": [
-        "meditation+sound"
-      ],
-      "ticket_url": "https://www.meetup.com/universalmetaphysics/events/315684291/",
-      "venue": "Soulshines Yoga Studio & Healing Arts",
-      "venue_ref": {
-        "name": "Soulshines Yoga Studio & Healing Arts",
-        "slug": "soulshines-yoga-studio-healing-arts"
-      },
-      "venue_url": ""
-    },
-    {
       "address": "7960 Niwot Road, Suite B-12, Longmont, CO 80503",
       "city": "Boulder",
       "confidence": 0.55,
@@ -1101,7 +1149,10 @@
         "slug": "una-vida-meditation-movement"
       },
       "operator_url": "https://www.unavidaniwot.com/",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Beth Naumann",
+        "slug": "beth-naumann"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.unavidaniwot.com/",
@@ -1136,7 +1187,10 @@
         "slug": "denver-botanic-gardens"
       },
       "operator_url": "https://www.botanicgardens.org/programs/singing-bowls-gardens",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Ann Martin",
+        "slug": "ann-martin"
+      },
       "price": "$25",
       "rejection_note": null,
       "source_url": "https://tickets.botanicgardens.org/events/e492c0f2-f809-468c-0220-f900957a8dec",
@@ -1151,7 +1205,7 @@
         "name": "Denver Botanic Gardens, Mitchell Hall",
         "slug": "denver-botanic-gardens-mitchell-hall"
       },
-      "venue_url": ""
+      "venue_url": "https://www.botanicgardens.org/programs/singing-bowls-gardens"
     },
     {
       "address": "2246 Irving Street, Denver, CO 80211",
@@ -1171,7 +1225,10 @@
         "slug": "vialet-b-rayne"
       },
       "operator_url": "https://www.vialetrayne.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Vialet B Rayne",
+        "slug": "vialet-b-rayne"
+      },
       "price": "$70",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/sound-immersion-with-the-harmonic-quintessence-hg-tickets-1990289025051",
@@ -1187,7 +1244,7 @@
         "name": "Merritt Wellness",
         "slug": "merritt-wellness"
       },
-      "venue_url": ""
+      "venue_url": "https://www.merrittwellness.net"
     },
     {
       "address": "3616 Soderburg Dr, Fort Collins, CO 80526",
@@ -1227,41 +1284,6 @@
       "venue_url": ""
     },
     {
-      "address": "193 W South Boulder Rd, Lafayette, CO 80026",
-      "city": "Boulder",
-      "confidence": 0.8,
-      "dedup_key": "feng shui sound bath children creativity joy|2026-07-29|firiel skin care",
-      "description": "A feng-shui-themed sound bath presented by The Oracle Collective at Firiel Skin Care in Boulder, Wednesday evening.",
-      "facilitator": "Courtnee Ghosh",
-      "first_seen_at": "2026-07-19T12:58:37-06:00",
-      "image_url": "https://secure.meetupstatic.com/photos/event/8/5/2/3/600_534934083.jpeg",
-      "name": "Feng Shui Sound Bath: Children, Creativity & Joy",
-      "neighborhood": null,
-      "note": "",
-      "operator": "The Oracle Collective",
-      "operator_ref": {
-        "name": "The Oracle Collective",
-        "slug": "the-oracle-collective"
-      },
-      "operator_url": "https://www.theoracle-collective.com",
-      "practitioner": null,
-      "price": "",
-      "rejection_note": null,
-      "source_url": "https://www.meetup.com/the-oracle-collective-meetup-group/events/315433099/",
-      "starts_at": "2026-07-29T19:00:00-06:00",
-      "status": "approved",
-      "tags": [
-        "sound bath"
-      ],
-      "ticket_url": "https://www.theoracle-collective.com/event-details-registration/7-29-feng-shui-sound-bath-children-creativity-joy",
-      "venue": "Firiel Skin Care",
-      "venue_ref": {
-        "name": "Firiel Skin Care",
-        "slug": "firiel-skin-care"
-      },
-      "venue_url": ""
-    },
-    {
       "address": "2855 Folsom St, Boulder, CO 80304",
       "city": "Boulder",
       "confidence": 0.6,
@@ -1279,7 +1301,10 @@
         "slug": "unity-of-boulder-spiritual-community"
       },
       "operator_url": "https://unityofboulder.com/events/wednesday-meditation/",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Norma Groverland",
+        "slug": "norma-groverland"
+      },
       "price": "Free (donations appreciated)",
       "rejection_note": null,
       "source_url": "https://unityofboulder.com/events/wednesday-meditation/",
@@ -1331,6 +1356,44 @@
       "venue_url": ""
     },
     {
+      "address": "193 W South Boulder Rd, Lafayette, CO 80026",
+      "city": "Lafayette",
+      "confidence": 0.8,
+      "dedup_key": "feng shui sound bath children creativity joy|2026-07-29|firiel skin care",
+      "description": "A feng-shui-themed sound bath presented by The Oracle Collective at Firiel Skin Care in Boulder, Wednesday evening.",
+      "facilitator": "Courtnee Ghosh",
+      "first_seen_at": "2026-07-19T12:58:37-06:00",
+      "image_url": "https://secure.meetupstatic.com/photos/event/8/5/2/3/600_534934083.jpeg",
+      "name": "Feng Shui Sound Bath: Children, Creativity & Joy",
+      "neighborhood": null,
+      "note": "",
+      "operator": "The Oracle Collective",
+      "operator_ref": {
+        "name": "The Oracle Collective",
+        "slug": "the-oracle-collective"
+      },
+      "operator_url": "https://www.theoracle-collective.com",
+      "practitioner": {
+        "name": "Courtnee Ghosh",
+        "slug": "courtnee-ghosh"
+      },
+      "price": "",
+      "rejection_note": null,
+      "source_url": "https://www.meetup.com/the-oracle-collective-meetup-group/events/315433099/",
+      "starts_at": "2026-07-29T19:00:00-06:00",
+      "status": "approved",
+      "tags": [
+        "sound bath"
+      ],
+      "ticket_url": "https://www.theoracle-collective.com/event-details-registration/7-29-feng-shui-sound-bath-children-creativity-joy",
+      "venue": "Firiel Skin Care",
+      "venue_ref": {
+        "name": "Firiel Skin Care",
+        "slug": "firiel-skin-care"
+      },
+      "venue_url": ""
+    },
+    {
       "address": "4633 East Colfax Avenue, Denver, CO 80220",
       "city": "Denver",
       "confidence": 0.6,
@@ -1348,7 +1411,10 @@
         "slug": "liminal-lemonade"
       },
       "operator_url": "https://www.liminallemonade.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Cyndi Ortiz",
+        "slug": "cyndi-ortiz"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/candlelight-sound-bath-tickets-1982925649998",
@@ -1383,7 +1449,10 @@
         "slug": "revive-wellness"
       },
       "operator_url": "https://www.revivewellnesscolorado.com/",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Amanda Rose",
+        "slug": "amanda-rose"
+      },
       "price": "Donation",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/full-moon-sound-bath-tickets-1993611581908",
@@ -1431,8 +1500,8 @@
       "ticket_url": "https://www.eventbrite.com/e/thursday-mind-body-reset-gong-journey-tickets-1994098983740",
       "venue": "Rocky Mountain Restore & Stretch LLC",
       "venue_ref": {
-        "name": "Rocky Mountain Restore & Stretch LLC",
-        "slug": "rocky-mountain-restore-stretch-llc"
+        "name": "Rocky Mountain Restore & Stretch",
+        "slug": "rocky-mountain-restore-stretch"
       },
       "venue_url": ""
     },
@@ -1454,7 +1523,10 @@
         "slug": "zach-miller"
       },
       "operator_url": "https://www.soundwavesacrament.com/",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Zach Miller",
+        "slug": "zach-miller"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/relaxing-soundbath-at-the-seedlings-dome-tickets-1993353836986",
@@ -1489,7 +1561,10 @@
         "slug": "pavanjeet"
       },
       "operator_url": "https://www.pavanjeet.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Pavanjeet",
+        "slug": "pavanjeet"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/full-moon-meditation-six-gong-relaxation-tickets-1989019606185",
@@ -1526,7 +1601,10 @@
         "slug": "sacred-society"
       },
       "operator_url": "https://www.sacredsociety.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Christina Epps",
+        "slug": "christina-epps"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.sacredsociety.com/offerings/sound-baths",
@@ -1632,7 +1710,10 @@
         "slug": "singing-bowls-of-the-rockies"
       },
       "operator_url": "https://www.singingbowlsoftherockies.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Gigi Martins",
+        "slug": "gigi-martins"
+      },
       "price": "$39",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/vagus-nerve-activation-sound-bath-reconnect-with-inner-peace-tickets-1992093067992",
@@ -1667,7 +1748,10 @@
         "slug": "dr-adrian-voss"
       },
       "operator_url": "https://intuitivesounds.org/",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Adrian Voss",
+        "slug": "adrian-voss"
+      },
       "price": "Free",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/psychic-sound-bath-wash-park-tickets-1994519064212",
@@ -1700,7 +1784,10 @@
         "slug": "norabell-dechant"
       },
       "operator_url": "https://www.pursuitofvitality.com/",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Norabell Dechant",
+        "slug": "norabell-dechant"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/sacred-roots-gathering-sound-bath-tickets-1992732656017",
@@ -1714,43 +1801,6 @@
       "venue_ref": {
         "name": "Verdant Nature Creations",
         "slug": "verdant-nature-creations"
-      },
-      "venue_url": ""
-    },
-    {
-      "address": "",
-      "city": "Boulder",
-      "confidence": 0.6,
-      "dedup_key": "kundalini in the park|2026-08-02|north boulder park",
-      "description": "An outdoor kundalini and sound session led by Pavanjeet at North Boulder Park, Sunday morning; donation-based.",
-      "facilitator": "Pavanjeet",
-      "first_seen_at": "2026-07-19T12:58:37-06:00",
-      "image_url": "http://static1.squarespace.com/static/54e612e0e4b0fbb3ebf7262b/t/683cde636708fc15e1a08843/1748819555879/parkclassedit.jpg?format=1500w",
-      "name": "Kundalini in the Park",
-      "neighborhood": null,
-      "note": "",
-      "operator": "Pavanjeet",
-      "operator_ref": {
-        "name": "Pavanjeet",
-        "slug": "pavanjeet"
-      },
-      "operator_url": "https://www.pavanjeet.com",
-      "practitioner": null,
-      "price": "Donation",
-      "rejection_note": null,
-      "source_url": "https://www.pavanjeet.com/inthepark",
-      "starts_at": "2026-08-02T09:00:00-06:00",
-      "status": "approved",
-      "tags": [
-        "yoga+sound",
-        "gong",
-        "breathwork+sound"
-      ],
-      "ticket_url": "",
-      "venue": "North Boulder Park",
-      "venue_ref": {
-        "name": "North Boulder Park",
-        "slug": "north-boulder-park"
       },
       "venue_url": ""
     },
@@ -1772,7 +1822,10 @@
         "slug": "sacred-society"
       },
       "operator_url": "https://www.sacredsociety.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Brookelin Barnhill",
+        "slug": "brookelin-barnhill"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.sacredsociety.com/offerings/sound-baths",
@@ -1787,6 +1840,46 @@
       "venue_ref": {
         "name": "Sacred Society",
         "slug": "sacred-society"
+      },
+      "venue_url": ""
+    },
+    {
+      "address": "",
+      "city": "Boulder",
+      "confidence": 0.6,
+      "dedup_key": "kundalini in the park|2026-08-02|north boulder park",
+      "description": "An outdoor kundalini and sound session led by Pavanjeet at North Boulder Park, Sunday morning; donation-based.",
+      "facilitator": "Pavanjeet",
+      "first_seen_at": "2026-07-19T12:58:37-06:00",
+      "image_url": "http://static1.squarespace.com/static/54e612e0e4b0fbb3ebf7262b/t/683cde636708fc15e1a08843/1748819555879/parkclassedit.jpg?format=1500w",
+      "name": "Kundalini in the Park",
+      "neighborhood": null,
+      "note": "",
+      "operator": "Pavanjeet",
+      "operator_ref": {
+        "name": "Pavanjeet",
+        "slug": "pavanjeet"
+      },
+      "operator_url": "https://www.pavanjeet.com",
+      "practitioner": {
+        "name": "Pavanjeet",
+        "slug": "pavanjeet"
+      },
+      "price": "Donation",
+      "rejection_note": null,
+      "source_url": "https://www.pavanjeet.com/inthepark",
+      "starts_at": "2026-08-02T09:00:00-06:00",
+      "status": "approved",
+      "tags": [
+        "yoga+sound",
+        "gong",
+        "breathwork+sound"
+      ],
+      "ticket_url": "",
+      "venue": "North Boulder Park",
+      "venue_ref": {
+        "name": "North Boulder Park",
+        "slug": "north-boulder-park"
       },
       "venue_url": ""
     },
@@ -1820,8 +1913,8 @@
       "ticket_url": "https://www.eventbrite.com/e/sundays-of-sound-mind-body-reset-gong-journey-tickets-1994581267263",
       "venue": "Rocky Mountain Restore & Stretch LLC",
       "venue_ref": {
-        "name": "Rocky Mountain Restore & Stretch LLC",
-        "slug": "rocky-mountain-restore-stretch-llc"
+        "name": "Rocky Mountain Restore & Stretch",
+        "slug": "rocky-mountain-restore-stretch"
       },
       "venue_url": ""
     },
@@ -1869,7 +1962,7 @@
       "description": "An acupuncture-detox and sound bath journey facilitated by Terri Slezak at North Of Ordinary Collective in Boulder, Sunday August 2 at 1:00 PM. Sliding scale $27–$44.",
       "facilitator": "Terri Slezak",
       "first_seen_at": "2026-07-21T10:35:19-06:00",
-      "image_url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1189098051%2F162273044203%2F1%2Foriginal.20260717-205704?crop=focalpoint&fit=crop&w=940&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.5&fp-y=0.5&s=e0bd785debea4721b96e52e08265ef81",
+      "image_url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1189098051%2F162273044203%2F1%2Foriginal.20260717-205704?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=e0bd785debea4721b96e52e08265ef81",
       "name": "AcuDetox & Sound Bath Journey Experience",
       "neighborhood": null,
       "note": "",
@@ -1879,7 +1972,10 @@
         "slug": "terri-slezak"
       },
       "operator_url": "https://www.instagram.com/territheparadox/",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Terri Slezak",
+        "slug": "terri-slezak"
+      },
       "price": "$27–$44 sliding scale",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/acudetox-sound-bath-journey-experience-tickets-1994511598883",
@@ -1912,7 +2008,10 @@
         "slug": "kathy-sietos"
       },
       "operator_url": "https://www.greenlightreiki.com/",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Kathy Sietos",
+        "slug": "kathy-sietos"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/energy-healing-sound-bath-immersion-tickets-1979113678288",
@@ -1947,7 +2046,10 @@
         "slug": "singing-bowls-of-the-rockies"
       },
       "operator_url": "https://www.singingbowlsoftherockies.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Gigi Martins",
+        "slug": "gigi-martins"
+      },
       "price": "$39",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/self-care-sunday-sound-bath-a-path-to-wellness-and-peace-tickets-1994143363481",
@@ -1982,7 +2084,10 @@
         "slug": "annmarie-of-resoundingwell"
       },
       "operator_url": "https://resoundingwell.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Annmarie Fore",
+        "slug": "annmarie-fore"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/harvesting-intentions-a-sound-journey-into-gratitude-tickets-1993952865697",
@@ -2018,7 +2123,10 @@
         "slug": "colorado-psychedelic-church"
       },
       "operator_url": "https://www.coloradopsychedelicchurch.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Oracle Richard",
+        "slug": "oracle-richard"
+      },
       "price": "Donation",
       "rejection_note": null,
       "source_url": "https://www.meetup.com/coloradopsychedelicchurch/events/315679656/",
@@ -2053,7 +2161,10 @@
         "slug": "singing-bowls-of-the-rockies"
       },
       "operator_url": "https://www.singingbowlsoftherockies.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Danielle Grace",
+        "slug": "danielle-grace"
+      },
       "price": "$45",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/somatic-breathwork-sound-bath-tickets-1994143672405",
@@ -2161,7 +2272,10 @@
         "slug": "unity-of-boulder-spiritual-community"
       },
       "operator_url": "https://unityofboulder.com/events/wednesday-meditation/",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Norma Groverland",
+        "slug": "norma-groverland"
+      },
       "price": "Free (donations appreciated)",
       "rejection_note": null,
       "source_url": "https://unityofboulder.com/events/wednesday-meditation/",
@@ -2206,8 +2320,8 @@
       "ticket_url": "https://www.eventbrite.com/e/thursday-mind-body-reset-gong-journey-tickets-1994098983740",
       "venue": "Rocky Mountain Restore & Stretch LLC",
       "venue_ref": {
-        "name": "Rocky Mountain Restore & Stretch LLC",
-        "slug": "rocky-mountain-restore-stretch-llc"
+        "name": "Rocky Mountain Restore & Stretch",
+        "slug": "rocky-mountain-restore-stretch"
       },
       "venue_url": ""
     },
@@ -2229,7 +2343,10 @@
         "slug": "una-vida-meditation-movement-laura-riehman"
       },
       "operator_url": "https://www.unavidaniwot.com/",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Laura Riehman",
+        "slug": "laura-riehman"
+      },
       "price": "$25–40",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/sound-bath-ceremony-tickets-1993974556575",
@@ -2264,7 +2381,10 @@
         "slug": "discover-your-spiritual-gifts"
       },
       "operator_url": "https://discoveryourspiritualgifts.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Vialet B Rayne",
+        "slug": "vialet-b-rayne"
+      },
       "price": "$40",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/sacred-sound-bath-dawn-stratton-vialet-rayne-tickets-1993143495850",
@@ -2278,39 +2398,6 @@
       "venue_ref": {
         "name": "Discover Your Spiritual Gifts",
         "slug": "discover-your-spiritual-gifts"
-      },
-      "venue_url": ""
-    },
-    {
-      "address": "2503 & 2513 Elmira St, Aurora, CO 80010",
-      "city": "Denver",
-      "confidence": 0.8,
-      "dedup_key": "coregulation sound bath|2026-08-07|the denver village",
-      "description": "A partner co-regulation sound bath using crystal singing bowls at The Denver Village in Aurora, Friday August 7 from 6:00-7:00 PM.",
-      "facilitator": "",
-      "first_seen_at": "2026-07-21T10:35:19-06:00",
-      "image_url": "https://images.squarespace-cdn.com/content/v1/661980168a4a1d082549c6b0/1764796815449-E1R3KVLG1RAUECW8U2EE/instruments+photo+caley+gardens.jpg",
-      "name": "Co-Regulation Sound Bath",
-      "neighborhood": null,
-      "note": "",
-      "operator": "The Denver Village",
-      "operator_ref": {
-        "name": "The Denver Village",
-        "slug": "the-denver-village"
-      },
-      "operator_url": "https://www.thedenvervillage.com/events-workshop",
-      "practitioner": null,
-      "price": "",
-      "rejection_note": null,
-      "source_url": "https://www.thedenvervillage.com/events-workshop/midweek-harmony-reset-sound-bath-effrw-hg9jg-xd2gg-bdrap-xecmp-hbzp6-4ltln-j9y36-jww6r-js8b5-8pswt-rtfnb-ft2ph-t36z9",
-      "starts_at": "2026-08-07T18:00:00-06:00",
-      "status": "approved",
-      "tags": [],
-      "ticket_url": "https://www.thedenvervillage.com/events-workshop/midweek-harmony-reset-sound-bath-effrw-hg9jg-xd2gg-bdrap-xecmp-hbzp6-4ltln-j9y36-jww6r-js8b5-8pswt-rtfnb-ft2ph-t36z9",
-      "venue": "The Denver Village",
-      "venue_ref": {
-        "name": "The Denver Village",
-        "slug": "the-denver-village"
       },
       "venue_url": ""
     },
@@ -2350,6 +2437,39 @@
       "venue_url": "https://www.harmonistsanctuary.org"
     },
     {
+      "address": "2503 & 2513 Elmira St, Aurora, CO 80010",
+      "city": "Denver",
+      "confidence": 0.8,
+      "dedup_key": "coregulation sound bath|2026-08-07|the denver village",
+      "description": "A partner co-regulation sound bath using crystal singing bowls at The Denver Village in Aurora, Friday August 7 from 6:00-7:00 PM.",
+      "facilitator": "",
+      "first_seen_at": "2026-07-21T10:35:19-06:00",
+      "image_url": "https://images.squarespace-cdn.com/content/v1/661980168a4a1d082549c6b0/1764796815449-E1R3KVLG1RAUECW8U2EE/instruments+photo+caley+gardens.jpg",
+      "name": "Co-Regulation Sound Bath",
+      "neighborhood": null,
+      "note": "",
+      "operator": "The Denver Village",
+      "operator_ref": {
+        "name": "The Denver Village",
+        "slug": "the-denver-village"
+      },
+      "operator_url": "https://www.thedenvervillage.com/events-workshop",
+      "practitioner": null,
+      "price": "",
+      "rejection_note": null,
+      "source_url": "https://www.thedenvervillage.com/events-workshop/midweek-harmony-reset-sound-bath-effrw-hg9jg-xd2gg-bdrap-xecmp-hbzp6-4ltln-j9y36-jww6r-js8b5-8pswt-rtfnb-ft2ph-t36z9",
+      "starts_at": "2026-08-07T18:00:00-06:00",
+      "status": "approved",
+      "tags": [],
+      "ticket_url": "https://www.thedenvervillage.com/events-workshop/midweek-harmony-reset-sound-bath-effrw-hg9jg-xd2gg-bdrap-xecmp-hbzp6-4ltln-j9y36-jww6r-js8b5-8pswt-rtfnb-ft2ph-t36z9",
+      "venue": "The Denver Village",
+      "venue_ref": {
+        "name": "The Denver Village",
+        "slug": "the-denver-village"
+      },
+      "venue_url": ""
+    },
+    {
       "address": "7500 E. Arapahoe Road, Suite 208, Centennial, CO 80112",
       "city": "Denver",
       "confidence": 1,
@@ -2367,7 +2487,10 @@
         "slug": "discover-your-spiritual-gifts"
       },
       "operator_url": "https://discoveryourspiritualgifts.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Vialet B Rayne",
+        "slug": "vialet-b-rayne"
+      },
       "price": "$40",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-tickets-1636336469429",
@@ -2403,7 +2526,10 @@
         "slug": "singing-bowls-of-the-rockies"
       },
       "operator_url": "https://www.singingbowlsoftherockies.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Gigi Martins",
+        "slug": "gigi-martins"
+      },
       "price": "$39",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/chakra-cleansing-sound-bath-tickets-1994144139803",
@@ -2438,7 +2564,10 @@
         "slug": "lauren-salz"
       },
       "operator_url": "https://www.eventbrite.com/o/90940014013",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Alana Basamanowicz",
+        "slug": "alana-basamanowicz"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/sound-bath-a-sacred-start-to-the-school-year-tickets-1990594499734",
@@ -2473,7 +2602,10 @@
         "slug": "citrine-unlimited-llc"
       },
       "operator_url": "https://www.citrineunlimited.com/",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Sage Love",
+        "slug": "sage-love"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/second-saturday-sound-bath-meditation-community-circle-tickets-1983554117762",
@@ -2509,7 +2641,10 @@
         "slug": "singing-bowls-of-the-rockies"
       },
       "operator_url": "https://www.singingbowlsoftherockies.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Gigi Martins",
+        "slug": "gigi-martins"
+      },
       "price": "$39",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/lions-gate-portal-sound-bath-tickets-1994144613219",
@@ -2529,7 +2664,7 @@
     },
     {
       "address": "5350 DTC Parkway, Greenwood Village, CO 80111",
-      "city": "Denver",
+      "city": "Greenwood Village",
       "confidence": 0.65,
       "dedup_key": "vibrations of peace gong bath sound immersion|2026-08-09|mile high mindfulness",
       "description": "A gong bath and sound immersion led by Meg Munster with Mile High Mindfulness in Denver, Sunday afternoon.",
@@ -2545,7 +2680,10 @@
         "slug": "mile-high-mindfulness"
       },
       "operator_url": "",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Meg Munster",
+        "slug": "meg-munster"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/vibrations-of-peace-gong-bath-sound-immersion-tickets-815845514897",
@@ -2581,7 +2719,10 @@
         "slug": "una-vida-meditation-movement"
       },
       "operator_url": "https://www.unavidaniwot.com/",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Beth Naumann",
+        "slug": "beth-naumann"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.unavidaniwot.com/",
@@ -2616,7 +2757,10 @@
         "slug": "pavanjeet"
       },
       "operator_url": "https://www.pavanjeet.com",
-      "practitioner": null,
+      "practitioner": {
+        "name": "Pavanjeet",
+        "slug": "pavanjeet"
+      },
       "price": "",
       "rejection_note": null,
       "source_url": "https://www.eventbrite.com/e/solar-eclipse-sunset-gong-bath-tickets-1993167940966",
@@ -2635,5 +2779,5 @@
       "venue_url": ""
     }
   ],
-  "generated_at": "2026-07-22T19:07:36.835Z"
+  "generated_at": "2026-07-24T21:04:11.436Z"
 }

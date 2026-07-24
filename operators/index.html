@@ -10,7 +10,11 @@
   <meta name="robots" content="index, follow">
   <title>Organizers | Sound Bath Calendar</title>
   <meta name="description" content="The collectives and studios running sound baths across Denver and the Colorado Front Range: who they are, and where to catch them next.">
-  <meta name="theme-color" content="#F5F7FA">
+  <!-- CAL-UX-11: paired theme-colors so mobile browser chrome follows the
+       scheme instead of fighting it — light = --paper, dark = the CAL-14
+       dark ground (#101216, styles.css dark flip). -->
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F5F7FA">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101216">
 
   <!-- RSS feed discovery (CAL-05). Root feed by default; city pages override
        https://soundbathcalendar.com/feed.xml with their own region feed. -->
@@ -38,10 +42,7 @@
   "@type": "Organization",
   "name": "Sound Bath Calendar",
   "url": "https://soundbathcalendar.com",
-  "sameAs": [
-    "https://thefirstwater.co"
-  ],
-  "description": "A curated, weekly-updated calendar of sound baths across Denver and the Front Range: Boulder, Fort Collins, and Colorado Springs. Every room worth knowing.",
+  "description": "A curated, weekly-updated calendar of sound baths across Denver and the Front Range: Boulder, Fort Collins, and Colorado Springs. Every sound bath worth knowing.",
   "areaServed": {
     "@type": "AdministrativeArea",
     "name": "Denver metro and the Colorado Front Range"
@@ -52,6 +53,10 @@
     "sound healing",
     "breathwork with sound",
     "guided meditation with sound"
+  ],
+  "sameAs": [
+    "https://www.instagram.com/soundbathcalendar/",
+    "https://www.facebook.com/profile.php?id=61592057895510"
   ]
 }
   </script>
@@ -345,7 +350,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=8d326f4b">
+  <link rel="stylesheet" href="../styles.css?v=414fe5b7">
   
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -378,14 +383,19 @@
 </head>
 <body>
   <header class="masthead">
+  <!-- CAL-UX-11: first focusable on every page — invisible until keyboard
+       focus, then a solid ink-on-paper pill (well above the muted-ink floor).
+       Targets #main in the base layout. -->
+  <a class="skip-link" href="#main">Skip to the calendar</a>
   <div class="container masthead-inner">
     <a href="../" class="wordmark">Sound Bath Calendar</a>
-    <nav class="masthead-cities" aria-label="Calendar navigation">
+    <nav class="masthead-cities" aria-label="Primary navigation">
       <a href="../denver/">Denver</a>
       <a href="../boulder/">Boulder</a>
       <a href="../fort-collins/">Fort Collins</a>
       <a href="../colorado-springs/">Colorado Springs</a>
       <a href="../map/">Map</a>
+      <a href="../learn/">Learn</a>
     </nav>
     <!-- Slim digest capture: inline form on wide screens, an anchor link down
          to the full form on small ones. Same Formspree seam as the main form. -->
@@ -400,7 +410,10 @@
   </div>
 </header>
 
-  <main>
+  <!-- CAL-UX-11: #main is the skip link's target (masthead partial).
+       tabindex="-1" so fragment navigation reliably moves focus into the
+       landmark; no visible ring (the focus-visible rule scopes to controls). -->
+  <main id="main" tabindex="-1">
   <section class="section section--light operators">
   <div class="container">
     <nav class="dir-crumbs" aria-label="Breadcrumb">
@@ -418,12 +431,12 @@
       <a class="dir-card" href="../operator/camdazco-farm/"><span class="dir-card__media" data-monogram="C" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188201273%2F181484102815%2F1%2Foriginal.20260704-134936?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.503&amp;fp-y=0.46&amp;s=0ac649700b95c139aca49c6d016d5b2d" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Camdazco Farm</span><span class="dir-card__meta">1 upcoming</span></a>
       <a class="dir-card" href="../operator/citrine-unlimited-llc/"><span class="dir-card__media" data-monogram="C" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1177955237%2F178255149259%2F1%2Foriginal.20260219-175815?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=f4e26275c6eb6c46fc96f8155192e20d" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Citrine Unlimited LLC</span><span class="dir-card__meta">1 upcoming</span></a>
       <a class="dir-card" href="../operator/colorado-psychedelic-church/"><span class="dir-card__media" data-monogram="C" aria-hidden="true"><img src="https://secure.meetupstatic.com/photos/event/7/5/1/5/600_534989973.jpeg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Colorado Psychedelic Church</span><span class="dir-card__meta">1 upcoming</span></a>
-      <a class="dir-card" href="../operator/colorful-sound-vibrations/"><span class="dir-card__media" data-monogram="C" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1185167628%2F41374558650%2F1%2Foriginal.20260521-202636?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.52&amp;fp-y=0.771&amp;s=570dee5a036894bc1649730048f89af6" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Colorful Sound Vibrations</span><span class="dir-card__meta">1 upcoming</span></a>
+      <a class="dir-card" href="../operator/colorful-sound-vibrations/"><span class="dir-card__media dir-card__media--ph" data-monogram="C" aria-hidden="true"></span><span class="dir-card__name">Colorful Sound Vibrations</span><span class="dir-card__meta">Organizer</span></a>
       <a class="dir-card" href="../operator/denver-botanic-gardens/"><span class="dir-card__media dir-card__media--ph" data-monogram="D" aria-hidden="true"></span><span class="dir-card__name">Denver Botanic Gardens</span><span class="dir-card__meta">1 upcoming</span></a>
       <a class="dir-card" href="../operator/denver-sound-bath-collective/"><span class="dir-card__media" data-monogram="D" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1186895672%2F68448586439%2F1%2Foriginal.20260615-005704?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=436920a6237389e510a11fffe2eb1094" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Denver Sound Bath Collective</span><span class="dir-card__meta">1 upcoming</span></a>
       <a class="dir-card" href="../operator/discover-your-spiritual-gifts/"><span class="dir-card__media" data-monogram="D" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188160149%2F214699472161%2F1%2Foriginal.20260703-151835?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.748&amp;fp-y=0.527&amp;s=c5a5dd34f618d51b8931bc134c8cec27" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Discover Your Spiritual Gifts</span><span class="dir-card__meta">2 upcoming</span></a>
       <a class="dir-card" href="../operator/dr-adrian-voss/"><span class="dir-card__media" data-monogram="D" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1189179907%2F2997668619628%2F1%2Foriginal.20260719-225321?w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;s=e800e6555deba7e97451f24abbfe5e9a" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Dr. Adrian Voss</span><span class="dir-card__meta">1 upcoming</span></a>
-      <a class="dir-card" href="../operator/elise-nicole/"><span class="dir-card__media" data-monogram="E" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1187032162%2F362102452485%2F1%2Foriginal.20260616-145844?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=826d362a6dd40f4bf081d9243427625f" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Elise Nicole</span><span class="dir-card__meta">1 upcoming</span></a>
+      <a class="dir-card" href="../operator/elise-nicole/"><span class="dir-card__media dir-card__media--ph" data-monogram="E" aria-hidden="true"></span><span class="dir-card__name">Elise Nicole</span><span class="dir-card__meta">Organizer</span></a>
       <a class="dir-card" href="../operator/essential-wellness-society-of-colorado/"><span class="dir-card__media" data-monogram="E" aria-hidden="true"><img src="https://secure.meetupstatic.com/photos/event/e/8/a/2/600_534299554.jpeg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Essential Wellness Society of Colorado</span><span class="dir-card__meta">1 upcoming</span></a>
       <a class="dir-card" href="../operator/izabelle-sweet/"><span class="dir-card__media" data-monogram="I" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1186895672%2F68448586439%2F1%2Foriginal.20260615-005704?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=436920a6237389e510a11fffe2eb1094" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">IzaBelle Sweet</span><span class="dir-card__meta">1 upcoming</span></a>
       <a class="dir-card" href="../operator/karma-yoga-center/"><span class="dir-card__media dir-card__media--ph" data-monogram="K" aria-hidden="true"></span><span class="dir-card__name">Karma Yoga Center</span><span class="dir-card__meta">1 upcoming</span></a>
@@ -436,15 +449,15 @@
       <a class="dir-card" href="../operator/pavanjeet/"><span class="dir-card__media" data-monogram="P" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1184030067%2F232943210601%2F1%2Foriginal.20260507-154404?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.498&amp;fp-y=0.421&amp;s=fca436183d536357b87cb58433aea8ec" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Pavanjeet</span><span class="dir-card__meta">3 upcoming</span></a>
       <a class="dir-card" href="../operator/resoundingwell/"><span class="dir-card__media" data-monogram="R" aria-hidden="true"><img src="https://img1.wsimg.com/isteam/ip/3e9a6958-4ca3-44ee-8e8e-b80ffe67c099/61-IMG_9257.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">ResoundingWell</span><span class="dir-card__meta">1 upcoming</span></a>
       <a class="dir-card" href="../operator/revive-wellness/"><span class="dir-card__media" data-monogram="R" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1046637953%2F1103626744413%2F1%2Foriginal.20250605-144301?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=3fa8eb2b05dcf90709635dabb1afc1c0" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Revive wellness</span><span class="dir-card__meta">1 upcoming</span></a>
-      <a class="dir-card" href="../operator/rocky-mountain-restore-stretch/"><span class="dir-card__media" data-monogram="R" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1185765802%2F732979952313%2F1%2Foriginal.20260530-155609?crop=focalpoint&amp;fit=crop&amp;w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=e3407899097eb98a34c983af0aaaffaa" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Rocky Mountain Restore &amp; Stretch</span><span class="dir-card__meta">5 upcoming</span></a>
-      <a class="dir-card" href="../operator/sacred-society/"><span class="dir-card__media dir-card__media--ph" data-monogram="S" aria-hidden="true"></span><span class="dir-card__name">Sacred Society</span><span class="dir-card__meta">2 upcoming</span></a>
+      <a class="dir-card" href="../operator/rocky-mountain-restore-stretch/"><span class="dir-card__media" data-monogram="R" aria-hidden="true"><img src="https://static.wixstatic.com/media/37af73_c07b9d90685a4dad8ff8447bdc0a6f8c~mv2.png/v1/fill/w_940,h_788,al_c/37af73_c07b9d90685a4dad8ff8447bdc0a6f8c~mv2.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Rocky Mountain Restore &amp; Stretch</span><span class="dir-card__meta">4 upcoming</span></a>
+      <a class="dir-card" href="../operator/sacred-society/"><span class="dir-card__media" data-monogram="S" aria-hidden="true"><img src="https://www.sacredsociety.com/og.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Sacred Society</span><span class="dir-card__meta">2 upcoming</span></a>
       <a class="dir-card" href="../operator/singing-bowls-of-the-rockies/"><span class="dir-card__media" data-monogram="S" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1185279528%2F365104895489%2F1%2Foriginal.20260523-155148?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=dd42c630821e82f5269729ec8b4bdd09" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Singing Bowls of the Rockies</span><span class="dir-card__meta">8 upcoming</span></a>
       <a class="dir-card" href="../operator/soul-growth-network/"><span class="dir-card__media" data-monogram="S" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1176232293%2F1717123237503%2F1%2Foriginal.20260130-041610?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.518&amp;fp-y=0.222&amp;s=e8a8bd97733bca403872b7643c66cebb" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Soul Growth Network</span><span class="dir-card__meta">3 upcoming</span></a>
-      <a class="dir-card" href="../operator/soul-light-llc/"><span class="dir-card__media" data-monogram="S" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1121785743%2F1415215040793%2F1%2Foriginal.20250911-233753?crop=focalpoint&amp;amp;fit=crop&amp;amp;w=940&amp;amp;auto=format%2Ccompress&amp;amp;q=75&amp;amp;sharp=10&amp;amp;fp-x=0.5&amp;amp;fp-y=0.5&amp;amp;s=f3b9bc9d2654a496ad03f3c8c3ab6c94" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Soul Light, LLC</span><span class="dir-card__meta">1 upcoming</span></a>
-      <a class="dir-card" href="../operator/sound-murals/"><span class="dir-card__media" data-monogram="S" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1184954631%2F885379362523%2F1%2Foriginal.20260519-155448?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.504&amp;fp-y=0.419&amp;s=19d0390ecf9df5444e1dbcc7222b5eed" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Sound Murals</span><span class="dir-card__meta">1 upcoming</span></a>
-      <a class="dir-card" href="../operator/terri-slezak/"><span class="dir-card__media" data-monogram="T" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1189098051%2F162273044203%2F1%2Foriginal.20260717-205704?crop=focalpoint&amp;amp;fit=crop&amp;amp;w=940&amp;amp;auto=format%2Ccompress&amp;amp;q=75&amp;amp;sharp=10&amp;amp;fp-x=0.5&amp;amp;fp-y=0.5&amp;amp;s=e0bd785debea4721b96e52e08265ef81" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Terri Slezak</span><span class="dir-card__meta">1 upcoming</span></a>
-      <a class="dir-card" href="../operator/the-denver-village/"><span class="dir-card__media" data-monogram="T" aria-hidden="true"><img src="https://images.squarespace-cdn.com/content/v1/661980168a4a1d082549c6b0/1764796815449-E1R3KVLG1RAUECW8U2EE/instruments+photo+caley+gardens.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">The Denver Village</span><span class="dir-card__meta">3 upcoming</span></a>
-      <a class="dir-card" href="../operator/the-living-room-fort-collins/"><span class="dir-card__media" data-monogram="T" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1187746188%2F3004593821062%2F1%2Foriginal.20260626-234312?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=5d4a6803104a87e879b3f60f869af76d" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">The Living Room Fort Collins</span><span class="dir-card__meta">1 upcoming</span></a>
+      <a class="dir-card" href="../operator/soul-light-llc/"><span class="dir-card__media" data-monogram="S" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1121785743%2F1415215040793%2F1%2Foriginal.20250911-233753?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=f3b9bc9d2654a496ad03f3c8c3ab6c94" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Soul Light, LLC</span><span class="dir-card__meta">1 upcoming</span></a>
+      <a class="dir-card" href="../operator/sound-murals/"><span class="dir-card__media dir-card__media--ph" data-monogram="S" aria-hidden="true"></span><span class="dir-card__name">Sound Murals</span><span class="dir-card__meta">Organizer</span></a>
+      <a class="dir-card" href="../operator/terri-slezak/"><span class="dir-card__media" data-monogram="T" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1189098051%2F162273044203%2F1%2Foriginal.20260717-205704?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=e0bd785debea4721b96e52e08265ef81" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Terri Slezak</span><span class="dir-card__meta">1 upcoming</span></a>
+      <a class="dir-card" href="../operator/the-denver-village/"><span class="dir-card__media" data-monogram="T" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1172534889%2F572711759515%2F1%2Foriginal.20251208-164621?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=0a693f10700db3db98ac16fe85db6e3a" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">The Denver Village</span><span class="dir-card__meta">2 upcoming</span></a>
+      <a class="dir-card" href="../operator/the-living-room-fort-collins/"><span class="dir-card__media dir-card__media--ph" data-monogram="T" aria-hidden="true"></span><span class="dir-card__name">The Living Room Fort Collins</span><span class="dir-card__meta">Organizer</span></a>
       <a class="dir-card" href="../operator/the-oracle-collective/"><span class="dir-card__media" data-monogram="T" aria-hidden="true"><img src="https://secure.meetupstatic.com/photos/event/8/5/2/3/600_534934083.jpeg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">The Oracle Collective</span><span class="dir-card__meta">1 upcoming</span></a>
       <a class="dir-card" href="../operator/think-positive-club/"><span class="dir-card__media" data-monogram="T" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188806489%2F724080710653%2F1%2Foriginal.20260714-034211?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.454&amp;fp-y=0.169&amp;s=891f3db767f78c53c359ca72e831b3fd" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Think Positive Club</span><span class="dir-card__meta">1 upcoming</span></a>
       <a class="dir-card" href="../operator/una-vida-meditation-movement/"><span class="dir-card__media" data-monogram="U" aria-hidden="true"><img src="https://static1.squarespace.com/static/611f0a9cbabebd01212ff5b3/t/614915bced8271425779a1a7/1632179644657/Untitled+design.png?format=1500w" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Una Vida Meditation &amp; Movement</span><span class="dir-card__meta">1 upcoming</span></a>
@@ -465,6 +478,24 @@
         <a href="../" class="footer-wordmark">Sound Bath Calendar</a>
         <p class="footer-tag">Every sound bath on the Colorado Front Range —
         Denver, Boulder, Fort Collins, Colorado Springs — kept current every week.</p>
+        <ul class="footer-social" aria-label="Sound Bath Calendar on social media">
+          <li>
+            <a href="https://www.instagram.com/soundbathcalendar/" rel="me noopener"
+               target="_blank" aria-label="Sound Bath Calendar on Instagram">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/profile.php?id=61592057895510" rel="me noopener"
+               target="_blank" aria-label="Sound Bath Calendar on Facebook">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
       </div>
       <nav class="footer-col" aria-label="Calendar">
         <span class="footer-col__h">Calendar</span>
@@ -481,6 +512,7 @@
         <a href="../venues/">Venues</a>
         <a href="../operators/">Organizers</a>
         <a href="../state-of-sound-healing/">State of the scene</a>
+        <a href="../submit/">Add to the calendar</a>
       </nav>
       <nav class="footer-col" aria-label="Learn">
         <span class="footer-col__h">Learn</span>
@@ -492,14 +524,14 @@
       </nav>
     </div>
     <div class="footer-bar">
-      <p class="footer-fine">Kept by <a href="https://thefirstwater.co/">Firstwater</a></p>
-      <p class="footer-fine">Denver, Colorado</p>
+      <p class="footer-fine">Sound Bath Calendar</p>
+      <p class="footer-fine">Denver, Colorado · <a href="../privacy/">Privacy</a></p>
     </div>
   </div>
 </footer>
 
   <!-- Progressive-enhancement calendar filters (Track B B.5). The page is fully
        usable without it — it only reveals and wires the filter bar. -->
-  <script defer src="../filters.js?v=8a39f81c"></script>
+  <script defer src="../filters.js?v=8d2736ac"></script>
 </body>
 </html>

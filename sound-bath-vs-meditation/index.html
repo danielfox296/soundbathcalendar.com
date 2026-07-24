@@ -10,7 +10,11 @@
   <meta name="robots" content="index, follow">
   <title>Sound Bath vs. Meditation: What's the Difference? | Sound Bath Calendar</title>
   <meta name="description" content="A sound bath is receptive — you lie down and listen, no technique required. Meditation is usually an active attention practice. How they overlap, how they differ, and why a sound bath works for people who say they can&#x27;t meditate.">
-  <meta name="theme-color" content="#F5F7FA">
+  <!-- CAL-UX-11: paired theme-colors so mobile browser chrome follows the
+       scheme instead of fighting it — light = --paper, dark = the CAL-14
+       dark ground (#101216, styles.css dark flip). -->
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F5F7FA">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101216">
 
   <!-- RSS feed discovery (CAL-05). Root feed by default; city pages override
        https://soundbathcalendar.com/feed.xml with their own region feed. -->
@@ -38,10 +42,7 @@
   "@type": "Organization",
   "name": "Sound Bath Calendar",
   "url": "https://soundbathcalendar.com",
-  "sameAs": [
-    "https://thefirstwater.co"
-  ],
-  "description": "A curated, weekly-updated calendar of sound baths across Denver and the Front Range: Boulder, Fort Collins, and Colorado Springs. Every room worth knowing.",
+  "description": "A curated, weekly-updated calendar of sound baths across Denver and the Front Range: Boulder, Fort Collins, and Colorado Springs. Every sound bath worth knowing.",
   "areaServed": {
     "@type": "AdministrativeArea",
     "name": "Denver metro and the Colorado Front Range"
@@ -52,6 +53,10 @@
     "sound healing",
     "breathwork with sound",
     "guided meditation with sound"
+  ],
+  "sameAs": [
+    "https://www.instagram.com/soundbathcalendar/",
+    "https://www.facebook.com/profile.php?id=61592057895510"
   ]
 }
   </script>
@@ -89,7 +94,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=8d326f4b">
+  <link rel="stylesheet" href="../styles.css?v=414fe5b7">
   <style>
 /* /learn/ pages — glossary + explainers (CAL-20). Page-only styles; leans on
    the shared tokens and section/eyebrow/cal-h1/btn classes in styles.css.
@@ -212,14 +217,19 @@
 </head>
 <body>
   <header class="masthead">
+  <!-- CAL-UX-11: first focusable on every page — invisible until keyboard
+       focus, then a solid ink-on-paper pill (well above the muted-ink floor).
+       Targets #main in the base layout. -->
+  <a class="skip-link" href="#main">Skip to the calendar</a>
   <div class="container masthead-inner">
     <a href="../" class="wordmark">Sound Bath Calendar</a>
-    <nav class="masthead-cities" aria-label="Calendar navigation">
+    <nav class="masthead-cities" aria-label="Primary navigation">
       <a href="../denver/">Denver</a>
       <a href="../boulder/">Boulder</a>
       <a href="../fort-collins/">Fort Collins</a>
       <a href="../colorado-springs/">Colorado Springs</a>
       <a href="../map/">Map</a>
+      <a href="../learn/">Learn</a>
     </nav>
     <!-- Slim digest capture: inline form on wide screens, an anchor link down
          to the full form on small ones. Same Formspree seam as the main form. -->
@@ -234,7 +244,10 @@
   </div>
 </header>
 
-  <main>
+  <!-- CAL-UX-11: #main is the skip link's target (masthead partial).
+       tabindex="-1" so fragment navigation reliably moves focus into the
+       landmark; no visible ring (the focus-visible rule scopes to controls). -->
+  <main id="main" tabindex="-1">
   <!-- HUMAN REVIEW: glossary copy (CAL-20), Daniel to review tone -->
 <section class="section section--light lrn">
   <div class="container lrn-narrow">
@@ -258,7 +271,7 @@
     <p class="lrn-p">Effort. Most meditation asks you to do something with your mind &mdash; follow the breath, note thoughts, return when you wander &mdash; and the practice is the returning. A sound bath asks nothing. The gongs and bowls keep offering your attention somewhere to rest, so wandering matters less; the sound simply collects you again. There is also a practical difference: meditation is free and portable, while a sound bath is an event &mdash; a room, a facilitator, a set time, usually a ticket.</p>
 
     <h2 class="lrn-h2">Neither is the advanced version of the other</h2>
-    <p class="lrn-p">It is tempting to rank them &mdash; meditation as the serious discipline, sound baths as the easy shortcut, or the reverse. Ranking misses the point. They are different tools: one builds a skill you carry everywhere, the other reliably delivers an hour of deep rest with no skill at all. Plenty of people use both, and some sessions on the <a href="../">calendar</a> blend them, opening with a short guided meditation before the instruments take over. The listing says so when they do.</p>
+    <p class="lrn-p">It is tempting to rank them &mdash; meditation as the serious discipline, sound baths as the easy shortcut, or the reverse. Ranking misses the point. They are different tools: one builds a skill you carry everywhere, the other reliably delivers an hour of deep rest with no skill at all. Plenty of people use both, and some sessions on the <a href="../">calendar</a> blend them, opening with a short guided meditation before the instruments take over.</p>
 
     <div class="lrn-qa">
       <h2 class="lrn-h2">Is a sound bath a form of meditation?</h2>
@@ -332,6 +345,24 @@
         <a href="../" class="footer-wordmark">Sound Bath Calendar</a>
         <p class="footer-tag">Every sound bath on the Colorado Front Range —
         Denver, Boulder, Fort Collins, Colorado Springs — kept current every week.</p>
+        <ul class="footer-social" aria-label="Sound Bath Calendar on social media">
+          <li>
+            <a href="https://www.instagram.com/soundbathcalendar/" rel="me noopener"
+               target="_blank" aria-label="Sound Bath Calendar on Instagram">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/profile.php?id=61592057895510" rel="me noopener"
+               target="_blank" aria-label="Sound Bath Calendar on Facebook">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
       </div>
       <nav class="footer-col" aria-label="Calendar">
         <span class="footer-col__h">Calendar</span>
@@ -348,6 +379,7 @@
         <a href="../venues/">Venues</a>
         <a href="../operators/">Organizers</a>
         <a href="../state-of-sound-healing/">State of the scene</a>
+        <a href="../submit/">Add to the calendar</a>
       </nav>
       <nav class="footer-col" aria-label="Learn">
         <span class="footer-col__h">Learn</span>
@@ -359,14 +391,14 @@
       </nav>
     </div>
     <div class="footer-bar">
-      <p class="footer-fine">Kept by <a href="https://thefirstwater.co/">Firstwater</a></p>
-      <p class="footer-fine">Denver, Colorado</p>
+      <p class="footer-fine">Sound Bath Calendar</p>
+      <p class="footer-fine">Denver, Colorado · <a href="../privacy/">Privacy</a></p>
     </div>
   </div>
 </footer>
 
   <!-- Progressive-enhancement calendar filters (Track B B.5). The page is fully
        usable without it — it only reveals and wires the filter bar. -->
-  <script defer src="../filters.js?v=8a39f81c"></script>
+  <script defer src="../filters.js?v=8d2736ac"></script>
 </body>
 </html>

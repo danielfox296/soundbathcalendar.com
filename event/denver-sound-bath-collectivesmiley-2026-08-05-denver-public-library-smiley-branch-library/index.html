@@ -8,9 +8,13 @@
   <meta name="msvalidate.01" content="9C97AFC25A8EE199FF51C4C6D7C46F2E" />
   <link rel="canonical" href="https://soundbathcalendar.com/event/denver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smiley-branch-library/">
   <meta name="robots" content="index, follow">
-  <title>Denver Sound Bath Collective-Smiley · Denver | Sound Bath Calendar</title>
+  <title>Denver Sound Bath Collective-Smiley | Sound Bath Calendar</title>
   <meta name="description" content="A sound bath from the Denver Sound Bath Collective, led by IzaBelle Sweet, at the Denver Public Library&#x27;s Smiley Branch, Wednesday evening; $15–40.">
-  <meta name="theme-color" content="#F5F7FA">
+  <!-- CAL-UX-11: paired theme-colors so mobile browser chrome follows the
+       scheme instead of fighting it — light = --paper, dark = the CAL-14
+       dark ground (#101216, styles.css dark flip). -->
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F5F7FA">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101216">
 
   <!-- RSS feed discovery (CAL-05). Root feed by default; city pages override
        https://soundbathcalendar.com/feed.xml with their own region feed. -->
@@ -21,7 +25,7 @@
   <meta property="og:description" content="A sound bath from the Denver Sound Bath Collective, led by IzaBelle Sweet, at the Denver Public Library&#x27;s Smiley Branch, Wednesday evening; $15–40.">
   <meta property="og:url" content="https://soundbathcalendar.com/event/denver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smiley-branch-library/">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1186895672%2F68448586439%2F1%2Foriginal.20260615-005704?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=436920a6237389e510a11fffe2eb1094">
+  <meta property="og:image" content="https://soundbathcalendar.com/img/og/denver.jpg">
   <meta property="og:site_name" content="Sound Bath Calendar">
   <meta property="og:locale" content="en_US">
 
@@ -29,7 +33,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Denver Sound Bath Collective-Smiley">
   <meta name="twitter:description" content="A sound bath from the Denver Sound Bath Collective, led by IzaBelle Sweet, at the Denver Public Library&#x27;s Smiley Branch, Wednesday evening; $15–40.">
-  <meta name="twitter:image" content="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1186895672%2F68448586439%2F1%2Foriginal.20260615-005704?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=436920a6237389e510a11fffe2eb1094">
+  <meta name="twitter:image" content="https://soundbathcalendar.com/img/og/denver.jpg">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -38,10 +42,7 @@
   "@type": "Organization",
   "name": "Sound Bath Calendar",
   "url": "https://soundbathcalendar.com",
-  "sameAs": [
-    "https://thefirstwater.co"
-  ],
-  "description": "A curated, weekly-updated calendar of sound baths across Denver and the Front Range: Boulder, Fort Collins, and Colorado Springs. Every room worth knowing.",
+  "description": "A curated, weekly-updated calendar of sound baths across Denver and the Front Range: Boulder, Fort Collins, and Colorado Springs. Every sound bath worth knowing.",
   "areaServed": {
     "@type": "AdministrativeArea",
     "name": "Denver metro and the Colorado Front Range"
@@ -52,6 +53,10 @@
     "sound healing",
     "breathwork with sound",
     "guided meditation with sound"
+  ],
+  "sameAs": [
+    "https://www.instagram.com/soundbathcalendar/",
+    "https://www.facebook.com/profile.php?id=61592057895510"
   ]
 }
   </script>
@@ -115,6 +120,12 @@
     {
       "@type": "ListItem",
       "position": 2,
+      "name": "Denver",
+      "item": "https://soundbathcalendar.com/denver/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
       "name": "Denver Sound Bath Collective-Smiley"
     }
   ]
@@ -135,10 +146,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../../styles.css?v=8d326f4b">
+  <link rel="stylesheet" href="../../styles.css?v=414fe5b7">
   <style>
     .cal-event { }
-    .cal-event__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin: 0 0 2rem; }
+    .cal-event__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
     .cal-event__crumbs a { color: var(--accent-on-light); text-decoration: none; }
     .cal-event__crumbs a:hover { text-decoration: underline; }
     .cal-past-banner { background: rgba(var(--ink-rgb),0.05); border-left: 3px solid var(--gray); padding: 0.9rem 1.2rem; margin: 0 0 2rem; font-size: 0.95rem; }
@@ -148,13 +159,14 @@
     .cal-event__note { font: 500 1.2rem var(--font-display); color: var(--ink); max-width: 40rem; line-height: 1.4; margin: 0 0 1.6rem; }
     .cal-event__figure { margin: 2rem 0; max-width: 640px; }
     .cal-event__figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: rgba(var(--ink-rgb),0.06); }
-    .cal-event__figure figcaption { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.55); margin-top: 0.6rem; }
+    .cal-event__figure figcaption { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin-top: 0.6rem; }
     .cal-event__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.6rem; margin: 2rem 0; max-width: 40rem; }
-    .cal-event__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--gray); align-self: baseline; }
+    .cal-event__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); align-self: baseline; }
     .cal-event__facts dd { margin: 0; color: var(--ink); }
     .cal-event__cta { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; margin: 2rem 0; }
     .cal-event__link { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .cal-event__link:hover { text-decoration: underline; }
+    .cal-event__firsttime { margin: 1.4rem 0 0; font-size: 0.88rem; color: rgba(var(--ink-rgb),0.65); }
     .cal-event__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
     .cal-event__back a { color: var(--accent-on-light); text-decoration: none; }
     .cal-event__back a:hover { text-decoration: underline; }
@@ -191,14 +203,19 @@
 </head>
 <body>
   <header class="masthead">
+  <!-- CAL-UX-11: first focusable on every page — invisible until keyboard
+       focus, then a solid ink-on-paper pill (well above the muted-ink floor).
+       Targets #main in the base layout. -->
+  <a class="skip-link" href="#main">Skip to the calendar</a>
   <div class="container masthead-inner">
     <a href="../../" class="wordmark">Sound Bath Calendar</a>
-    <nav class="masthead-cities" aria-label="Calendar navigation">
+    <nav class="masthead-cities" aria-label="Primary navigation">
       <a href="../../denver/">Denver</a>
       <a href="../../boulder/">Boulder</a>
       <a href="../../fort-collins/">Fort Collins</a>
       <a href="../../colorado-springs/">Colorado Springs</a>
       <a href="../../map/">Map</a>
+      <a href="../../learn/">Learn</a>
     </nav>
     <!-- Slim digest capture: inline form on wide screens, an anchor link down
          to the full form on small ones. Same Formspree seam as the main form. -->
@@ -213,11 +230,14 @@
   </div>
 </header>
 
-  <main>
+  <!-- CAL-UX-11: #main is the skip link's target (masthead partial).
+       tabindex="-1" so fragment navigation reliably moves focus into the
+       landmark; no visible ring (the focus-visible rule scopes to controls). -->
+  <main id="main" tabindex="-1">
   <section class="section section--light cal-event">
   <div class="container">
     <nav class="cal-event__crumbs" aria-label="Breadcrumb">
-      <a href="../../">Calendar</a> <span aria-hidden="true">/</span> <span>Denver Sound Bath Collective-Smiley</span>
+      <a href="../../">Calendar</a> <span aria-hidden="true">/</span> <a href="../../denver/">Denver</a> <span aria-hidden="true">/</span> <span>Denver Sound Bath Collective-Smiley</span>
     </nav>
     <div class="detail-shell">
       <div class="detail-main">
@@ -237,19 +257,20 @@
       <dt>Area</dt><dd>Berkeley, Denver</dd>
       <dt>Price</dt><dd>$15–40</dd>
       <dt>Facilitator</dt><dd>IzaBelle Sweet</dd>
-      <dt>Operator</dt><dd><a class="cal-event__link" href="../../operator/denver-sound-bath-collective/">Denver Sound Bath Collective</a></dd>
+      <dt>Organizer</dt><dd><a class="cal-event__link" href="../../operator/denver-sound-bath-collective/">Denver Sound Bath Collective</a></dd>
     </dl>
     <iframe class="detail-card__map" loading="lazy" title="Map" src="https://maps.google.com/maps?q=4501+West+46th+Avenue%2C+Denver%2C+CO+80212%2C+Denver%2C+CO&amp;z=15&amp;output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe>
     <p class="cal-event__cta"><a class="btn btn-primary" href="https://www.eventbrite.com/e/denver-sound-bath-collective-smiley-tickets-1993054503672" target="_blank" rel="noopener">Tickets</a> <a class="cal-event__link" href="https://www.eventbrite.com/o/13380693760" target="_blank" rel="noopener">Denver Sound Bath Collective</a> <a class="cal-event__link" href="https://www.google.com/maps/search/?api=1&amp;query=4501+West+46th+Avenue%2C+Denver%2C+CO+80212%2C+Denver%2C+CO" target="_blank" rel="noopener">Open in Maps</a></p>
     <details class="cal-addcal">
       <summary class="cal-event__link cal-addcal__summary">Add to calendar</summary>
       <div class="cal-addcal__menu">
-        <a class="cal-addcal__opt" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Denver+Sound+Bath+Collective-Smiley&amp;dates=20260806T010000Z%2F20260806T021500Z&amp;details=A+sound+bath+from+the+Denver+Sound+Bath+Collective%2C+led+by+IzaBelle+Sweet%2C+at+the+Denver+Public+Library%27s+Smiley+Branch%2C+Wednesday+evening%3B+%2415%E2%80%9340.%0A%0ATickets%3A+https%3A%2F%2Fwww.eventbrite.com%2Fe%2Fdenver-sound-bath-collective-smiley-tickets-1993054503672&amp;location=Denver+Public+Library%3A+Smiley+Branch+Library%2C+4501+West+46th+Avenue%2C+Denver%2C+CO+80212" target="_blank" rel="noopener">Google Calendar</a>
+        <a class="cal-addcal__opt" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Denver+Sound+Bath+Collective-Smiley&amp;dates=20260806T010000Z%2F20260806T021500Z&amp;details=A+sound+bath+from+the+Denver+Sound+Bath+Collective%2C+led+by+IzaBelle+Sweet%2C+at+the+Denver+Public+Library%27s+Smiley+Branch%2C+Wednesday+evening%3B+%2415%E2%80%9340.%0A%0ATickets%3A+https%3A%2F%2Fwww.eventbrite.com%2Fe%2Fdenver-sound-bath-collective-smiley-tickets-1993054503672%0A%0Ahttps%3A%2F%2Fsoundbathcalendar.com%2Fevent%2Fdenver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smiley-branch-library%2F&amp;location=Denver+Public+Library%3A+Smiley+Branch+Library%2C+4501+West+46th+Avenue%2C+Denver%2C+CO+80212" target="_blank" rel="noopener">Google Calendar</a>
         <a class="cal-addcal__opt" href="event.ics">Apple Calendar</a>
-        <a class="cal-addcal__opt" href="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&amp;rru=addevent&amp;subject=Denver+Sound+Bath+Collective-Smiley&amp;startdt=2026-08-06T01%3A00%3A00Z&amp;enddt=2026-08-06T02%3A15%3A00Z&amp;location=Denver+Public+Library%3A+Smiley+Branch+Library%2C+4501+West+46th+Avenue%2C+Denver%2C+CO+80212&amp;body=A+sound+bath+from+the+Denver+Sound+Bath+Collective%2C+led+by+IzaBelle+Sweet%2C+at+the+Denver+Public+Library%27s+Smiley+Branch%2C+Wednesday+evening%3B+%2415%E2%80%9340.%0A%0ATickets%3A+https%3A%2F%2Fwww.eventbrite.com%2Fe%2Fdenver-sound-bath-collective-smiley-tickets-1993054503672" target="_blank" rel="noopener">Outlook</a>
+        <a class="cal-addcal__opt" href="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&amp;rru=addevent&amp;subject=Denver+Sound+Bath+Collective-Smiley&amp;startdt=2026-08-06T01%3A00%3A00Z&amp;enddt=2026-08-06T02%3A15%3A00Z&amp;location=Denver+Public+Library%3A+Smiley+Branch+Library%2C+4501+West+46th+Avenue%2C+Denver%2C+CO+80212&amp;body=A+sound+bath+from+the+Denver+Sound+Bath+Collective%2C+led+by+IzaBelle+Sweet%2C+at+the+Denver+Public+Library%27s+Smiley+Branch%2C+Wednesday+evening%3B+%2415%E2%80%9340.%0A%0ATickets%3A+https%3A%2F%2Fwww.eventbrite.com%2Fe%2Fdenver-sound-bath-collective-smiley-tickets-1993054503672%0A%0Ahttps%3A%2F%2Fsoundbathcalendar.com%2Fevent%2Fdenver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smiley-branch-library%2F" target="_blank" rel="noopener">Outlook</a>
         <a class="cal-addcal__opt" href="event.ics" download>Download .ics</a>
       </div>
     </details>
+    <p class="cal-event__firsttime">First time? <a class="cal-event__link" href="../../what-to-expect/">Read what to expect</a></p>
         </div>
       </aside>
     </div>
@@ -265,6 +286,24 @@
         <a href="../../" class="footer-wordmark">Sound Bath Calendar</a>
         <p class="footer-tag">Every sound bath on the Colorado Front Range —
         Denver, Boulder, Fort Collins, Colorado Springs — kept current every week.</p>
+        <ul class="footer-social" aria-label="Sound Bath Calendar on social media">
+          <li>
+            <a href="https://www.instagram.com/soundbathcalendar/" rel="me noopener"
+               target="_blank" aria-label="Sound Bath Calendar on Instagram">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/profile.php?id=61592057895510" rel="me noopener"
+               target="_blank" aria-label="Sound Bath Calendar on Facebook">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
       </div>
       <nav class="footer-col" aria-label="Calendar">
         <span class="footer-col__h">Calendar</span>
@@ -281,6 +320,7 @@
         <a href="../../venues/">Venues</a>
         <a href="../../operators/">Organizers</a>
         <a href="../../state-of-sound-healing/">State of the scene</a>
+        <a href="../../submit/">Add to the calendar</a>
       </nav>
       <nav class="footer-col" aria-label="Learn">
         <span class="footer-col__h">Learn</span>
@@ -292,14 +332,14 @@
       </nav>
     </div>
     <div class="footer-bar">
-      <p class="footer-fine">Kept by <a href="https://thefirstwater.co/">Firstwater</a></p>
-      <p class="footer-fine">Denver, Colorado</p>
+      <p class="footer-fine">Sound Bath Calendar</p>
+      <p class="footer-fine">Denver, Colorado · <a href="../../privacy/">Privacy</a></p>
     </div>
   </div>
 </footer>
 
   <!-- Progressive-enhancement calendar filters (Track B B.5). The page is fully
        usable without it — it only reveals and wires the filter bar. -->
-  <script defer src="../../filters.js?v=8a39f81c"></script>
+  <script defer src="../../filters.js?v=8d2736ac"></script>
 </body>
 </html>
