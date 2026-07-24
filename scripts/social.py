@@ -36,6 +36,7 @@ import io
 import json
 import math
 import os
+import re
 import sys
 import urllib.error
 import urllib.request
@@ -79,6 +80,20 @@ IG_TAGS = ('#soundbath #soundhealing #soundbathmeditation #gongbath '
            '#singingbowls #denver #boulder #colorado #frontrange')
 
 WEEKEND_WEEKDAY = 3                # Thursday (Monday = 0), matches the digest day
+
+# Warm-content slots. Tuesday and Sunday run a practitioner spotlight instead
+# of the daily event carousel — the ~2/week non-event cadence, using the one
+# warm content that is ready (real bios + a reviewed photo). Blog excerpts and
+# quote cards, when built, take the Sunday slot and drop this to Tuesdays only.
+PRACTITIONER_WEEKDAYS = {1, 6}     # Tue, Sun
+# Rotation epoch: the spotlight launch date. The roster is walked one person
+# per warm slot from here, so the sequence is fixed and every re-run of a
+# given date renders the same person.
+PRACTITIONER_EPOCH = date(2026, 7, 27)   # first Sunday on/after go-live
+
+PRACT_FEED_URL = 'https://admin.soundbathcalendar.com/feeds/practitioners.json'
+PRACT_CACHE = os.path.join(ROOT, 'data', 'practitioners.json')
+PRACT_PHOTO_DIR = os.path.join(ROOT, 'img', 'practitioners')
 
 
 # ---------- text helpers ----------
@@ -564,6 +579,259 @@ def build_weekend(events, thursday, quiet=False):
     return manifest
 
 
+# ---------- practitioner spotlights ----------
+
+def load_practitioners():
+    """Published practitioners that have a REVIEWED photo committed under
+    img/practitioners/. The photo file is the gate — a practitioner without a
+    face never enters the rotation, so no spotlight ever ships a logo or a
+    blank. Bios come from the live service feed (falling back to the committed
+    cache), because the local cache goes stale — see the feed contract."""
+    feed = None
+    try:
+        req = urllib.request.Request(PRACT_FEED_URL, headers={'user-agent': IMAGE_UA})
+        with urllib.request.urlopen(req, timeout=IMAGE_TIMEOUT_S) as resp:
+            feed = json.loads(resp.read().decode())
+    except (urllib.error.URLError, OSError, ValueError):
+        try:
+            with open(PRACT_CACHE, encoding='utf-8') as fh:
+                feed = json.load(fh)
+        except (OSError, ValueError):
+            return []
+    rows = feed.get('practitioners', []) if isinstance(feed, dict) else (feed or [])
+    out = []
+    for p in rows:
+        slug = (p.get('slug') or '').strip()
+        photo = os.path.join(PRACT_PHOTO_DIR, f'{slug}.jpg')
+        if slug and os.path.exists(photo):
+            out.append({**p, '_photo': photo})
+    # Stable order so the rotation is deterministic regardless of feed order.
+    return sorted(out, key=lambda p: p['slug'])
+
+
+def _count_weekday(start, end, weekday):
+    """Occurrences of `weekday` in [start, end] inclusive, by ordinal math —
+    no day-by-day loop that would grow with the calendar."""
+    if end < start:
+        return 0
+    a, b = start.toordinal(), end.toordinal()
+    first = a + (weekday - (a - 1) % 7) % 7   # first such weekday >= start
+    return 0 if first > b else (b - first) // 7 + 1
+
+
+def practitioner_slot(day):
+    """How many warm slots have elapsed through `day` since the epoch — the
+    rotation index before it is taken modulo the roster size."""
+    return sum(_count_weekday(PRACTITIONER_EPOCH, day, wd)
+               for wd in PRACTITIONER_WEEKDAYS)
+
+
+def practitioner_for(day, roster):
+    """The practitioner whose turn it is on `day`. One person advances per
+    warm slot, so the roster cycles evenly and a given date is reproducible."""
+    if not roster:
+        return None
+    return roster[(practitioner_slot(day) - 1) % len(roster)]
+
+
+def _first_sentence(text, limit=120):
+    """The bio's opening sentence, for the cover's one-line essence."""
+    text = ' '.join((text or '').split())
+    m = re.search(r'(.+?[.!?])(\s|$)', text)
+    s = m.group(1) if m else text
+    return s if len(s) <= limit else s[:limit].rsplit(' ', 1)[0] + '…'
+
+
+def _pull_quote(bio):
+    """A quoted line from the bio if the practitioner has one — their own
+    words are the warmest thing on the card."""
+    m = re.search(r'[“"]([^”"]{20,140})[”"]', bio or '')
+    return m.group(1) if m else ''
+
+
+def practitioner_next_session(events, name, on_day):
+    """Soonest session this person facilitates that is still UPCOMING on
+    `on_day` — never a past date, which on a public card reads as stale."""
+    key = _norm(name)
+    if not key:
+        return None
+    mine = [e for e in events
+            if _norm(e.get('facilitator')) == key
+            and parse_iso(e['starts_at']).astimezone(DENVER).date() >= on_day]
+    return sorted(mine, key=lambda e: parse_iso(e['starts_at']))[0] if mine else None
+
+
+def _first_name(name):
+    return (name or '').split()[0] if name else 'them'
+
+
+def slide_practitioner_cover(palette, p):
+    """Portrait band + name. The face is the hook, so it gets the top half."""
+    img = ground(palette, rotate=0)
+    d = ImageDraw.Draw(img)
+    try:
+        photo = Image.open(p['_photo']).convert('RGB')
+        img.paste(_cover_crop(photo, (W, PHOTO_H)), (0, 0))
+        d.line([(0, PHOTO_H), (W, PHOTO_H)], fill=RULE, width=2)
+    except (OSError, ValueError):
+        pass
+
+    y = PHOTO_H + 54
+    _wave(d, MARGIN, y + 6)
+    _eyebrow(d, MARGIN + 80, y - 8, 'PRACTITIONER', font(26, 600))
+    y += 58
+
+    f_name = font(72, 500)
+    for line in _wrap(d, p.get('name', ''), f_name, COL, 2):
+        d.text((MARGIN, y), line, font=f_name, fill=INK)
+        y += round(f_name.size * 1.12)
+
+    essence = _first_sentence(p.get('bio', ''))
+    if essence:
+        for line in _wrap(d, essence, font(34, 400), COL, 2):
+            d.text((MARGIN, y + 6), line, font=font(34, 400), fill=MUTED)
+            y += 44
+    _footer(d, right='swipe →')
+    return img
+
+
+def slide_practitioner_bio(palette, p, rotate):
+    """Their story, in their own words. A pulled quote gets set large; the
+    rest of the bio runs beneath it."""
+    img = ground(palette, rotate=rotate)
+    d = ImageDraw.Draw(img)
+    _wave(d, MARGIN, 116)
+    _eyebrow(d, MARGIN + 80, 100, _first_name(p.get('name')).upper(), font(26, 600))
+
+    bio = ' '.join((p.get('bio') or '').split())
+    quote = _pull_quote(bio)
+    y = 210
+    if quote:
+        # Drop the quote from the running body so it is not said twice.
+        bio = bio.replace(f'“{quote}”', '').replace(f'"{quote}"', '').strip(' ,.')
+        f_q = font(52, 500)
+        for line in _wrap(d, f'“{quote}”', f_q, COL, 4):
+            d.text((MARGIN, y), line, font=f_q, fill=INK)
+            y += round(f_q.size * 1.2)
+        y += 30
+
+    f_b = font(34, 400)
+    for line in _wrap(d, bio, f_b, COL, 12):
+        d.text((MARGIN, y), line, font=f_b, fill=INK if not quote else MUTED)
+        y += round(f_b.size * 1.34)
+    _footer(d, right='swipe →')
+    return img
+
+
+def slide_practitioner_find(palette, p, rotate, session):
+    """Where to find them: next session if there is one, plus their own links.
+
+    The block is measured and vertically centred, because whether a person has
+    an upcoming session swings the content between full and sparse — a fixed
+    top anchor left the no-session version stranded above a half-empty card.
+    """
+    img = ground(palette, rotate=rotate)
+    d = ImageDraw.Draw(img)
+    _wave(d, MARGIN, 116)
+    _eyebrow(d, MARGIN + 80, 100, 'WHERE TO FIND THEM', font(26, 600))
+
+    f_title = font(72, 500)
+    f_lead = font(28, 600)
+    f_big = font(38, 500)
+    f_body = font(34, 400)
+    f_small = font(30, 400)
+
+    # Build the block as (font, colour, text) rows, then measure and centre.
+    rows = [(f_title, INK, f'Find {_first_name(p.get("name"))}'), (None, None, 24)]
+    when = parse_iso(session['starts_at']).astimezone(DENVER) if session else None
+    if session:
+        rows += [
+            (f_lead, ACCENT, 'NEXT SESSION'),
+            (f_big, INK, f'{when.strftime("%a %b %-d")} · {fmt_time(session["starts_at"]).lower()}'),
+            (f_body, MUTED, _fit(d, session.get('name', ''), f_body, COL)),
+            (f_small, MUTED, _fit(d, _where(d, session, f_small, COL), f_small, COL)),
+            (None, None, 40),
+        ]
+    else:
+        rows += [(f_body, MUTED, 'Practicing on the Front Range'), (None, None, 40)]
+    for label, key in (('Website', 'website_url'), ('Instagram', 'instagram_url')):
+        val = (p.get(key) or '').strip()
+        if val:
+            handle = re.sub(r'^https?://(www\.)?', '', val).rstrip('/')
+            rows.append((f_small, INK, f'{label} · {_fit(d, handle, f_small, COL - 220)}'))
+
+    def row_h(r):
+        return r[2] if r[0] is None else round(r[0].size * 1.34)
+    total = sum(row_h(r) for r in rows)
+    top, bottom = 210, H - 190
+    y = top + max(0, (bottom - top - total) // 2)
+    for fnt, col, val in rows:
+        if fnt is None:
+            y += val
+            continue
+        d.text((MARGIN, y), val, font=fnt, fill=col)
+        y += round(fnt.size * 1.34)
+
+    _footer(d, left='soundbathcalendar.com', right='full profile — link in bio')
+    return img
+
+
+def practitioner_captions(p, session):
+    """Meet-the-practitioner captions. The body is the bio verbatim — their
+    voice, not ours — and the link is their profile page."""
+    name = p.get('name', '')
+    slug = p.get('slug', '')
+    url = f'{SITE_URL}/practitioner/{slug}/'
+    bio = ' '.join((p.get('bio') or '').split())
+
+    lines = [f'Meet {name} — a sound practitioner on the Front Range.', '', bio]
+    if session:
+        when = parse_iso(session['starts_at']).astimezone(DENVER)
+        lines += ['', f'Next up: {session.get("name", "")} · '
+                  f'{when.strftime("%a %b %-d")}, {fmt_time(session["starts_at"]).lower()}.']
+    body = '\n'.join(lines)
+    tags = ('#soundbath #soundhealing #frontrange #denver #boulder #colorado '
+            '#practitioner #soundhealer')
+    fb = f'{body}\n\nFull profile: {url}'
+    ig = f'{body}\n\nFull profile — link in bio.\n\n{tags}'
+    return fb, ig
+
+
+def build_practitioner(events, day, quiet=False):
+    """One practitioner spotlight for `day`. Returns the manifest, or None
+    when there is no one in the rotation (roster empty)."""
+    roster = load_practitioners()
+    p = practitioner_for(day, roster)
+    if p is None:
+        if not quiet:
+            print(f'  -- {day}: no practitioner with a photo, skipping')
+        return None
+
+    palette = palette_for(day)
+    stamp = day.isoformat()
+    slug = p['slug']
+    folder = f'img/social/{stamp}-practitioner'
+    session = practitioner_next_session(events, p.get('name', ''), day)
+
+    slides = [
+        _write(slide_practitioner_cover(palette, p), f'{folder}/01-cover.jpg'),
+        _write(slide_practitioner_bio(palette, p, 2), f'{folder}/02-story.jpg'),
+        _write(slide_practitioner_find(palette, p, 3, session), f'{folder}/03-find.jpg'),
+    ]
+    fb, ig = practitioner_captions(p, session)
+    manifest = {
+        'date': stamp, 'kind': 'practitioner', 'palette': palette,
+        'slides': slides, 'practitioner': p.get('name', ''), 'slug': slug,
+        'landing_url': f'{SITE_URL}/practitioner/{slug}/',
+        'caption_facebook': fb, 'caption_instagram': ig,
+    }
+    _write_manifest(f'img/social/{stamp}-practitioner.json', manifest)
+    if not quiet:
+        print(f'  ok {folder} — {p.get("name")}, palette {palette}'
+              f'{" (+next session)" if session else ""}')
+    return manifest
+
+
 def _write_manifest(rel, manifest):
     path = os.path.join(ROOT, rel)
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -573,15 +841,21 @@ def _write_manifest(rel, manifest):
 
 
 def kind_for(day):
-    """Thursday runs the weekend carousel INSTEAD of the daily one — one post
-    a day, rather than two on Thursdays."""
-    return 'weekend' if day.weekday() == WEEKEND_WEEKDAY else 'daily'
+    """One post a day, picked by weekday: Thursday runs the weekend carousel,
+    Tuesday and Sunday run a practitioner spotlight, everything else is the
+    daily event carousel."""
+    if day.weekday() == WEEKEND_WEEKDAY:
+        return 'weekend'
+    if day.weekday() in PRACTITIONER_WEEKDAYS:
+        return 'practitioner'
+    return 'daily'
 
 
 def main():
     ap = argparse.ArgumentParser(description='Render the social carousel.')
     ap.add_argument('--date', help='YYYY-MM-DD (default: today, Denver)')
-    ap.add_argument('--kind', choices=('daily', 'weekend', 'auto'), default='auto')
+    ap.add_argument('--kind', choices=('daily', 'weekend', 'practitioner', 'auto'),
+                    default='auto')
     ap.add_argument('--days', type=int, default=1,
                     help='render this many consecutive days (local preview)')
     args = ap.parse_args()
@@ -589,13 +863,24 @@ def main():
     start = (date.fromisoformat(args.date) if args.date
              else datetime.now(DENVER).date())
     events = load_events()
+    builders = {
+        'weekend': build_weekend,
+        'practitioner': build_practitioner,
+        'daily': build_daily,
+    }
     made = 0
     for i in range(max(1, args.days)):
         day = start + timedelta(days=i)
         kind = kind_for(day) if args.kind == 'auto' else args.kind
-        built = (build_weekend(events, day) if kind == 'weekend'
-                 else build_daily(events, day))
-        made += built is not None
+        # Best-effort: this runs mid-deploy, so a render fault must degrade to
+        # "no card for that day" (the post step then no-ops), never fail the
+        # site build. A missing social post is recoverable; a failed deploy is
+        # the whole site down.
+        try:
+            built = builders[kind](events, day)
+            made += built is not None
+        except Exception as exc:  # noqa: BLE001 — deliberately broad
+            print(f'  !! {day} ({kind}) render failed: {exc}', file=sys.stderr)
     print(f'social done — {made} post(s)')
 
 

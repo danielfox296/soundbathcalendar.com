@@ -272,7 +272,8 @@ def post_instagram(manifest, ig_user_id, token):
 # ---------- driver ----------
 
 def load_manifest(day, kind):
-    name = f'{day}-weekend.json' if kind == 'weekend' else f'{day}.json'
+    # daily lives at <date>.json; the others get a suffix.
+    name = f'{day}.json' if kind == 'daily' else f'{day}-{kind}.json'
     path = os.path.join(ROOT, 'img', 'social', name)
     if not os.path.exists(path):
         return None
@@ -283,7 +284,11 @@ def load_manifest(day, kind):
 def _preview(manifest):
     print(f'  date         {manifest["date"]} ({manifest["kind"]})')
     print(f'  palette      {manifest["palette"]}')
-    print(f'  sessions     {manifest["event_count"]}')
+    # Event manifests carry a session count; the practitioner one names a person.
+    if 'event_count' in manifest:
+        print(f'  sessions     {manifest["event_count"]}')
+    if 'practitioner' in manifest:
+        print(f'  practitioner {manifest["practitioner"]}')
     if 'photos_used' in manifest:
         print(f'  photos       {manifest["photos_used"]}/'
               f'{manifest["sessions_on_slides"]} slides with event images')
@@ -301,7 +306,8 @@ def _preview(manifest):
 def main():
     ap = argparse.ArgumentParser(description="Publish the day's social carousel.")
     ap.add_argument('--date', help='YYYY-MM-DD (default: today, Denver)')
-    ap.add_argument('--kind', choices=('daily', 'weekend', 'auto'), default='auto')
+    ap.add_argument('--kind', choices=('daily', 'weekend', 'practitioner', 'auto'),
+                    default='auto')
     ap.add_argument('--live', action='store_true',
                     help='actually publish (default: dry run)')
     ap.add_argument('--require-live-image', action='store_true',
