@@ -1,0 +1,64 @@
+<section class="section submit-form-section">
+  <div class="container wte-narrow">
+    <h2 class="digest-h2">Tell us what you have.</h2>
+    <p class="form-note">A person reads every one of these &mdash; usually within a few
+    days. We do not list everything we are sent: the calendar covers facilitated group
+    sound sessions on the Front Range, so a yoga class with a bowl at the end is probably
+    not a fit. If yours is not, we will say so rather than leave you wondering.</p>
+
+    <form class="contact-form submit-form"
+          action="https://admin.soundbathcalendar.com/submit" method="POST">
+      <input type="hidden" name="next" value="https://soundbathcalendar.com/submitted/">
+
+      <label class="form-field">
+        <span>What is this?</span>
+        <select name="kind">
+          <option value="event" selected>A session to list</option>
+          <option value="claim">A correction to a profile</option>
+          <option value="venue">A space that could host one</option>
+        </select>
+      </label>
+
+      <label class="form-field">
+        <span>Your name</span>
+        <input type="text" name="name" autocomplete="name" maxlength="200" required>
+      </label>
+
+      <label class="form-field">
+        <span>Email</span>
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+
+      <label class="form-field">
+        <span>Practice, business or venue <em class="form-optional">optional</em></span>
+        <input type="text" name="organisation" autocomplete="organization" maxlength="200">
+      </label>
+
+      <label class="form-field">
+        <span>A link <em class="form-optional">optional</em></span>
+        <input type="url" name="url" inputmode="url" maxlength="500"
+               placeholder="Your site, ticket page, or Instagram">
+      </label>
+
+      <label class="form-field">
+        <span>Details</span>
+        <textarea name="message" rows="6" maxlength="4000" required
+                  placeholder="Dates and times, where it is, what you play, what the space is like — whatever is relevant. Plain text is fine."></textarea>
+      </label>
+
+      <!-- Honeypot: hidden from people, irresistible to form bots. A filled
+           value is answered exactly like a real submission and quietly dropped. -->
+      <div class="submit-hp" aria-hidden="true">
+        <label>Website
+          <input type="text" name="website" tabindex="-1" autocomplete="off">
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Send it</button>
+    </form>
+
+    <p class="form-note submit-fine">We use your email to answer you, and to check
+    details if something changes. It does not go on the digest list unless you ask, and it
+    never goes to anyone else. See the <a href="{{css_path}}privacy/">privacy page</a>.</p>
+  </div>
+</section>

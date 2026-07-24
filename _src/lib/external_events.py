@@ -1932,8 +1932,8 @@ def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
     out.append('    ' + _render_faq(city_faq(city)))
     out.append('    ' + render_digest_block(selected_city=slug, rows=rows, now=now))
 
-    out.append('    <p class="cal-submit">Running a venue we should know about? '
-               '<a href="mailto:hello@soundbathcalendar.com?subject=A%20venue%20for%20the%20calendar">Send it our way.</a></p>')
+    out.append('    <p class="cal-submit">Running sessions, or have a space that '
+               f'could host one? <a href="{nav_prefix}submit/">Add to the calendar.</a></p>')
 
     out.append('  </div>')
     out.append('</section>')

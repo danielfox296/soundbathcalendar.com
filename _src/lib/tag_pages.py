@@ -463,8 +463,8 @@ def render_tag_page(rows, slug, nav_prefix, built_map, now=None, geocode=None):
     out.append('    ' + X._render_faq(tag_faq(rows, slug)))
     out.append('    ' + X.render_digest_block(selected_city='all', rows=rows, now=now))
 
-    out.append('    <p class="cal-submit">Running a venue we should know about? '
-               '<a href="mailto:hello@soundbathcalendar.com?subject=A%20venue%20for%20the%20calendar">Send it our way.</a></p>')
+    out.append('    <p class="cal-submit">Running sessions, or have a space that '
+               f'could host one? <a href="{nav_prefix}submit/">Add to the calendar.</a></p>')
 
     out.append('  </div>')
     out.append('</section>')

@@ -1,0 +1,54 @@
+.submit-ways {
+      margin-top: 2.5rem;
+      display: grid;
+      gap: 1.75rem;
+    }
+
+    .submit-way__h {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      margin: 0 0 0.4rem;
+      color: var(--ink);
+    }
+
+    .submit-way p {
+      margin: 0;
+      color: var(--ink-muted, var(--ink));
+    }
+
+    .submit-form-section .contact-form {
+      margin-top: 1.5rem;
+    }
+
+    .submit-form textarea {
+      resize: vertical;
+      min-height: 8rem;
+    }
+
+    .form-optional {
+      font-style: normal;
+      font-weight: 400;
+      opacity: 0.62;
+    }
+
+    .submit-fine {
+      margin-top: 1.5rem;
+    }
+
+    /* The honeypot. Kept out of the layout AND out of the accessibility tree
+       (the wrapper carries aria-hidden), so no screen reader ever announces a
+       field a person is not meant to fill. */
+    .submit-hp {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    @media (min-width: 40rem) {
+      .submit-ways {
+        gap: 2rem;
+      }
+    }

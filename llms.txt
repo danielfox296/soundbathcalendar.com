@@ -25,6 +25,7 @@ Each city page is the same time-grouped calendar filtered to one area, with its 
 - [Organizers](https://soundbathcalendar.com/operators/): The studios and collectives running the listed sessions, each with its upcoming dates.
 - [Roundups](https://soundbathcalendar.com/roundups/): Editorial shortlists from the calendar's own data — e.g. venues worth knowing — refreshed as the scene changes.
 - [Learn](https://soundbathcalendar.com/learn/): The glossary and explainer index; the individual pages are listed under Learn below.
+- [Add to the calendar](https://soundbathcalendar.com/submit/): How practitioners and organizers get a session listed, how anyone listed can correct or remove their own profile, and how a venue offers a space to host a session. Free; there is no paid placement on this calendar.
 
 ## Original data (free to cite)
 
