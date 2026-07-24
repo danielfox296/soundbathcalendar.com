@@ -4,12 +4,16 @@ Builds a set of 4:5 slides plus the captions that go with them, and writes a
 manifest scripts/post.py publishes to Instagram (as a carousel) and the
 Facebook Page (as a multi-photo post).
 
-TWO POST KINDS:
-  daily    cover slide + one slide per session that day, each carrying the
-           operator's own event image. Thursdays skip this.
-  weekend  Thursdays only: cover + one slide per day for Fri/Sat/Sun, each a
-           short list. One post a day either way — Thursday runs the weekend
-           card INSTEAD of the daily one rather than posting twice.
+POST KINDS (one a day, chosen by weekday — see the POSTING SCHEDULE block):
+  daily        cover slide + one slide per session that day, each carrying the
+               operator's own event image.
+  weekend      Thu: cover + one slide per day for Fri/Sat/Sun, each a short
+               list — the weekend card runs INSTEAD of the daily one.
+  practitioner Tue: a three-slide spotlight (portrait, bio, where to find them).
+  blog         Sun (alternating): a carousel per evergreen essay — cover +
+               up to three VERBATIM passage slides + a read-the-piece closer.
+  quote        Sun (alternating): a single 4:5 card, one striking verbatim line
+               from an essay, attributed. One slide, not a carousel.
 
 WHY A CAROUSEL. The single card had to hold a whole day, so it was a wall of
 text. Giving each session its own slide drops it to three lines a slide and
@@ -29,9 +33,11 @@ Run from the repo root:
 
     python3 scripts/social.py                    # today's post, whichever kind
     python3 scripts/social.py --kind weekend
-    python3 scripts/social.py --date 2026-08-02 --kind daily
+    python3 scripts/social.py --date 2026-08-02 --kind blog
+    python3 scripts/social.py --date 2026-08-09 --kind quote
 """
 import argparse
+import html
 import io
 import json
 import math
@@ -79,17 +85,34 @@ NUMBER_WORDS = ['no', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven',
 IG_TAGS = ('#soundbath #soundhealing #soundbathmeditation #gongbath '
            '#singingbowls #denver #boulder #colorado #frontrange')
 
-WEEKEND_WEEKDAY = 3                # Thursday (Monday = 0), matches the digest day
+# ============================ POSTING SCHEDULE ============================
+# One post a day, chosen by weekday. THIS BLOCK IS THE WHOLE CADENCE — retune
+# it here and both the renderer (this file) and the poster (post.py, which
+# imports kind_for) follow. See kind_for() for the resolver.
+#
+#   Tue   practitioner spotlight        (warm, ~1/week)
+#   Thu   weekend roundup (Fri/Sat/Sun)
+#   Sun   warm essay content, ALTERNATING weekly: blog carousel / quote card
+#   else  daily event carousel
+#
+# ~2 non-event posts a week (Tue + Sun), interleaved with the event cards.
+MONDAY, TUESDAY, WEDNESDAY, THURSDAY = 0, 1, 2, 3
+FRIDAY, SATURDAY, SUNDAY = 4, 5, 6
 
-# Warm-content slots. Tuesday and Sunday run a practitioner spotlight instead
-# of the daily event carousel — the ~2/week non-event cadence, using the one
-# warm content that is ready (real bios + a reviewed photo). Blog excerpts and
-# quote cards, when built, take the Sunday slot and drop this to Tuesdays only.
-PRACTITIONER_WEEKDAYS = {1, 6}     # Tue, Sun
-# Rotation epoch: the spotlight launch date. The roster is walked one person
-# per warm slot from here, so the sequence is fixed and every re-run of a
-# given date renders the same person.
-PRACTITIONER_EPOCH = date(2026, 7, 26)   # first warm slot (Sun) on/after go-live
+WEEKEND_WEEKDAY = THURSDAY          # matches the digest day
+
+# Practitioner spotlights now run TUESDAYS ONLY — Sunday went to blog/quote.
+PRACTITIONER_WEEKDAYS = {TUESDAY}
+# Rotation epoch: one person is walked off the roster per practitioner slot
+# from here, so the sequence is fixed and every re-run of a given date renders
+# the same person. The first Tuesday on/after go-live.
+PRACTITIONER_EPOCH = date(2026, 7, 28)
+
+# The Sunday warm slot alternates blog carousel / quote card week over week.
+# Odd Sundays since the epoch are blog, even are quote (see warm_sunday_kind);
+# each kind then walks its own rotation (ESSAYS / QUOTES) one step per slot, so
+# any given Sunday is fully reproducible. The first Sunday on/after go-live.
+WARM_SUNDAY_EPOCH = date(2026, 8, 2)
 
 PRACT_FEED_URL = 'https://admin.soundbathcalendar.com/feeds/practitioners.json'
 PRACT_CACHE = os.path.join(ROOT, 'data', 'practitioners.json')
@@ -138,6 +161,38 @@ def _fit(draw, text, f, max_w):
     """Single line, ellipsized to fit."""
     lines = _wrap(draw, text, f, max_w, 1)
     return lines[0] if lines else ''
+
+
+def _eyebrow_text(draw, text, f, max_w, tracking=3):
+    """Clip an eyebrow string to what fits `max_w` at the tracked pitch —
+    _eyebrow draws char by char and has no wrap, so a long essay title would
+    otherwise run off the right margin."""
+    out, x = '', 0.0
+    for ch in text:
+        adv = draw.textlength(ch, font=f) + tracking
+        if x + adv > max_w:
+            break
+        out += ch
+        x += adv
+    return out
+
+
+def _fit_block(draw, text, weight, max_w, max_h, sizes, max_lines):
+    """Largest font from `sizes` (try in the given, descending, order) whose
+    wrap fits inside max_lines AND max_h WITHOUT ellipsis. Returns (font, lines).
+
+    The no-ellipsis rule matters: excerpt and quote text is verbatim from the
+    essays, so dropping a trailing word to make it fit is not allowed — we
+    shrink the type instead. Falls back to the smallest size if nothing fits."""
+    for size in sizes:
+        f = font(size, weight)
+        lines = _wrap(draw, text, f, max_w, max_lines)
+        line_h = round(f.size * 1.2)
+        if (len(lines) <= max_lines and len(lines) * line_h <= max_h
+                and not lines[-1].endswith('…')):
+            return f, lines
+    f = font(sizes[-1], weight)
+    return f, _wrap(draw, text, f, max_w, max_lines)
 
 
 def _where(draw, event, f, max_w):
@@ -832,6 +887,398 @@ def build_practitioner(events, day, quiet=False):
     return manifest
 
 
+# ---------- blog excerpts & quote cards ----------
+#
+# Both draw on the twelve evergreen essays that live at the repo ROOT as
+# <slug>/index.html. Nothing here writes new prose: excerpts are pulled
+# VERBATIM from the essays (the register rule — honest facts, subculture voice
+# honored, never a claim the essay didn't make), and quote cards use a curated
+# shortlist of lines lifted from those same essays.
+
+# Rotation order for the blog carousel. A blog Sunday resolves to one essay via
+# WARM_SUNDAY_EPOCH + a slot counter (mirrors the practitioner rotation), so
+# the sequence is fixed and every re-run of a given date renders the same essay.
+# Ordered to interleave the topics rather than march through look-alikes.
+ESSAYS = [
+    'what-to-expect',
+    'sound-bath-science',
+    'where-sound-baths-come-from',
+    'singing-bowls-vs-gongs',
+    'is-a-sound-bath-religious',
+    '432hz-explained',
+    'what-is-a-gong-bath',
+    'sound-bath-vs-meditation',
+    'what-is-a-crystal-bowl-sound-bath',
+    'gong-bath',
+    'breathwork-sound',
+    'state-of-sound-healing',
+]
+
+# One striking line per quote card, VERBATIM from the essay it is credited to
+# (excerpts only — no new claims). Rotated one per quote slot. Each line is a
+# self-contained sentence that survives being lifted out of its paragraph.
+QUOTES = [
+    ('There is nothing to perform and no way to do it wrong.', 'what-to-expect'),
+    ('Most sound baths use both, and neither requires anything from you but '
+     'lying down and listening.', 'singing-bowls-vs-gongs'),
+    ('A sound bath is receptive — you lie down and the sound comes to you, no '
+     'technique required.', 'sound-bath-vs-meditation'),
+    ('There is nothing to do and no technique to get right.', 'what-is-a-gong-bath'),
+    ('No beliefs and no experience are required.', 'what-is-a-gong-bath'),
+    ('There is no liturgy, no text, no membership, and no one asks what you '
+     'believe.', 'is-a-sound-bath-religious'),
+    ('Thin evidence is not the same as evidence against.', 'sound-bath-science'),
+    ('Young traditions are still traditions; this one is being written by the '
+     'people playing tonight.', 'where-sound-baths-come-from'),
+    ('You are welcome to enjoy the session with or without the framework.',
+     '432hz-explained'),
+    ('Your mind can wander all it likes; the sound keeps drawing it back '
+     'without you doing anything.', 'sound-bath-vs-meditation'),
+    ('That physical, whole-room quality is what people mean when they call a '
+     'gong bath immersive.', 'what-is-a-gong-bath'),
+    ('Choose a session by facilitator, instruments, size, and setting — the '
+     'things that actually shape the hour.', '432hz-explained'),
+]
+
+# Paragraph classes that are chrome, not prose (crumbs, ctas, meta rows…).
+_PROSE_SKIP = ('crumb', 'cta', 'meta', 'footer', 'tag', 'label', 'eyebrow',
+               'kicker', 'fine', 'note')
+# Sentences opening with one of these dangle without their antecedent once
+# lifted out of the paragraph, so they never make good pull-quotes.
+_SENT_BAD_START = {'But', 'So', 'That', 'This', 'It', 'They', 'And', 'Yet',
+                   'Still', 'Then', 'There', 'These', 'Those'}
+QUOTE_TAGS = ('#soundbath #soundhealing #frontrange #denver #boulder #colorado '
+              '#soundbathmeditation #mindfulness')
+BLOG_TAGS = ('#soundbath #soundhealing #frontrange #denver #boulder #colorado '
+             '#soundbathmeditation #gongbath #singingbowls')
+
+
+# ---------- essay parsing ----------
+
+def _clean(fragment):
+    """Inline tags out, entities decoded, whitespace collapsed."""
+    text = re.sub(r'<[^>]+>', ' ', fragment or '')
+    return re.sub(r'\s+', ' ', html.unescape(text)).strip()
+
+
+def _sentences(text):
+    """Split into sentences on end punctuation FOLLOWED by whitespace and a
+    capital (or a quote), so decimals like '21.9' and mid-sentence
+    abbreviations don't fracture a sentence in half."""
+    parts = re.split(r'(?<=[.!?])\s+(?=[A-Z"“])', (text or '').strip())
+    return [p.strip() for p in parts if p.strip()]
+
+
+def _prose_sentences(raw_paragraph):
+    """Sentences of a paragraph, with any cross-reference / calendar link
+    DROPPED whole — a sentence that was really a 'see also' (its text was a
+    link to another page) is not pulled as an excerpt. Same-page anchors (#…)
+    are kept."""
+    marked = re.sub(r'<a\b[^>]*\shref="(?!#)[^"]*"[^>]*>.*?</a>', ' \x00 ',
+                    raw_paragraph, flags=re.S)
+    return [s for s in _sentences(_clean(marked)) if '\x00' not in s]
+
+
+def _essay_html(slug):
+    with open(os.path.join(ROOT, slug, 'index.html'), encoding='utf-8') as fh:
+        return fh.read()
+
+
+def _essay_title(html_text):
+    m = re.search(r'<h1[^>]*>(.*?)</h1>', html_text, re.S)
+    return _clean(m.group(1)) if m else ''
+
+
+def _essay_paragraphs(html_text):
+    """Raw inner-HTML of each prose paragraph in <main>, in document order.
+
+    Content-filtered, not class-filtered: the twelve essays use a dozen
+    different paragraph classes for the same honest prose, so a paragraph
+    qualifies by being a real sentence of some length rather than by its class.
+    """
+    m = re.search(r'<main\b[^>]*>(.*?)</main>', html_text, re.S)
+    body = m.group(1) if m else html_text
+    out = []
+    for pm in re.finditer(r'<p(?:\s+class="([^"]*)")?[^>]*>(.*?)</p>', body, re.S):
+        cls = pm.group(1) or ''
+        if any(s in cls for s in _PROSE_SKIP):
+            continue
+        raw = pm.group(2)
+        if len(_clean(raw).split()) >= 18 and re.search(r'[.!?]', raw):
+            out.append(raw)
+    return out
+
+
+def _essay_hook(html_text, paragraphs):
+    """The cover's one-line essence: the page's own summary, minus any leading
+    live-count sentence (a few essays open their summary with a session count,
+    which would date an evergreen card), falling back to the first prose
+    paragraph."""
+    m = re.search(r'<p class="(?:cal-summary|soh-dek)"[^>]*>(.*?)</p>',
+                  html_text, re.S)
+    sents = _sentences(_clean(m.group(1))) if m else []
+    while sents and re.match(r'\d', sents[0]):   # drop a leading count sentence
+        sents.pop(0)
+    hook = ' '.join(sents).strip()
+    if not hook and paragraphs:
+        hook = _clean(paragraphs[0])
+    return hook
+
+
+def _essay_passages(paragraphs, hook, n=3):
+    """Up to n verbatim excerpts, spread across the essay. Each is a single
+    sentence chosen to stand on its own: long enough to say something, short
+    enough to set large, and not opening on a dangling connective."""
+    hook_sents = set(_sentences(hook))
+    pool, seen = [], set()
+    for raw in paragraphs:
+        for s in _prose_sentences(raw):
+            if s in hook_sents or s in seen:
+                continue
+            if not 60 <= len(s) <= 200:
+                continue
+            first = s.split()[0].strip('“"—')
+            # A dangling connective or a bare number opening reads badly once
+            # the sentence is lifted onto a card of its own.
+            if first in _SENT_BAD_START or first[:1].isdigit():
+                continue
+            seen.add(s)
+            pool.append(s)
+    if len(pool) <= n:
+        return pool
+    # Spread the picks roughly evenly through the essay so the three slides
+    # aren't three consecutive sentences from the opening.
+    step = len(pool) / n
+    return [pool[min(len(pool) - 1, int(i * step))] for i in range(n)]
+
+
+# ---------- rotation ----------
+
+def _sunday_index(day):
+    """1-based count of Sundays from WARM_SUNDAY_EPOCH through `day` inclusive.
+    Odd -> blog week, even -> quote week. Robust off-Sunday too (a manual
+    --kind blog on any date still resolves deterministically)."""
+    return _count_weekday(WARM_SUNDAY_EPOCH, day, SUNDAY)
+
+
+def warm_sunday_kind(day):
+    return 'blog' if _sunday_index(day) % 2 == 1 else 'quote'
+
+
+def blog_essay_slug(day):
+    """The essay whose turn it is — one step per blog Sunday."""
+    slot = (_sunday_index(day) + 1) // 2
+    return ESSAYS[(slot - 1) % len(ESSAYS)]
+
+
+def quote_for(day):
+    """The (line, source-slug) whose turn it is — one step per quote Sunday."""
+    slot = _sunday_index(day) // 2
+    return QUOTES[(slot - 1) % len(QUOTES)]
+
+
+# ---------- blog slides ----------
+
+def slide_blog_cover(palette, title, hook):
+    """Essay title + hook. No photo — the type is the hero, on the pastel."""
+    img = ground(palette, rotate=0)
+    d = ImageDraw.Draw(img)
+    _wave(d, MARGIN, 116)
+    _eyebrow(d, MARGIN + 80, 100, 'FROM THE JOURNAL', font(26, 600))
+
+    f_title, lines = _fit_block(d, title, 500, COL, 560,
+                                [104, 92, 80, 70, 60], 4)
+    line_h = round(f_title.size * 1.1)
+    hook_lines = _wrap(d, hook, font(36, 400), COL, 4) if hook else []
+    hook_h = len(hook_lines) * round(36 * 1.34) + (34 if hook_lines else 0)
+    block_h = len(lines) * line_h + hook_h
+    y = max(300, (H - block_h) // 2 - 30)
+    for line in lines:
+        d.text((MARGIN, y), line, font=f_title, fill=INK)
+        y += line_h
+    if hook_lines:
+        y += 34
+        for line in hook_lines:
+            d.text((MARGIN, y), line, font=font(36, 400), fill=MUTED)
+            y += round(36 * 1.34)
+
+    _footer(d, right='swipe →')
+    return img
+
+
+def slide_blog_passage(palette, passage, eyebrow, rotate):
+    """One verbatim excerpt, set as large as it fits and vertically centred."""
+    img = ground(palette, rotate=rotate)
+    d = ImageDraw.Draw(img)
+    _wave(d, MARGIN, 116)
+    _eyebrow(d, MARGIN + 80, 100, eyebrow, font(26, 600))
+
+    top, bottom = 250, H - 170
+    f, lines = _fit_block(d, passage, 500, COL, bottom - top,
+                          [64, 58, 52, 46, 40, 36, 32], 9)
+    line_h = round(f.size * 1.28)
+    y = top + max(0, (bottom - top - len(lines) * line_h) // 2)
+    for line in lines:
+        d.text((MARGIN, y), line, font=f, fill=INK)
+        y += line_h
+
+    _footer(d, right='swipe →')
+    return img
+
+
+def slide_blog_close(palette, title, slug, rotate):
+    """Closer: the title again and the call to read it. Link in bio."""
+    img = ground(palette, rotate=rotate)
+    d = ImageDraw.Draw(img)
+    _wave(d, MARGIN, 116)
+    _eyebrow(d, MARGIN + 80, 100, 'READ THE FULL PIECE', font(26, 600))
+
+    f_head, lines = _fit_block(d, title, 500, COL, 520, [88, 76, 66, 58], 4)
+    line_h = round(f_head.size * 1.12)
+    block_h = len(lines) * line_h + 90
+    y = max(300, (H - block_h) // 2 - 20)
+    for line in lines:
+        d.text((MARGIN, y), line, font=f_head, fill=INK)
+        y += line_h
+    d.text((MARGIN, y + 30), 'Link in bio', font=font(42, 500), fill=ACCENT)
+
+    _footer(d, left='soundbathcalendar.com', right=f'/{slug}')
+    return img
+
+
+# ---------- quote card ----------
+
+def slide_quote(palette, line, essay_title):
+    """A single 4:5 card: one line centred large, attributed. No swipe cue —
+    this is a one-slide post, not a carousel."""
+    img = ground(palette, rotate=0)
+    d = ImageDraw.Draw(img)
+    _wave(d, (W - 60) // 2, 190)
+
+    top, bottom = 300, H - 300
+    f, lines = _fit_block(d, f'“{line}”', 500, COL, bottom - top,
+                          [96, 84, 74, 64, 56, 48, 42], 8)
+    line_h = round(f.size * 1.2)
+    y = top + max(0, (bottom - top - len(lines) * line_h) // 2)
+    for ln in lines:
+        w = d.textlength(ln, font=f)
+        d.text(((W - w) // 2, y), ln, font=f, fill=INK)
+        y += line_h
+
+    fa = font(30, 500)
+    attrib = 'soundbathcalendar.com'
+    wa = d.textlength(attrib, font=fa)
+    d.text(((W - wa) // 2, y + 46), attrib, font=fa, fill=ACCENT)
+    if essay_title:
+        fe = font(28, 400)
+        et = _fit(d, f'from “{essay_title}”', fe, COL)
+        we = d.textlength(et, font=fe)
+        d.text(((W - we) // 2, y + 96), et, font=fe, fill=MUTED)
+    return img
+
+
+# ---------- captions ----------
+
+def blog_captions(title, hook, slug):
+    """Excerpt-carousel captions. The body is the essay's own hook — its
+    words, not ours — and the link is the essay page."""
+    url = f'{SITE_URL}/{slug}/'
+    lines = [f'From the journal — {title}.']
+    if hook:
+        lines += ['', hook]
+    body = '\n'.join(lines)
+    fb = f'{body}\n\nRead the full piece: {url}'
+    ig = f'{body}\n\nRead the full piece — link in bio.\n\n{BLOG_TAGS}'
+    return fb, ig
+
+
+def quote_captions(line, essay_title, slug):
+    url = f'{SITE_URL}/{slug}/'
+    body = f'“{line}”\n\n— soundbathcalendar.com'
+    tail = f'in “{essay_title}”' if essay_title else 'on the calendar'
+    fb = f'{body}\n\nMore {tail}: {url}'
+    ig = f'{body}\n\nFrom “{essay_title}” — link in bio.\n\n{QUOTE_TAGS}'
+    return fb, ig
+
+
+# ---------- post builders ----------
+
+def build_blog(events, day, quiet=False):
+    """One blog-excerpt carousel for `day`: cover + up to three verbatim
+    passage slides + a read-the-piece closer. Returns the manifest, or None
+    when the essay can't be read or yields nothing usable."""
+    slug = blog_essay_slug(day)
+    try:
+        html_text = _essay_html(slug)
+    except OSError:
+        if not quiet:
+            print(f'  -- {day}: essay {slug} not found, skipping')
+        return None
+    title = _essay_title(html_text)
+    paragraphs = _essay_paragraphs(html_text)
+    hook = _essay_hook(html_text, paragraphs)
+    passages = _essay_passages(paragraphs, hook, 3)
+    if not title or not passages:
+        if not quiet:
+            print(f'  -- {day}: essay {slug} yielded no passages, skipping')
+        return None
+
+    palette = palette_for(day)
+    stamp = day.isoformat()
+    folder = f'img/social/{stamp}-blog'
+    # A blank scratch canvas for text measurement — cheaper than rendering a
+    # mesh ground just to size the eyebrow.
+    eyebrow = _eyebrow_text(ImageDraw.Draw(Image.new('RGB', (W, H))),
+                            title.upper(), font(26, 600), COL - 90)
+
+    slides = [_write(slide_blog_cover(palette, title, hook), f'{folder}/01-cover.jpg')]
+    for i, passage in enumerate(passages, start=2):
+        slides.append(_write(slide_blog_passage(palette, passage, eyebrow, i % 4),
+                             f'{folder}/{i:02d}-passage.jpg'))
+    n = len(slides) + 1
+    slides.append(_write(slide_blog_close(palette, title, slug, n % 4),
+                         f'{folder}/{n:02d}-read.jpg'))
+
+    fb, ig = blog_captions(title, hook, slug)
+    manifest = {
+        'date': stamp, 'kind': 'blog', 'palette': palette,
+        'slides': slides, 'essay': slug, 'title': title,
+        'landing_url': f'{SITE_URL}/{slug}/',
+        'caption_facebook': fb, 'caption_instagram': ig,
+    }
+    _write_manifest(f'img/social/{stamp}-blog.json', manifest)
+    if not quiet:
+        print(f'  ok {folder} — “{title}”, {len(slides)} slides, palette {palette}')
+    return manifest
+
+
+def build_quote(events, day, quiet=False):
+    """One single-image quote card for `day`. Always renders — the quote list
+    is committed, so there is nothing to fetch and nothing to skip on."""
+    line, slug = quote_for(day)
+    try:
+        title = _essay_title(_essay_html(slug))
+    except OSError:
+        title = ''
+
+    palette = palette_for(day)
+    stamp = day.isoformat()
+    folder = f'img/social/{stamp}-quote'
+    slides = [_write(slide_quote(palette, line, title), f'{folder}/01-quote.jpg')]
+
+    fb, ig = quote_captions(line, title, slug)
+    manifest = {
+        'date': stamp, 'kind': 'quote', 'palette': palette,
+        'slides': slides, 'essay': slug, 'quote': line, 'title': title,
+        'landing_url': f'{SITE_URL}/{slug}/',
+        'caption_facebook': fb, 'caption_instagram': ig,
+    }
+    _write_manifest(f'img/social/{stamp}-quote.json', manifest)
+    if not quiet:
+        print(f'  ok {folder} — quote from {slug}, palette {palette}')
+    return manifest
+
+
 def _write_manifest(rel, manifest):
     path = os.path.join(ROOT, rel)
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -841,20 +1288,29 @@ def _write_manifest(rel, manifest):
 
 
 def kind_for(day):
-    """One post a day, picked by weekday: Thursday runs the weekend carousel,
-    Tuesday and Sunday run a practitioner spotlight, everything else is the
-    daily event carousel."""
-    if day.weekday() == WEEKEND_WEEKDAY:
+    """One post a day, picked by weekday. The whole schedule lives in the
+    POSTING SCHEDULE block near the top of this file:
+
+        Tue   practitioner spotlight
+        Thu   weekend roundup
+        Sun   blog carousel / quote card, alternating weekly
+        else  daily event carousel
+    """
+    wd = day.weekday()
+    if wd == WEEKEND_WEEKDAY:
         return 'weekend'
-    if day.weekday() in PRACTITIONER_WEEKDAYS:
+    if wd in PRACTITIONER_WEEKDAYS:
         return 'practitioner'
+    if wd == SUNDAY:
+        return warm_sunday_kind(day)
     return 'daily'
 
 
 def main():
     ap = argparse.ArgumentParser(description='Render the social carousel.')
     ap.add_argument('--date', help='YYYY-MM-DD (default: today, Denver)')
-    ap.add_argument('--kind', choices=('daily', 'weekend', 'practitioner', 'auto'),
+    ap.add_argument('--kind', choices=('daily', 'weekend', 'practitioner',
+                                       'blog', 'quote', 'auto'),
                     default='auto')
     ap.add_argument('--days', type=int, default=1,
                     help='render this many consecutive days (local preview)')
@@ -866,6 +1322,8 @@ def main():
     builders = {
         'weekend': build_weekend,
         'practitioner': build_practitioner,
+        'blog': build_blog,
+        'quote': build_quote,
         'daily': build_daily,
     }
     made = 0
