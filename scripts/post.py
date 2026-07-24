@@ -19,7 +19,12 @@ would mean a refresh job that rewrites its own GitHub secret and a PAT scoped
 to do it. Taking the Facebook-Login path instead, a Page access token derived
 from a long-lived user token DOES NOT EXPIRE, and the same token authorizes
 both surfaces: Page posts and Instagram publishing (via the IG account linked
-to the Page). One secret, set once, no refresh machinery. Getting it:
+to the Page). One secret, set once, no refresh machinery.
+
+    scripts/meta_token.py does the whole chain and refuses to hand back a
+    token that turns out to be expiring. Prefer it to doing this by hand.
+
+The chain it runs:
 
   1. Graph API Explorer -> your app -> User Token with pages_show_list,
      pages_manage_posts, pages_read_engagement, instagram_basic,
@@ -68,7 +73,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Overridable because Meta retires versions on a ~2-year clock; when this one
 # goes, set META_API_VERSION rather than editing the script.
-API_VERSION = os.environ.get('META_API_VERSION', 'v21.0')
+API_VERSION = os.environ.get('META_API_VERSION', 'v25.0')
 GRAPH = f'https://graph.facebook.com/{API_VERSION}'
 
 HTTP_TIMEOUT_S = 45

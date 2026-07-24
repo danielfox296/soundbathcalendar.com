@@ -24,7 +24,7 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 
-API_VERSION = os.environ.get('META_API_VERSION', 'v21.0')
+API_VERSION = os.environ.get('META_API_VERSION', 'v25.0')
 GRAPH = f'https://graph.facebook.com/{API_VERSION}'
 TIMEOUT_S = 30
 
