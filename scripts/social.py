@@ -89,7 +89,7 @@ PRACTITIONER_WEEKDAYS = {1, 6}     # Tue, Sun
 # Rotation epoch: the spotlight launch date. The roster is walked one person
 # per warm slot from here, so the sequence is fixed and every re-run of a
 # given date renders the same person.
-PRACTITIONER_EPOCH = date(2026, 7, 27)   # first Sunday on/after go-live
+PRACTITIONER_EPOCH = date(2026, 7, 26)   # first warm slot (Sun) on/after go-live
 
 PRACT_FEED_URL = 'https://admin.soundbathcalendar.com/feeds/practitioners.json'
 PRACT_CACHE = os.path.join(ROOT, 'data', 'practitioners.json')
