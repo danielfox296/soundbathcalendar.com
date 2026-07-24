@@ -39,6 +39,10 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import meta_check  # noqa: E402
+
 DEFAULT_APP_ID = '1973127126520036'   # Sound Bath Calendar Poster
 
 API_VERSION = os.environ.get('META_API_VERSION', 'v25.0')
@@ -186,11 +190,25 @@ def main():
         else:
             print('META_IG_USER_ID    (none — Instagram not linked to this Page)')
         print(f'META_PAGE_TOKEN    {r["token"]}')
-    print('\nSet these three as GitHub repository secrets:')
+    print('\nSet these as GitHub repository secrets:')
     print('  Settings -> Secrets and variables -> Actions -> New repository secret')
-    print('\nThen confirm with the shareable checker:')
-    print("  export META_PAGE_TOKEN='<the token above>'")
-    print('  python3 scripts/meta_check.py')
+
+    # Verify in the SAME run that minted it. Making this a second command that
+    # needed the token pasted into it was the whole source of trouble: a token
+    # copied between two commands is a token that can be copied wrong.
+    print('\n' + '=' * 68)
+    print('Verification (safe to share — no token below this line)')
+    print('=' * 68 + '\n')
+    for r in usable:
+        print(f'--- {r["name"]} ---')
+        problems, _, _ = meta_check.verify(r['token'])
+        if problems:
+            print(f'\n  {len(problems)} problem(s):')
+            for p in problems:
+                print(f'    - {p}')
+        else:
+            print('\n  All checks passed.')
+        print()
     return 0
 
 
