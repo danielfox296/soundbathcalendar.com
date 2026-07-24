@@ -5,8 +5,10 @@ confirms the token is the never-expiring PAGE kind rather than a user token,
 checks every permission the poster actually calls, and prints the three secret
 values to paste into GitHub.
 
-    export META_PAGE_TOKEN='EAA...'
     python3 scripts/meta_check.py
+
+It prompts for the token (hidden input, so it stays out of shell history);
+META_PAGE_TOKEN is honoured if already set to a real one.
 
 Read-only: it lists and inspects, and never publishes anything.
 
@@ -16,6 +18,7 @@ copy them out of the Graph API Explorer, and picking the wrong one means the
 whole automation silently dies two months from now — on a Tuesday, with no
 error until the workflow goes red. debug_token is what tells them apart.
 """
+import getpass
 import json
 import os
 import sys
@@ -56,10 +59,22 @@ def graph(path, params):
 
 
 def main():
+    # Prompt rather than require an env var: an `export VAR='placeholder'`
+    # line pasted verbatim is indistinguishable here from a real token, and
+    # produces a confusing "cannot parse access token" from Meta instead of an
+    # obvious local mistake. getpass keeps it out of shell history too.
     token = os.environ.get('META_PAGE_TOKEN', '').strip()
-    if not token:
-        print('Set META_PAGE_TOKEN first:\n')
-        print("    export META_PAGE_TOKEN='EAA...'\n")
+    if not token.startswith('EAA'):
+        if token:
+            print(f'META_PAGE_TOKEN is set but does not look like a token '
+                  f'(expected it to start with "EAA") — ignoring it.\n')
+        try:
+            token = getpass.getpass('Page access token: ').strip()
+        except (EOFError, KeyboardInterrupt):
+            print('\nCancelled.')
+            return 2
+    if not token.startswith('EAA'):
+        print('That does not look like a Graph access token.')
         return 2
 
     problems = []
