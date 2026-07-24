@@ -2,6 +2,11 @@ __pycache__/
 *.pyc
 .DS_Store
 
+# Daily social cards — generated into the deploy by scripts/social.py on every
+# build (CAL-25), never committed. Regenerate locally with:
+#   python3 scripts/social.py --days 7
+img/social/
+
 # Claude Code — per-user local settings & agent worktrees (never commit; may contain secrets)
 .claude/settings.local.json
 .claude/worktrees/

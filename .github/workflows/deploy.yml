@@ -16,6 +16,11 @@ on:
   schedule:
     - cron: '0 12 * * *'
   workflow_dispatch:
+    inputs:
+      post_social:
+        description: 'Also publish the day card to Facebook + Instagram'
+        type: boolean
+        default: false
 
 jobs:
   deploy:
@@ -44,9 +49,29 @@ jobs:
             -o /tmp/live-sitemap.xml \
             || echo "live sitemap unavailable — IndexNow will submit all URLs"
 
-      # Build is stdlib-only Python — no pip install step needed.
+      # Pinned to the version ubuntu-latest already ships, so this changes
+      # nothing about how build.py runs — it is here so the Pillow install in
+      # the next-but-one step lands in a normal, writable environment rather
+      # than a PEP 668 externally-managed system Python.
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      # Build itself is stdlib-only.
       - name: Build site
         run: python3 build.py
+
+      # The daily social card (CAL-25). Pillow is the ONE non-stdlib
+      # dependency in this workflow and only this step needs it. Runs after
+      # build.py so it reads the same freshly-fetched feed cache the site did.
+      # Three days, not one: Meta ingests its own copy of the image at publish
+      # time, so a card only has to be reachable during the post — rendering a
+      # short buffer just means a retried or manual post still finds one.
+      - name: Render social cards
+        run: |
+          python3 -m pip install --quiet --disable-pip-version-check Pillow
+          python3 scripts/social.py --days 3
 
       - name: Stage site
         run: |
@@ -72,3 +97,31 @@ jobs:
       # never fails a deploy.
       - name: Ping IndexNow (changed URLs only)
         run: python3 scripts/indexnow.py --baseline /tmp/live-sitemap.xml
+
+      # Publish the day's card to the Facebook Page + Instagram (CAL-25).
+      # AFTER the Pages deploy on purpose: Instagram cURLs the image rather
+      # than accepting bytes, so the card has to be live first —
+      # --require-live-image polls the public URL and refuses to publish until
+      # it serves a JPEG.
+      #
+      # Only on the daily cron, or a manual run that explicitly ticks the box.
+      # The repository_dispatch trigger fires on EVERY event approval, and
+      # posting on each of those would blast the feed a dozen times a day.
+      #
+      # No-ops safely when the secrets are unset (nothing published, step
+      # passes), so this can merge before the Meta app exists. A red step here
+      # means the token died or Meta rejected the post — that failure mail is
+      # the whole monitoring story for this job.
+      - name: Post the day card to Meta
+        if: github.event_name == 'schedule' || inputs.post_social
+        env:
+          META_PAGE_ID: ${{ secrets.META_PAGE_ID }}
+          META_PAGE_TOKEN: ${{ secrets.META_PAGE_TOKEN }}
+          META_IG_USER_ID: ${{ secrets.META_IG_USER_ID }}
+        run: |
+          if [ -z "$META_PAGE_TOKEN" ]; then
+            echo "META_PAGE_TOKEN unset — social posting not configured yet."
+            python3 scripts/post.py
+            exit 0
+          fi
+          python3 scripts/post.py --live --require-live-image
