@@ -9,9 +9,12 @@ touches nothing. Publishing requires --live.
     python3 scripts/post.py --live               # actually publish
 
 CREDENTIALS (env; needed for --live):
-    META_PAGE_ID      the Facebook Page's numeric id
-    META_PAGE_TOKEN   a PAGE access token (see below)
-    META_IG_USER_ID   the Instagram professional account's IG user id
+    META_PAGE_TOKEN   a PAGE access token — the ONLY required secret.
+
+The Page and Instagram ids are derived from the token at run time (a Page
+token knows its own Page, and the Page knows its linked Instagram account), so
+there is nothing else to look up or paste. META_PAGE_ID / META_IG_USER_ID
+still override, for a token that can see more than one Page.
 
 ON THE TOKEN — this is the decision that keeps the whole thing from rotting.
 Instagram's own login path issues a token that expires every 60 days, which
@@ -160,6 +163,45 @@ def _await_container(creation_id, token, label):
         time.sleep(CONTAINER_POLL_SLEEP_S)
 
 
+def resolve_targets(token):
+    """Work out which Page and Instagram account this token speaks for.
+
+    A Page token already knows its own Page (/me) and the Page knows its
+    linked Instagram account, so making a human look those ids up and paste
+    them into two more secrets was busywork with two extra chances to paste
+    the wrong thing. One secret in, both ids derived here.
+
+    META_PAGE_ID / META_IG_USER_ID still override, for the case of a token
+    that can see several Pages.
+    """
+    page_id = os.environ.get('META_PAGE_ID', '').strip()
+    ig_user_id = os.environ.get('META_IG_USER_ID', '').strip()
+    if page_id and ig_user_id:
+        return page_id, ig_user_id
+
+    if not page_id:
+        try:
+            page_id = _graph('me', {'fields': 'id,name',
+                                    'access_token': token}).get('id', '')
+        except PostError as exc:
+            print(f'  could not resolve the Page from the token — {exc}',
+                  file=sys.stderr)
+            return '', ig_user_id
+
+    if not ig_user_id and page_id:
+        # Absent is normal and not an error: no linked Instagram account just
+        # means this run posts to Facebook only.
+        try:
+            linked = _graph(page_id, {
+                'fields': 'instagram_business_account{id,username}',
+                'access_token': token,
+            }).get('instagram_business_account') or {}
+            ig_user_id = linked.get('id', '')
+        except PostError as exc:
+            print(f'  no Instagram account resolved ({exc}) — Facebook only')
+    return page_id, ig_user_id
+
+
 # ---------- the two surfaces ----------
 
 def post_facebook(manifest, page_id, token):
@@ -296,12 +338,12 @@ def main():
         raise SystemExit(f'refusing to publish {day} on {today} — '
                          f'pass --allow-stale-date if you mean it')
 
-    page_id = os.environ.get('META_PAGE_ID', '').strip()
     token = os.environ.get('META_PAGE_TOKEN', '').strip()
-    ig_user_id = os.environ.get('META_IG_USER_ID', '').strip()
-    if not token or not (page_id or ig_user_id):
-        raise SystemExit('META_PAGE_TOKEN and at least one of META_PAGE_ID / '
-                         'META_IG_USER_ID must be set to publish')
+    if not token:
+        raise SystemExit('META_PAGE_TOKEN must be set to publish')
+    page_id, ig_user_id = resolve_targets(token)
+    if not (page_id or ig_user_id):
+        raise SystemExit('token resolves to no Page and no Instagram account')
 
     if args.require_live_image:
         for i, slide in enumerate(manifest['slides'], start=1):

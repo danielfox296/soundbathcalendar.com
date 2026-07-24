@@ -120,8 +120,11 @@ jobs:
       - name: Post the day carousel to Meta
         if: github.event_name == 'schedule' || inputs.post_social
         env:
-          META_PAGE_ID: ${{ secrets.META_PAGE_ID }}
+          # The only secret required. post.py derives the Page and Instagram
+          # ids from the token itself; the other two are optional overrides
+          # for a token that can see more than one Page.
           META_PAGE_TOKEN: ${{ secrets.META_PAGE_TOKEN }}
+          META_PAGE_ID: ${{ secrets.META_PAGE_ID }}
           META_IG_USER_ID: ${{ secrets.META_IG_USER_ID }}
         run: |
           if [ -z "$META_PAGE_TOKEN" ]; then
