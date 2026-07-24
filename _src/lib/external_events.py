@@ -1,12 +1,10 @@
 """External sound-events feed loader + calendar renderer for build.py.
 
-SOUND BATH CALENDAR fork (2026-07-19 port): the calendar lives at the ROOT of
-soundbathcalendar.com — permalinks at /event/<slug>/ — and Firstwater is one
-operator among many (its rows link out to thefirstwater.co session pages).
-Divergences from the site/ original are marked with `# [port]`.
+SOUND BATH CALENDAR: the calendar lives at the ROOT of soundbathcalendar.com,
+with permalinks at /event/<slug>/.
 
-The Front Range calendar lists sound events run by other operators alongside
-Firstwater's own dated sessions. At build time we:
+The Front Range calendar lists sound events run by operators across the region.
+At build time we:
   1. fetch the calendar feed (env CALENDAR_FEED_URL, default: the events
      service /feeds/calendar.json, which serves APPROVED events only),
   2. validate its shape and write it to data/external-events.json
@@ -21,12 +19,12 @@ service ships it, the fetch fails on every build and we fall back to the
 committed data/external-events.json — which the pull agent writes as a PR
 and Daniel reviews. That committed file is BOTH the interim source of truth
 AND the eventual cache: once the service serves the feed, a successful HTTP
-fetch overwrites it (same discipline as sessions_feed + data/sessions-cache.json).
+fetch overwrites it.
 Set CALENDAR_FEED_FILE=/abs/path to build against a local fixture without
 ever touching the committed file.
 
-Stdlib only — no new dependencies. Date/time formatting and the Firstwater
-Event builder are reused from sessions_feed so the two feeds never drift.
+Stdlib only — no new dependencies. Date/time formatting comes from
+datetime_fmt so every surface agrees on a session's local date.
 
 FEED CONTRACT (GET {CALENDAR_FEED_URL}), shape:
 { "generated_at": "<ISO>", "events": [ {
@@ -70,16 +68,13 @@ from urllib.parse import quote, quote_plus, urlencode
 
 from _src.lib import ics as ics_lib
 from _src.lib import taxonomy
-from _src.lib import sessions_feed
-from _src.lib.sessions_feed import DENVER, parse_iso
+from _src.lib import datetime_fmt
+from _src.lib.datetime_fmt import DENVER, parse_iso
 
 DEFAULT_FEED_URL = 'https://admin.soundbathcalendar.com/feeds/calendar.json'
 CACHE_REL_PATH = os.path.join('data', 'external-events.json')
 FETCH_TIMEOUT_S = 10
 
-# [port] Firstwater's own session pages stay on the artist site; every
-# Firstwater row on this calendar links out to them absolutely.
-FIRSTWATER_URL = 'https://thefirstwater.co'
 
 # The calendar's own origin — used for absolute webcal:// + https .ics subscribe
 # URLs (the site is static, so every .ics is a build-emitted file served here).
@@ -104,7 +99,7 @@ CITY_H2 = {
 }
 
 # Nearby suburbs fold into the nearest canonical section (spec mapping). Only
-# used when a row's city is not already canonical, or to place a Firstwater
+# used when a row's city is not already canonical, or to place an
 # session from its free-text venue address.
 _SUBURB_TO_CITY = {
     'lakewood': 'Denver', 'arvada': 'Denver', 'aurora': 'Denver',
@@ -176,7 +171,7 @@ def map_city(text):
 
 
 # ---------------------------------------------------------------------------
-# Loading (mirrors sessions_feed.load_feed precedence + graceful fallback)
+# Loading (mirrors datetime_fmt.load_feed precedence + graceful fallback)
 # ---------------------------------------------------------------------------
 
 def empty_feed():
@@ -259,16 +254,16 @@ def load_feed(repo_root, log=print):
 
 
 # ---------------------------------------------------------------------------
-# Time helpers (America/Denver) — thin wrappers over sessions_feed idioms so
-# both feeds format dates identically.
+# Time helpers (America/Denver) — thin wrappers over datetime_fmt so every
+# surface formats dates identically.
 # ---------------------------------------------------------------------------
 
 def _denver(ts):
-    return sessions_feed._denver(ts)
+    return datetime_fmt._denver(ts)
 
 
 def _day(n):
-    return sessions_feed._day(n)
+    return datetime_fmt._day(n)
 
 
 def fmt_row_date(ts):
@@ -288,7 +283,7 @@ def fmt_row_daynum(ts):
 
 
 def fmt_time(ts):
-    return sessions_feed.fmt_time(ts)
+    return datetime_fmt.fmt_time(ts)
 
 
 def fmt_stamp_date(now):
@@ -331,7 +326,7 @@ def weekend_window(now=None):
 
 
 # ---------------------------------------------------------------------------
-# Row model — one normalized dict per rendered event, external or Firstwater.
+# Row model — one normalized dict per rendered event.
 # ---------------------------------------------------------------------------
 
 def _external_row(e):
@@ -379,89 +374,11 @@ def _external_row(e):
     }
 
 
-# Nicer display names for the known Firstwater session slugs; any other slug
-# falls back to a title-cased form of the slug itself.
-_SESSION_TITLES = {
-    'healing-from-breakups': 'Healing from Breakups',
-    'sunday-downshift': 'Sunday Downshift',
-    'grief': 'Grief',
-    'new-to-denver': 'New to Denver',
-    'couples': 'Couples Reconnection',
-    'quiet-new-years': "Quiet New Year's",
-    'laid-off': 'Laid Off',
-    'singles': 'Singles',
-    'sleep': 'Sleep Descent',
-}
-
-
-def _session_title(slug):
-    return _SESSION_TITLES.get(slug) or slug.replace('-', ' ').title()
-
-
-def _session_price(s):
-    """Cheapest-tier price string for a Firstwater row, or ''."""
-    tiers = s.get('tiers') or []
-    cents = None
-    for t in tiers:
-        if t.get('mode') == 'sliding':
-            amt = t.get('min_amount') or t.get('suggested_amount') or t.get('amount')
-            prefix = 'from '
-        else:
-            amt = t.get('amount')
-            prefix = 'from ' if len(tiers) > 1 else ''
-        if amt is None:
-            continue
-        if cents is None or amt < cents:
-            cents = amt
-            best_prefix = prefix
-    if cents is None:
-        return ''
-    money = sessions_feed.fmt_money(cents)
-    return f'{best_prefix}{money}' if money else ''
-
-
-def _firstwater_row(s):
-    slug = s.get('event_slug', '')
-    venue = (s.get('venue') or {}).get('name', '') or ''
-    address = (s.get('venue') or {}).get('address', '') or ''
-    title = _session_title(slug)
-    return {
-        'kind': 'firstwater',
-        'name': title,
-        'operator': 'Firstwater',
-        'starts_at': s['starts_at'],
-        'city': map_city(address or venue),
-        'venue': venue,
-        'neighborhood': None,
-        'address': address,
-        'price': _session_price(s),
-        'note': '',
-        # [port] absolute: the session page lives on the artist site now
-        'ticket_url': f'{FIRSTWATER_URL}/sessions/{slug}/',
-        'source_url': '',
-        'tags': [],
-        'dedup_key': f'firstwater|{slug}|{_denver(s["starts_at"]).strftime("%Y-%m-%d")}',
-        # v2 fields — Firstwater rows carry no listing image (their distinction is
-        # treatment, not a flyer) and link to their own rich session page; the
-        # factual line still renders from the template. facilitator/urls stay
-        # empty here (the session page is authoritative for its own detail).
-        'image_url': '',
-        'facilitator': '',
-        'operator_url': '',
-        'venue_url': '',
-        'description': '',
-        '_ext': None,
-        '_sess': s,
-        '_event_title': title,
-    }
-
-
-def build_rows(cal_feed, sessions_feed_data, now=None):
+def build_rows(cal_feed, now=None):
     """Normalized, future, de-duplicated rows for the calendar.
 
-    External: status='approved' AND starts in the future.
-    Firstwater: sessions_feed DISPLAY_STATUSES AND future.
-    Rejected/candidate external events and past events never appear.
+    status='approved' AND starts in the future. Rejected/candidate events and
+    past events never appear.
     """
     now = _now_utc(now)
     rows = []
@@ -476,51 +393,19 @@ def build_rows(cal_feed, sessions_feed_data, now=None):
             continue
         rows.append(_external_row(e))
 
-    for s in (sessions_feed_data or {}).get('sessions', []):
-        if s.get('status') not in sessions_feed.DISPLAY_STATUSES:
-            continue
-        try:
-            if parse_iso(s['starts_at']) <= now:
-                continue
-        except (KeyError, ValueError):
-            continue
-        rows.append(_firstwater_row(s))
-
-    # Defensive de-dup within the external feed (server already dedups; this
-    # guards a hand-edited feed): first occurrence by dedup_key, then by
-    # ticket_url, wins.
-    #
-    # Cross-feed guard: external and Firstwater rows use structurally disjoint
-    # dedup_keys (content-based vs 'firstwater|slug|date') and disjoint
-    # ticket_urls (Eventbrite vs internal session path), so the two guards above
-    # never catch the SAME real event surfacing in both feeds — e.g. a Firstwater
-    # session an operator also cross-posts to Eventbrite. Firstwater is
-    # authoritative for its own sessions, so drop any external row whose canonical
-    # normalize(name)+date+normalize(venue) matches a Firstwater row. Best-effort:
-    # a scraped listing whose title/venue text differs from the session's curated
-    # title/venue won't match — source-level exclusion in the pull agent is the
-    # primary guard; this only catches the clean, identical cross-post.
-    def _content_key(r):
-        day = _denver(r['starts_at']).strftime('%Y-%m-%d')
-        return make_dedup_key(r['name'], day, r['venue'])
-
-    firstwater_content = {
-        _content_key(r) for r in rows if r['kind'] == 'firstwater'
-    }
-
+    # Defensive de-dup (the server already dedups; this guards a hand-edited
+    # feed): first occurrence by dedup_key, then by ticket_url, wins.
     seen_keys, seen_urls, deduped = set(), set(), []
     for r in rows:
         k = r.get('dedup_key') or ''
         u = r.get('ticket_url') or ''
         if k and k in seen_keys:
             continue
-        if u and r['kind'] == 'external' and u in seen_urls:
-            continue
-        if r['kind'] == 'external' and _content_key(r) in firstwater_content:
+        if u and u in seen_urls:
             continue
         if k:
             seen_keys.add(k)
-        if u and r['kind'] == 'external':
+        if u:
             seen_urls.add(u)
         deduped.append(r)
 
@@ -635,7 +520,7 @@ def factual_description(row):
 
 def editorial_note(row):
     """Daniel's verbatim one-liner, or '' — never synthesized. External rows
-    only (a Firstwater row speaks on its own session page)."""
+    only."""
     if row.get('kind') == 'external':
         return (row.get('note') or '').strip()
     return ''
@@ -681,21 +566,15 @@ def event_permalink_url(row, site_url):
 
 def entity_next_up(session_rows, nav_prefix):
     """The entity aside's "Next up" value (CAL-13 two-column adoption): the
-    soonest upcoming session, linked — external rows to their permalink page,
-    Firstwater rows to their own session page on thefirstwater.co. Returns ''
-    when the entity has nothing upcoming. Callers style the bare <a> via their
-    page-local sheet."""
+    soonest upcoming session, linked to its permalink page. Returns '' when the
+    entity has nothing upcoming. Callers style the bare <a> via their page-local
+    sheet."""
     if not session_rows:
         return ''
     r = session_rows[0]
-    if r['kind'] == 'firstwater':
-        href = _esc(r['ticket_url'])
-        extra = ' target="_blank" rel="noopener"'
-    else:
-        href = _esc(f'{nav_prefix}{event_permalink_path(r)}')
-        extra = ''
-    date = sessions_feed.fmt_date_short(r['starts_at'])
-    return f'<a href="{href}"{extra}>{_esc(date)} · {_esc(r["name"])}</a>'
+    href = _esc(f'{nav_prefix}{event_permalink_path(r)}')
+    date = datetime_fmt.fmt_date_short(r['starts_at'])
+    return f'<a href="{href}">{_esc(date)} · {_esc(r["name"])}</a>'
 
 
 def _price_span(rows):
@@ -1006,8 +885,7 @@ def add_to_calendar_urls(row, site_url, now=None):
 
 
 def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None):
-    is_fw = row['kind'] == 'firstwater'
-    cls = 'cal-row cal-row--firstwater' if is_fw else 'cal-row'
+    cls = 'cal-row'
     # Filter hooks: area + free/donation (B.5) + tags (CAL-01), read by
     # filters.js. data-tags is a space-joined slug list (empty when untagged).
     _slugs = row_tag_slugs(row)
@@ -1033,7 +911,7 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None):
         # outside the build month. Per-row, so it survives client filtering.
         if now is not None:
             _d = _denver(row['starts_at'])
-            _n = now.astimezone(sessions_feed.DENVER)
+            _n = now.astimezone(datetime_fmt.DENVER)
             if (_d.year, _d.month) != (_n.year, _n.month):
                 parts.append(f'    <span class="cal-row__mo">{_esc(_d.strftime("%b"))}</span>')
     parts.append(f'    <span class="cal-row__time">{_esc(fmt_time(row["starts_at"]))}</span>')
@@ -1041,35 +919,32 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None):
     parts.append('  <div class="cal-row__body">')
 
     # Event image — one consistent frame (fixed ratio, object-fit cover, lazy)
-    # so heterogeneous operator flyers sit coherently. The frame is Firstwater's,
-    # the content is the operator's (RA-style). CAL-12: the media column is now
-    # RESERVED for every external row — an image-less row draws a quiet
-    # placeholder tile instead of collapsing, so every text column shares one
-    # left edge (mirrors digest.ts `showThumb`). FW rows keep their border+tint
-    # identity and carry no media tile.
+    # so heterogeneous operator flyers sit coherently. CAL-12: the media column
+    # is RESERVED on every row — an image-less row draws a quiet placeholder
+    # tile instead of collapsing, so every text column shares one left edge
+    # (mirrors digest.ts `showThumb`).
     img = row.get('image_url')
-    if not is_fw:
-        if img:
-            parts.append('    <div class="cal-row__media">')
-            # CAL-UX-11: empty alt — the row text beside the thumb already
-            # carries name/operator/venue, so a descriptive alt made screen
-            # readers hear every event twice. The event PAGE hero keeps its
-            # factual alt_text (there the image stands alone).
-            parts.append(
-                f'      <img src="{_esc(img)}" alt="" '
-                f'loading="lazy" decoding="async" referrerpolicy="no-referrer">'
-            )
-            parts.append('    </div>')
-        else:
-            parts.append('    <div class="cal-row__media cal-row__media--empty"'
-                         ' aria-hidden="true"></div>')
+    if img:
+        parts.append('    <div class="cal-row__media">')
+        # CAL-UX-11: empty alt — the row text beside the thumb already carries
+        # name/operator/venue, so a descriptive alt made screen readers hear
+        # every event twice. The event PAGE hero keeps its factual alt_text
+        # (there the image stands alone).
+        parts.append(
+            f'      <img src="{_esc(img)}" alt="" '
+            f'loading="lazy" decoding="async" referrerpolicy="no-referrer">'
+        )
+        parts.append('    </div>')
+    else:
+        parts.append('    <div class="cal-row__media cal-row__media--empty"'
+                     ' aria-hidden="true"></div>')
 
     parts.append('    <div class="cal-row__text">')
 
-    # Marks line: the city chip (every row) + the primary modality kicker (CAL-12,
-    # 'what kind of sound bath' at a glance, linked to its tag page when one
-    # exists) + Firstwater's own-room marker on its own rows.
-    mod = None if is_fw else row_primary_modality(row)
+    # Marks line: the city chip (every row) + the primary modality kicker
+    # (CAL-12, 'what kind of sound bath' at a glance, linked to its tag page
+    # when one exists).
+    mod = row_primary_modality(row)
     parts.append('      <div class="cal-row__marks">')
     parts.append(f'        <span class="cal-row__city">{_esc(_city_tag(row))}</span>')
     if mod:
@@ -1080,25 +955,16 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None):
                          f'href="{_esc(nav_prefix + _mpath)}">{_mlabel}</a>')
         else:
             parts.append(f'        <span class="cal-row__modality">{_mlabel}</span>')
-    if is_fw:
-        parts.append('        <span class="cal-row__tag">Firstwater</span>')
-        parts.append('        <span class="cal-row__ours">Our session</span>')
     parts.append('      </div>')
 
-    # Name links to the event's page: external -> its calendar permalink (our
-    # rich, indexable surface + the internal link that puts it in the crawl
-    # graph); Firstwater -> its session page on thefirstwater.co ([port]:
-    # absolute URL, so no nav_prefix and it opens like any other operator link).
+    # Name links to the event's calendar permalink — our rich, indexable
+    # surface, and the internal link that puts it in the crawl graph.
     slug = event_slug(row)
-    if is_fw:
-        name_href = row['ticket_url']
-    else:
-        name_href = f'{nav_prefix}{event_permalink_path(row)}' if slug else ''
+    name_href = f'{nav_prefix}{event_permalink_path(row)}' if slug else ''
     if name_href:
-        _new_tab = ' target="_blank" rel="noopener"' if is_fw else ''
         parts.append(
             f'      <h3 class="cal-row__name">'
-            f'<a href="{_esc(name_href)}"{_new_tab}>{_esc(row["name"])}</a></h3>'
+            f'<a href="{_esc(name_href)}">{_esc(row["name"])}</a></h3>'
         )
     else:
         parts.append(f'      <h3 class="cal-row__name">{_esc(row["name"])}</h3>')
@@ -1108,9 +974,9 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None):
     # calendar rows, not article cards). An operator running its own room
     # (operator == venue) shows the name once, not doubled.
     meta = []
-    if not is_fw and row['operator']:
+    if row['operator']:
         meta.append(row['operator'])
-    if row['venue'] and normalize(row['venue']) != normalize(row['operator'] if not is_fw else ''):
+    if row['venue'] and normalize(row['venue']) != normalize(row['operator']):
         meta.append(row['venue'])
     if row['price']:
         meta.append(row['price'])
@@ -1120,60 +986,51 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None):
     # Practitioner link (CAL-02) — external rows linked to a published profile.
     # Inlined path (no import of practitioners.py) to avoid a cycle.
     pr = row.get('practitioner') or {}
-    if not is_fw and isinstance(pr, dict) and pr.get('slug'):
+    if isinstance(pr, dict) and pr.get('slug'):
         parts.append(
             f'      <p class="cal-row__with">with <a href="'
             f'{nav_prefix}practitioner/{_esc(pr["slug"])}/">{_esc(pr.get("name") or "")}</a></p>')
 
     # Daniel's one-line editorial note — the moat — set as a margin voice.
-    # External rows only, and only when he has written one; a bare row is the
-    # honest default.
+    # Only when he has written one; a bare row is the honest default.
     note = editorial_note(row)
     if note:
         parts.append(f'      <p class="cal-row__note">{_esc(note)}</p>')
 
-    # Tag chips (CAL-01) — external rows only; the canonical vocabulary, or
-    # nothing when the row carries no known tag (a bare row is the honest default).
-    if not is_fw:
-        # Skip the modality already shown as the kicker (CAL-12) so the chip set
-        # carries the qualifiers (intent/setting/access), not a repeat.
-        chips = render_tag_chips(row, cls='cal-row__tags', nav_prefix=nav_prefix,
-                                 skip={mod} if mod else None)
-        if chips:
-            parts.append('      ' + chips)
+    # Tag chips (CAL-01) — the canonical vocabulary, or nothing when the row
+    # carries no known tag (a bare row is the honest default). Skip the modality
+    # already shown as the kicker (CAL-12) so the chip set carries the
+    # qualifiers (intent/setting/access), not a repeat.
+    chips = render_tag_chips(row, cls='cal-row__tags', nav_prefix=nav_prefix,
+                             skip={mod} if mod else None)
+    if chips:
+        parts.append('      ' + chips)
 
-    # CTA row: ticket link (external -> their link, new tab; Firstwater -> its
-    # session page) plus the operator/venue 'own page' link when known. External
-    # ticket/site URLs are scheme-checked before becoming hrefs; unsafe -> no link.
+    # CTA row: the operator's ticket link (new tab) plus the operator/venue
+    # 'own page' link when known. Ticket/site URLs are scheme-checked before
+    # becoming hrefs; unsafe -> no link.
     cta = []
-    if is_fw:
-        # [port] absolute cross-site link to the session page's own checkout
+    safe = _safe_ext_url(row['ticket_url'])
+    if safe:
         cta.append(
-            f'<a href="{_esc(row["ticket_url"])}" target="_blank" '
-            f'rel="noopener">Get tickets</a>'
+            f'<a href="{_esc(safe)}" target="_blank" rel="noopener">Tickets</a>'
         )
-    else:
-        safe = _safe_ext_url(row['ticket_url'])
-        if safe:
-            cta.append(
-                f'<a href="{_esc(safe)}" target="_blank" rel="noopener">Tickets</a>'
-            )
-        link_url, link_label = _facil_venue_link(row)
-        if link_url:
-            # CAL-UX-12: an operator running its own room (operator == venue,
-            # the meta line's normalize-compare) puts exactly ONE entity name
-            # on the row — repeating it as this link's label directly under
-            # that meta line reads as a defect, not a fact. Label the link by
-            # its function instead. Rows naming two entities keep the name
-            # label (it says WHOSE site opens).
-            if (row.get('venue') and
-                    normalize(row['venue']) == normalize(row.get('operator') or '') and
-                    normalize(link_label) == normalize(row['venue'])):
-                link_label = 'Website'
-            cta.append(
-                f'<a class="cal-row__link" href="{_esc(link_url)}" '
-                f'target="_blank" rel="noopener">{_esc(link_label)}</a>'
-            )
+    link_url, link_label = _facil_venue_link(row)
+    if link_url:
+        # CAL-UX-12: an operator running its own room (operator == venue,
+        # the meta line's normalize-compare) puts exactly ONE entity name
+        # on the row — repeating it as this link's label directly under
+        # that meta line reads as a defect, not a fact. Label the link by
+        # its function instead. Rows naming two entities keep the name
+        # label (it says WHOSE site opens).
+        if (row.get('venue') and
+                normalize(row['venue']) == normalize(row.get('operator') or '') and
+                normalize(link_label) == normalize(row['venue'])):
+            link_label = 'Website'
+        cta.append(
+            f'<a class="cal-row__link" href="{_esc(link_url)}" '
+            f'target="_blank" rel="noopener">{_esc(link_label)}</a>'
+        )
     if cta:
         parts.append('      <p class="cal-row__cta">' + ' '.join(cta) + '</p>')
 
@@ -1541,20 +1398,6 @@ def event_jsonld(row, site_url):
     return {'@context': 'https://schema.org', **_external_event(row, site_url)}
 
 
-def _firstwater_event(row, site_url):
-    """Reuse sessions_feed's Event builder so Firstwater rows carry the same
-    accurate Event markup as their session pages; url points at the session page
-    (its canonical home ON THEFIRSTWATER.CO — [port]: never this domain), and
-    @context is stripped for ItemList nesting."""
-    slug = (row.get('_sess') or {}).get('event_slug', '')
-    session_url = f'{FIRSTWATER_URL}/sessions/{slug}/' if slug else FIRSTWATER_URL
-    ev = sessions_feed.event_schema(
-        row['_sess'], row['_event_title'], session_url, FIRSTWATER_URL,
-    )
-    ev.pop('@context', None)
-    return ev
-
-
 def calendar_itemlist(rows, page_url, site_url):
     """One ItemList wrapping an Event per rendered row, or None when empty.
 
@@ -1568,8 +1411,7 @@ def calendar_itemlist(rows, page_url, site_url):
 
     items = []
     for i, row in enumerate(ordered, start=1):
-        ev = (_firstwater_event(row, site_url)
-              if row['kind'] == 'firstwater' else _external_event(row, site_url))
+        ev = _external_event(row, site_url)
         items.append({'@type': 'ListItem', 'position': i, 'item': ev})
 
     return {
@@ -1964,8 +1806,7 @@ def city_itemlist(rows, city, site_url):
         return None
     items = []
     for i, row in enumerate(crows, start=1):
-        ev = (_firstwater_event(row, site_url)
-              if row['kind'] == 'firstwater' else _external_event(row, site_url))
+        ev = _external_event(row, site_url)
         items.append({'@type': 'ListItem', 'position': i, 'item': ev})
     return {
         '@context': 'https://schema.org',
@@ -2011,17 +1852,11 @@ def _ics_location(row):
 
 def event_ics_input(row, site_url, now=None):
     """Normalize one row into the event dict _src/lib/ics.py expects. URL points
-    at the event's own page (permalink for external, session page for
-    Firstwater); the ticket link rides in DESCRIPTION."""
+    at the event's own permalink page; the ticket link rides in DESCRIPTION."""
     start = parse_iso(row['starts_at'])
     end = start + timedelta(minutes=ICS_DEFAULT_DURATION_MIN)
-    if row['kind'] == 'firstwater':
-        slug = (row.get('_sess') or {}).get('event_slug', '')
-        url = f'{FIRSTWATER_URL}/sessions/{slug}/' if slug else FIRSTWATER_URL
-        ticket = row.get('ticket_url', '')
-    else:
-        url = event_permalink_url(row, site_url)
-        ticket = _safe_ext_url(row.get('ticket_url', ''))
+    url = event_permalink_url(row, site_url)
+    ticket = _safe_ext_url(row.get('ticket_url', ''))
     desc = factual_description(row)
     if ticket:
         desc = f'{desc}\n\nTickets: {ticket}'
@@ -2209,7 +2044,7 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     # Facts block
     out.append('    <dl class="cal-event__facts">')
     out.append(
-        f'      <dt>When</dt><dd>{esc(sessions_feed.fmt_date_long(row["starts_at"]))} '
+        f'      <dt>When</dt><dd>{esc(datetime_fmt.fmt_date_long(row["starts_at"]))} '
         f'· {esc(fmt_time(row["starts_at"]))} (Denver time)</dd>')
     # Where: link the venue to its curated /venue/<slug>/ page when linked to a
     # published one (CAL-03); otherwise the plain venue + address string.
@@ -2334,11 +2169,9 @@ def render_event_page(row, nav_prefix, site_url, now=None):
 
 
 def approved_event_rows(cal_feed, now=None):
-    """External rows for EVERY approved event — past and future — deduped by
-    permalink slug. Drives the permalink-page pipeline (future pages are
-    indexed + in the sitemap; past pages stay live but noindex + out of it).
-    Firstwater sessions are excluded: they already have their own rich session
-    pages and must not get a second, duplicate permalink.
+    """Rows for EVERY approved event — past and future — deduped by permalink
+    slug. Drives the permalink-page pipeline (future pages are indexed + in the
+    sitemap; past pages stay live but noindex + out of it).
     """
     rows, seen = [], set()
     for e in (cal_feed or {}).get('events', []):

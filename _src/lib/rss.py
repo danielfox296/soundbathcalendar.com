@@ -3,8 +3,7 @@
 feed.xml at the site root (every upcoming event) plus one per region
 (denver/feed.xml, boulder/feed.xml, …), built from the SAME cal_rows the pages
 render so the feed never drifts from the calendar. Mirrors the .ics feeds
-(build_ics_feeds): all rows are included, and a Firstwater row links to its own
-session page on thefirstwater.co exactly as its .ics does.
+(build_ics_feeds): all rows are included.
 
 Stdlib only — hand-rolled XML with xml.sax.saxutils.escape for every value, and
 email.utils for the RFC-822 dates RSS requires. build.py owns file writing; this
@@ -18,27 +17,15 @@ from _src.lib import external_events as X
 
 
 def _item_link(row, site_url):
-    """The item's canonical URL: the event permalink for an external row, the
-    session page on thefirstwater.co for a Firstwater row (same target its .ics
-    URL uses, so the two feeds agree)."""
-    if row['kind'] == 'firstwater':
-        slug = (row.get('_sess') or {}).get('event_slug', '')
-        return f'{X.FIRSTWATER_URL}/sessions/{slug}/' if slug else X.FIRSTWATER_URL
+    """The item's canonical URL: the event's permalink page."""
     return X.event_permalink_url(row, site_url)
 
 
 def _item_guid(row, link):
     """A globally-unique guid that still resolves (isPermaLink stays true).
 
-    An external permalink already encodes name+date+venue, so it is unique per
-    occurrence. A Firstwater session page is NOT date-specific, so two dates of
-    a recurring session would collide (readers would drop the duplicate and hide
-    a real date); append the local date as an inert query param to keep each
-    occurrence distinct while the URL still resolves."""
-    if row['kind'] == 'firstwater':
-        day = X._denver(row['starts_at']).strftime('%Y-%m-%d')
-        sep = '&' if '?' in link else '?'
-        return f'{link}{sep}occurs={day}'
+    A permalink already encodes name+date+venue, so it is unique per
+    occurrence."""
     return link
 
 

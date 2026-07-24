@@ -2,10 +2,8 @@
 """
 Sound Bath Calendar — Site Builder
 ==================================
-Assembles the static calendar site from modular source files. Forked from the
-Firstwater SSG chassis (site/build.py) on 2026-07-19 for the brand split:
-the calendar lives at the root of soundbathcalendar.com, permalinks at
-/event/<slug>/, and Firstwater is one operator among many.
+Assembles the static calendar site from modular source files. The calendar
+lives at the root of soundbathcalendar.com, with permalinks at /event/<slug>/.
 
 Usage:
     python3 build.py
@@ -53,7 +51,7 @@ PAGES    = os.path.join(SRC, 'pages')
 # broken feed never breaks the build — committed data/ caches are the net.
 if REPO not in sys.path:
     sys.path.insert(0, REPO)
-from _src.lib import sessions_feed
+from _src.lib import datetime_fmt
 from _src.lib import external_events
 from _src.lib import practitioners as practitioners_lib
 from _src.lib import venues as venues_lib
@@ -235,11 +233,6 @@ def build():
 
     pages_built = []
 
-    # Both feeds: external events are the calendar's body; the sessions feed
-    # contributes Firstwater's own dated rows.
-    print('Loading sessions feed...')
-    feed = sessions_feed.load_feed(REPO)
-    print()
     print('Loading calendar feed...')
     cal_feed = external_events.load_feed(REPO)
     # One build-time 'now' shared by the calendar page (weekend window,
@@ -248,7 +241,7 @@ def build():
     cal_now = external_events.current_now()
     # Future, de-duplicated, chronological rows — shared by the root injection,
     # the ItemList schema, and the city pages (Track B B.2).
-    cal_rows = external_events.build_rows(cal_feed, feed, now=cal_now)
+    cal_rows = external_events.build_rows(cal_feed, now=cal_now)
     # CAL-09: which tags have earned a landing page (>= BUILD_MIN upcoming). Set
     # BEFORE any chip renders (root injection below, then city/event pages) so
     # every tag chip links to /<slug>/ when that page exists.
@@ -698,8 +691,8 @@ def build_event_pages(base, header, footer, cal_feed, now):
     # every page restamped the whole /event/ set on every build (CAL-SEO-2).
     gen = (cal_feed or {}).get('generated_at')
     try:
-        feed_lastmod = sessions_feed.parse_iso(gen).astimezone(
-            sessions_feed.DENVER).date().isoformat()
+        feed_lastmod = datetime_fmt.parse_iso(gen).astimezone(
+            datetime_fmt.DENVER).date().isoformat()
     except Exception:
         feed_lastmod = _dt.date.today().isoformat()
 
@@ -711,7 +704,7 @@ def build_event_pages(base, header, footer, cal_feed, now):
         output = f'event/{slug}/index.html'
         nav_prefix = '../../'
         css_path = nav_prefix
-        is_past = sessions_feed.parse_iso(row['starts_at']) <= now
+        is_past = datetime_fmt.parse_iso(row['starts_at']) <= now
         robots_value = 'noindex, follow' if is_past else 'index, follow'
         canonical_url = external_events.event_permalink_url(row, SITE_URL)
 
@@ -1853,8 +1846,8 @@ def _row_date_iso(row):
         if not ts:
             continue
         try:
-            return sessions_feed.parse_iso(ts).astimezone(
-                sessions_feed.DENVER).date().isoformat()
+            return datetime_fmt.parse_iso(ts).astimezone(
+                datetime_fmt.DENVER).date().isoformat()
         except Exception:
             continue
     return None

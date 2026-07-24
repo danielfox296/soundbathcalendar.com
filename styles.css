@@ -1,6 +1,5 @@
-/* SOUND BATH CALENDAR — v1 (2026-07-19 brand split).
-   Tokens carried from the Firstwater design system chassis; light ground,
-   utility register. One sheet: the calendar is the site.
+/* SOUND BATH CALENDAR — v1.
+   Light ground, utility register. One sheet: the calendar is the site.
    No JS anywhere — every rule below must hold with scripts blocked. */
 :root {
   --ink: #0A0B0D;
@@ -173,8 +172,8 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
    off-system, and a different edge from the field above it. */
 .form-field input, .form-field select, .form-field textarea { width: 100%; background: transparent; border: 1px solid var(--field-line); padding: 0.85rem 1rem; font: 400 1rem var(--font-body); color: var(--ink); }
 /* The focus ring rides --accent-on-light, not --accent. The ice #62B6E8 is a
-   MARK color: it measures 2.09:1 on the light ground and fails 2.4.11 the same
-   way CAL-11 caught it in the Firstwater codebase. --accent-on-light is the
+   MARK color: it measures 2.09:1 on the light ground and fails 2.4.11, as
+   CAL-11 found. --accent-on-light is the
    scheme-flipping accessible pair (5.02:1 light / 10.31:1 dark). */
 .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: 2px solid var(--accent-on-light); outline-offset: 1px; border-color: transparent; }
 .form-note { max-width: 34rem; color: rgba(var(--ink-rgb),0.65); margin: 0 0 1.4rem; }
@@ -370,7 +369,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-row__text { min-width: 0; flex: 1 1 auto; }
 
 /* Marks line above the name: the city chip (every row) + the modality kicker
-   (CAL-12) + Firstwater's marks. */
+   (CAL-12). */
 .cal-row__marks { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.7rem; margin-bottom: 0.25rem; }
 .cal-row__city { font: 600 0.68rem var(--font-body); letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-on-light); }
 /* Modality kicker — 'what kind of sound bath' beside the city, a quiet middot
@@ -395,9 +394,6 @@ a.cal-row__modality:hover { text-decoration: underline; }
 .cal-row__cta { display: flex; flex-wrap: wrap; gap: 0.35rem 1.2rem; margin: 0.55rem 0 0; }
 .cal-row__cta a { color: var(--accent-on-light); font: 600 0.86rem var(--font-body); text-decoration: none; }
 .cal-row__cta a:hover { text-decoration: underline; }
-
-/* Firstwater's rows — one operator among many, still visibly its own. */
-.cal-row--firstwater { border-left: 3px solid var(--accent); padding-left: 1.2rem; background: rgba(98,182,232,0.06); }
 
 .cal-empty { color: rgba(var(--ink-rgb),0.62); font-size: 1rem; margin: 0; padding: 1.6rem 0; }
 .cal-empty--all { padding: 2.6rem 0; }
@@ -509,7 +505,6 @@ a.cal-row__modality:hover { text-decoration: underline; }
   .cal-row__when { flex-direction: row; gap: 0.55rem; align-items: baseline; }
   .cal-row__dnum { font-size: 1.1rem; }
   .cal-row__time { margin-top: 0; }
-  .cal-row--firstwater { padding-left: 1.1rem; }
   .cal-row__media { width: 84px; }
   /* First-viewport budget: stamp + summary + first rows above the fold. */
   .section { padding-top: 1.4rem; }

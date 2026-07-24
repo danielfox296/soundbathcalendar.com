@@ -1,6 +1,6 @@
 # Sound Bath Calendar — DESIGN.md
 
-*Ratified 2026-07-22. The calendar's own design constitution — post-split, this brand is not Firstwater. Every "per DESIGN.md" in `styles.css` now means this file; the Firstwater chassis doc (`site/DESIGN.md`) is a different brand and is never imported, cited, or matched for voice.*
+*Ratified 2026-07-22. The calendar's own design constitution. Every "per DESIGN.md" in `styles.css` means this file.*
 
 **Ground truth.** The law lives here; the implementation lives in `styles.css`, the page-local style blocks in `_src/lib/*.py` (`EVENT_PAGE_STYLE`, `VENUE_PAGE_STYLE`, `PRACTITIONER_PAGE_STYLE`, `OPERATOR_PAGE_STYLE`, `BROWSE_STYLE`, `ROUNDUPS_HEAD`, `MAP_HEAD`, `INSIGHTS_HEAD`, `CITY_WARM_STYLE`), and `_src/partials/`. If doc and tree disagree, that is a defect: fix one to match the other and record the call here. `RULE:` lines are load-bearing.
 
@@ -130,7 +130,6 @@ One primitive for every detail page (event, venue, practitioner, organizer):
 2. **Month marker** (`.cal-row__mo`, CAL-UX-2): any row whose Denver-time month differs from the build month stamps the muted month abbreviation (`Aug`) in the rail. Per-row on purpose — client-side filters can hide the rollover, so the marker must survive filtering. Entity-page session lists get it too.
 3. **Media tile** (`.cal-row__media`): fixed 104px, 3:2, radius 2px, `object-fit: cover` — flyers of any source aspect are framed, never raw. Image-less rows render the reserved placeholder (`--empty`: the ∿ sine glyph at 0.16) so every text column shares one left edge (CAL-12, mirroring the digest's `showThumb`). On mobile: 84px.
 4. **Text column**: marks line (`__marks`: city chip + modality kicker, §3.2) → name → meta (one line where it fits, capped 42rem) → optional practitioner cross-link (`__with`) → optional editorial note (`__note`: Daniel's one line, display 500, 2px accent left rule, capped 38rem) → ghost-link CTA row (`__cta`).
-5. **Firstwater rows** (`.cal-row--firstwater`): 3px accent left border + `rgba(98,182,232,0.06)` tint — one operator among many, still visibly its own.
 
 Mobile ≤640px: rows become bordered cards (radius 0), the date rail runs inline, `.cal-rows` drops its top rule. First-viewport budget: stamp + summary + first rows above the fold.
 

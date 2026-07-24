@@ -497,8 +497,7 @@ def tag_itemlist(rows, slug, site_url):
         return None
     items = []
     for i, row in enumerate(trows, start=1):
-        ev = (X._firstwater_event(row, site_url)
-              if row['kind'] == 'firstwater' else X._external_event(row, site_url))
+        ev = X._external_event(row, site_url)
         items.append({'@type': 'ListItem', 'position': i, 'item': ev})
     return {
         '@context': 'https://schema.org',

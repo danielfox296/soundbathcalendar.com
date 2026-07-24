@@ -1,8 +1,8 @@
 {
-  "_note": "Byline is first name only (matches the outreach signature). No Firstwater disclosure on this page — Daniel's call 2026-07-24, deliberate, do not reintroduce. Kept here rather than in an HTML comment because sections/ ships to the browser and _src does not.",
+  "_note": "Byline is first name only, matching the outreach signature. Firstwater is a separate business and has no place on this site — do not reintroduce it here or anywhere in this repo. Kept in config rather than an HTML comment because sections/ ships to the browser and _src does not.",
   "seo_title": "About Sound Bath Calendar — Who Keeps It | Sound Bath Calendar",
   "title": "About",
-  "meta_description": "Who keeps the Sound Bath Calendar, how sessions get listed, why there is no paid placement, and a plain disclosure: the person who runs it also facilitates sound baths on the Front Range.",
+  "meta_description": "Who keeps the Sound Bath Calendar, how a sound bath gets listed, and why there is no paid placement. Kept by one person in Denver; listing is free and every listing links to the organizer's own ticket page.",
   "output": "about/index.html",
   "og_image": "img/og/practitioners.jpg",
   "robots": "index, follow",

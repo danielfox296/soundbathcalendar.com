@@ -1,6 +1,6 @@
 """ICS (RFC 5545) generation — stdlib only, no I/O.
 
-Python mirror of service/src/lib/ics.ts (the Firstwater ticket-confirmation +
+Python mirror of the service's ics.ts (the ticket-confirmation +
 /events.ics emitter), same discipline: UTC timestamps, CRLF line endings, TEXT
 escaping (backslash, semicolon, comma, newline), 75-octet line folding. The
 calendar's static build writes per-city, whole-calendar, and per-event .ics
