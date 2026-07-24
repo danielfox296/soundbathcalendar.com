@@ -94,6 +94,14 @@ PRACTITIONER_EPOCH = date(2026, 7, 26)   # first warm slot (Sun) on/after go-liv
 PRACT_FEED_URL = 'https://admin.soundbathcalendar.com/feeds/practitioners.json'
 PRACT_CACHE = os.path.join(ROOT, 'data', 'practitioners.json')
 PRACT_PHOTO_DIR = os.path.join(ROOT, 'img', 'practitioners')
+# Memo for the practitioner feed + the handle map derived from it, so a build
+# fetches the roster once no matter how many callers ask.
+_PRACT_MEMO = {}
+
+# Instagram allows 20 mentions in a caption. Ten is a self-imposed floor under
+# that: past about ten the line stops reading as credit and starts reading as
+# a tag farm, which is the opposite of what it is for.
+MAX_MENTIONS = 10
 
 
 # ---------- text helpers ----------
@@ -275,6 +283,100 @@ def _operator(event):
 
 def _norm(s):
     return ''.join(c for c in (s or '').lower() if c.isalnum())
+
+
+# ---------- Instagram handles ----------
+
+_IG_URL = re.compile(r'(?:https?://)?(?:www\.)?instagram\.com/([A-Za-z0-9._]+)',
+                     re.IGNORECASE)
+# Path segments that are Instagram's own, not somebody's username. A reel URL
+# ends up here as 'reel' and would otherwise tag whoever owns @reel.
+_IG_RESERVED = {'p', 'reel', 'reels', 'stories', 'explore', 'tv', 'accounts',
+                'direct', 'about', 'legal'}
+
+
+def _ig_handle(url):
+    """'@name' from an Instagram profile URL, or '' when it is not one."""
+    m = _IG_URL.match((url or '').strip())
+    if not m:
+        return ''
+    # Instagram ignores leading/trailing dots; a stored '.../name.' is the
+    # same account as '.../name' and only the bare form resolves as a mention.
+    handle = m.group(1).strip('.')
+    if not handle or handle.lower() in _IG_RESERVED:
+        return ''
+    return f'@{handle}'
+
+
+def _practitioner_feed():
+    """Raw practitioner rows — live service feed first, committed cache second.
+
+    Memoised because two callers want it (the spotlight rotation and caption
+    mentions) and one build should not fetch it twice. Returns [] when both
+    sources fail: every caller degrades to 'no practitioner data' rather than
+    raising, on the same rule as the event images — nothing in this script may
+    fail a deploy.
+    """
+    if 'rows' in _PRACT_MEMO:
+        return _PRACT_MEMO['rows']
+    feed = None
+    try:
+        req = urllib.request.Request(PRACT_FEED_URL, headers={'user-agent': IMAGE_UA})
+        with urllib.request.urlopen(req, timeout=IMAGE_TIMEOUT_S) as resp:
+            feed = json.loads(resp.read().decode())
+    except (urllib.error.URLError, OSError, ValueError):
+        try:
+            with open(PRACT_CACHE, encoding='utf-8') as fh:
+                feed = json.load(fh)
+        except (OSError, ValueError):
+            feed = None
+    if isinstance(feed, dict):
+        rows = feed.get('practitioners', []) or []
+    elif isinstance(feed, list):
+        rows = feed
+    else:
+        rows = []
+    _PRACT_MEMO['rows'] = rows
+    return rows
+
+
+def practitioner_handles():
+    """slug -> '@handle' for every practitioner with a published Instagram.
+
+    Deliberately NOT gated on a committed photo the way the spotlight rotation
+    is: a mention costs nothing to render, and the point here is reach rather
+    than a face. 16 of 37 carry a handle today, so most posts mention someone
+    and none mention everyone — filling the other 21 is a data task in admin,
+    not a change here.
+    """
+    if 'handles' in _PRACT_MEMO:
+        return _PRACT_MEMO['handles']
+    out = {}
+    for p in _practitioner_feed():
+        slug = (p.get('slug') or '').strip()
+        handle = _ig_handle(p.get('instagram_url'))
+        if slug and handle:
+            out[slug] = handle
+    _PRACT_MEMO['handles'] = out
+    return out
+
+
+def _mentions(rows):
+    """Ordered, de-duplicated @handles for the practitioners leading `rows`.
+
+    Joins on the curated `practitioner` ref, never on the free-text
+    `facilitator` string. The ref is an editorial decision made at approval
+    ('Gigi' -> gigi-martins, 'Dr. Adrian Voss' -> adrian-voss); matching on the
+    display name would miss those and, worse, would eventually tag a stranger
+    who happens to share a first name.
+    """
+    handles = practitioner_handles()
+    out = []
+    for e in rows:
+        handle = handles.get(((e.get('practitioner') or {}).get('slug') or '').strip())
+        if handle and handle not in out:
+            out.append(handle)
+    return out[:MAX_MENTIONS]
 
 
 def _credit(event):
@@ -470,9 +572,16 @@ def _session_lines(rows, limit=8):
 def captions(day, rows, kind, weekend_days=None):
     """Facebook and Instagram captions.
 
-    They differ on one axis only, and it is a platform limit rather than a
-    voice choice: Instagram feed captions render URLs as plain text, so the
-    link lives on the Facebook post and Instagram points at the bio.
+    They differ on two axes, both platform limits rather than voice choices.
+    One: Instagram feed captions render URLs as plain text, so the link lives
+    on the Facebook post and Instagram points at the bio. Two: the practitioner
+    @mentions are Instagram-only — a bare '@name' in a Facebook caption posted
+    through the API is inert text, and these are Instagram handles besides, so
+    on Facebook it would print noise at people instead of reaching them.
+
+    The mentions are the whole point of the post reaching past our own
+    following: a tagged practitioner gets a notification, and the ones who
+    reshare put us in front of an audience that already trusts them.
     """
     if kind == 'weekend':
         head = (f'{_count_word(len(rows))} sound baths this weekend — '
@@ -487,8 +596,16 @@ def captions(day, rows, kind, weekend_days=None):
 
     url = _landing_url(_cities(rows))
     fb = f'{head}\n\n{body}\n\nTimes, tickets and directions: {url}'
-    ig = f'{head}\n\n{body}\n\nFull calendar — link in bio.\n\n{IG_TAGS}'
-    return fb, ig
+
+    ig_lines = [head, '', body, '', 'Full calendar — link in bio.']
+    handles = _mentions(rows)
+    if handles:
+        # "On Instagram" rather than "Led by": only some of the night's
+        # practitioners have a handle on file, and a credit line that names
+        # three of five people would read as a claim about who led the rest.
+        ig_lines += ['', f'On Instagram: {" ".join(handles)}']
+    ig_lines += ['', IG_TAGS]
+    return fb, '\n'.join(ig_lines)
 
 
 # ---------- post builders ----------
@@ -587,20 +704,8 @@ def load_practitioners():
     face never enters the rotation, so no spotlight ever ships a logo or a
     blank. Bios come from the live service feed (falling back to the committed
     cache), because the local cache goes stale — see the feed contract."""
-    feed = None
-    try:
-        req = urllib.request.Request(PRACT_FEED_URL, headers={'user-agent': IMAGE_UA})
-        with urllib.request.urlopen(req, timeout=IMAGE_TIMEOUT_S) as resp:
-            feed = json.loads(resp.read().decode())
-    except (urllib.error.URLError, OSError, ValueError):
-        try:
-            with open(PRACT_CACHE, encoding='utf-8') as fh:
-                feed = json.load(fh)
-        except (OSError, ValueError):
-            return []
-    rows = feed.get('practitioners', []) if isinstance(feed, dict) else (feed or [])
     out = []
-    for p in rows:
+    for p in _practitioner_feed():
         slug = (p.get('slug') or '').strip()
         photo = os.path.join(PRACT_PHOTO_DIR, f'{slug}.jpg')
         if slug and os.path.exists(photo):
@@ -778,22 +883,31 @@ def slide_practitioner_find(palette, p, rotate, session):
 
 def practitioner_captions(p, session):
     """Meet-the-practitioner captions. The body is the bio verbatim — their
-    voice, not ours — and the link is their profile page."""
+    voice, not ours — and the link is their profile page.
+
+    Instagram's opener carries their @handle, Facebook's does not, for the
+    reason in `captions`. This is the mention that matters most: a whole post
+    about one person, landing in their notifications, ready to reshare.
+    """
     name = p.get('name', '')
     slug = p.get('slug', '')
     url = f'{SITE_URL}/practitioner/{slug}/'
     bio = ' '.join((p.get('bio') or '').split())
+    handle = practitioner_handles().get(slug, '')
 
-    lines = [f'Meet {name} — a sound practitioner on the Front Range.', '', bio]
-    if session:
-        when = parse_iso(session['starts_at']).astimezone(DENVER)
-        lines += ['', f'Next up: {session.get("name", "")} · '
-                  f'{when.strftime("%a %b %-d")}, {fmt_time(session["starts_at"]).lower()}.']
-    body = '\n'.join(lines)
+    def _body(who):
+        lines = [f'Meet {who} — a sound practitioner on the Front Range.', '', bio]
+        if session:
+            when = parse_iso(session['starts_at']).astimezone(DENVER)
+            lines += ['', f'Next up: {session.get("name", "")} · '
+                      f'{when.strftime("%a %b %-d")}, {fmt_time(session["starts_at"]).lower()}.']
+        return '\n'.join(lines)
+
     tags = ('#soundbath #soundhealing #frontrange #denver #boulder #colorado '
             '#practitioner #soundhealer')
-    fb = f'{body}\n\nFull profile: {url}'
-    ig = f'{body}\n\nFull profile — link in bio.\n\n{tags}'
+    fb = f'{_body(name)}\n\nFull profile: {url}'
+    ig = (f'{_body(f"{name} ({handle})" if handle else name)}'
+          f'\n\nFull profile — link in bio.\n\n{tags}')
     return fb, ig
 
 
