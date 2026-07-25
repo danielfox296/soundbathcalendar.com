@@ -39,9 +39,12 @@
   </script>
 
   <link rel="icon" type="image/svg+xml" href="{{css_path}}img/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
+  <!-- CAL-27: Archivo variable is the site's ONLY typeface — self-hosted
+       (no Google Fonts requests survive), one ~88KB latin woff2 carrying
+       both axes (wdth 62..125, wght 100..900). Preloaded because every
+       heading on every page needs it; crossorigin is required for font
+       preloads even same-origin. @font-face lives in styles.css. -->
+  <link rel="preload" href="{{css_path}}vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{css_path}}styles.css">
   {{page_style}}
 

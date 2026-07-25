@@ -66,10 +66,13 @@
   </script>
 
   <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=95a8ce35">
+  <!-- CAL-27: Archivo variable is the site's ONLY typeface — self-hosted
+       (no Google Fonts requests survive), one ~88KB latin woff2 carrying
+       both axes (wdth 62..125, wght 100..900). Preloaded because every
+       heading on every page needs it; crossorigin is required for font
+       preloads even same-origin. @font-face lives in styles.css. -->
+  <link rel="preload" href="../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../styles.css?v=2e731584">
   <style>.cal-warmband { margin: 0 0 2rem; } .cal-warmband img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 5; object-fit: cover; } @media (prefers-color-scheme: dark) { .cal-warmband img { filter: brightness(0.82); } }</style>
 
   <!-- Systemic image fallback: external listing images (operator CDNs,

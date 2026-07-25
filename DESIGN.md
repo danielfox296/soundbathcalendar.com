@@ -58,25 +58,31 @@ RULE: `rgba(var(--ink-rgb), a)` never colors text. It survives for **lines and t
 
 Exempt (depictions, not page UI): the digest-preview miniature keeps its scaled email values; monogram/placeholder marks stay decorative alphas (`.dir-card__media--ph::before` 0.32).
 
-### 1.3 Type
+### 1.3 Type (v5 — CAL-27, ratified 2026-07-25)
 
-- `--font-display: 'Space Grotesk'` · `--font-body: 'Inter'`.
-- Body: Inter 400, `1.02rem / 1.65`. Headings base (`h1,h2,h3`): display 700, `line-height 1.08`, `letter-spacing -0.015em`.
-- Scale anchors (checkable):
+**Archivo variable is the site's only typeface.** Self-hosted latin subset (~88KB woff2, axes `wdth 62..125` + `wght 100..900`) at `vendor/fonts/`, `@font-face` + `font-display: swap` + a `<link rel="preload">` in the base layout; zero requests to Google Fonts. Space Grotesk and Inter are retired. Fallback stack: `system-ui, 'Helvetica Neue', Arial, sans-serif` — **no serif anywhere, ever** (standing ruling), in the stack or otherwise. `--font-display`/`--font-body` survive as aliases of the same stack so page-local sheets keep resolving.
+
+One file, two voices: the condensed display voice (`font-stretch: 72–78%`, heavy, UPPERCASE via CSS `text-transform` — crawlable text stays sentence-case in HTML) and the normal-width text voice (`font-stretch: 100%`). Headings base (`h1,h2,h3`): 800 · stretch 72% · `line-height 1.02` · `letter-spacing -0.005em`.
 
 | Surface | Spec |
 |---|---|
-| Listing H1 `.cal-h1` | `clamp(1.7rem, 3.6vw, 2.7rem)` · 500 |
-| Detail H1 (`.cal-event__h1`, `.venue__h1`, `.pract__h1`, `.operator__h1`) | `clamp(2rem, 4vw, 3rem)` · 700 (base) |
-| Directory H1 `.dir-h1` | same clamp · 500 |
-| Band H2 `.cal-band__h2` | `clamp(1.4rem, 2.6vw, 1.95rem)` · 700 |
-| Summary `.cal-summary` | display 500 · 1.12rem / 1.45 |
-| Row name `.cal-row__name` | 500 · 1.12rem / 1.25 |
-| Row meta `.cal-row__meta` | 400 · 0.92rem · ink 0.62 |
-| Eyebrow `.eyebrow` | Inter 600 · 0.75rem · 0.16em tracking · uppercase · ink 0.65 |
-| Wordmark `.wordmark` | display 700 · 0.95rem · 0.14em · uppercase |
+| H1 monument `.cal-h1` | `clamp(56px, 8vw, 112px)` · wdth 72 · wght 800 · UPPERCASE · lh .92 · ls −.005em |
+| Band heads `.cal-band__h2` | `clamp(36px, 4.5vw, 64px)` · wdth 72 · wght 800 · UPPERCASE · lh .95 |
+| Card names `.cal-row__name` (h3>a) | 30px (22 mobile) · wdth 78 · wght 750 · UPPERCASE · lh 1.02; featured 2-up cards 44px (CAL-28) |
+| Detail/directory H1s (`.detail__h1`, `.dir-h1`) | `clamp(2.4rem, 5vw, 4rem)` · UPPERCASE · lh .95 (CAL-29 refines) |
+| Answer-first summary `.cal-summary` | 24px · wdth 100 · wght 400 · lh 1.35 · **bold counts** (`summary_html`) |
+| Meta / UI / forms | 16px · wdth 100 · `--muted` · lh 1.45 |
+| Fine print (`.cal-updated`, `.footer-fine`) | 13px · `--muted` |
+| Masthead | 15px · UPPERCASE · wordmark 700, nav 400 · no added tracking |
+| Ticker (CAL-28) | 16px · 700 · UPPERCASE · **ls .055em** — the single sanctioned positive tracking on the site (Daniel-ruled) · `/` separators |
 
-The pattern: identity/answer surfaces run display **500** (utility register); entity and event names carry the base **700**. Rows are a scan surface — their leading (1.25–1.45) is deliberately tighter than page prose (1.65); don't "fix" it up.
+RULE — **the tracking law: zero positive letter-spacing everywhere except the ticker.** The small-caps tracked-label vocabulary no longer exists — dates-as-monuments replaced it (CAL-28). Negative tracking on monuments is fine. (The digest-preview miniature keeps its tracked depiction of the shipping email until CAL-37.)
+
+RULE: `font-variant-numeric: tabular-nums` on times, prices, and counts (`.cal-row__when`, `.cal-row__meta`, `.cal-updated`, summary counts).
+
+**Wordmark:** `SOUND BATH CALENDAR` — caps, wght 700, wdth 100, **no mark of any kind** (∿ retired). Footer matches.
+
+Rows are a scan surface — their leading (1.02–1.35) is deliberately tighter than page prose (1.65); don't "fix" it up. The reading register (learn/explainers) keeps sentence-case heads until its own pass (CAL-34).
 
 Reading measure (D-13, ratified 2026-07-22): one physical family, two roles. `--measure: 44rem` (`styles.css:143`; was `68ch` — the same width at shipped font sizes) caps long-form prose in shells (`.detail-main > p`, entity bio/desc paragraphs, `/privacy/`); fixed rem caps (38–48rem, centered on 42–44rem) govern listing and answer surfaces whose font sizes intentionally differ (`.cal-summary` 44, `.cal-row__meta` 42, `.cal-intro` 42, `.cal-faq__item` 44, `.cal-emptystate` 40, `.rup-narrow` 48…). RULE: new prose columns pick from this family — `var(--measure)` for long-form, an existing rem cap otherwise; no new bespoke widths.
 
@@ -289,3 +295,5 @@ The masthead ships `.btn-primary.btn-slim` "Get the digest" on every page (`_src
 | D-17/D-20 vocabulary | §7 |
 | D-13 reading measure ratified | §1.3, §9 |
 | D-14 editorial register ratified | §1.5, §9 |
+| CAL-26 v5 Broadcast tokens | §0, §1.1, §1.2, §5, §6, §8 |
+| CAL-27 Archivo type system | §1.3 |

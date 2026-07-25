@@ -542,7 +542,7 @@ BROWSE_STYLE = """<style>
     .browse__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.8rem; }
     .browse__lede { font-size: 1.1rem; color: var(--ink); max-width: 42rem; margin: 0 0 2.4rem; }
     .browse__axis { margin: 0 0 2.4rem; }
-    .browse__axis-h2 { font: 600 0.78rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.9rem; }
+    .browse__axis-h2 { font: 600 0.78rem var(--font-body); text-transform: uppercase; color: var(--muted); margin: 0 0 0.9rem; }
     .browse__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.9rem; }
     .browse__card { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; text-decoration: none; color: inherit; border: 1px solid rgba(var(--ink-rgb),0.14); padding: 0.8rem 0.95rem; }
     a.browse__card:hover { border-color: var(--signal-text); }

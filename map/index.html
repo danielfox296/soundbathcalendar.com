@@ -60,10 +60,13 @@
   </script>
 
   <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=95a8ce35">
+  <!-- CAL-27: Archivo variable is the site's ONLY typeface — self-hosted
+       (no Google Fonts requests survive), one ~88KB latin woff2 carrying
+       both axes (wdth 62..125, wght 100..900). Preloaded because every
+       heading on every page needs it; crossorigin is required for font
+       preloads even same-origin. @font-face lives in styles.css. -->
+  <link rel="preload" href="../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../styles.css?v=2e731584">
   <link rel="stylesheet" href="../vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="../vendor/markercluster/MarkerCluster.css">
   <style>.map-wrap { margin: 0; } .map-intro { margin: 0 0 1.4rem; } .map-intro .cal-updated { color: var(--muted); font-size: 0.85rem; margin: 0.2rem 0 0; } .map-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; } .map-split__map { position: relative; } @media (min-width: 900px) { .map-split { grid-template-columns: minmax(340px, 5fr) 7fr; gap: 2.4rem; align-items: start; } .map-split__map { position: sticky; top: 90px; } .map-split__list .cal-row__media { display: none; } } @media (max-width: 899px) { .map-split__map { order: -1; } } #sbc-map { width: 100%; height: 680px; border: 1px solid var(--line); background: var(--paper); } @media (max-width: 899px) { #sbc-map { height: 440px; } } .map-hint { position: absolute; inset: 0; z-index: 1200; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 1.4rem; background: rgba(var(--ink-rgb),0.45); opacity: 0; transition: opacity .25s; pointer-events: none; } .map-hint--on { opacity: 1; } .map-hint span { background: var(--paper); color: var(--ink); border: 1px solid var(--line); padding: 0.6rem 1rem; font: 600 0.9rem var(--font-body); } .sbc-pin { width: 100%; height: 100%; background: var(--ink); color: var(--paper); border: 2px solid var(--paper); border-radius: 50%; display: flex; align-items: center; justify-content: center; font: 600 12px/1 var(--font-body); box-shadow: 0 1px 4px rgba(var(--shadow-rgb),0.35); } .sbc-pin--cluster { font-size: 13px; } .sbc-pin--hot { background: var(--signal); color: #fff; border-color: var(--paper); } .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--paper); color: var(--ink); } .sbc-pop__name { font: 600 0.98rem var(--font-body); margin: 0 0 0.3rem; } .sbc-pop__name a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; } .sbc-pop__list { margin: 0; padding-left: 1.05rem; } .sbc-pop__list li { font-size: 0.86rem; line-height: 1.5; } .sbc-pop__list a { color: var(--ink); } .sbc-pop__more { list-style: none; margin-left: -1.05rem; color: var(--muted); } .leaflet-container { font: inherit; } .map-empty { color: var(--muted); } @media (prefers-color-scheme: dark) { .leaflet-tile { filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9); } }</style>
