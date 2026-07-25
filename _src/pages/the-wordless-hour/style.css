@@ -1,0 +1,89 @@
+/* /learn/ pages — glossary + explainers (CAL-20). Page-only styles; leans on
+   the shared tokens and section/eyebrow/cal-h1/btn classes in styles.css.
+   Radius 0 per the design law. Secondary ink rides rgba(var(--ink-rgb),a)
+   so the CAL-14 dark scheme inverts it for free. */
+
+/* A single reading column for the whole page. */
+.lrn-narrow { max-width: 48rem; }
+
+/* Trim the stacked-section rhythm under the intro. */
+.lrn--body { padding-top: 0.6rem; }
+.lrn--next { padding-top: 1rem; }
+
+.lrn-cta { margin: 1.8rem 0 0; }
+
+/* Prose paragraphs — comfortable measure, slightly quieted ink. */
+.lrn-p {
+  color: rgba(var(--ink-rgb), 0.74);
+  font-size: 1rem;
+  line-height: 1.68;
+  margin: 0 0 0.9rem;
+}
+.lrn-p:last-child { margin-bottom: 0; }
+
+/* H2 landmarks — same scale as the what-to-expect questions. */
+.lrn-h2 {
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 2.2rem 0 0.6rem;
+}
+.lrn-h2:first-child { margin-top: 0; }
+
+/* Q&A blocks (the FAQPage-backed section). */
+.lrn-qa { margin: 0 0 2rem; }
+.lrn-qa:last-child { margin-bottom: 0; }
+
+/* An honest-note aside — quiet accent rule, no alarm. */
+.lrn-note {
+  border-left: 3px solid var(--accent);
+  padding: 0.15rem 0 0.15rem 1rem;
+  background: rgba(98, 182, 232, 0.06);
+}
+
+/* "Keep going" — quiet link list, mirrors .wte-links. */
+.lrn-links { list-style: none; margin: 0.4rem 0 0; padding: 0; }
+.lrn-links li {
+  color: rgba(var(--ink-rgb), 0.74);
+  font-size: 1rem;
+  line-height: 1.6;
+  padding: 0.35rem 0 0.35rem 1rem;
+  border-left: 1px solid var(--line);
+  margin: 0 0 0.35rem;
+}
+.lrn-links a { font-weight: 600; }
+
+/* /learn/ index — card directory, mirrors .wte-next. */
+.lrn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  margin: 1.6rem 0 0;
+}
+.lrn-card {
+  display: block;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color .15s, background .15s;
+}
+.lrn-card:hover { border-color: var(--accent-on-light); background: rgba(98, 182, 232, 0.05); }
+.lrn-card__label {
+  display: block;
+  font: 600 0.72rem var(--font-body);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent-on-light);
+  margin-bottom: 0.3rem;
+}
+.lrn-card__desc {
+  display: block;
+  color: rgba(var(--ink-rgb), 0.68);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 560px) {
+  .lrn-grid { grid-template-columns: 1fr; }
+}
