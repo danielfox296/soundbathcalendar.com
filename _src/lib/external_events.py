@@ -1326,16 +1326,23 @@ def render_ticker(rows, now=None):
 
 
 def render_jump(rows, now=None, include_faq=True):
-    """The temporal jump-nav — only the bands that exist, plus the FAQ. With
-    JS, filters.js upgrades each data-band anchor into a toggleable band
-    FILTER chip (CAL-16); without JS they stay plain jump anchors. The FAQ
-    link carries no data-band, so it always just jumps — which is why
-    include_faq=False exists: on a page with no FAQ section that pill
+    """The WHEN dial (CAL-38): the temporal jump-nav as a segmented strip —
+    only the bands that exist, plus the FAQ. Each band cell carries its
+    build-time census (len of the band's rows) as a muted tabular count —
+    the same honest numbers the summary speaks. The counts are STATIC by
+    design: filters.js is frozen, so an active area filter does not shrink
+    them (decision of record, CAL-38 D3). With JS, filters.js upgrades each
+    data-band anchor into a toggleable band FILTER chip (CAL-16; pressed =
+    ink fill — cells are full blocks, so state changes shift nothing);
+    without JS they stay plain jump anchors. The FAQ link carries no
+    data-band and no count, so it always just jumps — which is why
+    include_faq=False exists: on a page with no FAQ section that cell
     would be a dead anchor dressed like its working siblings. Standalone
     since CAL-23 phase B, so the rail can hold it beside the list."""
     out = ['<nav class="cal-jump" aria-label="Jump to a time">']
-    for bid, label, _brows, _sd in _band_list(rows, now):
-        out.append(f'  <a href="#{bid}" data-band="{bid}">{_esc(label)}</a>')
+    for bid, label, brows, _sd in _band_list(rows, now):
+        out.append(f'  <a href="#{bid}" data-band="{bid}">{_esc(label)}'
+                   f' <span class="cal-jump__ct">{len(brows)}</span></a>')
     if include_faq:
         out.append('  <a href="#faq">FAQ</a>')
     out.append('</nav>')
@@ -1343,26 +1350,29 @@ def render_jump(rows, now=None, include_faq=True):
 
 
 def render_rail_links(nav_prefix, ics_filename, feed_path):
-    """The rail's standing links (CAL-23 phase B): subscribe + map + digest,
-    plus a first-timer doorway into the learn layer (CAL-UX-9).
-    Server-rendered, JS-free — the rail is never dead chrome without JS.
-    Subscribe is three quiet options (CAL-UX-4): webcal for Apple, an
-    add-by-URL link for Google Calendar (which silently fails on webcal),
-    and the raw .ics download."""
+    """The standing links as TWO quiet lines of reference furniture (CAL-38,
+    collapsing the old link wall; every CAL-23/UX-4/UX-9 href survives):
+    a SUBSCRIBE line (webcal for Apple, add-by-URL for Google Calendar —
+    which silently fails on webcal — the raw .ics, RSS) and a MORE line
+    (map · digest · what-to-expect). Muted caps lead-ins, ink links bare
+    at rest. Server-rendered, JS-free — never dead chrome without JS."""
+    sep = '<span class="cal-rail__sep" aria-hidden="true">·</span>'
     return '\n'.join([
         '<div class="cal-rail__links">',
-        '  <span class="cal-rail__subhead">Subscribe: '
-        f'<a href="{ics_webcal_url(ics_filename)}">Apple / webcal</a> '
-        '<span aria-hidden="true">·</span> '
-        f'<a href="{gcal_subscribe_url(ics_filename)}">Google Calendar</a>'
+        '  <span class="cal-rail__line">'
+        '<span class="cal-rail__subhead">Subscribe</span> '
+        f'<a href="{ics_webcal_url(ics_filename)}">Apple / webcal</a> {sep} '
+        f'<a href="{gcal_subscribe_url(ics_filename)}">Google Calendar</a> {sep} '
+        f'<a href="{ics_https_url(ics_filename)}">Download .ics</a> {sep} '
+        f'<a href="{nav_prefix}{feed_path}">RSS</a>'
         '</span>',
-        f'  <a href="{ics_https_url(ics_filename)}">'
-        'Download .ics</a>',
-        f'  <a href="{nav_prefix}{feed_path}">RSS</a>',
-        f'  <a href="{nav_prefix}map/">See the map</a>',
-        '  <a href="#digest">Get the Thursday digest</a>',
-        f'  <a href="{nav_prefix}what-to-expect/">'
-        'New to sound baths? What to expect</a>',
+        '  <span class="cal-rail__line">'
+        '<span class="cal-rail__subhead">More</span> '
+        f'<a href="{nav_prefix}map/">See the map</a> {sep} '
+        f'<a href="#digest">Get the Thursday digest</a> {sep} '
+        f'<a href="{nav_prefix}what-to-expect/">'
+        'New to sound baths? What to expect</a>'
+        '</span>',
         '</div>',
     ])
 
@@ -1372,20 +1382,36 @@ NO_RESULTS = 'No sessions match those filters.'
 
 
 def render_filters(rows=None, include_city=True):
-    """The progressive-enhancement filter bar (B.5 + CAL-01): area (root only) +
-    free/donation + tags. Hidden until filters.js reveals it, so no-JS visitors
-    see every row and the page is fully usable. The tag facet only offers tags
-    actually present in `rows` (never a filter that would match nothing), grouped
-    by axis. PLACEHOLDER copy, flagged."""
-    out = ['<div class="cal-filters" data-cal-filters hidden>']
+    """The refine deck (B.5 + CAL-01, redesigned CAL-38): area (root/tag) +
+    free/donation + near-me + tags + clear, inside a native <details> whose
+    48px summary is the deck's engraved name, FILTER + SORT. Ships `open`
+    (so the deck rides expanded wherever the summary is hidden or static);
+    the base-layout script drops `open` under 640px at load — the mobile
+    stack starts collapsed with zero changes to filters.js. Still `hidden`
+    until filters.js reveals it, so no-JS visitors see every row and the
+    page is fully usable — the details never matters without JS. The tag
+    facet only offers tags actually present in `rows` (never a filter that
+    would match nothing), grouped by axis. Checkboxes stay NATIVE inputs
+    (visually hidden inside their chip labels; checked state paints via
+    :has in styles.css) so every filters.js binding and the browser's own
+    keyboard/AT semantics survive untouched. PLACEHOLDER copy, flagged."""
+    out = ['<details class="cal-filters" data-cal-filters hidden open>']
+    # The caret span is decorative; open/closed state is native semantics.
+    out.append('  <summary><span class="cal-filters__summary">Filter + sort'
+               '<span class="cal-filters__caret" aria-hidden="true"></span>'
+               '</span></summary>')
     out.append('  <div class="cal-filters__primary">')
     if include_city:
         opts = ['<option value="">All areas</option>']
         opts += [f'<option value="{_esc(city_slug(c))}">{_esc(c)}</option>'
                  for c in CITIES]
+        # The engraved AREA label is aria-hidden; the select carries the
+        # full name for AT (CAL-38 a11y note — was a visually-hidden span).
         out.append('    <label class="cal-filters__field">')
-        out.append('      <span class="visually-hidden">Filter by area</span>')
-        out.append('      <select data-filter-city>' + ''.join(opts) + '</select>')
+        out.append('      <span class="cal-filters__flab" aria-hidden="true">'
+                   'Area</span>')
+        out.append('      <select data-filter-city aria-label="Filter by area">'
+                   + ''.join(opts) + '</select>')
         out.append('    </label>')
     out.append('    <label class="cal-filters__check">'
                '<input type="checkbox" data-filter-free> '
@@ -1395,10 +1421,6 @@ def render_filters(rows=None, include_city=True):
     # so no-JS visitors never see a dead control.
     out.append('    <button type="button" class="cal-filters__nearme" '
                'data-nearme aria-pressed="false" hidden>Sort by distance</button>')
-    # CAL-UX-10 clear-all. Ships hidden; filters.js reveals it only while any
-    # filter (or the near-me sort) is active, and it resets every facet.
-    out.append('    <button type="button" class="cal-filters__clear" '
-               'data-filter-clear hidden>Clear filters</button>')
     out.append('  </div>')
 
     present = present_tag_slugs(rows or [])
@@ -1420,7 +1442,12 @@ def render_filters(rows=None, include_city=True):
                     f'<span>{_esc(taxonomy.label_for(slug))}</span></label>')
             out.append('    </div>')
         out.append('  </div>')
-    out.append('</div>')
+    # CAL-UX-10 clear-all at the deck's foot — after the facets it resets
+    # (CAL-38 D1). Ships hidden; filters.js reveals it only while any filter
+    # (or the near-me sort) is active.
+    out.append('  <button type="button" class="cal-filters__clear" '
+               'data-filter-clear hidden>Clear filters</button>')
+    out.append('</details>')
     return '\n'.join(out)
 
 
@@ -1442,8 +1469,10 @@ def render_calendar_body(rows, nav_prefix='', now=None, geocode=None):
     return '\n'.join([
         '<div class="cal-split">',
         '<aside class="cal-rail"><div class="cal-rail__inner">',
-        render_filters(rows, include_city=True),
+        # CAL-38 D1: the WHEN dial leads; the refine deck follows; furniture
+        # last. filters.js is order-agnostic (selector-bound).
         render_jump(rows, now),
+        render_filters(rows, include_city=True),
         render_rail_links(nav_prefix, 'front-range.ics', 'feed.xml'),
         '</div></aside>',
         '<div class="cal-list">',
@@ -1917,8 +1946,9 @@ def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
     # city_context drops the city term in captions (the neighborhood leads).
     out.append('    <div class="cal-split">')
     out.append('    <aside class="cal-rail"><div class="cal-rail__inner">')
-    out.append('    ' + render_filters(crows, include_city=False))
+    # CAL-38 D1 order: dial, then deck, then furniture.
     out.append('    ' + render_jump(crows, now))
+    out.append('    ' + render_filters(crows, include_city=False))
     out.append('    ' + render_rail_links(nav_prefix, f'{slug}.ics',
                                           f'{slug}/feed.xml'))
     out.append('    </div></aside>')

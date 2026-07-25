@@ -38,7 +38,7 @@ Defined at `:root` in `styles.css:4`. Dark mode flips the same names (§6). All 
 | `--signal-rgb` | `185, 58, 43` | unchanged | hover tint washes only |
 | `--shadow-rgb` | `53, 47, 92` (ink-cast) | `0, 0, 0` | shadows — never a light glow |
 | `--line` | `rgba(var(--ink-rgb), 0.14)` | follows the flip | hairlines **between blocks** — never a control edge |
-| `--field-line` | `rgba(var(--ink-rgb), 0.46)` | follows the flip | the edge of anything a person types or clicks into |
+| `--field-line` | `rgba(var(--ink-rgb), 0.56)` (3.19:1) | follows the flip (5.89:1) | the edge of anything a person types or clicks into — alpha re-tuned by CAL-38 D7 (0.46 was tuned for v4's near-black ink and fell to 2.51:1 on the v5 day ground) |
 
 There is no third hue. The ice accent, the link blue, and `--gray` are deleted — the only sanctioned survivors are the frozen `--soh-*` (until CAL-36) and `--dp-*` (until CAL-37) namespaces, which depict artifacts that still ship v4.
 
@@ -111,7 +111,7 @@ The state-of-sound report's 14px/999px family is the sanctioned editorial regist
 
 - `.container`: max 1140px — the default shell (detail pages, learn pages).
 - Listing pages (`.cal-main`, i.e. root + city + tag): container caps at **1024px**; at **≥1080px** they widen to **1320px** and split: `.cal-split` = sticky rail `clamp(232px, 19vw, 272px)` + `minmax(0, 1fr)` grid, gap `clamp(2.4rem, 3vw, 3.4rem)`. `.cal-rail__inner` sticks at `var(--mast-offset)`.
-- The rail is a build-time **relocation** of the same markup `filters.js` binds (filters · jump chips · standing links) — selector-based and position-agnostic. Below 1080px the wrappers are inert and the page is a single stack. (The rail's own restyling is CAL-38.)
+- The rail is a build-time **relocation** of the same markup `filters.js` binds — selector-based and position-agnostic. Order (CAL-38 D1): **dial · deck · furniture** (jump, then filters, then standing links) in every placement; the module's own law is §3.5. Below 1080px the wrappers are inert and the page is a single stack.
 - The identity block on listing pages is **left-set** (CAL-28 — the CAL-23 centering is retired by the ratified comp): H1 monument (max 16ch) · summary · stamp, in that order.
 
 ### 2.2 The detail shell (CAL-10)
@@ -125,7 +125,7 @@ One primitive for every detail page (event, venue, practitioner, organizer):
 
 ### 2.3 The Program Grid (CAL-28, ratified 2026-07-25 — the core surface; replaces the list rows entirely)
 
-The list is gone on listing surfaces (root, city, tag). The four temporal bands survive **invisibly** as the IA — each `section.cal-band` wrapper keeps its id (`today` / `this-weekend` / `this-week` / `weeks-ahead`), renders only when it has sessions, and remains the `filters.js` + CAL-16 contract (rows record the temporal band id; jump chips stay `Today · This weekend · …` and still double as filters, pressed state unchanged). Inside each wrapper, the visible structure is **day sections** (`.cal-day`): a **date monument** head over a card grid, one per Denver-local day, chronological, only when non-empty.
+The list is gone on listing surfaces (root, city, tag). The four temporal bands survive **invisibly** as the IA — each `section.cal-band` wrapper keeps its id (`today` / `this-weekend` / `this-week` / `weeks-ahead`), renders only when it has sessions, and remains the `filters.js` + CAL-16 contract (rows record the temporal band id; jump chips stay `Today · This weekend · …` and still double as filters, rendered as the WHEN dial — §3.5 — whose pressed cells are ink fills on full blocks, so toggling never shifts layout). Inside each wrapper, the visible structure is **day sections** (`.cal-day`): a **date monument** head over a card grid, one per Denver-local day, chronological, only when non-empty.
 
 **Day head** (`.cal-day__head`): `h2.cal-band__h2` condensed-caps date monument (`SATURDAY, JULY 25`; year appended only across a year seam) + computed count right (`.cal-day__ct`, `--muted`, `N sessions` — computed, never typed), over a 2px ink rule. Dates-as-monuments replaced the old tear-off date rail — cards on listing surfaces carry **no dates**. **The LIVE day** (`Today`/`Tonight` — `today_band_label` unchanged) is the exception both ways: its h2 is the label as a **white-on-coral slab** (`--signal` fill, padding 4px 18px 7px, coral rule), and its count line carries the full date (`Saturday, July 25 · 6 sessions`) since its cards say no date. RULE — the slab is the signal budget's second sanctioned slab (ticker + live head ONLY, §1.1); coral on any other band head is a defect requiring Daniel's explicit budget amendment.
 
@@ -193,6 +193,18 @@ Signup pitch + form beside a build-time mini-render of this week's **actual** Th
 - RULE: never a bare "…on the way." floating above the footer.
 - RULE: **never fabricate.** Every count, price span, and "next up" is computed from the feed at build time. Entity fallback paragraphs state only what the data holds (`venues.py` / `operators.py` fallbacks). No fake scarcity, no invented urgency badges, no "+N more" unless N is real (§2.7). If we don't know it, the surface doesn't say it.
 
+### 3.5 The filter & control module (CAL-38, ratified 2026-07-25)
+
+One instrument, three placements (comp of record: `marketing/design-v5-filters-2026-07-25.html`). Two decks between 2px ink rules, then two lines of furniture:
+
+1. **The WHEN dial** (`.cal-jump`) — the temporal jump-nav as a segmented strip: joined 48px cells (44px in the rail column), caps 13 / 700 / zero tracking, each band cell carrying its **build-time census** (`.cal-jump__ct`, muted, tabular). RULE: the counts are static band sizes — filters.js is frozen and they do not react to other facets (D3, decision of record). Pressed (CAL-16) = ink fill; cells are blocks, so state never shifts layout. FAQ carries no data-band and no count — a muted jump, not a filter. The strip scrolls where it outgrows its track (phones); the cut cell is the affordance — no gradient fades.
+2. **The refine deck** (`details.cal-filters[data-cal-filters]`) — a native `<details>` whose 48px summary is the deck's engraved name, **FILTER + SORT**. Ships `open` + `hidden`; filters.js reveals it (byte-identical — every selector hook preserved); the base-layout script drops `open` under 640px at load, so the mobile stack starts collapsed. ≤640 the summary is the toggle; 641–1079 it is hidden (headless console); ≥1080 (and stacked tag pages) it stays as a static head. Active state paints a coral REC square on the head via `:has()` — coral-as-state-mark, inside the §1.1 mark family. One control language: 44px cells on 1px `--field-line` edges — the engraved AREA field (muted 13 label · 16px caps value · drawn caret; 16px kills iOS focus-zoom), press-chips for free/donation, near-me, and tags (native checkboxes visually hidden in their labels, state via `:has(:checked)`), Clear at the deck's foot as an underlined × text control. Pressed/checked = ink fill, everywhere. Coral never touches a control at rest.
+3. **The furniture** (`.cal-rail__links`) — the standing links as two quiet 13px lines: SUBSCRIBE (Apple/webcal · Google Calendar · Download .ics · RSS) and MORE (map · digest · what-to-expect). Muted caps lead-ins; sentence-case ink links, bare at rest.
+
+RULE: mobile pre-grid stack (dial + closed deck + furniture) stays ≈200px — the ~1.5-viewport law with room. If the tag census outgrows the rail's sticky viewport (~8+ tags), each axis label becomes its own `<summary>` in the same language (escape hatch specified in the comp, not yet needed).
+
+RULE — the `[hidden]` lockstep (CAL-28 carries it forward): every display-bearing module class restates `[hidden] { display: none }`.
+
 ---
 
 ## 4 · Imagery
@@ -259,8 +271,8 @@ Commits `0330c4c` (D-17) and `d57d296` (D-20). Applies to all public copy: pages
 
 ## 8 · Accessibility floor
 
-- AA everywhere, both schemes: ink 10.98:1 / 17.41:1; `--muted` 5.21:1 / 8.21:1; `--signal-text` 5.08:1 / 6.25:1; button text ≥ 4.5:1 on its own fill (§3.1). `scripts/contrast_check.py` re-verifies every shipped pair.
-- Focus is always visible: `a, button, input` get a 2px `--ink` outline, offset 2px; form fields swap their border for an ink outline.
+- AA everywhere, both schemes: ink 10.98:1 / 17.41:1; `--muted` 5.21:1 / 8.21:1; `--signal-text` 5.08:1 / 6.25:1; `--field-line` control edges 3.19:1 / 5.89:1 (§1.1, CAL-38 D7); button text ≥ 4.5:1 on its own fill (§3.1). `scripts/contrast_check.py` re-verifies every shipped pair.
+- Focus is always visible: `a, button, input` get a 2px `--ink` outline, offset 2px; form fields swap their border for an ink outline. **Exception (CAL-38 D6, ratified):** the filter/control module's controls ride a 2px `--signal-text` ring instead — 5.08:1 day / 6.25:1 night against the 3:1 floor; chip rings paint on the label via `:has()` since the native input is visually hidden.
 - `prefers-reduced-motion` kills smooth scroll (`styles.css:22`); any future motion must check it.
 - The no-JS baseline (§0) is itself an accessibility guarantee: content never gated on scripts; enhancement-only controls ship `hidden` until `filters.js` reveals them.
 - Semantics: `.visually-hidden` for off-screen labels, `aria-pressed` on toggle chips/buttons, `aria-label`ed navs, alt text on every image (§4's honesty line governs its content).
@@ -308,3 +320,4 @@ The masthead's `.btn-primary` digest form is retired for an underlined text link
 | CAL-27 Archivo type system | §1.3 |
 | CAL-28 Program Grid + treat pipeline + ticker + editorial band | §1.1, §1.3, §1.4, §2.1, §2.3, §4 |
 | CAL-30 item 1 masthead (pulled forward) + D-15 closed | §2.6, §3.1, §9 |
+| CAL-38 filter & control module | §3.5, §1.1 (field-line 0.56), §2.1 (order), §2.3 (dial pressed), §8 (focus exception) |

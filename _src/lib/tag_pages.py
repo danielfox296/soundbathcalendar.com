@@ -454,10 +454,14 @@ def render_tag_page(rows, slug, nav_prefix, built_map, now=None, geocode=None):
     out.append(f'    <p class="cal-summary" id="cal-summary">'
                f'{X.summary_html(tag_summary_sentence(rows, slug))}</p>')
 
-    # The tag is fixed; the bar still offers area + free/donation + any OTHER tags
-    # these rows carry, so a visitor can narrow further.
+    # The tag is fixed; the deck still offers area + free/donation + any OTHER
+    # tags these rows carry, so a visitor can narrow further. CAL-38 D1 order:
+    # the WHEN dial leads, the refine deck follows (so the jump renders here,
+    # not inside _render_bands).
+    out.append('    ' + X.render_jump(trows, now))
     out.append('    ' + X.render_filters(trows, include_city=True))
-    out.append('    ' + X._render_bands(trows, nav_prefix, now, geocode))
+    out.append('    ' + X._render_bands(trows, nav_prefix, now, geocode,
+                                        include_jump=False))
     out.append('    ' + X._render_noresults())
     out.append('    ' + _render_related(slug, built_map, nav_prefix))
     out.append('    ' + X._render_faq(tag_faq(rows, slug)))

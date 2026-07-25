@@ -15,6 +15,22 @@ SIGNAL = '#B93A2B'
 SIGNAL_TEXT_L, SIGNAL_TEXT_D = '#B93A2B', '#E2724E'
 SURFACE_TEXT = '#F5F2ED'   # --surface-text (CAL-28 tiles) — one value, both schemes
 WHITE = '#FFFFFF'
+# --field-line rides rgba(ink-rgb, alpha) over paper; audit the BLENDED edge
+# (CAL-38 D7: 0.46 was tuned for v4's near-black ink and fell to 2.51:1 on
+# the v5 day ground — 0.56 clears the 1.4.11 boundary floor on both).
+FIELD_ALPHA = 0.56
+
+
+def _blend(fg_hex, alpha, bg_hex):
+    f, b = fg_hex.lstrip('#'), bg_hex.lstrip('#')
+    out = ''.join(
+        f'{round(int(f[i:i + 2], 16) * alpha + int(b[i:i + 2], 16) * (1 - alpha)):02X}'
+        for i in (0, 2, 4))
+    return '#' + out
+
+
+FIELD_LINE_L = _blend(INK_L, FIELD_ALPHA, PAPER_L)
+FIELD_LINE_D = _blend(INK_D, FIELD_ALPHA, PAPER_D)
 
 
 def _lin(c):
@@ -61,6 +77,8 @@ PAIRS = [
     ('signal-text on paper (dark)', SIGNAL_TEXT_D, PAPER_D, 4.5),
     ('signal slab against paper (light, non-text)', SIGNAL, PAPER_L, 3.0),
     ('signal slab against paper (dark, non-text)', SIGNAL, PAPER_D, 3.0),
+    ('field-line edge on paper (light, control boundary)', FIELD_LINE_L, PAPER_L, 3.0),
+    ('field-line edge on paper (dark, control boundary)', FIELD_LINE_D, PAPER_D, 3.0),
 ]
 
 if __name__ == '__main__':

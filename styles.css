@@ -31,12 +31,14 @@
   --line: rgba(var(--ink-rgb), 0.14);
   /* Form-control boundaries carry their own token, a step heavier than --line.
      WCAG 1.4.11 wants 3:1 for the visual boundary of a control, and --line's
-     0.14 (a hairline BETWEEN blocks, exempt) is nowhere near it. At 0.46 the
-     edge measures 3.20:1 on the light ground and 4.41:1 on the dark desk —
-     it rides --ink-rgb, so one token covers both schemes. Decorative borders
-     (rules, chips) keep --line; anything a person types or clicks into uses
-     this. */
-  --field-line: rgba(var(--ink-rgb), 0.46);
+     0.14 (a hairline BETWEEN blocks, exempt) is nowhere near it. The alpha is
+     0.56 (CAL-38 D7): the old 0.46 was tuned against v4's near-black ink and
+     quietly fell to 2.51:1 when CAL-26 swapped the ink to indigo — at 0.56
+     the edge measures 3.19:1 on the day ground and 5.89:1 on night. It rides
+     --ink-rgb, so one token covers both schemes (contrast_check.py holds the
+     pair). Decorative borders (rules, chips) keep --line; anything a person
+     types or clicks into uses this. */
+  --field-line: rgba(var(--ink-rgb), 0.56);
   /* v5 type (CAL-27): Archivo variable is the ONLY face — one file, two
      voices (condensed-caps display / normal-width text), selected per-surface
      via font-stretch + font-weight, never a second family. The two var names
@@ -100,14 +102,21 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; font-stretch: 7
         rail is a build-time RELOCATION of the same markup filters.js already
         binds (selector-based, position-agnostic); its nearest-first list
         mounts before the first .cal-band, i.e. inside .cal-list. ---- */
-.cal-rail__links { display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
-.cal-rail__links a { color: var(--ink); font: 600 0.86rem var(--font-body); text-decoration: none; }
-.cal-rail__links a:hover { text-decoration: underline; }
-/* CAL-UX-4: the subscribe trio's quiet lead-in + separators, one wrap item. */
-.cal-rail__subhead { font: 600 0.86rem var(--font-body); color: var(--muted); }
+/* CAL-38 D5: the standing links are TWO quiet lines of reference furniture —
+   muted caps lead-ins (Subscribe / More), ink links bare at rest, hover
+   restores the underline (v5 chrome-link rule). 13px = the fine-print
+   register; sentence-case links keep the furniture distinct from the caps
+   instrument above it. */
+.cal-rail__links { padding-top: 14px; font-size: 13px; line-height: 1.7; }
+.cal-rail__line { display: block; }
+.cal-rail__line + .cal-rail__line { margin-top: 2px; }
+.cal-rail__links a { color: var(--ink); font-weight: 400; text-decoration: none; }
+.cal-rail__links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.cal-rail__subhead { font-weight: 700; text-transform: uppercase; letter-spacing: 0; color: var(--muted); margin-right: 4px; }
+.cal-rail__sep { color: var(--muted); padding: 0 4px; }
 @media (max-width: 1079px) {
-  /* Stacked mode: the rail links read as the old subscribe row. */
-  .cal-rail__links { flex-direction: row; flex-wrap: wrap; gap: 0.5rem 1.3rem; border-top: 0; padding-top: 0; margin: 0 0 2rem; }
+  /* Stacked mode: same two lines, spaced off the band list below. */
+  .cal-rail__links { margin: 0 0 2rem; }
 }
 @media (min-width: 1080px) {
   .cal-main .container { max-width: 1320px; }
@@ -117,13 +126,17 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; font-stretch: 7
      align-items:start above was sizing it to its own content. */
   .cal-rail { align-self: stretch; }
   .cal-rail__inner { position: sticky; top: var(--mast-offset); }
-  /* Vertical variants of the relocated chrome. */
-  .cal-rail .cal-filters { flex-direction: column; align-items: stretch; gap: 1rem; margin: 0 0 1.6rem; border-top: 0; padding-top: 0; }
-  .cal-rail .cal-filters__primary { display: flex; flex-direction: column; align-items: stretch; gap: 0.9rem; }
-  .cal-rail .cal-filters__field select { width: 100%; }
-  .cal-rail .cal-filters__nearme { align-self: flex-start; }
-  .cal-rail .cal-filters__clear { align-self: flex-start; }
-  .cal-rail .cal-jump { flex-direction: column; align-items: flex-start; gap: 0.7rem; margin: 0 0 1.6rem; }
+  /* Vertical variants of the relocated chrome (CAL-38): the WHEN dial
+     becomes a column of 44px cells (label left, census right), the refine
+     deck a column console under its static FILTER + SORT head. */
+  .cal-rail .cal-jump { flex-direction: column; overflow: visible; }
+  .cal-rail .cal-jump a { flex: 0 0 auto; justify-content: flex-start; min-height: 44px; border-left: 0; border-top: 1px solid var(--line); }
+  .cal-rail .cal-jump a:first-child { border-top: 0; }
+  .cal-rail .cal-jump .cal-jump__ct { margin-left: auto; }
+  .cal-rail .cal-filters { margin: 26px 0 0; }
+  .cal-rail .cal-filters__primary { flex-direction: column; align-items: stretch; }
+  .cal-rail .cal-filters__field { display: flex; width: 100%; }
+  .cal-rail .cal-filters__field select { flex: 1 1 auto; width: 100%; min-width: 0; }
 }
 .eyebrow { font: 600 0.75rem var(--font-body); text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 1.2rem; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -323,75 +336,145 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-summary { font: 400 1.5rem var(--font-display); color: var(--ink); max-width: 44rem; margin: 1.6rem 0 0.75rem; line-height: 1.35; }
 .cal-summary strong, .cal-summary b { font-weight: 700; }
 
-.cal-jump { display: flex; flex-wrap: wrap; gap: 0.7rem 1.5rem; margin: 0 0 2.2rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line); }
-.cal-jump a { color: var(--ink); text-decoration: none; font: 600 0.76rem var(--font-body); text-transform: uppercase; }
-.cal-jump a:hover { text-decoration: underline; }
-/* CAL-16 bands-as-filters: the pressed chip fills ink-on-paper. The negative
-   margins cancel the padding exactly, so toggling never shifts the nav's
-   layout. Tokens flip in dark mode, so the pressed fill flips with them. */
-.cal-jump a[aria-pressed="true"] { background: var(--ink); color: var(--paper); padding: 0.3em 0.55em; margin: -0.3em -0.55em; text-decoration: none; }
+/* ---- the WHEN dial (CAL-38, ratified 2026-07-25): the temporal jump-nav as
+        a segmented strip — joined cells between 2px ink rules, caps 13 / 700 /
+        zero tracking, muted tabular census per cell. Pressed (CAL-16) is the
+        one word for "on": ink fill, paper text — cells are full blocks, so
+        state changes shift nothing (the old negative-margin chip hack is
+        retired). overflow-x lets the strip scroll wherever it outgrows its
+        track (phones; narrow stacked widths) — cells hold their content width
+        via the flex min-size floor, and the cut cell at the edge is the
+        scroll affordance (no gradient fades — chrome law). FAQ carries no
+        data-band: a quiet muted jump, not a filter. */
+.cal-jump { display: flex; align-items: stretch; margin: 0; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); overflow-x: auto; scrollbar-width: none; }
+.cal-jump::-webkit-scrollbar { display: none; }
+.cal-jump a { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 12px; font: 700 13px/1.2 var(--font-body); letter-spacing: 0; text-transform: uppercase; color: var(--ink); text-decoration: none; border-left: 1px solid var(--line); white-space: nowrap; }
+.cal-jump a:first-child { border-left: 0; }
+.cal-jump__ct { font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+.cal-jump a:hover { background: rgba(var(--ink-rgb), 0.06); }
+.cal-jump a[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.cal-jump a[aria-pressed="true"] .cal-jump__ct { color: var(--paper); }
+.cal-jump a:not([data-band]) { flex: 0 0 auto; color: var(--muted); padding: 0 18px; }
 
-/* ---- filters (Track B B.5, progressive enhancement) — the bar is hidden
-        until filters.js reveals it, so no-JS visitors see every row. The
-        [hidden] rules override .cal-row's display:grid / .cal-band's block. */
-.cal-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem 1.6rem; margin: 0 0 2rem; padding: 0.85rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.cal-filters__field select { background: transparent; border: 1px solid var(--field-line); padding: 0.4rem 0.7rem; font: 400 0.9rem var(--font-body); color: var(--ink); }
-.cal-filters__check { display: inline-flex; align-items: center; gap: 0.45rem; font: 600 0.86rem var(--font-body); color: var(--ink); cursor: pointer; }
-.cal-filters__check input { width: 1rem; height: 1rem; accent-color: var(--ink); }
-/* LOCKSTEP LAW (CAL-28): this rule must always out-rank whatever display the
+/* ---- the refine deck (Track B B.5, redesigned CAL-38) — a native <details>
+        console under the dial: 48px FILTER + SORT summary head, then the
+        primary row (area field · free/donation chip · near-me chip) and the
+        tag axes, with Clear at the foot. One control language: 44px cells on
+        1px --field-line edges, caps 13 / 700 / zero tracking (select value
+        16px — kills iOS focus-zoom), pressed/checked = ink fill. Still
+        `hidden` until filters.js reveals it, so no-JS visitors see every
+        row. The [hidden] rules override each class's own display value. */
+.cal-filters { display: block; border-bottom: 2px solid var(--ink); margin: 0 0 2rem; }
+.cal-filters summary { list-style: none; cursor: pointer; }
+.cal-filters summary::-webkit-details-marker { display: none; }
+.cal-filters__summary { display: flex; align-items: center; gap: 12px; min-height: 48px; font: 700 13px/1.2 var(--font-body); letter-spacing: 0; text-transform: uppercase; color: var(--ink); border-bottom: 1px solid var(--line); }
+.cal-filters:not([open]) .cal-filters__summary { border-bottom: 0; }
+.cal-filters__caret { width: 8px; height: 8px; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(45deg) translateY(-2px); margin-left: auto; margin-right: 6px; transition: transform 0.12s; }
+.cal-filters[open] .cal-filters__caret { transform: rotate(-135deg) translateY(-2px); }
+@media (prefers-reduced-motion: reduce) { .cal-filters__caret { transition: none; } }
+/* The REC mark: a coral state-square on the deck head while any facet is
+   active — pure CSS :has(), no script. Coral-as-state-mark rides the
+   sanctioned Free/Donation mark family (§1.1), not chrome coral. */
+.cal-filters:has(input:checked) .cal-filters__summary::before,
+.cal-filters:has(option:checked:not([value=""])) .cal-filters__summary::before,
+.cal-filters:has([data-nearme][aria-pressed="true"]) .cal-filters__summary::before { content: ""; flex: 0 0 auto; width: 8px; height: 8px; background: var(--signal-text); }
+/* ≥641px the deck rides open (base.html only closes it ≤640): 641–1079 the
+   summary disappears entirely (headless console between summary and grid);
+   ≥1080 — and on stacked-at-any-width tag pages — it stays as the deck's
+   static engraved head (mouse-inert; keyboard can still toggle, harmless). */
+@media (min-width: 641px) {
+  .cal-filters summary { pointer-events: none; }
+  .cal-filters__caret { display: none; }
+}
+@media (min-width: 641px) and (max-width: 1079px) {
+  .cal-main .cal-filters summary { display: none; }
+}
+.cal-filters__primary { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px 0; }
+.cal-filters__tags { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 26px; padding: 2px 0 14px; }
+.cal-filters__axis { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.cal-filters__axislabel { font: 700 13px/1.2 var(--font-body); letter-spacing: 0; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+/* The area field: engraved muted label + 16px caps value + drawn caret. */
+.cal-filters__field { position: relative; display: inline-flex; align-items: stretch; min-height: 44px; border: 1px solid var(--field-line); }
+.cal-filters__field:hover { border-color: var(--ink); }
+.cal-filters__flab { display: flex; align-items: center; padding: 0 12px; font: 700 13px/1.2 var(--font-body); letter-spacing: 0; text-transform: uppercase; color: var(--muted); border-right: 1px solid var(--line); }
+.cal-filters__field select { appearance: none; -webkit-appearance: none; background: transparent; border: 0; color: var(--ink); font: 700 16px/1.2 var(--font-body); text-transform: uppercase; padding: 0 40px 0 14px; cursor: pointer; }
+.cal-filters__field::after { content: ""; position: absolute; right: 14px; top: 50%; width: 8px; height: 8px; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: translateY(-70%) rotate(45deg); pointer-events: none; }
+/* Press-chips: free/donation + near-me share one cell. Checkboxes stay
+   NATIVE inputs, visually hidden inside the label; state paints on the chip
+   via :has — filters.js bindings and the browser's own semantics untouched. */
+.cal-filters__check { position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 14px; border: 1px solid var(--field-line); font: 700 13px/1.2 var(--font-body); letter-spacing: 0; text-transform: uppercase; color: var(--ink); cursor: pointer; user-select: none; }
+.cal-filters__check input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none; }
+.cal-filters__check:hover { border-color: var(--ink); }
+.cal-filters__check:has(input:checked) { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+/* .cal-jump/.cal-nearme carry display:flex/inline styles, so the UA [hidden]
+   rule (a low-specificity display:none) loses to them — restate it here.
+   LOCKSTEP LAW (CAL-28): this rule must always out-rank whatever display the
    card/band/jump elements carry, or client filtering dies silently. Today
    the type tile is the only .cal-row variant with its own display
    (.cal-card--tile, flex — 0-1-0 vs this 0-2-0), .cal-jump is flex, and
    .cal-band draws no display of its own. Change a display value there →
    re-verify THIS rule still wins. */
 .cal-filters[hidden], .cal-row[hidden], .cal-band[hidden], .cal-jump[hidden], .cal-filters__nearme[hidden] { display: none; }
+/* CAL-38 × CAL-28: filters.js (frozen) hides empty BANDS, but day sections
+   are furniture it never learned — a day whose cards all fall away would
+   leave its date monument floating over nothing. Pure CSS closes it; with
+   no JS nothing is ever [hidden] and this never matches. */
+.cal-day:not(:has(.cal-row:not([hidden]))) { display: none; }
 
-/* ---- near-me distance sort (CAL-05): a toggle in the primary controls +
-        a per-row distance chip. The button carries `hidden` until filters.js
-        reveals it (only when rows are located), so no-JS visitors never see it.
+/* ---- near-me distance sort (CAL-05): the same press-chip + a per-row
+        distance chip. The button carries `hidden` until filters.js reveals
+        it (only when rows are located), so no-JS visitors never see it.
         Radius 0 per DESIGN.md. ---- */
-.cal-filters__nearme { background: transparent; border: 1px solid var(--field-line); padding: 0.4rem 0.9rem; font: 600 0.82rem var(--font-body); color: var(--ink); cursor: pointer; }
+.cal-filters__nearme { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 14px; background: transparent; border: 1px solid var(--field-line); font: 700 13px/1.2 var(--font-body); letter-spacing: 0; text-transform: uppercase; color: var(--ink); cursor: pointer; }
 .cal-filters__nearme:hover { border-color: var(--ink); }
 .cal-filters__nearme[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.cal-filters__nearme:disabled { color: var(--muted); cursor: default; }
-.cal-nearnote { padding: 0.3rem 0 0; font-size: 0.9rem; }
+.cal-filters__nearme:disabled { color: var(--muted); border-color: var(--line); cursor: default; }
+.cal-nearnote { padding: 8px 0 0; font-size: 13px; }
 
-/* ---- clear-all + off-screen indicator (CAL-UX-10). The bar's "Clear
-        filters" is a quiet link-button in the rail-links register — filters.js
-        reveals it only while something is active. The floating chip borrows
-        the pressed-chip language (.cal-jump ink fill, radius 0 per DESIGN.md)
-        and appears only when filters are active AND the bar is off-viewport;
-        at >=1080px the CAL-23 rail keeps the bar sticky-visible, so the chip
-        stays off there. Tokens flip both in dark mode. ---- */
-.cal-filters__clear { background: transparent; border: 0; padding: 0; font: 600 0.86rem var(--font-body); color: var(--ink); cursor: pointer; }
-.cal-filters__clear:hover { text-decoration: underline; }
+/* ---- clear-all + off-screen indicator (CAL-UX-10 / CAL-38). Clear sits at
+        the deck's foot — after the facets it resets — as a quiet underlined
+        text control with a leading ×; filters.js reveals it only while
+        something is active. The floating pill borrows the pressed language
+        (ink fill) at the family's 13px/44px scale; it appears only when
+        filters are active AND the deck is off-viewport; at >=1080px the
+        CAL-23 rail keeps the deck sticky-visible, so the pill stays off
+        there. Tokens flip both in dark mode. ---- */
+.cal-filters__clear { display: inline-flex; align-items: center; min-height: 44px; margin: 0 0 4px; background: transparent; border: 0; padding: 0; font: 700 13px/1.2 var(--font-body); letter-spacing: 0; text-transform: uppercase; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; cursor: pointer; }
+.cal-filters__clear::before { content: "×"; margin-right: 8px; font-size: 16px; }
 .cal-filters__clear[hidden] { display: none; }
-.cal-filterpill { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px)); z-index: 40; background: var(--ink); color: var(--paper); border: 0; font: 600 0.72rem var(--font-body); text-transform: uppercase; padding: 0.6rem 1.05rem; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 14px rgba(var(--shadow-rgb),0.28); }
+.cal-filterpill { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px)); z-index: 40; background: var(--ink); color: var(--paper); border: 0; font: 700 13px/1.2 var(--font-body); letter-spacing: 0; text-transform: uppercase; padding: 14px 18px; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 14px rgba(var(--shadow-rgb),0.28); }
 .cal-filterpill[hidden] { display: none; }
 @media (min-width: 1080px) { .cal-filterpill { display: none; } }
-/* Scroll-target offset: clearing from the chip scrolls the bar back into
+/* Scroll-target offset: clearing from the chip scrolls the deck back into
    view (and tab-focus can scroll to a control) — both must clear the sticky
    masthead (the house 90px, matching .cal-band's scroll-margin-top). */
 .cal-filters, .cal-filters select, .cal-filters input, .cal-filters button { scroll-margin-top: var(--mast-offset); }
 .cal-row__dist { font: 600 0.66rem var(--font-body); color: var(--ink); border: 1px solid rgba(var(--ink-rgb),0.25); padding: 0.05rem 0.4rem; line-height: 1.5; }
 
-/* ---- filter facet: primary controls (area + free) stacked over the tag
-        chips (CAL-01). The bar becomes a column so the tags wrap below. ---- */
-.cal-filters { flex-direction: column; align-items: flex-start; gap: 0.9rem; }
-.cal-filters__primary { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem 1.6rem; }
-.cal-filters__tags { display: flex; flex-wrap: wrap; gap: 0.5rem 1.3rem; }
-.cal-filters__axis { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.55rem; }
-/* v5 (CAL-26): secondary text is the discrete --muted grey (5.21:1 light /
-   8.21:1 dark) — the rgba ink ramp is retired FOR TEXT (small type is never
-   purple); it survives for hairlines and tint washes only. */
-.cal-filters__axislabel { font: 600 0.66rem var(--font-body); text-transform: uppercase; color: var(--muted); margin-right: 0.15rem; }
+/* ---- CAL-38 D6 (amends §8 for this module): focus rides the coral ring —
+        2px --signal-text, offset 2 (5.08:1 day / 6.25:1 night against the
+        3:1 floor). Chip rings paint on the label via :has since the native
+        input is visually hidden; the raw input's own ring is suppressed so
+        a 1px ghost ring never floats beside the cell. */
+.cal-jump a:focus-visible { outline: 2px solid var(--signal-text); outline-offset: -3px; }
+.cal-filters summary:focus-visible,
+.cal-filters__nearme:focus-visible,
+.cal-filters__clear:focus-visible,
+.cal-filterpill:focus-visible { outline: 2px solid var(--signal-text); outline-offset: 2px; }
+.cal-filters__field:has(select:focus-visible),
+.cal-filters__check:has(input:focus-visible),
+.cal-tag--toggle:has(input:focus-visible) { outline: 2px solid var(--signal-text); outline-offset: 2px; }
+.cal-filters__field select:focus, .cal-filters__check input:focus, .cal-tag--toggle input:focus { outline: none; }
 
 /* ---- tag chips (CAL-01): a display chip on rows/event pages + a toggle
-        variant in the filter facet. Radius 0 per DESIGN.md. ---- */
+        variant in the refine deck (CAL-38: the toggle joins the 44px
+        press-chip family; the display chip keeps its small mark scale).
+        Radius 0 per DESIGN.md. ---- */
 .cal-tag { display: inline-flex; align-items: center; gap: 0.3rem; font: 600 0.68rem var(--font-body); color: var(--ink); border: 1px solid rgba(var(--ink-rgb),0.18); padding: 0.1rem 0.45rem; line-height: 1.5; }
-.cal-tag--toggle { cursor: pointer; }
-.cal-tag--toggle input { width: 0.85rem; height: 0.85rem; accent-color: var(--ink); margin: 0; }
+.cal-tag--toggle { position: relative; justify-content: center; min-height: 44px; padding: 0 14px; border-color: var(--field-line); font: 700 13px/1.2 var(--font-body); letter-spacing: 0; text-transform: uppercase; cursor: pointer; user-select: none; }
+.cal-tag--toggle input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none; }
 .cal-tag--toggle:hover { border-color: var(--ink); }
+.cal-tag--toggle:has(input:checked) { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 /* A chip that links to its tag landing page (CAL-09) — same chip, clickable. */
 .cal-tag--link { text-decoration: none; cursor: pointer; }
 .cal-tag--link:hover { border-color: var(--signal-text); background: rgba(var(--signal-rgb),0.07); }
@@ -738,7 +821,9 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
   .section { padding-top: 1.4rem; }
   .cal-h1 { margin-top: 0.2rem; }
   .cal-summary { font-size: 1.15rem; margin-top: 1rem; }
-  .cal-jump { margin-bottom: 1.6rem; gap: 0.55rem 1.2rem; padding-bottom: 1rem; }
+  /* CAL-38: dial cells hold natural width on phones — the strip scrolls
+     (base overflow-x) and the cut cell at the edge is the affordance. */
+  .cal-jump a { flex: 0 0 auto; padding: 0 16px; }
 }
 
 /* ---- dark mode (CAL-14 / v5 "Night", CAL-26): a prefers-color-scheme token
