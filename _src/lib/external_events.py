@@ -394,19 +394,23 @@ def build_rows(cal_feed, now=None):
         rows.append(_external_row(e))
 
     # Defensive de-dup (the server already dedups; this guards a hand-edited
-    # feed): first occurrence by dedup_key, then by ticket_url, wins.
+    # feed): first occurrence by dedup_key, then by (ticket_url, local date),
+    # wins. The URL guard is date-scoped because recurring series share one
+    # landing page across dates — a bare-URL key would keep only the first
+    # future occurrence and orphan every later permalink (CAL-33).
     seen_keys, seen_urls, deduped = set(), set(), []
     for r in rows:
         k = r.get('dedup_key') or ''
         u = r.get('ticket_url') or ''
+        d = parse_iso(r['starts_at']).astimezone(DENVER).date().isoformat()
         if k and k in seen_keys:
             continue
-        if u and u in seen_urls:
+        if u and (u, d) in seen_urls:
             continue
         if k:
             seen_keys.add(k)
         if u:
-            seen_urls.add(u)
+            seen_urls.add((u, d))
         deduped.append(r)
 
     deduped.sort(key=lambda r: parse_iso(r['starts_at']))
