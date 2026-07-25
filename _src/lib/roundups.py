@@ -238,7 +238,7 @@ def render_index(posts, nav_prefix):
 # (CAL-14 token flip) holds.
 ROUNDUPS_HEAD = '''<style>
 .rup-narrow { max-width: 48rem; }
-.rup-meta { font-size: 0.85rem; color: rgba(var(--ink-rgb), 0.62); margin: 0 0 2.2rem; }
+.rup-meta { font-size: 0.85rem; color: var(--muted); margin: 0 0 2.2rem; }
 .rup-body h2 {
   font-size: clamp(1.25rem, 2.4vw, 1.6rem);
   font-weight: 500;
@@ -246,13 +246,13 @@ ROUNDUPS_HEAD = '''<style>
   margin: 2.4rem 0 0.6rem;
 }
 .rup-body h3 { font-size: 1.1rem; font-weight: 600; margin: 1.8rem 0 0.5rem; }
-.rup-body p { color: rgba(var(--ink-rgb), 0.74); line-height: 1.68; margin: 0 0 0.9rem; }
+.rup-body p { color: var(--ink); line-height: 1.68; margin: 0 0 0.9rem; }
 .rup-body ul { margin: 0 0 0.9rem; padding-left: 1.2rem; }
-.rup-body li { color: rgba(var(--ink-rgb), 0.74); line-height: 1.6; margin: 0 0 0.35rem; }
+.rup-body li { color: var(--ink); line-height: 1.6; margin: 0 0 0.35rem; }
 /* Blockquote = Daniel's verbatim note. Quiet accent rule, same family as the
    what-to-expect health note — set apart, never loud. */
 .rup-body blockquote {
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--ink);
   padding: 0.15rem 0 0.15rem 1rem;
   margin: 1.2rem 0;
 }
@@ -261,6 +261,6 @@ ROUNDUPS_HEAD = '''<style>
 .rup-list { list-style: none; margin: 0.4rem 0 0; padding: 0; }
 .rup-item { border-top: 1px solid var(--line); padding: 1.1rem 0 1.2rem; }
 .rup-item__title { font: 500 1.2rem var(--font-display); letter-spacing: -0.01em; }
-.rup-item__dek { color: rgba(var(--ink-rgb), 0.74); line-height: 1.6; margin: 0.35rem 0 0; }
-.rup-item__meta { font-size: 0.82rem; color: rgba(var(--ink-rgb), 0.62); margin: 0.35rem 0 0; }
+.rup-item__dek { color: var(--ink); line-height: 1.6; margin: 0.35rem 0 0; }
+.rup-item__meta { font-size: 0.82rem; color: var(--muted); margin: 0.35rem 0 0; }
 </style>'''

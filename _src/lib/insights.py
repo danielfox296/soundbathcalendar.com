@@ -352,7 +352,8 @@ _SCRIPT = """
 # ---------------------------------------------------------------------------
 # Page <head> styles — namespaced under .soh so nothing leaks into styles.css.
 # Reuses the site design tokens defined there (--ink, --paper, --accent,
-# --accent-on-light, --line, --ink-rgb, --font-display, --font-body). Full-bleed
+# --line, --ink-rgb, --font-display, --font-body; its ice accents are its own
+# --soh-* values, frozen until CAL-36). Full-bleed
 # alternating bands (paper / white / ink) differentiate sections; images keep
 # their intrinsic ratio (height:auto / explicit object-fit) so nothing
 # stretches; the stat grid uses explicit 3/2/1 columns so tiles always fill the
@@ -361,15 +362,19 @@ _SCRIPT = """
 INSIGHTS_HEAD = """<style>
   .soh { --soh-white: #fff; --soh-dim: #5d6570; --soh-wash: rgba(98,182,232,0.14);
          --soh-line: var(--line);
+         /* CAL-26: the report keeps its OWN v4 ice/blue accents (frozen until
+            the CAL-36 editorial pass) — the site tokens no longer carry them. */
+         --soh-accent: #62B6E8; --soh-link: #1F6FA8;
          --soh-ink-bg: #0A0B0D; --soh-ink-text: #F5F7FA;
          --soh-ink-dim: rgba(245,247,250,0.62); --soh-ink-line: rgba(245,247,250,0.14); }
-  /* Dark scheme: the site swaps --ink/--paper/--accent-on-light (styles.css),
+  /* Dark scheme: the site swaps --ink/--paper/--muted (styles.css),
      so the prose adapts on its own — these keep the report's OWN surfaces in
      step: "white" bands become an elevated dark card, dims lighten, and the
      hairlines flip light (--line is a static dark rgba and would vanish). */
   @media (prefers-color-scheme: dark) {
     .soh { --soh-white: #16191E; --soh-dim: rgba(245,247,250,0.62);
-           --soh-wash: rgba(98,182,232,0.17); --soh-line: rgba(245,247,250,0.14); }
+           --soh-wash: rgba(98,182,232,0.17); --soh-line: rgba(245,247,250,0.14);
+           --soh-link: #7CC3EC; }
     /* Photos are the one surface tokens can't fix: a daylight landscape and a
        white-tabletop still-life read as glowing blocks on the dark ground.
        Pull them down toward the page instead of letting them blast through. */
@@ -378,26 +383,26 @@ INSIGHTS_HEAD = """<style>
   }
   .soh :is(h1,h2,h3) { font-family: var(--font-display); }
   .soh p { line-height: 1.7; }
-  .soh a { color: var(--accent-on-light); text-underline-offset: 3px; }
+  .soh a { color: var(--soh-link); text-underline-offset: 3px; }
 
   /* ---- Bands: full-bleed rooms with a generous shared rhythm ---- */
   .soh-band { padding: clamp(3.5rem, 7vw, 6rem) 0; }
   .soh-band--paper { background: var(--paper); }
   .soh-band--white { background: var(--soh-white); border-top: 1px solid var(--soh-line); border-bottom: 1px solid var(--soh-line); }
   .soh-band--ink { background: var(--soh-ink-bg); color: var(--soh-ink-text); }
-  .soh-band--ink a { color: var(--accent); }
+  .soh-band--ink a { color: var(--soh-accent); }
   .soh-wrap { max-width: 71rem; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
 
   /* ---- Masthead ---- */
   .soh-band--mast { padding-top: clamp(4rem, 9vw, 7rem); padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   .soh-eyebrow { font: 500 13px/1 var(--font-display); letter-spacing: .22em;
-    text-transform: uppercase; color: var(--accent-on-light); margin: 0 0 22px; }
+    text-transform: uppercase; color: var(--soh-link); margin: 0 0 22px; }
   .soh-h1 { font-size: clamp(34px, 6vw, 66px); line-height: 1.02; font-weight: 700;
     letter-spacing: -0.022em; margin: 0 0 26px; max-width: 20ch; }
-  .soh-h1__accent { color: var(--accent-on-light); }
+  .soh-h1__accent { color: var(--soh-link); }
   .soh-dek { font: 500 clamp(18px, 2.2vw, 22px)/1.5 var(--font-display); color: var(--ink);
     max-width: 46rem; margin: 0 0 34px; }
-  .soh-dek em { font-style: normal; border-bottom: 3px solid var(--accent); }
+  .soh-dek em { font-style: normal; border-bottom: 3px solid var(--soh-accent); }
   .soh-meta { display: flex; flex-wrap: wrap; gap: 10px 26px; font-size: 13.5px;
     color: var(--soh-dim); padding-top: 24px; border-top: 1px solid var(--soh-line); }
   .soh-meta b { color: var(--ink); font-weight: 600; }
@@ -413,10 +418,10 @@ INSIGHTS_HEAD = """<style>
 
   /* ---- Section furniture ---- */
   .soh-kicker { font: 500 12.5px/1 var(--font-display); letter-spacing: .18em;
-    text-transform: uppercase; color: var(--accent-on-light); margin: 0 0 14px;
+    text-transform: uppercase; color: var(--soh-link); margin: 0 0 14px;
     display: flex; align-items: baseline; gap: 14px; }
   .soh-kicker::after { content:""; flex: 1; height: 1px; background: var(--soh-line); }
-  .soh-band--ink .soh-kicker { color: var(--accent); }
+  .soh-band--ink .soh-kicker { color: var(--soh-accent); }
   .soh-band--ink .soh-kicker::after { background: var(--soh-ink-line); }
   .soh-h2 { font-size: clamp(25px, 3.6vw, 36px); line-height: 1.1; font-weight: 700;
     letter-spacing: -0.018em; margin: 0 0 18px; max-width: 26ch; }
@@ -432,7 +437,7 @@ INSIGHTS_HEAD = """<style>
     border-radius: 14px; padding: 26px 24px 22px; }
   .soh-stat__fig { font: 500 clamp(38px, 5vw, 54px)/1 var(--font-display);
     letter-spacing: -0.02em; color: var(--soh-ink-text); font-variant-numeric: tabular-nums; }
-  .soh-stat__fig .u { font-size: .48em; color: var(--accent); }
+  .soh-stat__fig .u { font-size: .48em; color: var(--soh-accent); }
   .soh-stat__lab { margin-top: 12px; font-size: 14px; color: var(--soh-ink-dim); line-height: 1.45; }
 
   /* ---- Two-column prose + chart ---- */
@@ -444,7 +449,7 @@ INSIGHTS_HEAD = """<style>
   .soh-row { display: grid; grid-template-columns: 118px 1fr 44px; align-items: center; gap: 14px; }
   .soh-row__name { font-size: 14px; color: var(--soh-dim); text-align: right; }
   .soh-row__track { background: var(--soh-wash); border-radius: 5px; height: 26px; overflow: hidden; }
-  .soh-row__fill { display: block; height: 100%; background: var(--accent); border-radius: 5px; width: var(--w); }
+  .soh-row__fill { display: block; height: 100%; background: var(--soh-accent); border-radius: 5px; width: var(--w); }
   .soh-row__val { font: 500 15px var(--font-display); text-align: right; color: var(--ink);
     font-variant-numeric: tabular-nums; }
   @media (max-width: 560px) { .soh-row { grid-template-columns: 96px 1fr 38px; gap: 10px; }
@@ -462,7 +467,7 @@ INSIGHTS_HEAD = """<style>
   .soh-tbl tbody tr:last-child td { border-bottom: none; }
   .soh-bc { position: relative; }
   .soh-mini { position: absolute; left: 20px; bottom: 7px; height: 3px;
-    background: var(--accent); border-radius: 2px; opacity: .5; }
+    background: var(--soh-accent); border-radius: 2px; opacity: .5; }
 
   /* ---- Split figure (price) — aspect preserved, never stretched ---- */
   .soh-split { display: grid; grid-template-columns: 1fr; gap: 30px; align-items: center; margin-top: 8px; }
@@ -475,7 +480,7 @@ INSIGHTS_HEAD = """<style>
 
   /* ---- Note / callout ---- */
   .soh-note { background: var(--paper); border: 1px solid var(--soh-line);
-    border-left: 3px solid var(--accent); border-radius: 12px; padding: 22px 26px;
+    border-left: 3px solid var(--soh-accent); border-radius: 12px; padding: 22px 26px;
     margin-top: 30px; max-width: 44rem; }
   .soh-band--paper .soh-note { background: var(--soh-white); }
   .soh-note h3 { font: 700 15px var(--font-body); margin: 0 0 8px; }
@@ -485,7 +490,7 @@ INSIGHTS_HEAD = """<style>
   .soh-band--pull { padding: clamp(3.5rem, 7vw, 5.5rem) 0; }
   .soh-pull { font: 500 clamp(24px, 3.6vw, 38px)/1.32 var(--font-display);
     letter-spacing: -0.015em; margin: 0; max-width: 30ch; }
-  .soh-pull b { color: var(--accent); font-weight: 500; }
+  .soh-pull b { color: var(--soh-accent); font-weight: 500; }
 
   /* ---- Methodology ---- */
   .soh-band--method { border-bottom: 0; }
@@ -493,7 +498,7 @@ INSIGHTS_HEAD = """<style>
   .soh-list li { position: relative; padding-left: 28px; font-size: 15px;
     color: var(--soh-dim); line-height: 1.6; }
   .soh-list li::before { content:""; position: absolute; left: 0; top: 8px;
-    width: 9px; height: 9px; border: 1.5px solid var(--accent); border-radius: 50%; }
+    width: 9px; height: 9px; border: 1.5px solid var(--soh-accent); border-radius: 50%; }
   .soh-list li b { color: var(--ink); }
   .soh-cite { font-size: 13.5px; line-height: 1.7; color: var(--soh-dim);
     background: var(--paper); border: 1px dashed var(--soh-line); border-radius: 12px;

@@ -452,7 +452,7 @@ def render_tag_page(rows, slug, nav_prefix, built_map, now=None, geocode=None):
     out.append(f'    <p class="cal-intro">{_esc(tag_intro(slug))}</p>')
 
     out.append(f'    <p class="cal-summary" id="cal-summary">'
-               f'{_esc(tag_summary_sentence(rows, slug))}</p>')
+               f'{X.summary_html(tag_summary_sentence(rows, slug))}</p>')
 
     # The tag is fixed; the bar still offers area + free/donation + any OTHER tags
     # these rows carry, so a visitor can narrow further.
@@ -537,20 +537,20 @@ def tag_faqpage_schema(rows, slug):
 # ---------------------------------------------------------------------------
 
 BROWSE_STYLE = """<style>
-    .browse__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
-    .browse__crumbs a { color: var(--accent-on-light); text-decoration: none; }
+    .browse__crumbs { font-size: 0.82rem; color: var(--muted); margin: 0 0 2rem; }
+    .browse__crumbs a { color: var(--ink); text-decoration: none; }
     .browse__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.8rem; }
-    .browse__lede { font-size: 1.1rem; color: rgba(var(--ink-rgb),0.75); max-width: 42rem; margin: 0 0 2.4rem; }
+    .browse__lede { font-size: 1.1rem; color: var(--ink); max-width: 42rem; margin: 0 0 2.4rem; }
     .browse__axis { margin: 0 0 2.4rem; }
-    .browse__axis-h2 { font: 600 0.78rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); margin: 0 0 0.9rem; }
+    .browse__axis-h2 { font: 600 0.78rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.9rem; }
     .browse__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.9rem; }
     .browse__card { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; text-decoration: none; color: inherit; border: 1px solid rgba(var(--ink-rgb),0.14); padding: 0.8rem 0.95rem; }
-    a.browse__card:hover { border-color: var(--accent-on-light); }
-    a.browse__card .browse__name { color: var(--accent-on-light); }
+    a.browse__card:hover { border-color: var(--signal-text); }
+    a.browse__card:hover .browse__name { color: var(--signal-text); }
     .browse__name { font: 500 1.02rem var(--font-display); color: var(--ink); }
-    .browse__count { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); white-space: nowrap; }
-    .browse__tracked { font-size: 0.9rem; color: rgba(var(--ink-rgb),0.62); max-width: 46rem; margin: 0.9rem 0 0; line-height: 1.55; }
-    .browse__foot { font-size: 0.95rem; color: rgba(var(--ink-rgb),0.7); max-width: 42rem; margin: 0.4rem 0 0; }
+    .browse__count { font-size: 0.82rem; color: var(--muted); white-space: nowrap; }
+    .browse__tracked { font-size: 0.9rem; color: var(--muted); max-width: 46rem; margin: 0.9rem 0 0; line-height: 1.55; }
+    .browse__foot { font-size: 0.95rem; color: var(--muted); max-width: 42rem; margin: 0.4rem 0 0; }
   </style>"""
 
 

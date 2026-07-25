@@ -1,26 +1,29 @@
-/* SOUND BATH CALENDAR — v1.
-   Light ground, utility register. One sheet: the calendar is the site.
-   No JS anywhere — every rule below must hold with scripts blocked. */
+/* SOUND BATH CALENDAR — v5 "Broadcast" (CAL-26, ratified 2026-07-25).
+   Warm grounds, indigo ink, one coral signal. One sheet: the calendar is the
+   site. No JS anywhere — every rule below must hold with scripts blocked. */
 :root {
-  --ink: #0A0B0D;
-  /* --ink-rgb powers every rgba(var(--ink-rgb),a) secondary/border/tint value so
-     dark mode (CAL-14) can flip them with one token, no per-rule overrides. */
-  --ink-rgb: 10, 11, 13;
-  --paper: #F5F7FA;
-  --gray: #98A1AB;
-  --accent: #62B6E8;
-  /* --accent-rgb powers rgba(var(--accent-rgb),a) tint values (CAL-31: no more
-     hardcoded 98,182,232 literals). The ice accent is a MARK on both grounds,
-     so it has no dark override — but a tint authored against the token follows
-     automatically when CAL-26 re-values the accent. */
-  --accent-rgb: 98, 182, 232;
-  /* Accessible link blue on the paper ground: #1F6FA8 on #F5F7FA = 5.02:1
-     (WCAG AA needs 4.5:1). The ice --accent stays for marks, not text. */
-  --accent-on-light: #1F6FA8;
-  /* Its rgba() companion — flips with the dark scheme like the hex it mirrors,
-     so link-tint washes (e.g. .cal-tag--link:hover) follow the scheme instead
-     of freezing at the light value (CAL-31 token fix). */
-  --accent-on-light-rgb: 31, 111, 168;
+  --ink: #352F5C;   /* indigo — ALL text. The site is WRITTEN in this. */
+  /* --ink-rgb powers every rgba(var(--ink-rgb),a) STRUCTURAL alpha — hairlines,
+     borders, tint washes — so dark mode (CAL-14) can flip them with one token.
+     v5 law: the alpha ramp is lines/tints ONLY. Text is --ink or --muted,
+     never rgba ink — small type is never purple (Daniel, 2026-07-25). */
+  --ink-rgb: 53, 47, 92;
+  --paper: #F5F2ED; /* warm white ground */
+  /* Meta/counts/fine print — the discrete NEUTRAL grey that replaced the
+     muted-ink alpha ramp for text (5.21:1 here, 8.21:1 dark). */
+  --muted: #676561;
+  /* Imageless type tiles (CAL-28) — ink slab light, raised violet-black dark. */
+  --surface: #352F5C;
+  /* The one signal hue. Budget law: ≤2 coral slabs per screen (ticker +
+     TONIGHT) + Free/Donation marks + hover states. Nothing else. */
+  --signal: #B93A2B;
+  --signal-rgb: 185, 58, 43;  /* hover tint washes only */
+  /* Coral that clears AA as TEXT on each ground (5.08:1 / 6.25:1) —
+     Free/Donation marks and hover-name color. */
+  --signal-text: #B93A2B;
+  /* Shadows are ink-cast on the light ground, true black on the dark one —
+     never a light glow (the dark flip would invert --ink-rgb shadows). */
+  --shadow-rgb: 53, 47, 92;
   --line: rgba(var(--ink-rgb), 0.14);
   /* Form-control boundaries carry their own token, a step heavier than --line.
      WCAG 1.4.11 wants 3:1 for the visual boundary of a control, and --line's
@@ -45,7 +48,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 img { max-width: 100%; display: block; }
-a { color: var(--accent-on-light); }
+/* v5: links are ink like everything else — the UA underline (kept in prose) or
+   the surface's own affordance (nav position, weight, hover) marks them. No
+   link-blue exists anymore; hover color is the one sanctioned signal use. */
+a { color: var(--ink); }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.08; letter-spacing: -0.015em; }
 .container { max-width: 1140px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 64px); }
 /* CAL-23 phase A2 (Daniel: "stingy margins, aggressively left justified"):
@@ -68,10 +74,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.
         binds (selector-based, position-agnostic); its nearest-first list
         mounts before the first .cal-band, i.e. inside .cal-list. ---- */
 .cal-rail__links { display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
-.cal-rail__links a { color: var(--accent-on-light); font: 600 0.86rem var(--font-body); text-decoration: none; }
+.cal-rail__links a { color: var(--ink); font: 600 0.86rem var(--font-body); text-decoration: none; }
 .cal-rail__links a:hover { text-decoration: underline; }
 /* CAL-UX-4: the subscribe trio's quiet lead-in + separators, one wrap item. */
-.cal-rail__subhead { font: 600 0.86rem var(--font-body); color: rgba(var(--ink-rgb), 0.65); }
+.cal-rail__subhead { font: 600 0.86rem var(--font-body); color: var(--muted); }
 @media (max-width: 1079px) {
   /* Stacked mode: the rail links read as the old subscribe row. */
   .cal-rail__links { flex-direction: row; flex-wrap: wrap; gap: 0.5rem 1.3rem; border-top: 0; padding-top: 0; margin: 0 0 2rem; }
@@ -92,9 +98,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.
   .cal-rail .cal-filters__clear { align-self: flex-start; }
   .cal-rail .cal-jump { flex-direction: column; align-items: flex-start; gap: 0.7rem; margin: 0 0 1.6rem; }
 }
-.eyebrow { font: 600 0.75rem var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); display: block; margin-bottom: 1.2rem; }
+.eyebrow { font: 600 0.75rem var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 1.2rem; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent-on-light); outline-offset: 2px; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 /* CAL-UX-11: skip link — the masthead's first focusable. Clipped (the
    .visually-hidden pattern) until keyboard focus, then a solid ink-on-paper
    pill pinned inside the sticky masthead; tokens flip it with dark mode. */
@@ -104,7 +110,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 /* ---- sections (consonant with the chassis; light by default, no tall hero) */
 .section { padding: 2.2rem 0 4rem; position: relative; }
 .section--light { background: var(--paper); color: var(--ink); }
-.section--light a { color: var(--accent-on-light); }
+.section--light a { color: var(--ink); }
 
 /* ---- masthead: compact, light, sticky. Wordmark · city anchors · slim
         digest capture. Two rows on small screens, one on wide. ---- */
@@ -120,11 +126,11 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
    clip on every side without shifting the layout. */
 .masthead-cities { display: flex; gap: 1.2rem; flex: 1 1 auto; min-width: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 4px; margin: -4px; }
 .masthead-cities::-webkit-scrollbar { display: none; }
-.masthead-cities a { color: rgba(var(--ink-rgb),0.62); text-decoration: none; font: 600 0.82rem var(--font-body); white-space: nowrap; }
-.masthead-cities a:hover { color: var(--ink); }
+.masthead-cities a { color: var(--ink); text-decoration: none; font: 600 0.82rem var(--font-body); white-space: nowrap; }
+.masthead-cities a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .masthead-digest { display: flex; gap: 0.5rem; align-items: center; }
 .masthead-digest input[type="email"] { width: 14.5rem; max-width: 38vw; background: transparent; border: 1px solid var(--field-line); padding: 0.45rem 0.7rem; font: 400 0.85rem var(--font-body); color: var(--ink); }
-.masthead-digest-link { display: none; font: 600 0.82rem var(--font-body); color: var(--accent-on-light); text-decoration: none; white-space: nowrap; }
+.masthead-digest-link { display: none; font: 600 0.82rem var(--font-body); color: var(--ink); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
 .masthead-digest-link:hover { text-decoration: underline; }
 @media (max-width: 900px) {
   .masthead-digest { display: none; }
@@ -133,22 +139,20 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
   .masthead-inner { row-gap: 0.5rem; }
 }
 
-/* ---- buttons (CAL-11) — primary is INK fill + PAPER text: high-contrast,
-        editorial, ~17:1. The ice --accent is a MARK color, never a text-bearing
-        button fill — ice #62B6E8 under --ink text is ~1.9:1 and reads as a
-        *disabled* button (the v1 defect). Ice returns only as a hover accent
-        (an inset underline) and on the small non-critical toggles further down
-        (near-me pressed, tag toggle), where "soft" reads as "selected." ---- */
+/* ---- buttons (CAL-11/CAL-26) — primary is INK fill + PAPER text:
+        high-contrast, editorial (10.98:1 light / 15.6:1 dark on the inverted
+        fill). Hover earns the one sanctioned coral: an inset signal underline.
+        Coral is never a text-bearing button fill (budget law, §1.1). ---- */
 .btn { display: inline-block; font: 600 0.95rem var(--font-body); text-decoration: none; padding: 0.95rem 2rem; border: 1px solid transparent; cursor: pointer; transition: background .2s, color .2s, border-color .2s, box-shadow .2s, transform .15s; }
 .btn:active { transform: translateY(1px); }
 .btn-primary { background: var(--ink); color: var(--paper); }
 /* Anchor buttons sit inside .section--light, whose `a` color (0-1-1) would beat
-   .btn-primary (0-1-0) and paint the label link-blue on ink — pin the label. */
+   .btn-primary (0-1-0) and paint the label ink-on-ink — pin the label. */
 .section--light a.btn-primary { color: var(--paper); }
 .section--light a.btn-secondary { color: var(--ink); }
-.btn-primary:hover { box-shadow: inset 0 -2px 0 var(--accent); }
+.btn-primary:hover { box-shadow: inset 0 -3px 0 var(--signal); }
 .btn-secondary { background: transparent; color: var(--ink); border-color: var(--line); }
-.btn-secondary:hover { border-color: var(--accent-on-light); }
+.btn-secondary:hover { border-color: var(--ink); }
 .btn-slim { padding: 0.5rem 1rem; font-size: 0.82rem; }
 
 /* ---- detail shell (CAL-10): the reclaimed horizontal space. Detail pages
@@ -178,41 +182,39 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
         pages). One cached copy here; each template keeps only its genuinely
         unique rules (and small overrides) inline. CAL-28/29 edit THIS block,
         not four constants. ---- */
-.detail__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
-.detail__crumbs a { color: var(--accent-on-light); text-decoration: none; }
+.detail__crumbs { font-size: 0.82rem; color: var(--muted); margin: 0 0 2rem; }
+.detail__crumbs a { color: var(--ink); text-decoration: none; }
 .detail__crumbs a:hover { text-decoration: underline; }
 .detail__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.4rem; }
 .detail__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 1.1rem 0 0; }
-.detail__links a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
+.detail__links a { color: var(--ink); font: 600 0.9rem var(--font-body); text-decoration: none; }
 .detail__links a:hover { text-decoration: underline; }
 .detail__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.2rem; margin: 0; }
-.detail__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); align-self: baseline; }
+.detail__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); align-self: baseline; }
 .detail__facts dd { margin: 0; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
-.detail__facts a { color: var(--accent-on-light); text-decoration: none; font-weight: 600; }
+.detail__facts a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; font-weight: 600; }
 .detail__facts a:hover { text-decoration: underline; }
 @media (max-width: 640px) { .detail__facts { grid-template-columns: 1fr; gap: 0.2rem; } .detail__facts dd { margin-bottom: 0.8rem; } }
 .detail__desc { max-width: var(--measure); }
-.detail__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); margin: 0 0 1rem; }
+.detail__desc p { font-size: 1.08rem; line-height: 1.7; color: var(--ink); margin: 0 0 1rem; }
 .detail__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
-.detail__empty { color: rgba(var(--ink-rgb),0.62); }
+.detail__empty { color: var(--muted); }
 .detail__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
-.detail__back a { color: var(--accent-on-light); text-decoration: none; }
+.detail__back a { color: var(--ink); text-decoration: none; }
 .detail__back a:hover { text-decoration: underline; }
 
 /* ---- forms (digest capture) ---- */
 .contact-form { max-width: 34rem; }
 .form-field { display: block; margin-bottom: 1.6rem; }
-.form-field span { display: block; font: 600 0.75rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); margin-bottom: 0.5rem; }
+.form-field span { display: block; font: 600 0.75rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
 /* textarea is in the selector deliberately: the /submit/ form (2026-07-24) added
    one, and without it the control fell through to the UA's own gray border —
    off-system, and a different edge from the field above it. */
 .form-field input, .form-field select, .form-field textarea { width: 100%; background: transparent; border: 1px solid var(--field-line); padding: 0.85rem 1rem; font: 400 1rem var(--font-body); color: var(--ink); }
-/* The focus ring rides --accent-on-light, not --accent. The ice #62B6E8 is a
-   MARK color: it measures 2.09:1 on the light ground and fails 2.4.11, as
-   CAL-11 found. --accent-on-light is the
-   scheme-flipping accessible pair (5.02:1 light / 10.31:1 dark). */
-.form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: 2px solid var(--accent-on-light); outline-offset: 1px; border-color: transparent; }
-.form-note { max-width: 34rem; color: rgba(var(--ink-rgb),0.65); margin: 0 0 1.4rem; }
+/* The focus ring is INK (v5): 10.98:1 on the light ground, 17.41:1 on the
+   dark one — the scheme flip keeps it accessible everywhere (2.4.11). */
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: 2px solid var(--ink); outline-offset: 1px; border-color: transparent; }
+.form-note { max-width: 34rem; color: var(--muted); margin: 0 0 1.4rem; }
 
 /* ---- digest signup + live preview (CAL-18). The pitch + form pair with a
         build-time mini-render of this week's ACTUAL Thursday email — the
@@ -230,20 +232,25 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .digest-h2 { font-size: clamp(1.35rem, 2.4vw, 1.75rem); font-weight: 500; letter-spacing: -0.01em; margin: 0 0 0.8rem; }
 .digest-preview { margin: 2.4rem 0 0; max-width: 22rem; }
 @media (min-width: 900px) { .digest-preview { margin-top: 0; } }
-.digest-preview__caption { font: 500 0.85rem var(--font-display); color: rgba(var(--ink-rgb),0.65); margin: 0 0 0.7rem; }
+.digest-preview__caption { font: 500 0.85rem var(--font-display); color: var(--muted); margin: 0 0 0.7rem; }
 .digest-preview {
   --dp-desk: #EAEEF3;            /* digest.ts LIGHT.desk */
   --dp-sheet: #F5F7FA;           /* LIGHT.sheet */
   --dp-sheet-rgb: 245, 247, 250; /* the fade gradient's transparent end */
   --dp-rule: #D8DCE2;            /* LIGHT.rule */
   --dp-thumbbg: #E1E6EC;         /* LIGHT.imageBg */
+  /* The email still ships the v4 ice/blue accents until CAL-37 restyles it —
+     the preview depicts THAT artifact, so its accents are pinned here (the
+     sanctioned --dp-* namespace), not inherited from the v5 site tokens. */
+  --dp-accent: #62B6E8;          /* digest.ts accent (day rule, underlines) */
+  --dp-city: #1F6FA8;            /* LIGHT city label */
 }
 .digest-preview__frame { background: var(--dp-desk); padding: 1rem 0.9rem; }
 .digest-preview__sheet { background: var(--dp-sheet); box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 6px 16px rgba(0,0,0,0.06); padding: 1rem 1rem 0.85rem; }
 .digest-preview__brand { display: block; font: 700 0.6rem var(--font-body); letter-spacing: 0.18em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.5); }
 .digest-preview__h1 { font: 500 1.08rem var(--font-display); letter-spacing: -0.015em; line-height: 1.2; color: var(--ink); margin: 0.55rem 0 0; max-width: 16em; }
 .digest-preview__day { display: flex; flex-direction: column; gap: 0.1rem; margin: 1.05rem 0 0.55rem; }
-.digest-preview__day--next { border-top: 2px solid var(--accent); padding-top: 0.85rem; }
+.digest-preview__day--next { border-top: 2px solid var(--dp-accent); padding-top: 0.85rem; }
 .digest-preview__dow { font: 700 0.56rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.5); }
 .digest-preview__date { font: 500 0.95rem var(--font-display); letter-spacing: -0.015em; color: var(--ink); }
 .digest-preview__row { display: flex; gap: 0.7rem; align-items: flex-start; padding: 0.6rem 0; border-top: 1px solid var(--dp-rule); }
@@ -252,8 +259,8 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .digest-preview__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .digest-preview__thumb--empty, .digest-preview__thumb.img-broken { background: transparent; }
 .digest-preview__text { min-width: 0; display: flex; flex-direction: column; gap: 0.1rem; }
-.digest-preview__city { font: 600 0.56rem var(--font-body); letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-on-light); }
-.digest-preview__name { font: 500 0.88rem var(--font-display); letter-spacing: -0.01em; line-height: 1.3; color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 2px; }
+.digest-preview__city { font: 600 0.56rem var(--font-body); letter-spacing: 0.09em; text-transform: uppercase; color: var(--dp-city); }
+.digest-preview__name { font: 500 0.88rem var(--font-display); letter-spacing: -0.01em; line-height: 1.3; color: var(--ink); text-decoration: underline; text-decoration-color: var(--dp-accent); text-underline-offset: 2px; }
 .digest-preview__meta { font: 400 0.76rem var(--font-body); line-height: 1.45; color: rgba(var(--ink-rgb),0.62); }
 /* The tear-off bottom: the last rows dissolve into the sheet, then the honest
    count of what the fade hides. Renders only when the week holds more rooms
@@ -263,7 +270,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 
 /* ---- calendar root: answer-first head (no hero, no image, no animation) */
 .cal-h1 { font-size: clamp(1.7rem, 3.6vw, 2.7rem); font-weight: 500; margin: 0.6rem 0 0.9rem; letter-spacing: -0.01em; }
-.cal-updated { color: rgba(var(--ink-rgb),0.62); font-size: 0.85rem; letter-spacing: 0.03em; margin: 0 0 1rem; }
+.cal-updated { color: var(--muted); font-size: 0.85rem; letter-spacing: 0.03em; margin: 0 0 1rem; }
 /* CAL-23 phase A: the centered identity block on listing pages (root + city).
    The narrow text caps (summary 44rem etc.) read as a left-hugging stripe
    inside the 1140 container — the design-research P1 finding the detail
@@ -276,7 +283,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-summary { font: 500 1.12rem var(--font-display); color: var(--ink); max-width: 44rem; margin: 0 0 1.6rem; line-height: 1.45; }
 
 .cal-jump { display: flex; flex-wrap: wrap; gap: 0.7rem 1.5rem; margin: 0 0 2.2rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line); }
-.cal-jump a { color: var(--accent-on-light); text-decoration: none; font: 600 0.76rem var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; }
+.cal-jump a { color: var(--ink); text-decoration: none; font: 600 0.76rem var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; }
 .cal-jump a:hover { text-decoration: underline; }
 /* CAL-16 bands-as-filters: the pressed chip fills ink-on-paper. The negative
    margins cancel the padding exactly, so toggling never shifts the nav's
@@ -289,7 +296,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem 1.6rem; margin: 0 0 2rem; padding: 0.85rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .cal-filters__field select { background: transparent; border: 1px solid var(--field-line); padding: 0.4rem 0.7rem; font: 400 0.9rem var(--font-body); color: var(--ink); }
 .cal-filters__check { display: inline-flex; align-items: center; gap: 0.45rem; font: 600 0.86rem var(--font-body); color: var(--ink); cursor: pointer; }
-.cal-filters__check input { width: 1rem; height: 1rem; accent-color: var(--accent-on-light); }
+.cal-filters__check input { width: 1rem; height: 1rem; accent-color: var(--ink); }
 /* .cal-jump/.cal-nearme carry display:flex/inline styles, so the UA [hidden]
    rule (a low-specificity display:none) loses to them — restate it here. */
 .cal-filters[hidden], .cal-row[hidden], .cal-band[hidden], .cal-jump[hidden], .cal-filters__nearme[hidden] { display: none; }
@@ -298,10 +305,10 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
         a per-row distance chip. The button carries `hidden` until filters.js
         reveals it (only when rows are located), so no-JS visitors never see it.
         Radius 0 per DESIGN.md. ---- */
-.cal-filters__nearme { background: transparent; border: 1px solid var(--field-line); padding: 0.4rem 0.9rem; font: 600 0.82rem var(--font-body); color: var(--accent-on-light); cursor: pointer; }
-.cal-filters__nearme:hover { border-color: var(--accent-on-light); }
-.cal-filters__nearme[aria-pressed="true"] { background: var(--accent); color: var(--ink); border-color: var(--accent); }
-.cal-filters__nearme:disabled { color: rgba(var(--ink-rgb),0.45); cursor: default; }
+.cal-filters__nearme { background: transparent; border: 1px solid var(--field-line); padding: 0.4rem 0.9rem; font: 600 0.82rem var(--font-body); color: var(--ink); cursor: pointer; }
+.cal-filters__nearme:hover { border-color: var(--ink); }
+.cal-filters__nearme[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.cal-filters__nearme:disabled { color: var(--muted); cursor: default; }
 .cal-nearnote { padding: 0.3rem 0 0; font-size: 0.9rem; }
 
 /* ---- clear-all + off-screen indicator (CAL-UX-10). The bar's "Clear
@@ -311,10 +318,10 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
         and appears only when filters are active AND the bar is off-viewport;
         at >=1080px the CAL-23 rail keeps the bar sticky-visible, so the chip
         stays off there. Tokens flip both in dark mode. ---- */
-.cal-filters__clear { background: transparent; border: 0; padding: 0; font: 600 0.86rem var(--font-body); color: var(--accent-on-light); cursor: pointer; }
+.cal-filters__clear { background: transparent; border: 0; padding: 0; font: 600 0.86rem var(--font-body); color: var(--ink); cursor: pointer; }
 .cal-filters__clear:hover { text-decoration: underline; }
 .cal-filters__clear[hidden] { display: none; }
-.cal-filterpill { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px)); z-index: 40; background: var(--ink); color: var(--paper); border: 0; font: 600 0.72rem var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; padding: 0.6rem 1.05rem; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 14px rgba(0,0,0,0.22); }
+.cal-filterpill { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px)); z-index: 40; background: var(--ink); color: var(--paper); border: 0; font: 600 0.72rem var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; padding: 0.6rem 1.05rem; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 14px rgba(var(--shadow-rgb),0.28); }
 .cal-filterpill[hidden] { display: none; }
 @media (min-width: 1080px) { .cal-filterpill { display: none; } }
 /* Scroll-target offset: clearing from the chip scrolls the bar back into
@@ -329,29 +336,29 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-filters__primary { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem 1.6rem; }
 .cal-filters__tags { display: flex; flex-wrap: wrap; gap: 0.5rem 1.3rem; }
 .cal-filters__axis { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.55rem; }
-/* Muted-ink floor (CAL-DES-1): text never sits below rgba(ink, 0.62) —
-   0.62 ≈ 5.6:1 on paper, labels at 0.65 ≈ 6.1:1. --gray is retired as a
-   TEXT color (borders/accents only). Dark mode inherits the same floor. */
-.cal-filters__axislabel { font: 600 0.66rem var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); margin-right: 0.15rem; }
+/* v5 (CAL-26): secondary text is the discrete --muted grey (5.21:1 light /
+   8.21:1 dark) — the rgba ink ramp is retired FOR TEXT (small type is never
+   purple); it survives for hairlines and tint washes only. */
+.cal-filters__axislabel { font: 600 0.66rem var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-right: 0.15rem; }
 
 /* ---- tag chips (CAL-01): a display chip on rows/event pages + a toggle
         variant in the filter facet. Radius 0 per DESIGN.md. ---- */
-.cal-tag { display: inline-flex; align-items: center; gap: 0.3rem; font: 600 0.68rem var(--font-body); letter-spacing: 0.03em; color: var(--accent-on-light); border: 1px solid rgba(var(--ink-rgb),0.18); padding: 0.1rem 0.45rem; line-height: 1.5; }
+.cal-tag { display: inline-flex; align-items: center; gap: 0.3rem; font: 600 0.68rem var(--font-body); letter-spacing: 0.03em; color: var(--ink); border: 1px solid rgba(var(--ink-rgb),0.18); padding: 0.1rem 0.45rem; line-height: 1.5; }
 .cal-tag--toggle { cursor: pointer; }
-.cal-tag--toggle input { width: 0.85rem; height: 0.85rem; accent-color: var(--accent-on-light); margin: 0; }
-.cal-tag--toggle:hover { border-color: var(--accent-on-light); }
+.cal-tag--toggle input { width: 0.85rem; height: 0.85rem; accent-color: var(--ink); margin: 0; }
+.cal-tag--toggle:hover { border-color: var(--ink); }
 /* A chip that links to its tag landing page (CAL-09) — same chip, clickable. */
 .cal-tag--link { text-decoration: none; cursor: pointer; }
-.cal-tag--link:hover { border-color: var(--accent-on-light); background: rgba(var(--accent-on-light-rgb),0.06); }
+.cal-tag--link:hover { border-color: var(--signal-text); background: rgba(var(--signal-rgb),0.07); }
 .cal-row__tags, .cal-event__tags { display: flex; flex-wrap: wrap; gap: 0.3rem 0.4rem; margin: 0.5rem 0 0; padding: 0; }
 .cal-event__tags { margin: 0.4rem 0 1.4rem; }
 
 /* ---- tag landing pages (CAL-09): the audience-first intro + a related-tags
         nav below the list. ---- */
-.cal-intro { font-size: 1.02rem; color: rgba(var(--ink-rgb),0.8); max-width: 42rem; margin: 0 0 1.2rem; line-height: 1.55; }
+.cal-intro { font-size: 1.02rem; color: var(--ink); max-width: 42rem; margin: 0 0 1.2rem; line-height: 1.55; }
 .cal-related { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; margin: 1.8rem 0 2.4rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
-.cal-related__label { font: 600 0.66rem var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); }
-.cal-related a { color: var(--accent-on-light); text-decoration: none; font: 600 0.9rem var(--font-body); }
+.cal-related__label { font: 600 0.66rem var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.cal-related a { color: var(--ink); text-decoration: none; font: 600 0.9rem var(--font-body); }
 .cal-related a:hover { text-decoration: underline; }
 
 /* ---- add-to-calendar menu (CAL-01): a no-JS <details> disclosure on the
@@ -361,15 +368,15 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-addcal__summary::-webkit-details-marker { display: none; }
 .cal-addcal[open] .cal-addcal__summary { margin-bottom: 0.6rem; }
 .cal-addcal__menu { display: flex; flex-wrap: wrap; gap: 0.5rem 1.1rem; }
-.cal-addcal__opt { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
+.cal-addcal__opt { color: var(--ink); font: 600 0.9rem var(--font-body); text-decoration: none; }
 .cal-addcal__opt:hover { text-decoration: underline; }
 
 /* ---- ICS subscribe / download (Track B B.4) ---- */
 .cal-ics { display: flex; flex-wrap: wrap; gap: 0.4rem 1.3rem; align-items: baseline; margin: 0 0 2rem; }
 .cal-ics a { text-decoration: none; }
 .cal-ics a:hover { text-decoration: underline; }
-.cal-ics__sub { color: var(--accent-on-light); font: 600 0.86rem var(--font-body); }
-.cal-ics__dl { color: rgba(var(--ink-rgb),0.62); font: 600 0.82rem var(--font-body); }
+.cal-ics__sub { color: var(--ink); font: 600 0.86rem var(--font-body); }
+.cal-ics__dl { color: var(--muted); font: 600 0.82rem var(--font-body); }
 
 /* ---- temporal bands: the root's axis (Today · This weekend · This week ·
         The weeks ahead). Each renders only when it has rooms. ---- */
@@ -386,87 +393,88 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 /* Tear-off date rail: weekday over numeral over time. The Today band omits the
    date, so a time-only rail sits at the top of the column. */
 .cal-row__when { display: flex; flex-direction: column; align-items: flex-start; gap: 0.02rem; line-height: 1.05; }
-.cal-row__dow { font: 600 0.72rem var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.62); }
+.cal-row__dow { font: 600 0.72rem var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .cal-row__dnum { font: 500 1.5rem var(--font-display); color: var(--ink); letter-spacing: -0.02em; }
-.cal-row__mo { font: 600 0.62rem var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.62); }
-.cal-row__time { color: rgba(var(--ink-rgb),0.62); font-size: 0.85rem; margin-top: 0.15rem; }
+.cal-row__mo { font: 600 0.62rem var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.cal-row__time { color: var(--muted); font-size: 0.85rem; margin-top: 0.15rem; }
 
 /* Body = optional flyer thumbnail (one consistent frame) + the text column.
    Rows with no image render with no frame — the text simply fills the row. */
 .cal-row__body { display: flex; gap: 1.1rem; align-items: flex-start; min-width: 0; }
 .cal-row__media { flex: 0 0 auto; width: 104px; aspect-ratio: 3 / 2; overflow: hidden; background: rgba(var(--ink-rgb),0.05); border-radius: 2px; }
 .cal-row__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-/* CAL-12: reserved placeholder for an image-less row — a quiet sine-wave mark so
-   the column holds its width and every text column shares one left edge, without
-   reading as a broken image. .img-broken (a load-time failure, marked by the
-   base-layout fallback script) collapses to the same designed state. */
+/* CAL-12/CAL-26: reserved placeholder for an image-less row — a bare tint tile
+   (the ∿ mark is retired from all chrome), so the column holds its width and
+   every text column shares one left edge without reading as a broken image.
+   .img-broken (a load-time failure, marked by the base-layout fallback script)
+   collapses to the same designed state. CAL-29 brings the type-tile language. */
 .cal-row__media--empty, .cal-row__media.img-broken { display: flex; align-items: center; justify-content: center; }
-.cal-row__media--empty::after, .cal-row__media.img-broken::after { content: "\223F"; font: 400 1.3rem var(--font-display); color: rgba(var(--ink-rgb),0.16); }
 .cal-row__text { min-width: 0; flex: 1 1 auto; }
 
 /* Marks line above the name: the city chip (every row) + the modality kicker
    (CAL-12). */
 .cal-row__marks { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.7rem; margin-bottom: 0.25rem; }
-.cal-row__city { font: 600 0.68rem var(--font-body); letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-on-light); }
+.cal-row__city { font: 600 0.68rem var(--font-body); letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); }
 /* Modality kicker — 'what kind of sound bath' beside the city, a quiet middot
    apart. Links to its tag page when one exists (CAL-09). */
-.cal-row__modality { font: 600 0.68rem var(--font-body); letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-on-light); text-decoration: none; }
+.cal-row__modality { font: 600 0.68rem var(--font-body); letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
 .cal-row__modality::before { content: "\00B7"; margin-right: 0.6rem; color: rgba(var(--ink-rgb),0.35); }
 a.cal-row__modality:hover { text-decoration: underline; }
-.cal-row__tag { font: 600 0.66rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-on-light); }
-.cal-row__ours { font: 600 0.62rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); }
+.cal-row__tag { font: 600 0.66rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.cal-row__ours { font: 600 0.62rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
 
 .cal-row__name { font-size: 1.12rem; font-weight: 500; margin: 0 0 0.15rem; letter-spacing: -0.01em; line-height: 1.25; }
 .cal-row__name a { color: inherit; text-decoration: none; }
-.cal-row__name a:hover { text-decoration: underline; text-decoration-color: var(--accent-on-light); }
-.cal-row__meta { color: rgba(var(--ink-rgb),0.62); font-size: 0.92rem; margin: 0; max-width: 42rem; }
+.cal-row__name a:hover { color: var(--signal-text); }
+.cal-row__meta { color: var(--muted); font-size: 0.92rem; margin: 0; max-width: 42rem; }
+/* Free/Donation marks (CAL-26): the one text-signal role — coral, bold. */
+.cal-row__meta b { color: var(--signal-text); font-weight: 700; }
 /* Practitioner cross-link on a row (CAL-02) — quiet, discovery not decoration. */
-.cal-row__with { font-size: 0.85rem; color: rgba(var(--ink-rgb),0.62); margin: 0.15rem 0 0; }
-.cal-row__with a { color: var(--accent-on-light); text-decoration: none; }
+.cal-row__with { font-size: 0.85rem; color: var(--muted); margin: 0.15rem 0 0; }
+.cal-row__with a { color: var(--ink); text-decoration: none; }
 .cal-row__with a:hover { text-decoration: underline; }
 /* Daniel's one line — the moat — as a margin voice: display face, set off from
-   the facts by a quiet accent rule. */
-.cal-row__note { font: 500 1.02rem var(--font-display); color: var(--ink); margin: 0.55rem 0 0; padding-left: 0.9rem; border-left: 2px solid var(--accent); max-width: 38rem; line-height: 1.4; }
+   the facts by a solid ink rule (v5: no third hue exists). */
+.cal-row__note { font: 500 1.02rem var(--font-display); color: var(--ink); margin: 0.55rem 0 0; padding-left: 0.9rem; border-left: 2px solid var(--ink); max-width: 38rem; line-height: 1.4; }
 .cal-row__cta { display: flex; flex-wrap: wrap; gap: 0.35rem 1.2rem; margin: 0.55rem 0 0; }
-.cal-row__cta a { color: var(--accent-on-light); font: 600 0.86rem var(--font-body); text-decoration: none; }
+.cal-row__cta a { color: var(--ink); font: 600 0.86rem var(--font-body); text-decoration: none; }
 .cal-row__cta a:hover { text-decoration: underline; }
 
-.cal-empty { color: rgba(var(--ink-rgb),0.62); font-size: 1rem; margin: 0; padding: 1.6rem 0; }
+.cal-empty { color: var(--muted); font-size: 1rem; margin: 0; padding: 1.6rem 0; }
 .cal-empty--all { padding: 2.6rem 0; }
 
 /* ---- first-class empty state (CAL-13): what an entity index shows before any
         profile publishes — a quiet mark, one honest line, two redirects, and a
         get-listed seed. Never a bare "…on the way." above the footer. ---- */
 .cal-emptystate { max-width: 40rem; padding: 0.6rem 0 3rem; }
-.cal-emptystate__glyph { font: 400 2.4rem var(--font-display); color: rgba(var(--ink-rgb),0.18); margin: 0 0 0.7rem; line-height: 1; }
-.cal-emptystate__lead { font-size: 1.05rem; color: rgba(var(--ink-rgb),0.78); line-height: 1.55; margin: 0 0 1.2rem; }
+.cal-emptystate__lead { font-size: 1.05rem; color: var(--ink); line-height: 1.55; margin: 0 0 1.2rem; }
 .cal-emptystate__links { margin: 0 0 0.8rem; }
-.cal-emptystate__links a { color: var(--accent-on-light); font: 600 0.95rem var(--font-body); text-decoration: none; }
+.cal-emptystate__links a { color: var(--ink); font: 600 0.95rem var(--font-body); text-decoration: none; }
 .cal-emptystate__links a:hover { text-decoration: underline; }
-.cal-emptystate__seed { font-size: 0.92rem; color: rgba(var(--ink-rgb),0.62); margin: 0; }
-.cal-emptystate__seed a { color: var(--accent-on-light); }
+.cal-emptystate__seed { font-size: 0.92rem; color: var(--muted); margin: 0; }
+.cal-emptystate__seed a { color: var(--ink); }
 
 /* ---- city pages: breadcrumb + other-areas nav (Track B B.2) ---- */
-.cal-crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 1.4rem; }
-.cal-crumbs a { color: var(--accent-on-light); text-decoration: none; }
+.cal-crumbs { font-size: 0.82rem; color: var(--muted); margin: 0 0 1.4rem; }
+.cal-crumbs a { color: var(--ink); text-decoration: none; }
 .cal-crumbs a:hover { text-decoration: underline; }
 .cal-cities { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem 1.4rem; margin: 3.4rem 0 0; padding-top: 1.8rem; border-top: 1px solid var(--line); }
-.cal-cities__label { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); }
-.cal-cities a { color: var(--accent-on-light); text-decoration: none; font: 600 0.9rem var(--font-body); }
+.cal-cities__label { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
+.cal-cities a { color: var(--ink); text-decoration: none; font: 600 0.9rem var(--font-body); }
 .cal-cities a:hover { text-decoration: underline; }
 
 /* ---- FAQ — an answer surface for search/AI. Always visible for extraction. */
 .cal-faq { margin: 5rem 0 0; padding-top: 3rem; border-top: 1px solid var(--line); scroll-margin-top: 90px; }
 .cal-faq__item { margin: 0 0 1.8rem; max-width: 44rem; }
 .cal-faq__q { font-size: 1.15rem; font-weight: 500; margin: 0 0 0.5rem; }
-.cal-faq__a { color: rgba(var(--ink-rgb),0.72); font-size: 0.98rem; line-height: 1.6; margin: 0; }
+.cal-faq__a { color: var(--ink); font-size: 0.98rem; line-height: 1.6; margin: 0; }
 
-.cal-submit { margin: 3.5rem 0 0; padding-top: 2.4rem; border-top: 1px solid var(--line); color: rgba(var(--ink-rgb),0.7); }
-.cal-submit a { color: var(--accent-on-light); }
+.cal-submit { margin: 3.5rem 0 0; padding-top: 2.4rem; border-top: 1px solid var(--line); color: var(--muted); }
+.cal-submit a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---- thanks page ---- */
 .thanks-main { min-height: 55vh; }
-.thanks-sub { color: rgba(var(--ink-rgb),0.65); max-width: 38rem; margin: 0.6rem 0 2rem; }
+.thanks-sub { color: var(--muted); max-width: 38rem; margin: 0.6rem 0 2rem; }
 
 /* ---- image fallback (systemic): the base-layout script removes any <img>
         that fails to load and marks its parent .img-broken. Tile contexts
@@ -482,28 +490,28 @@ a.cal-row__modality:hover { text-decoration: underline; }
         directory, not a text list. Cards are borderless (the media carries the
         mass); radius 0 per the doctrine, 2px on the tile (photographic
         content, same as .cal-row__media). ---- */
-.dir-crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
-.dir-crumbs a { color: var(--accent-on-light); text-decoration: none; }
+.dir-crumbs { font-size: 0.82rem; color: var(--muted); margin: 0 0 2rem; }
+.dir-crumbs a { color: var(--ink); text-decoration: none; }
 .dir-crumbs a:hover { text-decoration: underline; }
 .dir-head { text-align: center; margin: 0 0 2.8rem; }
 .dir-h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; letter-spacing: -0.01em; margin: 0.2rem 0 0.8rem; }
-.dir-lede { font-size: 1.1rem; line-height: 1.55; color: rgba(var(--ink-rgb),0.72); max-width: 40rem; margin: 0 auto; }
+.dir-lede { font-size: 1.1rem; line-height: 1.55; color: var(--ink); max-width: 40rem; margin: 0 auto; }
 .dir-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr)); gap: 2.2rem 1.4rem; }
 .dir-card { display: block; text-decoration: none; color: inherit; }
 .dir-card__media { display: block; aspect-ratio: 3 / 2; border-radius: 2px; overflow: hidden; background: rgba(var(--ink-rgb),0.05); }
 .dir-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
 .dir-card:hover .dir-card__media img { transform: scale(1.03); }
 /* Placeholder tile: the entity's initial as a quiet monogram over the tint,
-   with a thin accent baseline — designed absence, not a broken image. The
+   with a thin ink baseline — designed absence, not a broken image. The
    same state serves .img-broken (an image that failed at load time, swapped
    in by the base-layout fallback script): the monogram rides data-monogram
    so CSS can draw it with no image and no extra markup. */
 .dir-card__media--ph, .dir-card__media.img-broken { display: grid; place-items: center; position: relative; }
-.dir-card__media--ph::after, .dir-card__media.img-broken::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--accent); opacity: 0.55; }
+.dir-card__media--ph::after, .dir-card__media.img-broken::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: rgba(var(--ink-rgb), 0.45); }
 .dir-card__media--ph::before, .dir-card__media.img-broken::before { content: attr(data-monogram); font: 300 2.6rem var(--font-display); letter-spacing: -0.02em; color: rgba(var(--ink-rgb),0.32); }
 .dir-card__name { display: block; margin-top: 0.75rem; font: 500 1.02rem var(--font-display); letter-spacing: -0.01em; line-height: 1.3; color: var(--ink); }
-.dir-card:hover .dir-card__name { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
-.dir-card__meta { display: block; margin-top: 0.2rem; font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); }
+.dir-card:hover .dir-card__name { color: var(--signal-text); text-decoration: none; }
+.dir-card__meta { display: block; margin-top: 0.2rem; font-size: 0.82rem; color: var(--muted); }
 @media (max-width: 560px) {
   .dir-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.8rem 1rem; }
 }
@@ -521,7 +529,7 @@ a.cal-row__modality:hover { text-decoration: underline; }
 .lrn-cta { margin: 1.8rem 0 0; }
 /* Prose paragraphs — comfortable measure, slightly quieted ink. */
 .lrn-p {
-  color: rgba(var(--ink-rgb), 0.74);
+  color: var(--ink);
   font-size: 1rem;
   line-height: 1.68;
   margin: 0 0 0.9rem;
@@ -538,16 +546,16 @@ a.cal-row__modality:hover { text-decoration: underline; }
 /* Q&A blocks (the FAQPage-backed section). */
 .lrn-qa { margin: 0 0 2rem; }
 .lrn-qa:last-child { margin-bottom: 0; }
-/* An honest-note aside — quiet accent rule, no alarm. */
+/* An honest-note aside — quiet ink rule, no alarm. */
 .lrn-note {
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--ink);
   padding: 0.15rem 0 0.15rem 1rem;
-  background: rgba(var(--accent-rgb), 0.06);
+  background: rgba(var(--ink-rgb), 0.05);
 }
 /* "Keep going" — quiet link list. */
 .lrn-links { list-style: none; margin: 0.4rem 0 0; padding: 0; }
 .lrn-links li {
-  color: rgba(var(--ink-rgb), 0.74);
+  color: var(--ink);
   font-size: 1rem;
   line-height: 1.6;
   padding: 0.35rem 0 0.35rem 1rem;
@@ -570,18 +578,18 @@ a.cal-row__modality:hover { text-decoration: underline; }
   color: var(--ink);
   transition: border-color .15s, background .15s;
 }
-.lrn-card:hover { border-color: var(--accent-on-light); background: rgba(var(--accent-rgb), 0.05); }
+.lrn-card:hover { border-color: var(--signal-text); background: rgba(var(--signal-rgb), 0.06); }
 .lrn-card__label {
   display: block;
   font: 600 0.72rem var(--font-body);
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--accent-on-light);
+  color: var(--ink);
   margin-bottom: 0.3rem;
 }
 .lrn-card__desc {
   display: block;
-  color: rgba(var(--ink-rgb), 0.68);
+  color: var(--muted);
   font-size: 0.92rem;
   line-height: 1.5;
 }
@@ -604,22 +612,23 @@ a.cal-row__modality:hover { text-decoration: underline; }
 @media (prefers-color-scheme: dark) { .wte-hero img { filter: brightness(0.82); } }
 
 /* ---- footer: brand column + three quiet link columns over a fine-print
-        bar. Links ride the muted ink ramp (not accent) so the footer reads as
-        reference furniture, not a call to action; tokens flip in dark mode. ---- */
+        bar. Headings and fine print sit on --muted, links in plain ink — the
+        footer reads as reference furniture, not a call to action; tokens flip
+        in dark mode. ---- */
 .site-footer { border-top: 1px solid var(--line); padding: 3.4rem 0 2.4rem; margin-top: 4rem; }
 .footer-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)); gap: 2.4rem 2rem; }
 .footer-wordmark { font: 700 0.9rem var(--font-display); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
-.footer-tag { color: rgba(var(--ink-rgb),0.62); font-size: 0.9rem; line-height: 1.6; max-width: 22rem; margin: 0.9rem 0 0; }
+.footer-tag { color: var(--muted); font-size: 0.9rem; line-height: 1.6; max-width: 22rem; margin: 0.9rem 0 0; }
 .footer-social { list-style: none; display: flex; gap: 0.9rem; margin: 1.2rem 0 0; padding: 0; }
-.footer-social a { display: inline-flex; align-items: center; justify-content: center; color: rgba(var(--ink-rgb),0.55); transition: color 0.15s ease; }
-.footer-social a:hover, .footer-social a:focus-visible { color: var(--accent); }
+.footer-social a { display: inline-flex; align-items: center; justify-content: center; color: var(--muted); transition: color 0.15s ease; }
+.footer-social a:hover, .footer-social a:focus-visible { color: var(--ink); }
 .footer-col { display: flex; flex-direction: column; gap: 0.55rem; align-items: flex-start; }
-.footer-col__h { font: 600 0.68rem var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); margin-bottom: 0.35rem; }
-.footer-col a { color: rgba(var(--ink-rgb),0.72); font: 400 0.9rem var(--font-body); text-decoration: none; }
-.footer-col a:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.footer-col__h { font: 600 0.68rem var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.35rem; }
+.footer-col a { color: var(--ink); font: 400 0.9rem var(--font-body); text-decoration: none; }
+.footer-col a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 .footer-bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.4rem 1.5rem; margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
-.footer-fine { color: rgba(var(--ink-rgb),0.62); font-size: 0.85rem; margin: 0; }
-.footer-fine a { color: rgba(var(--ink-rgb),0.72); text-decoration: none; }
+.footer-fine { color: var(--muted); font-size: 0.85rem; margin: 0; }
+.footer-fine a { color: var(--ink); text-decoration: none; }
 .footer-fine a:hover { color: var(--ink); text-decoration: underline; }
 @media (max-width: 760px) {
   .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -644,32 +653,36 @@ a.cal-row__modality:hover { text-decoration: underline; }
   .cal-band { margin-bottom: 3rem; }
 }
 
-/* ---- dark mode (CAL-14): a prefers-color-scheme token flip over the SAME
-        layout — no bespoke dark components. Palette proven in the weekly digest
-        (digest.ts). Every secondary text / border / tint rides
-        rgba(var(--ink-rgb),a), so flipping --ink-rgb to the light value inverts
-        them on the dark ground; --line resolves through --ink-rgb and follows.
-        --accent (ice) stays a mark on both grounds; links use the lightened ice
-        for AA on ink. .btn-primary (ink fill / paper text) auto-inverts to a
-        light button. OSM map tiles stay light (acceptable); the State-of-Sound
-        report keeps its own --soh- palette (a light card) for now. ---- */
+/* ---- dark mode (CAL-14 / v5 "Night", CAL-26): a prefers-color-scheme token
+        flip over the SAME layout — no bespoke dark components. Night is the
+        identity scheme: one near-black violet-cast ground (the desk/sheet
+        split is retired), white-hot text — violet never tints dark-scheme
+        type. Every structural alpha rides rgba(var(--ink-rgb),a), so flipping
+        --ink-rgb inverts hairlines and tints at once; --line follows.
+        --signal (coral) holds on both grounds; --signal-text lifts to #E2724E
+        for AA as text on the near-black. .btn-primary (ink fill / paper text)
+        auto-inverts to a light button. OSM tiles are CSS-inverted (mapview);
+        the State-of-Sound report keeps its own --soh-* palette until CAL-36. ---- */
 @media (prefers-color-scheme: dark) {
   :root {
-    --ink: #F5F7FA;            /* solid text on the dark ground */
-    --paper: #101216;          /* the dark ground (digest --sheet dark) */
-    --ink-rgb: 245, 247, 250;  /* flips every rgba(var(--ink-rgb),a) light */
-    --accent-on-light: #7CC3EC;/* links/accent text — AA on #101216 */
-    --accent-on-light-rgb: 124, 195, 236;
+    --ink: #F5F2ED;            /* white-hot — ALL text on the dark ground */
+    --paper: #0E0C12;          /* near-black, violet-cast */
+    --ink-rgb: 245, 242, 237;  /* flips every rgba(var(--ink-rgb),a) light */
+    --muted: #ABA8A3;          /* light grey — meta/counts/fine print (8.21:1) */
+    --surface: #1C1826;        /* type tiles: raised violet-black */
+    --signal-text: #E2724E;    /* coral AS TEXT on near-black (6.25:1) */
+    --shadow-rgb: 0, 0, 0;     /* true black — never a light glow */
   }
-  body { background: #08090B; } /* the desk behind the sheet, per the digest */
   /* CAL-18: the digest preview flips to the email's own dark layer (digest.ts).
-     The sheet sits a step LIGHTER than the section ground so it still reads as
-     a sheet on the desk; the desk drops to the email's dark body. */
+     The sheet sits a step LIGHTER than the page ground so it still reads as
+     a sheet on a desk; all values are the depicted email's own (until CAL-37). */
   .digest-preview {
     --dp-desk: #08090B;
     --dp-sheet: #16191E;
     --dp-sheet-rgb: 22, 25, 30;
     --dp-rule: #24282D;
     --dp-thumbbg: #1B1F24;
+    --dp-accent: #62B6E8;
+    --dp-city: #7CC3EC;
   }
 }

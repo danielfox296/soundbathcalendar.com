@@ -632,6 +632,16 @@ def build_summary_sentence(rows, now=None):
     return sent + '.'
 
 
+_COUNT_RE = re.compile(r'(\d+ sound baths?)')
+
+
+def summary_html(sentence):
+    """Escape an answer-first summary sentence and bold its session count —
+    the v5 register's "bold counts" (CAL-26/27). Presentation-only: schema and
+    speakable extraction read textContent, which <strong> leaves untouched."""
+    return _COUNT_RE.sub(r'<strong>\1</strong>', _esc(sentence))
+
+
 # Register-passable PLACEHOLDER FAQ (flagged for Daniel). Factual, no praise,
 # no woo — the GEO/AIO citation surface. Answers double as FAQPage JSON-LD.
 CALENDAR_FAQ = (
@@ -829,12 +839,12 @@ def render_tag_chips(row, cls='cal-tags', nav_prefix='', skip=None):
 
 def render_empty_state(nav_prefix, lead):
     """A first-class empty state (CAL-13) for an entity index with no published
-    instances: a quiet mark, one honest line of what the section will hold, two
-    redirects (calendar + map), and a get-listed seed — never a bare
-    '…on the way.' line floating above the footer."""
+    instances: one honest line of what the section will hold, two redirects
+    (calendar + map), and a get-listed seed — never a bare '…on the way.' line
+    floating above the footer. The ∿ glyph is retired (CAL-26); CAL-29 brings
+    the type-tile empty-state language."""
     return (
         '    <div class="cal-emptystate">\n'
-        '      <p class="cal-emptystate__glyph" aria-hidden="true">∿</p>\n'
         f'      <p class="cal-emptystate__lead">{_esc(lead)}</p>\n'
         f'      <p class="cal-emptystate__links">'
         f'<a href="{nav_prefix}">Browse this week’s calendar</a> '
@@ -977,15 +987,16 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None):
     # the factual sentence now lives only on the permalink page (B.3: these are
     # calendar rows, not article cards). An operator running its own room
     # (operator == venue) shows the name once, not doubled.
-    meta = []
-    if row['operator']:
-        meta.append(row['operator'])
+    meta = [_esc(m) for m in (row['operator'],) if m]
     if row['venue'] and normalize(row['venue']) != normalize(row['operator']):
-        meta.append(row['venue'])
+        meta.append(_esc(row['venue']))
     if row['price']:
-        meta.append(row['price'])
+        # v5 (CAL-26): Free/Donation is the one text-signal mark — <b> rides
+        # --signal-text in styles.css. Priced sessions stay plain muted text.
+        price = _esc(row['price'])
+        meta.append(f'<b>{price}</b>' if _is_free_or_donation(row) else price)
     if meta:
-        parts.append(f'      <p class="cal-row__meta">{_esc(" · ".join(meta))}</p>')
+        parts.append(f'      <p class="cal-row__meta">{" · ".join(meta)}</p>')
 
     # Practitioner link (CAL-02) — external rows linked to a published profile.
     # Inlined path (no import of practitioners.py) to avoid a cycle.
@@ -1735,7 +1746,7 @@ def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
     out.append(f'    <h1 class="cal-h1">{_esc(CITY_H1[city])}</h1>')
     out.append(f'    <p class="cal-updated">Last updated {_esc(fmt_stamp_date(now))}.</p>')
     out.append(f'    <p class="cal-summary" id="cal-summary">'
-               f'{_esc(build_city_summary_sentence(rows, city, now))}</p>')
+               f'{summary_html(build_city_summary_sentence(rows, city, now))}</p>')
     out.append('    </div>')
 
     # Warm band (CAL-22, WARMTH RULE): a slim strip of the same photograph as
@@ -1959,8 +1970,8 @@ def event_title_tag(name, site_name):
 # Inline style for event pages (they have no _src/pages dir, so no style.css is
 # injected). Design tokens come from the sitewide styles.css every page loads.
 EVENT_PAGE_STYLE = """<style>
-    .cal-past-banner { background: rgba(var(--ink-rgb),0.05); border-left: 3px solid var(--gray); padding: 0.9rem 1.2rem; margin: 0 0 2rem; font-size: 0.95rem; }
-    .cal-past-banner a { color: var(--accent-on-light); }
+    .cal-past-banner { background: rgba(var(--ink-rgb),0.05); border-left: 3px solid rgba(var(--ink-rgb),0.4); padding: 0.9rem 1.2rem; margin: 0 0 2rem; font-size: 0.95rem; }
+    .cal-past-banner a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
     /* Event-page overrides of the shared .detail__* vocabulary (styles.css,
        CAL-31): roomier H1 + a facts grid that breathes wider than the entity
        aside default. The base gap override would also win over the shared
@@ -1969,15 +1980,15 @@ EVENT_PAGE_STYLE = """<style>
     .detail__h1 { margin: 0.4rem 0 1.4rem; }
     .detail__facts { gap: 0.6rem 1.6rem; margin: 2rem 0; max-width: 40rem; }
     @media (max-width: 640px) { .detail__facts { gap: 0.2rem; } }
-    .cal-event__desc { font-size: 1.15rem; line-height: 1.6; max-width: 42rem; color: rgba(var(--ink-rgb),0.78); margin: 0 0 1rem; }
+    .cal-event__desc { font-size: 1.15rem; line-height: 1.6; max-width: 42rem; color: var(--ink); margin: 0 0 1rem; }
     .cal-event__note { font: 500 1.2rem var(--font-display); color: var(--ink); max-width: 40rem; line-height: 1.4; margin: 0 0 1.6rem; }
     .cal-event__figure { margin: 2rem 0; max-width: 640px; }
     .cal-event__figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: rgba(var(--ink-rgb),0.06); }
-    .cal-event__figure figcaption { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin-top: 0.6rem; }
+    .cal-event__figure figcaption { font-size: 0.82rem; color: var(--muted); margin-top: 0.6rem; }
     .cal-event__cta { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; margin: 2rem 0; }
-    .cal-event__link { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
+    .cal-event__link { color: var(--ink); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .cal-event__link:hover { text-decoration: underline; }
-    .cal-event__firsttime { margin: 1.4rem 0 0; font-size: 0.88rem; color: rgba(var(--ink-rgb),0.65); }
+    .cal-event__firsttime { margin: 1.4rem 0 0; font-size: 0.88rem; color: var(--muted); }
   </style>"""
 
 

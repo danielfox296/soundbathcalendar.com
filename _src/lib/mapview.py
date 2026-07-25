@@ -92,7 +92,7 @@ MAP_HEAD = """<link rel="stylesheet" href="{{css_path}}vendor/leaflet/leaflet.cs
   <style>
     .map-wrap { margin: 0; }
     .map-intro { margin: 0 0 1.4rem; }
-    .map-intro .cal-updated { color: rgba(var(--ink-rgb),0.62); font-size: 0.85rem; margin: 0.2rem 0 0; }
+    .map-intro .cal-updated { color: var(--muted); font-size: 0.85rem; margin: 0.2rem 0 0; }
     /* List + map split (CAL-10 phase C): the list flows with the page scroll, the
        map sits sticky beside it. Below 900px they stack, map band on top. With JS
        blocked the list is fully usable and the map box simply never initializes. */
@@ -126,20 +126,20 @@ MAP_HEAD = """<link rel="stylesheet" href="{{css_path}}vendor/leaflet/leaflet.cs
     .sbc-pin { width: 100%; height: 100%; background: var(--ink); color: var(--paper);
       border: 2px solid var(--paper); border-radius: 50%; display: flex;
       align-items: center; justify-content: center;
-      font: 600 12px/1 var(--font-body); box-shadow: 0 1px 4px rgba(0,0,0,0.35); }
+      font: 600 12px/1 var(--font-body); box-shadow: 0 1px 4px rgba(var(--shadow-rgb),0.35); }
     .sbc-pin--cluster { font-size: 13px; }
-    .sbc-pin--hot { background: var(--accent); color: #0A0B0D; border-color: #0A0B0D; }
+    .sbc-pin--hot { background: var(--signal); color: #fff; border-color: var(--paper); }
     /* Popup surfaces ride the tokens so they follow dark mode — the leaflet.css
        default is hardcoded white, which went illegible once --ink flipped. */
     .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--paper); color: var(--ink); }
     .sbc-pop__name { font: 600 0.98rem var(--font-body); margin: 0 0 0.3rem; }
-    .sbc-pop__name a { color: var(--accent-on-light); text-decoration: none; }
+    .sbc-pop__name a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
     .sbc-pop__list { margin: 0; padding-left: 1.05rem; }
     .sbc-pop__list li { font-size: 0.86rem; line-height: 1.5; }
     .sbc-pop__list a { color: var(--ink); }
-    .sbc-pop__more { list-style: none; margin-left: -1.05rem; color: rgba(var(--ink-rgb),0.62); }
+    .sbc-pop__more { list-style: none; margin-left: -1.05rem; color: var(--muted); }
     .leaflet-container { font: inherit; }
-    .map-empty { color: rgba(var(--ink-rgb),0.62); }
+    .map-empty { color: var(--muted); }
     /* Dark mode (CAL-14 polish): the light OSM raster tiles are inverted +
        hue-rotated into a dark basemap. Only .leaflet-tile is filtered — markers,
        popups, and controls live in other panes and stay untouched. */

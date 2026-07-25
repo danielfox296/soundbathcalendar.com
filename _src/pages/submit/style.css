@@ -17,7 +17,7 @@
       /* CAL-31: was var(--ink-muted, var(--ink)) — a token that has never
          existed, so the fallback silently rendered these solid ink. This is
          the muted value the author reached for, on the ramp the site uses. */
-      color: rgba(var(--ink-rgb), 0.74);
+      color: var(--ink);
     }
 
     .submit-form-section .contact-form {

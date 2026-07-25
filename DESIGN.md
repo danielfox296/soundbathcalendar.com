@@ -1,6 +1,6 @@
 # Sound Bath Calendar — DESIGN.md
 
-*Ratified 2026-07-22. The calendar's own design constitution. Every "per DESIGN.md" in `styles.css` means this file.*
+*Ratified 2026-07-22; tokens and register re-ratified 2026-07-25 as v5 "Broadcast" (CAL-26/27). The calendar's own design constitution. Every "per DESIGN.md" in `styles.css` means this file.*
 
 **Ground truth.** The law lives here; the implementation lives in `styles.css`, the page-local style blocks in `_src/lib/*.py` (`EVENT_PAGE_STYLE`, `VENUE_PAGE_STYLE`, `PRACTITIONER_PAGE_STYLE`, `OPERATOR_PAGE_STYLE`, `BROWSE_STYLE`, `ROUNDUPS_HEAD`, `MAP_HEAD`, `INSIGHTS_HEAD`, `CITY_WARM_STYLE`), and `_src/partials/`. If doc and tree disagree, that is a defect: fix one to match the other and record the call here. `RULE:` lines are load-bearing.
 
@@ -9,9 +9,10 @@
 ## 0 · Doctrine (in force)
 
 - Weight extremes over timid contrast. Asymmetry over three-identical-cards.
+- **v5 "Broadcast" (ratified 2026-07-25):** committed grounds — warm white day, near-black violet-cast night — written entirely in ink, with ONE coral signal on a hard budget (§1.1). Night is the identity scheme. The ∿ wave mark is retired from all chrome (masthead, footer, empty states, favicon, OG, separators).
 - Radius 0 — sharp editorial edges (§1.5 for the two sanctioned exceptions).
-- Motion only where it earns its place. No glassmorphism. No purple-indigo gradient. No emoji bullets.
-- The calendar is the site: one sheet (`styles.css`), one light ground, utility register.
+- Motion only where it earns its place. No glassmorphism. No gradients on chrome. No emoji bullets.
+- The calendar is the site: one sheet (`styles.css`), utility register.
 - **NO JS in the baseline.** Every rule holds with scripts blocked. JS is progressive enhancement only: `filters.js` reveals the filter bar, the map initializes or stays an empty box, `<details>` disclosures are native. No-JS visitors see every row, always.
 - Answer-first. The root opens with the machine-extractable summary (`.cal-summary`), not a hero. No tall marketing hero, no image, no animation on the listing root.
 - Honest surfaces: every count is computed from the feed at build time, never typed in (§3.4).
@@ -21,44 +22,41 @@
 
 ## 1 · Tokens
 
-### 1.1 Color
+### 1.1 Color (v5 "Broadcast" — CAL-26, ratified 2026-07-25)
 
-Defined at `:root` in `styles.css:5`. Dark mode flips the same names (§6).
+Defined at `:root` in `styles.css:4`. Dark mode flips the same names (§6). All ratios re-verified by `scripts/contrast_check.py` — rerun it after ANY token change.
 
-| Token | Light | Dark | Role |
+| Token | Light "Day" | Dark "Night" | Role |
 |---|---|---|---|
-| `--ink` | `#0A0B0D` | `#F5F7FA` | solid text |
-| `--paper` | `#F5F7FA` | `#101216` | the ground (the sheet) |
-| `--ink-rgb` | `10, 11, 13` | `245, 247, 250` | powers every `rgba(var(--ink-rgb), a)` |
-| `--accent` | `#62B6E8` | unchanged | ice — a MARK color (waveform, rules, small toggles) |
-| `--accent-on-light` | `#1F6FA8` (5.02:1 on paper) | `#7CC3EC` (AA on `#101216`) | link/text blue |
+| `--paper` | `#F5F2ED` warm white | `#0E0C12` near-black, violet-cast | committed grounds; never tinted pastels |
+| `--ink` | `#352F5C` indigo (10.98:1) | `#F5F2ED` white-hot (17.41:1) | ALL text — the site is WRITTEN in these; violet never tints dark-scheme type |
+| `--ink-rgb` | `53, 47, 92` | `245, 242, 237` | structural alphas (hairlines, tints) ONLY — never text |
+| `--muted` | `#676561` (5.21:1) | `#ABA8A3` (8.21:1) | meta/counts/fine print — the discrete grey that replaced the muted-ink alpha ramp for text |
+| `--surface` | `#352F5C` (paper text) | `#1C1826` | imageless type tiles (CAL-28) |
+| `--signal` | `#B93A2B` coral | unchanged | slabs/fills: ticker band, TONIGHT slab, tile hover — white text on it (5.67:1) |
+| `--signal-text` | `#B93A2B` (5.08:1) | `#E2724E` (6.25:1) | coral AS TEXT: Free/Donation marks, hover-name color |
+| `--signal-rgb` | `185, 58, 43` | unchanged | hover tint washes only |
+| `--shadow-rgb` | `53, 47, 92` (ink-cast) | `0, 0, 0` | shadows — never a light glow |
 | `--line` | `rgba(var(--ink-rgb), 0.14)` | follows the flip | hairlines **between blocks** — never a control edge |
-| `--field-line` | `rgba(var(--ink-rgb), 0.46)` (3.20:1 on paper) | follows the flip (4.41:1 on the desk) | the edge of anything a person types or clicks into |
-| `--gray` | `#98A1AB` | unchanged | **borders/accents only — retired as a text color** (CAL-DES-1) |
-| body bg | `--paper` | `#08090B` | dark adds the desk behind the sheet |
+| `--field-line` | `rgba(var(--ink-rgb), 0.46)` | follows the flip | the edge of anything a person types or clicks into |
 
-RULE: every secondary text color, border, and tint is written as `rgba(var(--ink-rgb), a)` — never a hardcoded gray, never `--gray`. This single convention is what makes dark mode a one-token flip (§6). A hex gray in a component is a defect.
+There is no third hue. The ice accent, the link blue, and `--gray` are deleted — the only sanctioned survivors are the frozen `--soh-*` (until CAL-36) and `--dp-*` (until CAL-37) namespaces, which depict artifacts that still ship v4.
 
-RULE: `--accent` (ice) is never a text color and never a text-bearing button fill (ice under ink text is ~1.9:1 — the v1 washed-CTA defect, CAL-11). Text-blue is always `--accent-on-light`. **Nor is ice ever a focus ring**: #62B6E8 is 2.09:1 on paper, so a focus outline drawn in it fails 2.4.11 on the light ground — the same CAL-11 defect wearing a different hat. Focus rings are `--accent-on-light` (5.02:1 light / 10.31:1 dark).
+RULE — **the signal budget:** coral appears as at most **2 slabs** per screen (ticker + TONIGHT) + Free/Donation marks + hover states. Nothing else. A third slab, a coral label, a coral border at rest — defects.
+
+RULE: every structural alpha (hairline, border, tint wash) is written as `rgba(var(--ink-rgb), a)` — never a hardcoded gray. This single convention is what makes dark mode a one-token flip (§6). A hex gray in a component is a defect.
+
+RULE: links are `--ink`. Prose links keep the UA underline; chrome links (nav rows, CTA rows, crumbs) may drop it where position and weight carry the affordance, and hover restores it. Hover MAY move name-class text to `--signal-text` (the comp's card-hover language). Focus rings are `--ink` (10.98:1 / 17.41:1 — 2.4.11 clears on both grounds).
 
 RULE: form-control borders use `--field-line`, not `--line`. WCAG 1.4.11 asks 3:1 for the *visual boundary of a control*; the 0.14 hairline is a decorative divider between blocks (exempt) and lands at 1.2:1. The two are not interchangeable, and a control edge on `--line` — or on the old 0.25 literal (1.77:1) — is a defect. Decorative borders around already-legible text (e.g. `.cal-row__dist`) are not controls and keep their lighter edge.
 
-### 1.2 The muted-ink floor (CAL-DES-1, ratified 2026-07-22)
+### 1.2 Two text colors, no ramp (CAL-26 — supersedes the CAL-DES-1 opacity floor)
 
-The opacity ramp on `rgba(var(--ink-rgb), a)` text (`styles.css:245`):
+Text is binary in v5: **`--ink`** (headings, names, prose, links, controls) or **`--muted`** (crumbs, meta, times, stamps, counts, labels, fine print, empty lines). Daniel's ruling of record: *small type is never purple* — an alpha over indigo ink tints grey text violet, so the muted-ink TEXT ramp is retired sitewide.
 
-```
-0.62   floor — muted text (crumbs, meta, times, stamps, empty lines)  ≈ 5.6:1
-0.65   the uppercase label family (eyebrow, facts <dt>, axis/col labels)  ≈ 6.1:1
-0.70–0.82   reading-prose intermediates (FAQ answers, ledes, entity prose)
-1.0    solid ink
-```
+RULE: `rgba(var(--ink-rgb), a)` never colors text. It survives for **lines and tints only** — hairlines, control edges, wash backgrounds, decorative glyph marks.
 
-RULE: functional text never sits below `rgba(var(--ink-rgb), 0.62)`. Uppercase labels sit at `0.65`. Dark mode inherits the same floor by construction.
-
-Exempt (not functional text): disabled controls (`.cal-filters__nearme:disabled`, 0.45); the digest-preview miniature (`.digest-preview__brand`/`__dow` at 0.5 — a scaled depiction of the email, not page UI); decorative glyphs and monograms (`.cal-row__media--empty::after` 0.16, `.cal-emptystate__glyph` 0.18, `.dir-card__media--ph::before` 0.32).
-
-Drift converged 2026-07-22: `.cal-row__ours` (was 0.5, under AA at its size) and `.browse__axis-h2` (was 0.60) joined the uppercase-label family at 0.65; the rest of the 0.60 family (`.cal-row__time`, `.cal-row__with`, `.cal-emptystate__seed`, `.footer-tag`, `.browse__count`) sits at the 0.62 floor. No functional text below the floor remains.
+Exempt (depictions, not page UI): the digest-preview miniature keeps its scaled email values; monogram/placeholder marks stay decorative alphas (`.dir-card__media--ph::before` 0.32).
 
 ### 1.3 Type
 
@@ -128,18 +126,18 @@ One primitive for every detail page (event, venue, practitioner, organizer):
 
 1. **Tear-off date rail** (`.cal-row__when`): weekday (`__dow`, uppercase, 0.62) over numeral (`__dnum`, display 500, 1.5rem) over time (`__time`). The Today band omits the date — a time-only rail is correct there.
 2. **Month marker** (`.cal-row__mo`, CAL-UX-2): any row whose Denver-time month differs from the build month stamps the muted month abbreviation (`Aug`) in the rail. Per-row on purpose — client-side filters can hide the rollover, so the marker must survive filtering. Entity-page session lists get it too.
-3. **Media tile** (`.cal-row__media`): fixed 104px, 3:2, radius 2px, `object-fit: cover` — flyers of any source aspect are framed, never raw. Image-less rows render the reserved placeholder (`--empty`: the ∿ sine glyph at 0.16) so every text column shares one left edge (CAL-12, mirroring the digest's `showThumb`). On mobile: 84px.
+3. **Media tile** (`.cal-row__media`): fixed 104px, 3:2, radius 2px, `object-fit: cover` — flyers of any source aspect are framed, never raw. Image-less rows render the reserved placeholder (`--empty`: a bare tint tile — the ∿ glyph is retired, CAL-26; CAL-29 brings the type-tile language) so every text column shares one left edge (CAL-12). On mobile: 84px.
 4. **Text column**: marks line (`__marks`: city chip + modality kicker, §3.2) → name → meta (one line where it fits, capped 42rem) → optional practitioner cross-link (`__with`) → optional editorial note (`__note`: Daniel's one line, display 500, 2px accent left rule, capped 38rem) → ghost-link CTA row (`__cta`).
 
 Mobile ≤640px: rows become bordered cards (radius 0), the date rail runs inline, `.cal-rows` drops its top rule. First-viewport budget: stamp + summary + first rows above the fold.
 
 ### 2.4 List + map (`/map/`, CAL-10 phase C)
 
-`.map-split`: ≥900px → list `minmax(340px, 5fr)` beside sticky map `7fr`; the list column hides media tiles (the map is the visual). Below 900px the map band stacks on top. Map height is fixed px (680 / 440 mobile) so Leaflet initializes against real dimensions. Pins carry the decision datum — a venue's session count — as ink circles with paper borders (`.sbc-pin`; `--hot` variant in accent); clusters sum their contents; popups ride the tokens so they flip in dark. With JS blocked the list is fully usable and the map box simply never initializes.
+`.map-split`: ≥900px → list `minmax(340px, 5fr)` beside sticky map `7fr`; the list column hides media tiles (the map is the visual). Below 900px the map band stacks on top. Map height is fixed px (680 / 440 mobile) so Leaflet initializes against real dimensions. Pins carry the decision datum — a venue's session count — as ink circles with paper borders (`.sbc-pin`; the `--hot` variant is a coral `--signal` fill with white text, CAL-26); clusters sum their contents; popups ride the tokens so they flip in dark. With JS blocked the list is fully usable and the map box simply never initializes.
 
 ### 2.5 Entity directories (`/venues/`, `/practitioners/`, `/operators/`)
 
-One shared card design (`_src/lib/directory.py`): `.dir-grid` auto-fill `minmax(13.5rem, 1fr)`; `.dir-card` is borderless — the 3:2 media tile carries the mass (entity photo, else next session's listing image, else the monogram placeholder). Placeholder = the entity's initial via `data-monogram` over the tint with a 2px accent baseline — designed absence, not a broken image; `.img-broken` collapses to the same state.
+One shared card design (`_src/lib/directory.py`): `.dir-grid` auto-fill `minmax(13.5rem, 1fr)`; `.dir-card` is borderless — the 3:2 media tile carries the mass (entity photo, else next session's listing image, else the monogram placeholder). Placeholder = the entity's initial via `data-monogram` over the tint with a 2px ink-alpha baseline — designed absence, not a broken image; `.img-broken` collapses to the same state. (CAL-29 replaces these with letterform type-plates.)
 
 ### 2.6 Masthead & footer
 
@@ -155,17 +153,18 @@ Signup pitch + form beside a build-time mini-render of this week's **actual** Th
 
 ### 3.1 Buttons (CAL-11)
 
-- `.btn-primary`: `--ink` fill, `--paper` text (~17:1). Hover: `inset 0 -2px 0 var(--accent)` — an ice underline, never a fill swap. Auto-inverts to a light button in dark mode.
-- `.btn-secondary`: transparent, ink text, `--line` border; hover border `--accent-on-light`.
-- `.btn-slim`: the compact variant (masthead). Ghost tier = plain `--accent-on-light` link CTAs (`.cal-row__cta`, `.cal-event__link`).
+- `.btn-primary`: `--ink` fill, `--paper` text (10.98:1 light / 15.6:1 dark). Hover: `inset 0 -3px 0 var(--signal)` — a coral underline (a sanctioned hover state), never a fill swap. Auto-inverts to a light button in dark mode.
+- `.btn-secondary`: transparent, ink text, `--line` border; hover border `--ink`.
+- `.btn-slim`: the compact variant (masthead). Ghost tier = plain ink 600 link CTAs (`.cal-row__cta`, `.cal-event__link`).
 - RULE: **exactly one `.btn-primary` per view intent.** Everything else is secondary or ghost. Known open violation: the masthead digest button on event pages — §9.
-- RULE: every button's text ≥ 4.5:1 on its own fill. An ice fill is allowed only on small non-critical toggles where softness reads as *selected*, not *disabled* — e.g. `.cal-filters__nearme[aria-pressed="true"]`.
+- RULE: every button's text ≥ 4.5:1 on its own fill. Pressed states are ink-fill-on-paper (`.cal-filters__nearme[aria-pressed="true"]`, the jump chips) — coral is never a pressed/selected fill (budget law, §1.1).
 - Specificity note: anchor buttons inside `.section--light` need the label pin (`.section--light a.btn-primary { color: var(--paper) }`, `styles.css:112`) — keep it when adding button contexts.
 
 ### 3.2 Chips & marks
 
-- `.cal-tag` (CAL-01): 600 · 0.68rem · `--accent-on-light` text · `rgba(ink, 0.18)` border · radius 0. Variants: `--toggle` (checkbox, `accent-color: var(--accent-on-light)`); `--link` (CAL-09 — links to its tag page, hover border + `rgba(31,111,168,0.06)` tint). Link-or-span rule: a chip links only when its landing page exists.
-- Marks line: `.cal-row__city` (every row) + `.cal-row__modality` (the "what kind" kicker, middot-separated, links per CAL-09) — both uppercase 0.68rem `--accent-on-light`.
+- `.cal-tag` (CAL-01): 600 · 0.68rem · ink text · `rgba(ink, 0.18)` border · radius 0. Variants: `--toggle` (checkbox, `accent-color: var(--ink)`); `--link` (CAL-09 — links to its tag page; hover = `--signal-text` border + `rgba(var(--signal-rgb), 0.07)` tint, a sanctioned hover state). Link-or-span rule: a chip links only when its landing page exists.
+- Marks line: `.cal-row__city` (every row) + `.cal-row__modality` (the "what kind" kicker, middot-separated, links per CAL-09) — both uppercase 0.68rem `--muted` (caps micro-furniture).
+- Free/Donation in row meta is `<b>` riding `--signal-text` — the one text-signal mark (§1.1).
 - `.cal-row__dist` (CAL-05): ink text, bordered — appears only when near-me sort is active.
 
 ### 3.3 Cards
@@ -203,13 +202,13 @@ RULE — **entity photos are real-only.** A venue photo, practitioner portrait, 
 
 **Spec:** 1200×630 **JPEG**, quality 82, progressive — photographic cards land ~200KB. Hard cap **< 600KB**: WhatsApp drops link previews above that, which is why these are JPEG, not PNG (`scripts/og.py:113`).
 
-**Anatomy:** a warm stock photo pulled toward ink (30% ink blend + bottom scrim from 30% height + left scrim to 78% width), the ice waveform + letterspaced eyebrow, title in Space Grotesk — all set in the dark tokens (`#F5F7FA` text, `#A7AFB9` muted, ice accent, which hold AA on the ink ground). Card copy reuses the page's own H1/meta language — no new claims.
+**Anatomy (v5, CAL-26):** a split card on the Night ground — a duotone-and-grain photo panel (indigo shadows → warm-white highlights; the ramp CAL-28's `treat.py` shares) beside a near-black text panel carrying the coral slab kicker, the title in condensed-caps Archivo (wght 800 · wdth 72 · UPPERCASE, shrink-to-fit), and a `--muted` sub. No wave mark. Card copy reuses the page's own H1/meta language — no new claims.
 
 **Provenance law:** every photo is logged in `img/og/SOURCES.md` — source URL, photographer, license, where used. A card whose photo isn't in SOURCES.md doesn't ship.
 
 **No-rot law (CAL-DES-2):** `og:image` is always a **committed** card — event permalinks use their city card, else `og-default.jpg` — never the organizer's signed CDN image, which expires and leaves share previews dead. Rot-prone listing images may still render on-page and in JSON-LD, where failure degrades gracefully (§4 fallback).
 
-**Pipeline:** local-only, like `geocode.py` — needs Pillow + the vendored assets in `scripts/assets/` (stock JPGs + `SpaceGrotesk-VF.ttf`). Outputs are committed under `img/og/`; **CI never regenerates them.**
+**Pipeline:** local-only, like `geocode.py` — needs Pillow + the vendored assets in `scripts/assets/` (stock JPGs + `Archivo-VF.ttf`). Outputs are committed under `img/og/`; **CI never regenerates them.**
 
 **Procedure — new page needs a card:**
 1. New tag page → add a `CARDS` entry in `scripts/og.py` (new photo? add it to `scripts/assets/stock/` + a SOURCES.md row).
@@ -223,11 +222,11 @@ RULE — **entity photos are real-only.** A venue photo, practitioner portrait, 
 
 One `prefers-color-scheme: dark` token flip over the **same layout** — no bespoke dark components (`styles.css:467`). Palette proven in the digest email (`digest.ts`).
 
-Mechanism: flipping `--ink-rgb` inverts every `rgba(var(--ink-rgb), a)` secondary/border/tint at once; `--line` follows; `--paper` becomes the `#101216` sheet on the `#08090B` desk; links move to `#7CC3EC` (AA on ink; `#1F6FA8` does not clear it — never use the light link blue on the dark ground); `--accent` stays a mark on both grounds; `.btn-primary` auto-inverts.
+Mechanism (v5): flipping `--ink-rgb` inverts every `rgba(var(--ink-rgb), a)` hairline/tint at once; `--line` follows; `--paper` becomes the one `#0E0C12` near-black ground (the desk/sheet split is retired — Night is a single committed ground); `--muted` lifts to its light grey; `--signal-text` lifts to `#E2724E` (coral never passes AA as text on near-black at the light value); `--shadow-rgb` drops to true black; `.btn-primary` auto-inverts.
 
 RULE: new components get dark mode for free **only** if they follow §1.1's `--ink-rgb` rule. A component needing its own dark block is a smell; justify it.
 
-Sanctioned exceptions: the digest preview flips to the email's own `--dp-*` dark layer; OSM tiles are CSS-inverted into a dark basemap (`.leaflet-tile` only — markers/popups untouched); warm photos and report photos dim via `filter`, not new assets; the state-of-sound report keeps its own `--soh-*` surface tokens with its own dark block (§9 D-14).
+Sanctioned exceptions: the digest preview flips to the email's own `--dp-*` dark layer (its v4 accents pinned in that namespace until CAL-37); OSM tiles are CSS-inverted into a dark basemap (`.leaflet-tile` only — markers/popups untouched); warm photos and report photos dim via `filter`, not new assets; the state-of-sound report keeps its own `--soh-*` surface AND accent tokens with its own dark block until CAL-36 (§9 D-14).
 
 ---
 
@@ -243,8 +242,8 @@ Commits `0330c4c` (D-17) and `d57d296` (D-20). Applies to all public copy: pages
 
 ## 8 · Accessibility floor
 
-- AA everywhere, both schemes: link blue 5.02:1 on paper, `#7CC3EC` on ink; the muted-ink floor (§1.2); button text ≥ 4.5:1 on its own fill (§3.1).
-- Focus is always visible: `a, button, input` get a 2px `--accent-on-light` outline, offset 2px (`styles.css:74`); form fields swap their border for an accent outline.
+- AA everywhere, both schemes: ink 10.98:1 / 17.41:1; `--muted` 5.21:1 / 8.21:1; `--signal-text` 5.08:1 / 6.25:1; button text ≥ 4.5:1 on its own fill (§3.1). `scripts/contrast_check.py` re-verifies every shipped pair.
+- Focus is always visible: `a, button, input` get a 2px `--ink` outline, offset 2px; form fields swap their border for an ink outline.
 - `prefers-reduced-motion` kills smooth scroll (`styles.css:22`); any future motion must check it.
 - The no-JS baseline (§0) is itself an accessibility guarantee: content never gated on scripts; enhancement-only controls ship `hidden` until `filters.js` reveals them.
 - Semantics: `.visually-hidden` for off-screen labels, `aria-pressed` on toggle chips/buttons, `aria-label`ed navs, alt text on every image (§4's honesty line governs its content).

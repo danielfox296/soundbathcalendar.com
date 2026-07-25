@@ -8,10 +8,8 @@
     }
 
     .about-main p {
-      color: rgba(var(--ink-rgb), 0.74);
+      color: var(--ink);
       margin: 0 0 0.9rem;
     }
 
-    .about-main .cal-summary {
-      color: rgba(var(--ink-rgb), 0.86);
-    }
+    

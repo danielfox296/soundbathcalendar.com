@@ -408,7 +408,7 @@ def build():
             content = content.replace('<!-- CALENDAR_BODY -->', _cal_body)
             content = content.replace(
                 '<!-- CALENDAR_SUMMARY -->',
-                html_mod.escape(
+                external_events.summary_html(
                     external_events.build_summary_sentence(cal_rows, now=cal_now)))
             content = content.replace(
                 '<!-- CALENDAR_LAST_UPDATED -->',

@@ -203,8 +203,8 @@ VENUE_PAGE_STYLE = """<style>
     .venue__figure { margin: 0 0 1.6rem; max-width: 640px; }
     .venue__photo { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: rgba(var(--ink-rgb),0.06); display: block; }
     /* Google Places attribution (CAL-25): required beside every venue photo. */
-    .venue__credit { margin: 0.4rem 0 0; font-size: 0.74rem; color: rgba(var(--ink-rgb),0.55); }
-    .venue__credit a { color: rgba(var(--ink-rgb),0.62); text-decoration: none; }
+    .venue__credit { margin: 0.4rem 0 0; font-size: 0.74rem; color: var(--muted); }
+    .venue__credit a { color: var(--muted); text-decoration: none; }
     .venue__credit a:hover { text-decoration: underline; }
   </style>"""
 

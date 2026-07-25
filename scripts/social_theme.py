@@ -13,10 +13,15 @@ colour centres, so four tones bleed into one another with no hard axis. The
 centre POSITIONS rotate per slide while the colours stay fixed, which is what
 lets a ten-slide carousel vary without ever leaving its palette.
 
-DARK TYPE ON LIGHT. The pastel ground inverts the type stack: --ink on the
-paper side, and --accent-on-light (#1F6FA8) for the eyebrow, times and
-prices, which is the token the site already proved at AA on a light ground.
-The ice --accent is a mark colour and would fail as text here.
+DARK TYPE ON LIGHT. The pastel ground inverts the type stack: near-black ink
+on the paper side, a blue proved at AA on a light ground for the eyebrow,
+times and prices.
+
+FROZEN AT v4 (CAL-26, 2026-07-25): the site moved to the v5 "Broadcast"
+tokens, but these constants deliberately keep the palette the carousels
+already ship — a re-run must never produce a different card from one Meta
+already ingested, so the IG surface converts wholesale in its own pass
+(CAL-37), not incrementally here.
 """
 import os
 
@@ -28,11 +33,11 @@ FONT_PATH = os.path.join(ROOT, 'scripts', 'assets', 'fonts', 'SpaceGrotesk-VF.tt
 W, H = 1080, 1350          # 4:5 — the tallest portrait the Instagram feed allows
 MARGIN = 76
 
-INK = (10, 11, 13)              # --ink
-ACCENT = (31, 111, 168)         # --accent-on-light, 5.02:1 on paper
-MUTED = (78, 88, 102)           # darkened from the site's --gray: #98A1AB is a
-#                                 border tone and drops under AA as body text
-#                                 on the lighter corners of these meshes.
+INK = (10, 11, 13)              # the v4 site ink (frozen — see docstring)
+ACCENT = (31, 111, 168)         # the v4 link blue, 5.02:1 on these grounds
+MUTED = (78, 88, 102)           # darkened from the v4 border grey, which
+#                                 drops under AA as body text on the lighter
+#                                 corners of these meshes.
 RULE = (176, 184, 196)
 
 # name -> the four corner colours, and the falloff power for the blend.
