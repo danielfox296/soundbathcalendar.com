@@ -4,5 +4,6 @@
   "meta_description": "The modern sound bath is a young practice with old roots: gong traditions of East and Southeast Asia, India's nada yoga, and Himalayan metal bowls — whose story is more modern, and richer, than the shorthand suggests. Honest credit, real context.",
   "output": "where-sound-baths-come-from/index.html",
   "robots": "index, follow",
-  "breadcrumb": "Where sound baths come from"
+  "breadcrumb": "Where sound baths come from",
+  "breadcrumb_parent": { "name": "Learn", "path": "learn/" }
 }

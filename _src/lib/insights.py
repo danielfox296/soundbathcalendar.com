@@ -144,14 +144,16 @@ def render_report(agg, nav_prefix, other_editions):
     top_time = tt[0][0] if tt else ''
     top_time_ct = tt[0][1] if tt else 0
 
-    # ---- Archive block ----
+    # ---- Editions block. The hub passes every edition (the one on display
+    # included) so each dated permalink always has an internal link — never an
+    # orphan (CAL-32 D1); edition permalinks still pass just the others. ----
     if other_editions:
         links = '\n'.join(
             f'          <li><a href="{cp}state-of-sound-healing/{_esc(o["edition"]["slug"])}/">'
             f'{_esc(o["edition"]["label"])}</a> — {_esc(_fmt_window(o["edition"]))}</li>'
             for o in other_editions)
         archive = (f'      <section class="soh-archive">\n'
-                   f'        <p class="soh-kicker">Past editions</p>\n'
+                   f'        <p class="soh-kicker">Editions</p>\n'
                    f'        <ul>\n{links}\n        </ul>\n      </section>')
     else:
         archive = ('      <p class="soh-firstnote">This is the first edition. As new '

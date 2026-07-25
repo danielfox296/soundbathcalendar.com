@@ -4,5 +4,6 @@
   "meta_description": "432 Hz is an alternative tuning standard — A tuned to 432 vibrations per second instead of the usual 440. Many players love how it feels and tune to it with real care; research so far has not found effects unique to the number. What it is, and how to hold it.",
   "output": "432hz-explained/index.html",
   "robots": "index, follow",
-  "breadcrumb": "432 Hz, explained"
+  "breadcrumb": "432 Hz, explained",
+  "breadcrumb_parent": { "name": "Learn", "path": "learn/" }
 }

@@ -72,6 +72,7 @@ SITE_NAME = 'Sound Bath Calendar'
 # venture-separation rule (no sameAs bridge to *other* ventures) is unaffected.
 INSTAGRAM_URL = 'https://www.instagram.com/soundbathcalendar/'
 FACEBOOK_URL  = 'https://www.facebook.com/profile.php?id=61592057895510'
+TWITTER_HANDLE = '@soundbathcalendar'
 
 # Sitewide description used in Organization + WebSite JSON-LD. Reuses the
 # approved calendar meta description verbatim — no new copy.
@@ -133,8 +134,12 @@ def _ldjson(obj):
     emitted page. HTML-entity escaping ('&lt;') is WRONG here — a <script>
     raw-text element does not decode entities, so consumers would read the
     literal entity.
+
+    Compact separators (CAL-31): JSON-LD is machine-read only, so the pretty
+    indentation was pure shipped weight (~156KB site-wide, ~28KB on the root's
+    ItemList alone).
     """
-    return (json.dumps(obj, indent=2)
+    return (json.dumps(obj, separators=(',', ':'))
             .replace('<', '\\u003c')
             .replace('>', '\\u003e')
             .replace('&', '\\u0026')
@@ -152,22 +157,44 @@ def collect_sections(sections_dir):
     return sorted(glob.glob(os.path.join(sections_dir, '*.html')))
 
 
-def _og_twitter_tags(title, description, canonical_url, og_image):
+def _og_twitter_tags(title, description, canonical_url, og_image,
+                     og_type='website'):
     """The OG + Twitter meta blocks (escaped)."""
     safe_title = html_mod.escape(title, quote=True)
     safe_desc = html_mod.escape(description, quote=True)
     safe_image = html_mod.escape(og_image, quote=True)
-    og = '\n  '.join([
+    # The alt mirrors the card's title line (cards render the page title over
+    # a photo); the ' | Site Name' tail is dropped so the alt doesn't say the
+    # site name twice.
+    safe_alt = html_mod.escape(
+        f'{title.split(" | ")[0].strip()} — {SITE_NAME}', quote=True)
+    og_lines = [
         f'<meta property="og:title" content="{safe_title}">',
         f'<meta property="og:description" content="{safe_desc}">',
         f'<meta property="og:url" content="{canonical_url}">',
-        f'<meta property="og:type" content="website">',
+        f'<meta property="og:type" content="{og_type}">',
         f'<meta property="og:image" content="{safe_image}">',
+    ]
+    # Dimensions only for our own generated share cards — those are all
+    # 1200×630 by spec (DESIGN.md §5, scripts/og.py). Entity pages may pass
+    # an arbitrary-size photo (a practitioner portrait) instead, and stating
+    # a wrong box is worse than stating none.
+    if og_image.startswith((f'{SITE_URL}/img/og/',
+                            f'{SITE_URL}/img/og-default.',
+                            f'{SITE_URL}/img/insights/og-')):
+        og_lines += [
+            '<meta property="og:image:width" content="1200">',
+            '<meta property="og:image:height" content="630">',
+        ]
+    og_lines += [
+        f'<meta property="og:image:alt" content="{safe_alt}">',
         f'<meta property="og:site_name" content="{SITE_NAME}">',
         f'<meta property="og:locale" content="en_US">',
-    ])
+    ]
+    og = '\n  '.join(og_lines)
     tw = '\n  '.join([
         f'<meta name="twitter:card" content="summary_large_image">',
+        f'<meta name="twitter:site" content="{TWITTER_HANDLE}">',
         f'<meta name="twitter:title" content="{safe_title}">',
         f'<meta name="twitter:description" content="{safe_desc}">',
         f'<meta name="twitter:image" content="{safe_image}">',
@@ -187,12 +214,44 @@ def _og_asset(*rels):
     return f'{SITE_URL}/img/og-default.jpg'
 
 
+# The <script> tag for filters.js, with build()'s content-fingerprint
+# cache-buster stamped in. _assemble injects it per page — see below.
+_FILTERS_TAG = '<script defer src="{{css_path}}filters.js"></script>'
+
+_STYLE_BLOCK_RE = re.compile(r'(<style[^>]*>)(.*?)(</style>)', re.DOTALL)
+_CSS_COMMENT_RE = re.compile(r'/\*.*?\*/', re.DOTALL)
+
+
+def _minify_page_style(value):
+    """Ship-minify a page_style head fragment (CAL-31): inside each <style>
+    block, strip CSS comments and collapse every whitespace run to one space.
+    Authoring comments stay in the source constants and page files — some
+    blocks ran to 38% comment bytes (MAP_HEAD) — but never reach the output.
+    Anything outside <style> (e.g. MAP_HEAD's vendor <link> tags) passes
+    through untouched. The collapse is safe for this CSS: no quoted string in
+    any page style carries a meaningful whitespace run."""
+    def _one(m):
+        css = _CSS_COMMENT_RE.sub('', m.group(2))
+        return m.group(1) + ' '.join(css.split()) + m.group(3)
+    return _STYLE_BLOCK_RE.sub(_one, value)
+
+
 def _assemble(base, mapping):
     """Substitute {{placeholders}} into the base layout. Two passes on
     css_path: content/header/footer may themselves use {{css_path}}."""
+    mapping = dict(mapping)
+    mapping['page_style'] = _minify_page_style(mapping.get('page_style', ''))
     html = base
     for key, value in mapping.items():
         html = html.replace('{{' + key + '}}', value)
+    # Progressive-enhancement calendar filters (Track B B.5): the page is
+    # fully usable without the script — it only reveals and wires the filter
+    # bar ([data-cal-filters], rendered by external_events.render_calendar_body
+    # on the root/city/tag listings). Pages without the bar skip the tag
+    # entirely (CAL-31: it was a guaranteed no-op on 113 of 227 pages).
+    html = html.replace(
+        '{{filters_script}}',
+        _FILTERS_TAG if 'data-cal-filters' in mapping.get('content', '') else '')
     html = html.replace('{{css_path}}', mapping.get('css_path', ''))
     # RSS discovery link — defaults to the root feed for any page that does not
     # set its own (city pages point at their own feed via mapping).
@@ -226,10 +285,13 @@ def build():
 
     # Same content-fingerprint cache-bust for filters.js so a behaviour change
     # (e.g. the CAL-05 near-me sort) reaches visitors immediately, not after a
-    # stale cached copy expires.
+    # stale cached copy expires. The tag itself is no longer in the base
+    # layout — _assemble emits it only on pages that render the filter bar.
+    global _FILTERS_TAG
     with open(os.path.join(REPO, 'filters.js'), 'rb') as _f:
         _filters_ver = hashlib.md5(_f.read()).hexdigest()[:8]
-    base = base.replace('filters.js"', f'filters.js?v={_filters_ver}"')
+    _FILTERS_TAG = ('<script defer src="{{css_path}}'
+                    f'filters.js?v={_filters_ver}"></script>')
 
     pages_built = []
 
@@ -391,7 +453,7 @@ def build():
         # CollectionPage (speakable summary + build-time dateModified),
         # ItemList of Events, and FAQPage.
         schema_json = (f'<script type="application/ld+json">\n'
-                       f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+                       f'{_ldjson(ORG_SCHEMA)}\n  </script>')
 
         if output == 'index.html':
             website_schema = {
@@ -407,7 +469,7 @@ def build():
                 }
             }
             schema_json += (f'\n  <script type="application/ld+json">\n'
-                            f'{json.dumps(website_schema, indent=2)}\n  </script>')
+                            f'{_ldjson(website_schema)}\n  </script>')
 
             if cal_rows:
                 _il = external_events.calendar_itemlist(
@@ -429,21 +491,35 @@ def build():
                             f'{_ldjson(_faq)}\n  </script>')
         else:
             leaf_name = config.get('breadcrumb') or title.split(' | ')[0].strip()
+            crumb_items = [
+                {"@type": "ListItem", "position": 1, "name": "Calendar",
+                 "item": SITE_URL + "/"},
+            ]
+            # Pages that sit under a section in the visible crumbs (the Learn
+            # explainers) declare it in config as breadcrumb_parent, so the
+            # BreadcrumbList matches what the page shows (CAL-32 D3).
+            parent = config.get('breadcrumb_parent')
+            if parent:
+                crumb_items.append(
+                    {"@type": "ListItem", "position": 2,
+                     "name": parent["name"],
+                     "item": f'{SITE_URL}/{parent["path"]}'})
+            crumb_items.append(
+                {"@type": "ListItem", "position": len(crumb_items) + 1,
+                 "name": leaf_name})
             breadcrumb_schema = {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
-                "itemListElement": [
-                    {"@type": "ListItem", "position": 1, "name": "Calendar",
-                     "item": SITE_URL + "/"},
-                    {"@type": "ListItem", "position": 2, "name": leaf_name},
-                ],
+                "itemListElement": crumb_items,
             }
             schema_json += (f'\n  <script type="application/ld+json">\n'
-                            f'{json.dumps(breadcrumb_schema, indent=2)}\n  </script>')
+                            f'{_ldjson(breadcrumb_schema)}\n  </script>')
 
         html = _assemble(base, {
-            'title':            title,
-            'robots':           robots_value,
+            # Config-sourced head fields arrive raw, so escape at assembly
+            # (CAL-32 D4) — the generated builders pre-escape theirs.
+            'title':            html_mod.escape(title, quote=True),
+            'robots':           html_mod.escape(robots_value, quote=True),
             'meta_description': meta_desc,
             'canonical_url':    canonical_url,
             'css_path':         css_path,
@@ -608,7 +684,7 @@ def build_city_pages(base, header, footer, cal_rows, now, geocode=None):
         # BreadcrumbList. The ItemList carries external-operator strings, so it
         # routes through _ldjson (breakout-safe); the rest are our own.
         schema_json = (f'<script type="application/ld+json">\n'
-                       f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+                       f'{_ldjson(ORG_SCHEMA)}\n  </script>')
         _cp = external_events.city_collectionpage_schema(
             city, canonical_url, SITE_URL, description, lastmod)
         schema_json += (f'\n  <script type="application/ld+json">\n'
@@ -631,7 +707,7 @@ def build_city_pages(base, header, footer, cal_rows, now, geocode=None):
             ],
         }
         schema_json += (f'\n  <script type="application/ld+json">\n'
-                        f'{json.dumps(breadcrumb_schema, indent=2)}\n  </script>')
+                        f'{_ldjson(breadcrumb_schema)}\n  </script>')
 
         content = external_events.render_city_page(
             cal_rows, city, nav_prefix, now=now, geocode=geocode)
@@ -728,13 +804,13 @@ def build_event_pages(base, header, footer, cal_feed, now):
         og_image = _og_asset(
             f'img/og/{external_events.city_slug(row["city"])}.jpg')
         og_tags, twitter_tags = _og_twitter_tags(
-            name, description, canonical_url, og_image)
+            name, description, canonical_url, og_image, og_type='event')
 
         # Organization (publisher entity, sitewide) + Event + BreadcrumbList.
         # The Event carries external-operator strings, so it and the crumbs
         # route through _ldjson (breakout-safe); the Organization is our own.
         schema_json = (f'<script type="application/ld+json">\n'
-                       f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+                       f'{_ldjson(ORG_SCHEMA)}\n  </script>')
         _ev = external_events.event_jsonld(row, SITE_URL)
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(_ev)}\n  </script>')
@@ -838,12 +914,12 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
         og_image = (external_events._safe_image_url(p.get('photo_url') or '')
                     or _og_asset('img/og/practitioners.jpg'))
         og_tags, twitter_tags = _og_twitter_tags(
-            name, description, canonical_url, og_image)
+            name, description, canonical_url, og_image, og_type='profile')
 
         # Organization (publisher) + ProfilePage/Person + BreadcrumbList. The
         # Person carries operator-adjacent strings, so route it through _ldjson.
         schema_json = (f'<script type="application/ld+json">\n'
-                       f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+                       f'{_ldjson(ORG_SCHEMA)}\n  </script>')
         _person = practitioners_lib.person_schema(p, canonical_url, sessions)
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(_person)}\n  </script>')
@@ -905,7 +981,7 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
         _og_asset('img/og/practitioners.jpg'))
 
     schema_json = (f'<script type="application/ld+json">\n'
-                   f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+                   f'{_ldjson(ORG_SCHEMA)}\n  </script>')
     _il = practitioners_lib.index_itemlist(practs, SITE_URL)
     if _il:
         schema_json += (f'\n  <script type="application/ld+json">\n'
@@ -921,7 +997,7 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
         ],
     }
     schema_json += (f'\n  <script type="application/ld+json">\n'
-                    f'{json.dumps(index_breadcrumb, indent=2)}\n  </script>')
+                    f'{_ldjson(index_breadcrumb)}\n  </script>')
 
     index_content = practitioners_lib.render_index(
         practs, count_by_slug, index_nav, art_by_slug)
@@ -933,7 +1009,7 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
         'meta_description': index_meta,
         'canonical_url': index_canonical,
         'css_path': index_nav,
-        'page_style': practitioners_lib.INDEX_STYLE,
+        'page_style': '',
         'og_tags': og_tags,
         'twitter_tags': twitter_tags,
         'schema_json': schema_json,
@@ -1009,7 +1085,7 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
             name, description, canonical_url, og_image)
 
         schema_json = (f'<script type="application/ld+json">\n'
-                       f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+                       f'{_ldjson(ORG_SCHEMA)}\n  </script>')
         _place = venues_lib.place_schema(v, canonical_url, sessions, credit)
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(_place)}\n  </script>')
@@ -1075,7 +1151,7 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
         'Venues', index_desc, index_canonical, _og_asset('img/og/venues.jpg'))
 
     schema_json = (f'<script type="application/ld+json">\n'
-                   f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+                   f'{_ldjson(ORG_SCHEMA)}\n  </script>')
     _il = venues_lib.index_itemlist(venue_list, SITE_URL)
     if _il:
         schema_json += (f'\n  <script type="application/ld+json">\n'
@@ -1091,7 +1167,7 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
         ],
     }
     schema_json += (f'\n  <script type="application/ld+json">\n'
-                    f'{json.dumps(index_breadcrumb, indent=2)}\n  </script>')
+                    f'{_ldjson(index_breadcrumb)}\n  </script>')
 
     index_content = venues_lib.render_index(
         venue_list, count_by_slug, index_nav, art_by_slug)
@@ -1103,7 +1179,7 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
         'meta_description': index_meta,
         'canonical_url': index_canonical,
         'css_path': index_nav,
-        'page_style': venues_lib.INDEX_STYLE,
+        'page_style': '',
         'og_tags': og_tags,
         'twitter_tags': twitter_tags,
         'schema_json': schema_json,
@@ -1173,7 +1249,7 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
             name, description, canonical_url, og_image)
 
         schema_json = (f'<script type="application/ld+json">\n'
-                       f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+                       f'{_ldjson(ORG_SCHEMA)}\n  </script>')
         _org = operators_lib.organization_schema(o, canonical_url)
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(_org)}\n  </script>')
@@ -1206,7 +1282,9 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
             'meta_description': meta_desc,
             'canonical_url': canonical_url,
             'css_path': nav_prefix,
-            'page_style': operators_lib.OPERATOR_PAGE_STYLE,
+            # Operator pages ride the shared .detail__* vocabulary wholesale
+            # (styles.css, CAL-31) — no page-local rules remain.
+            'page_style': '',
             'og_tags': og_tags,
             'twitter_tags': twitter_tags,
             'schema_json': schema_json,
@@ -1238,7 +1316,7 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
         'Organizers', index_desc, index_canonical, _og_asset('img/og/operators.jpg'))
 
     schema_json = (f'<script type="application/ld+json">\n'
-                   f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+                   f'{_ldjson(ORG_SCHEMA)}\n  </script>')
     _il = operators_lib.index_itemlist(operator_list, SITE_URL)
     if _il:
         schema_json += (f'\n  <script type="application/ld+json">\n'
@@ -1254,7 +1332,7 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
         ],
     }
     schema_json += (f'\n  <script type="application/ld+json">\n'
-                    f'{json.dumps(index_breadcrumb, indent=2)}\n  </script>')
+                    f'{_ldjson(index_breadcrumb)}\n  </script>')
 
     index_content = operators_lib.render_index(
         operator_list, count_by_slug, index_nav, art_by_slug)
@@ -1266,7 +1344,7 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
         'meta_description': index_meta,
         'canonical_url': index_canonical,
         'css_path': index_nav,
-        'page_style': operators_lib.INDEX_STYLE,
+        'page_style': '',
         'og_tags': og_tags,
         'twitter_tags': twitter_tags,
         'schema_json': schema_json,
@@ -1311,7 +1389,13 @@ def build_insights_pages(base, header, footer, now):
     def _emit(output, nav_prefix, agg, others, is_hub):
         ed = agg['edition']
         window = insights_lib._fmt_window(ed)
-        canonical = (f'{SITE_URL}/state-of-sound-healing/' if is_hub
+        # D1 (CAL-32): while the hub shows this edition, the dated permalink
+        # is a near-identical duplicate — it canonicalizes to the hub and
+        # stays out of the sitemap. The moment a newer edition takes over the
+        # hub, the permalink becomes self-canonical and sitemapped.
+        is_latest_dup = (not is_hub) and ed['slug'] == latest['edition']['slug']
+        canonical = (f'{SITE_URL}/state-of-sound-healing/'
+                     if is_hub or is_latest_dup
                      else f'{SITE_URL}/state-of-sound-healing/{ed["slug"]}/')
         title = (f'State of Sound Healing on the Front Range — {ed["label"]} '
                  f'| {SITE_NAME}')
@@ -1385,12 +1469,15 @@ def build_insights_pages(base, header, footer, now):
             _pool = [agg] + list(others) if is_hub else [agg]
             _stamps = [a['edition']['generated_at'][:10] for a in _pool
                        if a['edition'].get('generated_at')]
-            sitemap_entries.append(
-                (canonical,
-                 max(_stamps) if _stamps else external_events.stamp_date_iso(now)))
+            if not is_latest_dup:
+                sitemap_entries.append(
+                    (canonical,
+                     max(_stamps) if _stamps else external_events.stamp_date_iso(now)))
 
-    # Hub = latest edition inline, with the rest listed as archive.
-    _emit('state-of-sound-healing/index.html', '../', latest, editions[1:], True)
+    # Hub = latest edition inline, with EVERY edition (the shown one included)
+    # listed in the Editions block — the dated permalink must always have an
+    # internal link so it is never an orphan (CAL-32 D1).
+    _emit('state-of-sound-healing/index.html', '../', latest, editions, True)
     # Each edition also gets a stable dated permalink.
     for i, ed in enumerate(editions):
         _emit(f'state-of-sound-healing/{ed["edition"]["slug"]}/index.html', '../../',
@@ -1411,15 +1498,17 @@ def build_roundup_pages(base, header, footer, now):
     built, sitemap_entries = [], []
 
     def _emit(output, nav_prefix, title, description, robots_value, content,
-              schema_objs, lastmod, feature=True):
+              schema_objs, lastmod, feature=True, og_type='website'):
         canonical = page_url(output)
         meta_desc = ''
         if description:
             meta_desc = (f'<meta name="description" '
                          f'content="{html_mod.escape(description, quote=True)}">')
+        # _og_asset (CAL-32 D6): existence-checked .jpg fallback chain like
+        # every other surface — a roundups card slots in when one is drawn.
         og_tags, twitter_tags = _og_twitter_tags(
             title.split(' | ')[0], description, canonical,
-            f'{SITE_URL}/img/og-default.png')
+            _og_asset('img/og/roundups.jpg'), og_type=og_type)
         # _ldjson throughout: headlines/deks can carry operator-derived
         # strings (event titles), so guard against '</script>' breakout.
         schema_json = '\n  '.join(
@@ -1477,7 +1566,7 @@ def build_roundup_pages(base, header, footer, now):
               'index, follow',
               roundups_lib.render_post(post, '../../'),
               (ORG_SCHEMA, article, breadcrumb),
-              post['date'])
+              post['date'], og_type='article')
 
     # --- Index (noindex until INDEX_MIN posts — doorway discipline) ---
     indexable = len(posts) >= roundups_lib.INDEX_MIN
@@ -1578,7 +1667,7 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
         # BreadcrumbList. The ItemList carries external-operator strings, so it
         # routes through _ldjson (breakout-safe); the rest are our own.
         schema_json = (f'<script type="application/ld+json">\n'
-                       f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+                       f'{_ldjson(ORG_SCHEMA)}\n  </script>')
         _cp = tag_pages_lib.tag_collectionpage_schema(
             slug, canonical_url, SITE_URL, description, lastmod)
         schema_json += (f'\n  <script type="application/ld+json">\n'
@@ -1603,7 +1692,7 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
             ],
         }
         schema_json += (f'\n  <script type="application/ld+json">\n'
-                        f'{json.dumps(breadcrumb_schema, indent=2)}\n  </script>')
+                        f'{_ldjson(breadcrumb_schema)}\n  </script>')
 
         content = tag_pages_lib.render_tag_page(
             cal_rows, slug, nav_prefix, built_map, now=now, geocode=geocode)
@@ -1656,7 +1745,7 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
         _og_asset('img/og/tags.jpg'))
 
     schema_json = (f'<script type="application/ld+json">\n'
-                   f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+                   f'{_ldjson(ORG_SCHEMA)}\n  </script>')
     index_collectionpage = {
         "@context": "https://schema.org",
         "@type": "CollectionPage",
@@ -1667,7 +1756,7 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
         "isPartOf": {"@type": "WebSite", "name": SITE_NAME, "url": SITE_URL},
     }
     schema_json += (f'\n  <script type="application/ld+json">\n'
-                    f'{json.dumps(index_collectionpage, indent=2)}\n  </script>')
+                    f'{_ldjson(index_collectionpage)}\n  </script>')
     _il = tag_pages_lib.browse_itemlist(entries, SITE_URL)
     if _il:
         schema_json += (f'\n  <script type="application/ld+json">\n'
@@ -1683,7 +1772,7 @@ def build_tag_pages(base, header, footer, cal_rows, now, geocode=None):
         ],
     }
     schema_json += (f'\n  <script type="application/ld+json">\n'
-                    f'{json.dumps(index_breadcrumb, indent=2)}\n  </script>')
+                    f'{_ldjson(index_breadcrumb)}\n  </script>')
 
     index_content = tag_pages_lib.render_browse(entries, index_nav)
     page_header = header.strip().replace('{{nav_prefix}}', index_nav)
@@ -1738,7 +1827,7 @@ def build_map_page(base, header, footer, cal_rows, now, geocode=None):
         _og_asset('img/og/map.jpg'))
 
     schema_json = (f'<script type="application/ld+json">\n'
-                   f'{json.dumps(ORG_SCHEMA, indent=2)}\n  </script>')
+                   f'{_ldjson(ORG_SCHEMA)}\n  </script>')
     collectionpage = {
         "@context": "https://schema.org",
         "@type": "CollectionPage",
@@ -1748,7 +1837,7 @@ def build_map_page(base, header, footer, cal_rows, now, geocode=None):
         "isPartOf": {"@type": "WebSite", "name": SITE_NAME, "url": SITE_URL},
     }
     schema_json += (f'\n  <script type="application/ld+json">\n'
-                    f'{json.dumps(collectionpage, indent=2)}\n  </script>')
+                    f'{_ldjson(collectionpage)}\n  </script>')
     breadcrumb = {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
@@ -1759,7 +1848,7 @@ def build_map_page(base, header, footer, cal_rows, now, geocode=None):
         ],
     }
     schema_json += (f'\n  <script type="application/ld+json">\n'
-                    f'{json.dumps(breadcrumb, indent=2)}\n  </script>')
+                    f'{_ldjson(breadcrumb)}\n  </script>')
 
     content = mapview_lib.render_map_page(
         pins, nav_prefix, external_events.fmt_stamp_date(now),

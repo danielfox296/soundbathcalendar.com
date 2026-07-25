@@ -4,5 +4,6 @@
   "meta_description": "Mostly no — most sound baths are not affiliated with any religious space, practitioner, or tradition, though the practice carries aesthetics from outside mainstream Western music. An honest guide for people of faith and for skeptics, holding the questions both actually ask.",
   "output": "is-a-sound-bath-religious/index.html",
   "robots": "index, follow",
-  "breadcrumb": "Is a sound bath religious?"
+  "breadcrumb": "Is a sound bath religious?",
+  "breadcrumb_parent": { "name": "Learn", "path": "learn/" }
 }
