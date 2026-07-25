@@ -102,11 +102,22 @@ MAP_HEAD = """<link rel="stylesheet" href="{{css_path}}vendor/leaflet/leaflet.cs
     .map-split__map { position: relative; }
     @media (min-width: 900px) {
       .map-split { grid-template-columns: minmax(340px, 5fr) 7fr; gap: 2.4rem; align-items: start; }
-      .map-split__map { position: sticky; top: 90px; }
-      /* In the narrow list column the map is the visual — drop the flyer tile so
-         the rows read as a clean scan list beside it. */
-      .map-split__list .cal-row__media { display: none; }
+      .map-split__map { position: sticky; top: var(--mast-offset); }
     }
+    /* In the narrow list column the map is the visual (CAL-28): drop the card
+       faces so the day-banded list reads as a clean scan column beside it —
+       one column, caption-register cards; type tiles flatten to captions
+       (their tile colors revert to the page tokens). CAL-35 restyles. */
+    .map-split__list .cal-card__im { display: none; }
+    .map-split__list .cal-rows { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+    .map-split__list .cal-card--tile { background: transparent; aspect-ratio: auto; }
+    .map-split__list .cal-card__tin { padding: 0; }
+    .map-split__list .cal-row__name { font-size: 22px; }
+    .map-split__list .cal-card--tile .cal-row__name a { color: var(--ink); }
+    .map-split__list .cal-card--tile .cal-card__meta { color: var(--muted); }
+    .map-split__list .cal-card--tile .cal-card__meta b { color: var(--signal-text); }
+    .map-split__list .cal-card--tile:hover { background: transparent; }
+    .map-split__list .cal-card--tile:hover .cal-card__meta { color: var(--muted); }
     @media (max-width: 899px) { .map-split__map { order: -1; } }
     /* Fixed px height (not vh): guarantees the container is sized before Leaflet
        inits, so fitBounds sees real dimensions in every context. */

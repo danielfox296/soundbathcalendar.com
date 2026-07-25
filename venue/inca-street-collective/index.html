@@ -66,7 +66,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../../styles.css?v=2e731584">
+  <link rel="stylesheet" href="../../styles.css?v=ed4c5cfa">
   <style>.venue__figure { margin: 0 0 1.6rem; max-width: 640px; } .venue__photo { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: rgba(var(--ink-rgb),0.06); display: block; } .venue__credit { margin: 0.4rem 0 0; font-size: 0.74rem; color: var(--muted); } .venue__credit a { color: var(--muted); text-decoration: none; } .venue__credit a:hover { text-decoration: underline; }</style>
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -103,6 +103,13 @@
        focus, then a solid ink-on-paper pill (well above the muted-ink floor).
        Targets #main in the base layout. -->
   <a class="skip-link" href="#main">Skip to the calendar</a>
+  <!-- CAL-30 item 1 (pulled into CAL-28): one row at desktop widths — the
+       inline digest form is retired for an underlined text link (primary
+       demoted sitewide; closes the DESIGN.md §9 masthead-primary ruling).
+       SEO ruling: the 4 city links + Map + Learn are a load-bearing
+       internal-link class — always server-rendered <a> elements on every
+       page. They may visually collapse (the strip scrolls; below 900px it
+       drops to a second line) but never leave the HTML. -->
   <div class="container masthead-inner">
     <a href="../../" class="wordmark">Sound Bath Calendar</a>
     <nav class="masthead-cities" aria-label="Primary navigation">
@@ -113,16 +120,7 @@
       <a href="../../map/">Map</a>
       <a href="../../learn/">Learn</a>
     </nav>
-    <!-- Slim digest capture: inline form on wide screens, an anchor link down
-         to the full form on small ones. Same Formspree seam as the main form. -->
-    <form class="masthead-digest" action="https://admin.soundbathcalendar.com/digest/subscribe" method="POST">
-      <input type="hidden" name="next" value="https://soundbathcalendar.com/thanks/">
-      <label class="visually-hidden" for="mh-email">Email for the Thursday digest</label>
-      <input id="mh-email" type="email" name="email" autocomplete="email"
-             placeholder="Email for the Thursday digest" required>
-      <button type="submit" class="btn btn-primary btn-slim">Get the digest</button>
-    </form>
-    <a class="masthead-digest-link" href="../../#digest">The digest</a>
+    <a class="masthead-digest-link" href="../../#digest">Get the Thursday digest</a>
   </div>
 </header>
 

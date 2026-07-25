@@ -325,6 +325,18 @@ def build():
     # distance sort, which attaches data-lat/lng to each row that has one.
     geocode = mapview_lib.load_geocode(REPO)
 
+    # CAL-28: which events have committed card derivatives (scripts/treat.py,
+    # local-only — CI just reads the committed files). Registered BEFORE any
+    # card renders; an event without art renders the designed type tile.
+    _cards_dir = os.path.join(REPO, 'img', 'cards')
+    card_art = set()
+    if os.path.isdir(_cards_dir):
+        card_art = {n[:-len('-i.jpg')] for n in os.listdir(_cards_dir)
+                    if n.endswith('-i.jpg') and not n.endswith('-i280.jpg')
+                    and not n.startswith('editorial-')}
+    external_events.set_card_art(card_art)
+    print(f'Card art: {len(card_art)} committed derivative pair(s)')
+
     page_dirs = []
     for root, dirs, files in os.walk(PAGES):
         if 'config.json' in files:
@@ -406,6 +418,11 @@ def build():
             _cal_body = external_events.render_calendar_body(
                 cal_rows, nav_prefix, now=cal_now, geocode=geocode)
             content = content.replace('<!-- CALENDAR_BODY -->', _cal_body)
+            # CAL-28: the full-bleed coral ticker above the padded section —
+            # tonight's real sessions (or the next day's computed line).
+            content = content.replace(
+                '<!-- CALENDAR_TICKER -->',
+                external_events.render_ticker(cal_rows, now=cal_now))
             content = content.replace(
                 '<!-- CALENDAR_SUMMARY -->',
                 external_events.summary_html(
@@ -720,7 +737,7 @@ def build_city_pages(base, header, footer, cal_rows, now, geocode=None):
             'meta_description': meta_desc,
             'canonical_url':    canonical_url,
             'css_path':         nav_prefix,
-            'page_style':       external_events.CITY_WARM_STYLE,
+            'page_style':       '',
             'og_tags':          og_tags,
             'twitter_tags':     twitter_tags,
             'schema_json':      schema_json,

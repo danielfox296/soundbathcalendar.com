@@ -66,7 +66,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../../styles.css?v=2e731584">
+  <link rel="stylesheet" href="../../styles.css?v=ed4c5cfa">
   
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -103,6 +103,13 @@
        focus, then a solid ink-on-paper pill (well above the muted-ink floor).
        Targets #main in the base layout. -->
   <a class="skip-link" href="#main">Skip to the calendar</a>
+  <!-- CAL-30 item 1 (pulled into CAL-28): one row at desktop widths — the
+       inline digest form is retired for an underlined text link (primary
+       demoted sitewide; closes the DESIGN.md §9 masthead-primary ruling).
+       SEO ruling: the 4 city links + Map + Learn are a load-bearing
+       internal-link class — always server-rendered <a> elements on every
+       page. They may visually collapse (the strip scrolls; below 900px it
+       drops to a second line) but never leave the HTML. -->
   <div class="container masthead-inner">
     <a href="../../" class="wordmark">Sound Bath Calendar</a>
     <nav class="masthead-cities" aria-label="Primary navigation">
@@ -113,16 +120,7 @@
       <a href="../../map/">Map</a>
       <a href="../../learn/">Learn</a>
     </nav>
-    <!-- Slim digest capture: inline form on wide screens, an anchor link down
-         to the full form on small ones. Same Formspree seam as the main form. -->
-    <form class="masthead-digest" action="https://admin.soundbathcalendar.com/digest/subscribe" method="POST">
-      <input type="hidden" name="next" value="https://soundbathcalendar.com/thanks/">
-      <label class="visually-hidden" for="mh-email">Email for the Thursday digest</label>
-      <input id="mh-email" type="email" name="email" autocomplete="email"
-             placeholder="Email for the Thursday digest" required>
-      <button type="submit" class="btn btn-primary btn-slim">Get the digest</button>
-    </form>
-    <a class="masthead-digest-link" href="../../#digest">The digest</a>
+    <a class="masthead-digest-link" href="../../#digest">Get the Thursday digest</a>
   </div>
 </header>
 
@@ -153,28 +151,13 @@
       </aside>
     </div>
     <h2 class="detail__section-h">Upcoming sessions</h2>
-    <div class="cal-rows">
-<article class="cal-row" data-city="denver" data-free="1" data-tags="">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Sat</span>
-    <span class="cal-row__dnum">1</span>
-    <span class="cal-row__mo">Aug</span>
-    <span class="cal-row__time">3:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1189179907%2F2997668619628%2F1%2Foriginal.20260719-225321?w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;s=e800e6555deba7e97451f24abbfe5e9a" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · Washington Park</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../../event/psychic-sound-bath-wash-park-2026-08-01-washington-park/">Psychic Sound Bath Wash Park</a></h3>
-      <p class="cal-row__meta">Dr. Adrian Voss · Washington Park · <b>Free</b></p>
-      <p class="cal-row__with">with <a href="../../practitioner/adrian-voss/">Adrian Voss</a></p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/psychic-sound-bath-wash-park-tickets-1994519064212" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://intuitivesounds.org/" target="_blank" rel="noopener">Dr. Adrian Voss</a></p>
-    </div>
-  </div>
+    <div class="cal-rows cal-rows--3">
+<article class="cal-row cal-card" data-city="denver" data-free="1" data-tags="">
+  <span class="cal-card__im"><img src="../../img/cards/psychic-sound-bath-wash-park-2026-08-01-washington-park-i.jpg" srcset="../../img/cards/psychic-sound-bath-wash-park-2026-08-01-washington-park-i280.jpg 280w, ../../img/cards/psychic-sound-bath-wash-park-2026-08-01-washington-park-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../../img/cards/psychic-sound-bath-wash-park-2026-08-01-washington-park-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../../event/psychic-sound-bath-wash-park-2026-08-01-washington-park/">Psychic Sound Bath Wash Park</a></h3>
+    <p class="cal-card__meta cal-row__marks">Sat, Aug 1 · 3:00 PM · Washington Park — Washington Park, Denver · <span class="cal-row__with">with <a href="../../practitioner/adrian-voss/">Adrian Voss</a></span> · <b>Free</b><span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/psychic-sound-bath-wash-park-tickets-1994519064212" target="_blank" rel="noopener" aria-label="Tickets — Psychic Sound Bath Wash Park"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://intuitivesounds.org/" target="_blank" rel="noopener" aria-label="Dr. Adrian Voss website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
 </div>
     <p class="detail__back"><a href="../../operators/">All organizers →</a></p>

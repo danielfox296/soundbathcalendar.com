@@ -898,11 +898,117 @@ def add_to_calendar_urls(row, site_url, now=None):
     return {'google': google, 'outlook': outlook, 'apple': 'event.ics'}
 
 
-def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None):
-    cls = 'cal-row'
+# ---------------------------------------------------------------------------
+# Program Grid cards (CAL-28, ratified 2026-07-25 — replaces the list rows).
+# Every session is one card: a committed duotone derivative (scripts/treat.py)
+# when one exists, else a TYPE TILE — a designed poster variant, not a
+# fallback state. Cards keep the .cal-row class + data-* hooks so filters.js
+# binds byte-identical.
+# ---------------------------------------------------------------------------
+
+# Slugs with committed card derivatives (img/cards/<slug>-{i,c}.jpg). Set once
+# per build (build.py scans img/cards/) — like _LINKED_TAG_PAGES. Empty by
+# default, so a caller that doesn't set it renders every session as a tile.
+_CARD_ART = set()
+
+
+def set_card_art(slugs):
+    """Register the set of event slugs with committed card art (CAL-28)."""
+    global _CARD_ART
+    _CARD_ART = set(slugs or ())
+
+
+def _caption_meta(row, show_date, nav_prefix, city_context=None):
+    """The card's one --muted caption line (CAL-28):
+    [date ·] time · venue — locality · with practitioner · modality · price.
+
+    - The listing surfaces pass show_date=False — their day band head says
+      the date (addendum #5). Entity session lists (show_date=True) lead
+      with the compact date, since they have no day bands.
+    - city_context drops the city term on its own city page (the neighborhood
+      leads there); the root names the city on every card.
+    - The modality is the tag-linked caption term (link class survives the
+      old kicker; inert span when no tag page exists).
+    - Free/Donation rides <b> (--signal-text) — the one text-signal mark.
+    """
+    parts = []
+    if show_date:
+        parts.append(_esc(fmt_row_date(row['starts_at'])))
+    parts.append(_esc(fmt_time(row['starts_at'])))
+
+    place = row.get('venue') or row.get('operator') or ''
+    loc_bits = []
+    if row['city'] == 'Denver' and row.get('neighborhood'):
+        loc_bits.append(row['neighborhood'])
+    if row['city'] != city_context:
+        loc_bits.append(row['city'])
+    loc = ', '.join(loc_bits)
+    if place and loc:
+        parts.append(f'{_esc(place)} — {_esc(loc)}')
+    elif place or loc:
+        parts.append(_esc(place or loc))
+
+    pr = row.get('practitioner') or {}
+    if isinstance(pr, dict) and pr.get('slug'):
+        parts.append(
+            f'<span class="cal-row__with">with <a href="'
+            f'{nav_prefix}practitioner/{_esc(pr["slug"])}/">'
+            f'{_esc(pr.get("name") or "")}</a></span>')
+
+    mod = row_primary_modality(row)
+    if mod:
+        _mlabel = _esc(taxonomy.label_for(mod))
+        _mpath = _LINKED_TAG_PAGES.get(mod)
+        if _mpath:
+            parts.append(f'<a class="cal-row__modality" '
+                         f'href="{_esc(nav_prefix + _mpath)}">{_mlabel}</a>')
+        else:
+            parts.append(f'<span class="cal-row__modality">{_mlabel}</span>')
+
+    if row['price']:
+        price = _esc(row['price'])
+        parts.append(f'<b>{price}</b>' if _is_free_or_donation(row) else price)
+    return ' · '.join(parts)
+
+
+def _caption_icons(row, nav_prefix):
+    """Ticket + website access as ICONOGRAPHY (addendum #4 — the worded
+    'Tickets · Website' row is dead): line-drawn sprite glyphs in
+    currentColor, aria-labeled, 40px hit targets via CSS padding. URLs are
+    scheme-checked; unsafe -> no icon. Direct-to-tickets from the listing
+    survives — it's the site's pitch."""
+    icons = []
+    sprite = f'{nav_prefix}img/social-sprite.svg'
+    safe = _safe_ext_url(row['ticket_url'])
+    if safe:
+        icons.append(
+            f'<a class="cal-card__ica" href="{_esc(safe)}" target="_blank" '
+            f'rel="noopener" aria-label="Tickets — {_esc(row["name"])}">'
+            f'<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+            f'<use href="{_esc(sprite)}#icon-ticket"/></svg></a>')
+    link_url, link_label = _facil_venue_link(row)
+    if link_url:
+        icons.append(
+            f'<a class="cal-card__ica" href="{_esc(link_url)}" target="_blank" '
+            f'rel="noopener" aria-label="{_esc(link_label)} website">'
+            f'<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+            f'<use href="{_esc(sprite)}#icon-globe"/></svg></a>')
+    if not icons:
+        return ''
+    return f'<span class="cal-card__acts">{"".join(icons)}</span>'
+
+
+def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None,
+                city_context=None, eager=False):
+    """One Program Grid card (CAL-28). The whole card is one link surface:
+    the h3>a name link (crawlable, underlined at rest — addendum #2) stretches
+    over the card via CSS ::after, so the image/tile face is clickable
+    (addendum #3) with no duplicate anchor and no dead surface. Caption
+    sub-links (practitioner, modality, ticket/globe icons) z-lift above it.
+    """
+    _slugs = row_tag_slugs(row)
     # Filter hooks: area + free/donation (B.5) + tags (CAL-01), read by
     # filters.js. data-tags is a space-joined slug list (empty when untagged).
-    _slugs = row_tag_slugs(row)
     data = (f' data-city="{_esc(city_slug(row["city"]))}"'
             f' data-free="{"1" if _is_free_or_donation(row) else "0"}"'
             f' data-tags="{_esc(" ".join(_slugs))}"')
@@ -912,145 +1018,63 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None):
     coord = (geocode or {}).get((row.get('venue') or '').strip())
     if coord:
         data += f' data-lat="{coord["lat"]}" data-lng="{coord["lng"]}"'
-    parts = [f'<article class="{cls}"{data}>']
-    # Tear-off date rail: weekday over numeral over time. The Today/Tonight band
-    # omits the date (its heading already says "today"); every other band spans
-    # multiple days, so its rows carry day + numeral.
-    parts.append('  <div class="cal-row__when">')
-    if show_date:
-        parts.append(f'    <span class="cal-row__dow">{_esc(fmt_row_dow(row["starts_at"]))}</span>')
-        parts.append(f'    <span class="cal-row__dnum">{_esc(fmt_row_daynum(row["starts_at"]))}</span>')
-        # CAL-UX-2: a bare "Wed 29" is ambiguous once the weeks-ahead band
-        # crosses a month boundary — stamp the month abbreviation on any row
-        # outside the build month. Per-row, so it survives client filtering.
-        if now is not None:
-            _d = _denver(row['starts_at'])
-            _n = now.astimezone(datetime_fmt.DENVER)
-            if (_d.year, _d.month) != (_n.year, _n.month):
-                parts.append(f'    <span class="cal-row__mo">{_esc(_d.strftime("%b"))}</span>')
-    parts.append(f'    <span class="cal-row__time">{_esc(fmt_time(row["starts_at"]))}</span>')
-    parts.append('  </div>')
-    parts.append('  <div class="cal-row__body">')
 
-    # Event image — one consistent frame (fixed ratio, object-fit cover, lazy)
-    # so heterogeneous operator flyers sit coherently. CAL-12: the media column
-    # is RESERVED on every row — an image-less row draws a quiet placeholder
-    # tile instead of collapsing, so every text column shares one left edge
-    # (mirrors digest.ts `showThumb`).
-    img = row.get('image_url')
-    if img:
-        parts.append('    <div class="cal-row__media">')
-        # CAL-UX-11: empty alt — the row text beside the thumb already carries
-        # name/operator/venue, so a descriptive alt made screen readers hear
-        # every event twice. The event PAGE hero keeps its factual alt_text
-        # (there the image stands alone).
-        parts.append(
-            f'      <img src="{_esc(img)}" alt="" '
-            f'loading="lazy" decoding="async" referrerpolicy="no-referrer">'
-        )
-        parts.append('    </div>')
-    else:
-        parts.append('    <div class="cal-row__media cal-row__media--empty"'
-                     ' aria-hidden="true"></div>')
-
-    parts.append('    <div class="cal-row__text">')
-
-    # Marks line: the city chip (every row) + the primary modality kicker
-    # (CAL-12, 'what kind of sound bath' at a glance, linked to its tag page
-    # when one exists).
-    mod = row_primary_modality(row)
-    parts.append('      <div class="cal-row__marks">')
-    parts.append(f'        <span class="cal-row__city">{_esc(_city_tag(row))}</span>')
-    if mod:
-        _mlabel = _esc(taxonomy.label_for(mod))
-        _mpath = _LINKED_TAG_PAGES.get(mod)
-        if _mpath:
-            parts.append(f'        <a class="cal-row__modality" '
-                         f'href="{_esc(nav_prefix + _mpath)}">{_mlabel}</a>')
-        else:
-            parts.append(f'        <span class="cal-row__modality">{_mlabel}</span>')
-    parts.append('      </div>')
-
-    # Name links to the event's calendar permalink — our rich, indexable
-    # surface, and the internal link that puts it in the crawl graph.
     slug = event_slug(row)
+    has_art = slug in _CARD_ART
     name_href = f'{nav_prefix}{event_permalink_path(row)}' if slug else ''
+
+    # The crawlable name link — h3 > a[href] in served HTML, always.
     if name_href:
-        parts.append(
-            f'      <h3 class="cal-row__name">'
-            f'<a href="{_esc(name_href)}">{_esc(row["name"])}</a></h3>'
-        )
+        name_html = (f'<h3 class="cal-row__name">'
+                     f'<a href="{_esc(name_href)}">{_esc(row["name"])}</a></h3>')
     else:
-        parts.append(f'      <h3 class="cal-row__name">{_esc(row["name"])}</h3>')
+        name_html = f'<h3 class="cal-row__name">{_esc(row["name"])}</h3>'
 
-    # Facts line: operator · venue · price. Geography rides the city chip above;
-    # the factual sentence now lives only on the permalink page (B.3: these are
-    # calendar rows, not article cards). An operator running its own room
-    # (operator == venue) shows the name once, not doubled.
-    meta = [_esc(m) for m in (row['operator'],) if m]
-    if row['venue'] and normalize(row['venue']) != normalize(row['operator']):
-        meta.append(_esc(row['venue']))
-    if row['price']:
-        # v5 (CAL-26): Free/Donation is the one text-signal mark — <b> rides
-        # --signal-text in styles.css. Priced sessions stay plain muted text.
-        price = _esc(row['price'])
-        meta.append(f'<b>{price}</b>' if _is_free_or_donation(row) else price)
-    if meta:
-        parts.append(f'      <p class="cal-row__meta">{" · ".join(meta)}</p>')
+    meta_line = _caption_meta(row, show_date, nav_prefix, city_context)
+    icons = _caption_icons(row, nav_prefix)
+    # .cal-row__marks is the near-me distance chip's mount point (filters.js
+    # setChip appends to it) — the chip lands at the end of the caption line.
+    meta_html = (f'<p class="cal-card__meta cal-row__marks">{meta_line}'
+                 f'{icons}</p>')
 
-    # Practitioner link (CAL-02) — external rows linked to a published profile.
-    # Inlined path (no import of practitioners.py) to avoid a cycle.
-    pr = row.get('practitioner') or {}
-    if isinstance(pr, dict) and pr.get('slug'):
-        parts.append(
-            f'      <p class="cal-row__with">with <a href="'
-            f'{nav_prefix}practitioner/{_esc(pr["slug"])}/">{_esc(pr.get("name") or "")}</a></p>')
-
-    # Daniel's one-line editorial note — the moat — set as a margin voice.
-    # Only when he has written one; a bare row is the honest default.
+    # Daniel's one-line editorial note — the moat — kept as a caption voice.
     note = editorial_note(row)
-    if note:
-        parts.append(f'      <p class="cal-row__note">{_esc(note)}</p>')
+    note_html = (f'\n    <p class="cal-row__note">{_esc(note)}</p>'
+                 if note else '')
 
-    # Tag chips (CAL-01) — the canonical vocabulary, or nothing when the row
-    # carries no known tag (a bare row is the honest default). Skip the modality
-    # already shown as the kicker (CAL-12) so the chip set carries the
-    # qualifiers (intent/setting/access), not a repeat.
-    chips = render_tag_chips(row, cls='cal-row__tags', nav_prefix=nav_prefix,
-                             skip={mod} if mod else None)
-    if chips:
-        parts.append('      ' + chips)
-
-    # CTA row: the operator's ticket link (new tab) plus the operator/venue
-    # 'own page' link when known. Ticket/site URLs are scheme-checked before
-    # becoming hrefs; unsafe -> no link.
-    cta = []
-    safe = _safe_ext_url(row['ticket_url'])
-    if safe:
-        cta.append(
-            f'<a href="{_esc(safe)}" target="_blank" rel="noopener">Tickets</a>'
-        )
-    link_url, link_label = _facil_venue_link(row)
-    if link_url:
-        # CAL-UX-12: an operator running its own room (operator == venue,
-        # the meta line's normalize-compare) puts exactly ONE entity name
-        # on the row — repeating it as this link's label directly under
-        # that meta line reads as a defect, not a fact. Label the link by
-        # its function instead. Rows naming two entities keep the name
-        # label (it says WHOSE site opens).
-        if (row.get('venue') and
-                normalize(row['venue']) == normalize(row.get('operator') or '') and
-                normalize(link_label) == normalize(row['venue'])):
-            link_label = 'Website'
-        cta.append(
-            f'<a class="cal-row__link" href="{_esc(link_url)}" '
-            f'target="_blank" rel="noopener">{_esc(link_label)}</a>'
-        )
-    if cta:
-        parts.append('      <p class="cal-row__cta">' + ' '.join(cta) + '</p>')
-
-    parts.append('    </div>')  # .cal-row__text
-    parts.append('  </div>')    # .cal-row__body
+    parts = []
+    if has_art:
+        p = f'{nav_prefix}img/cards/{slug}'
+        parts.append(f'<article class="cal-row cal-card"{data}>')
+        # CAL-UX-11: empty alt — the caption carries name/venue, so a
+        # descriptive alt would read every event twice. The coral hover layer
+        # is a second stacked <img> (pure-CSS crossfade, no JS); both are
+        # committed derivatives, so no external CDN can rot them.
+        loading = 'eager' if eager else 'lazy'
+        parts.append(
+            f'  <span class="cal-card__im">'
+            f'<img src="{_esc(p)}-i.jpg" '
+            f'srcset="{_esc(p)}-i280.jpg 280w, {_esc(p)}-i.jpg 560w" '
+            f'sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" '
+            f'width="560" height="560" alt="" loading="{loading}" '
+            f'decoding="async">'
+            f'<img class="cal-card__im-c" src="{_esc(p)}-c.jpg" '
+            f'width="560" height="560" alt="" loading="lazy" '
+            f'decoding="async" aria-hidden="true"></span>')
+        parts.append('  <span class="cal-card__cap">')
+        parts.append(f'    {name_html}')
+        parts.append(f'    {meta_html}{note_html}')
+        parts.append('  </span>')
+    else:
+        # Type tile: solid --surface square, name + meta bottom-left — the
+        # designed poster for a session with no honest image (imagery law:
+        # flyers never stand in for people, stock never attaches to a
+        # specific session).
+        parts.append(f'<article class="cal-row cal-card cal-card--tile"{data}>')
+        parts.append('  <span class="cal-card__tin">')
+        parts.append(f'    {name_html}')
+        parts.append(f'    {meta_html}{note_html}')
+        parts.append('  </span>')
     parts.append('</article>')
     return '\n'.join(parts)
 
@@ -1105,10 +1129,12 @@ def today_band_label(today_rows, now=None):
 
 
 def _render_rows(rows, show_date, nav_prefix, geocode=None, now=None):
+    """A bare card grid (entity session lists — CAL-28). Not day-banded, so
+    the cards carry their dates in the caption (show_date=True there)."""
     inner = '\n'.join(
         _render_row(r, show_date=show_date, nav_prefix=nav_prefix, geocode=geocode, now=now)
         for r in rows)
-    return f'<div class="cal-rows">\n{inner}\n</div>'
+    return f'<div class="cal-rows cal-rows--3">\n{inner}\n</div>'
 
 
 def _band_list(rows, now=None):
@@ -1127,17 +1153,112 @@ def _band_list(rows, now=None):
     return bands
 
 
+def day_head_label(d, now=None):
+    """The date monument for a day head: 'Saturday, July 25' — plus the year
+    only when it differs from the build year (honesty at the Dec/Jan seam)."""
+    label = f'{d.strftime("%A")}, {d.strftime("%B")} {_day(d.strftime("%d"))}'
+    if now is not None and d.year != _now_utc(now).astimezone(DENVER).year:
+        label += f', {d.year}'
+    return label
+
+
+def _sessions_ct(n):
+    """'6 sessions' / '1 session' — computed, never typed."""
+    return f'{n} session' if n == 1 else f'{n} sessions'
+
+
+def _day_sections(brows):
+    """Group one band's (already chronological) rows by Denver-local date:
+    [(date, rows)] — the Program Grid's day monuments."""
+    out = []
+    for r in brows:
+        d = _denver(r['starts_at']).date()
+        if out and out[-1][0] == d:
+            out[-1][1].append(r)
+        else:
+            out.append((d, [r]))
+    return out
+
+
+def _grid_class(n, live=False):
+    """Grid density, computed from the day's count (CAL-28): the live day is
+    3-up; a 2-session day runs featured 2-up (44px names); a dense day (>=7)
+    runs 4-up; everything else 3-up."""
+    if live:
+        return 'cal-rows cal-rows--3'
+    if n == 2:
+        return 'cal-rows cal-rows--2'
+    if n >= 7:
+        return 'cal-rows cal-rows--4'
+    return 'cal-rows cal-rows--3'
+
+
+def _render_day(d, drows, live, label, nav_prefix, geocode, now,
+                city_context=None, eager_first=0):
+    """One day section: the date-monument head (h2 + computed count) over its
+    card grid. The LIVE day (Today/Tonight) gets the white-on-coral slab head
+    — the signal budget's second sanctioned slab (ticker + live head ONLY) —
+    and its count line carries the full date (addendum #5), since its cards
+    omit per-card dates. Other days: 2px ink rule, date as the h2 itself."""
+    if live:
+        head_h2, ct = label, f'{day_head_label(d, now)} · {_sessions_ct(len(drows))}'
+    else:
+        head_h2, ct = day_head_label(d, now), _sessions_ct(len(drows))
+    cards = '\n'.join(
+        _render_row(r, show_date=False, nav_prefix=nav_prefix, geocode=geocode,
+                    now=now, city_context=city_context, eager=(i < eager_first))
+        for i, r in enumerate(drows))
+    return '\n'.join([
+        f'  <div class="cal-day{" cal-day--live" if live else ""}">',
+        '    <div class="cal-day__head">',
+        f'      <h2 class="cal-band__h2">{_esc(head_h2)}</h2>',
+        f'      <span class="cal-day__ct">{_esc(ct)}</span>',
+        '    </div>',
+        f'    <div class="{_grid_class(len(drows), live)}">',
+        cards,
+        '    </div>',
+        '  </div>',
+    ])
+
+
+def render_editorial_band(nav_prefix):
+    """The full-width what-to-expect editorial band (CAL-28): treated stock
+    (generic-editorial only — never attached to a specific session), duotone
+    at rest crossfading coral on hover, linking the first-timer explainer.
+    Derivatives are committed by scripts/treat.py."""
+    p = f'{nav_prefix}img/cards/editorial-what-to-expect'
+    return '\n'.join([
+        f'<a class="cal-edband" href="{nav_prefix}what-to-expect/">',
+        f'  <span class="cal-edband__im">'
+        f'<img src="{p}-i.jpg" width="1300" height="406" alt="" '
+        f'loading="lazy" decoding="async">'
+        f'<img class="cal-card__im-c" src="{p}-c.jpg" width="1300" '
+        f'height="406" alt="" loading="lazy" decoding="async" '
+        f'aria-hidden="true"></span>',
+        '  <span class="cal-edband__cap">'
+        '<span class="cal-edband__t">First time? What to expect '
+        'at a sound bath</span>'
+        '<span class="cal-edband__arrow" aria-hidden="true">&rarr;</span>'
+        '</span>',
+        '</a>',
+    ])
+
+
 def _render_bands(rows, nav_prefix='', now=None, geocode=None,
-                  include_jump=True, include_faq=True):
-    """The temporal jump-nav + the four bands in fixed order (each drawn only
-    when it has rooms). Shared by the root and the city pages; the caller
-    appends its own FAQ. An empty weekend band simply isn't drawn — 'This week'
-    carries the near term — so a page never prints 'nothing this weekend'.
-    include_jump=False leaves the jump-nav to the caller (the CAL-23 rail
-    renders it in the aside via render_jump); tag/map callers keep the
-    default inline nav. include_faq=False drops the FAQ pill for callers
-    that render no FAQ section (the map page) — a jump pill only exists
-    where its anchor does."""
+                  include_jump=True, include_faq=True, editorial=False,
+                  city_context=None):
+    """The Program Grid (CAL-28): the four temporal bands survive as the IA —
+    each `section.cal-band` wrapper keeps its id and renders only when it has
+    sessions, so the CAL-16 jump/filter chips and filters.js keep working
+    byte-identical (rows record the temporal band id) — but the VISIBLE
+    structure inside is per-day date monuments, each over its own card grid.
+    The wrappers themselves draw no head; the day heads are the page's H2s,
+    in fixed chronological order, rendered only when non-empty.
+
+    include_jump/include_faq as before (rail vs inline callers). editorial=True
+    (root + city) inserts the what-to-expect band after the wrapper that
+    completes the second day monument — 'after the second or third calendar
+    band'. city_context drops the city term in captions on its own page."""
     bands = _band_list(rows, now)
 
     out = []
@@ -1148,13 +1269,60 @@ def _render_bands(rows, nav_prefix='', now=None, geocode=None,
     if not bands:
         out.append(f'<p class="cal-empty cal-empty--all">{_esc(ALL_EMPTY)}</p>')
 
-    for bid, label, brows, show_date in bands:
+    editorial_pending = editorial
+    days_done = 0
+    for bid, label, brows, _show_date in bands:
         out.append(f'<section class="cal-band" id="{bid}">')
-        out.append(f'  <h2 class="cal-band__h2">{_esc(label)}</h2>')
-        out.append('  ' + _render_rows(brows, show_date, nav_prefix, geocode, now=now))
+        live = (bid == 'today')
+        for j, (d, drows) in enumerate(_day_sections(brows)):
+            # The live band's first cards are the likely LCP — fetch eagerly.
+            eager_first = 3 if (live and days_done == 0) else 0
+            out.append(_render_day(
+                d, drows, live, label, nav_prefix, geocode, now,
+                city_context=city_context, eager_first=eager_first))
+            days_done += 1
         out.append('</section>')
+        if editorial_pending and days_done >= 2:
+            out.append(render_editorial_band(nav_prefix))
+            editorial_pending = False
+    if editorial_pending and bands:
+        out.append(render_editorial_band(nav_prefix))
 
     return '\n'.join(out)
+
+
+def render_ticker(rows, now=None):
+    """The coral broadcast ticker (CAL-28 — root + city pages): tonight's
+    real sessions from the same cal_rows the bands render, as a pure-CSS
+    ~70s loop (content duplicated 2x for seamlessness). aria-hidden — it
+    duplicates the live band. Static under prefers-reduced-motion (CSS).
+    An empty tonight shows the next day's computed date line instead —
+    honest, never fabricated. Returns '' when the calendar is empty."""
+    now = _now_utc(now)
+    today_b, weekend_b, week_b, ahead_b = band_assignments(rows, now)
+    if today_b:
+        segs = [today_band_label(today_b, now)]
+        for r in today_b:
+            t = fmt_time(r['starts_at']).replace(' AM', '').replace(' PM', '')
+            if r['city'] == 'Denver' and r.get('neighborhood'):
+                loc = r['neighborhood']
+            else:
+                loc = r['city']
+            seg = f'{r["name"]} {t} {loc}'
+            price = (r.get('price') or '').strip()
+            if price and len(price) <= 9:
+                seg += f' {price}'
+            segs.append(seg)
+    else:
+        nxt = weekend_b or week_b or ahead_b
+        if not nxt:
+            return ''
+        d, drows = _day_sections(nxt)[0]
+        segs = ['Next', f'{day_head_label(d, now)} · {_sessions_ct(len(drows))}']
+    text = _esc('  /  '.join(segs) + '  /  ')
+    return (f'<div class="cal-ticker" aria-hidden="true">'
+            f'<div class="cal-ticker__in"><span>{text}</span>'
+            f'<span>{text}</span></div></div>')
 
 
 def render_jump(rows, now=None, include_faq=True):
@@ -1279,7 +1447,8 @@ def render_calendar_body(rows, nav_prefix='', now=None, geocode=None):
         render_rail_links(nav_prefix, 'front-range.ics', 'feed.xml'),
         '</div></aside>',
         '<div class="cal-list">',
-        _render_bands(rows, nav_prefix, now, geocode, include_jump=False),
+        _render_bands(rows, nav_prefix, now, geocode, include_jump=False,
+                      editorial=True),
         _render_noresults(),
         '</div>',
         '</div>',
@@ -1487,20 +1656,6 @@ CITY_H1 = {c: f'Sound baths in {c}' for c in CITIES}
 # (generated LOCALLY by scripts/warm.py from the OG-card stock; committed).
 # Alt text describes only what the photograph shows — it is stock, not a
 # Front Range room, so it never claims a place.
-CITY_WARM = {
-    'Denver': {'alt': 'Singing bowls on a candlelit floor, mid-session'},
-    'Boulder': {'alt': 'Two practitioners playing singing bowls together in a sunlit studio'},
-    'Fort Collins': {'alt': 'A hammered singing bowl up close'},
-    'Colorado Springs': {'alt': 'Large singing bowls ringed by tea lights, a mallet in hand'},
-}
-
-# Page-local style for the band (city pages have no page directory, so the
-# builder passes this as page_style rather than touching styles.css).
-CITY_WARM_STYLE = """<style>
-    .cal-warmband { margin: 0 0 2rem; }
-    .cal-warmband img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 5; object-fit: cover; }
-    @media (prefers-color-scheme: dark) { .cal-warmband img { filter: brightness(0.82); } }
-  </style>"""
 CITY_META = {
     c: (f'A weekly-updated calendar of sound baths in {c}, Colorado: dates, '
         f'times, venues, prices, and ticket links for every listed session. '
@@ -1727,51 +1882,39 @@ def render_digest_block(selected_city='all', rows=None, now=None):
 
 
 def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
-    """The <main> body for one city page: crumb · H1 · stamp · summary · the
-    temporal bands (this city only) · other-areas nav · city FAQ · digest ·
-    submission line."""
+    """The <main> body for one city page (Program Grid, CAL-28): ticker ·
+    crumb · H1 · summary · stamp · the day-banded card grid (this city only) ·
+    other-areas nav · city FAQ · digest · submission line. The CAL-22 warm
+    band is retired on listing surfaces — the editorial what-to-expect band
+    (treated stock, mid-program) is the sanctioned image band now."""
     now = _now_utc(now)
     crows = city_rows(rows, city)
     slug = city_slug(city)
-    out = ['<section class="section section--light cal-main">', '  <div class="container">']
+    out = []
+    # The ticker is full-bleed chrome — it sits above the padded section.
+    ticker = render_ticker(crows, now)
+    if ticker:
+        out.append(ticker)
+    out += ['<section class="section section--light cal-main">', '  <div class="container">']
 
     out.append('    <nav class="cal-crumbs" aria-label="Breadcrumb">')
     out.append(f'      <a href="{nav_prefix}">Calendar</a> <span aria-hidden="true">/</span> '
                f'<span>{_esc(city)}</span>')
     out.append('    </nav>')
 
-    # Centered identity block (CAL-23 phase A), matching the root; the crumbs
-    # stay left (chrome, not identity) and the list keeps the full width.
+    # The identity block (v5: left-set monument; the CAL-23 centering is
+    # retired by the comp). Order per the comp: H1 · summary · stamp.
     out.append('    <div class="cal-hero">')
     out.append(f'    <h1 class="cal-h1">{_esc(CITY_H1[city])}</h1>')
-    out.append(f'    <p class="cal-updated">Last updated {_esc(fmt_stamp_date(now))}.</p>')
     out.append(f'    <p class="cal-summary" id="cal-summary">'
                f'{summary_html(build_city_summary_sentence(rows, city, now))}</p>')
+    out.append(f'    <p class="cal-updated">Last updated {_esc(fmt_stamp_date(now))}.</p>')
     out.append('    </div>')
-
-    # Warm band (CAL-22, WARMTH RULE): a slim strip of the same photograph as
-    # this city's OG card, between the answer-first block and the list. The
-    # ROOT listing stays utilitarian — warmth lives on city/content pages.
-    # Stock photography (provenance: img/og/SOURCES.md), so the alt describes
-    # only what is pictured — never a claim about a Front Range room.
-    band = CITY_WARM.get(city)
-    if band:
-        alt = band['alt']
-        out.append('    <figure class="cal-warmband">')
-        # CAL-UX-11: the band is the page's likely LCP — fetch it eagerly and
-        # first. Row thumbs further down stay lazy.
-        out.append(
-            f'      <img src="{nav_prefix}img/warm/{slug}-1600.jpg"'
-            f' srcset="{nav_prefix}img/warm/{slug}-800.jpg 800w,'
-            f' {nav_prefix}img/warm/{slug}-1600.jpg 1600w"'
-            f' sizes="(max-width: 900px) 100vw, 900px"'
-            f' width="1600" height="500" loading="eager" fetchpriority="high"'
-            f' decoding="async" alt="{_esc(alt)}">')
-        out.append('    </figure>')
 
     # CAL-23 rail/list split. City is fixed here, so the bar carries the
     # free/donation chip + the tags present in this city; the subscribe links
     # (formerly in the hero) live in the rail with the map/digest links.
+    # city_context drops the city term in captions (the neighborhood leads).
     out.append('    <div class="cal-split">')
     out.append('    <aside class="cal-rail"><div class="cal-rail__inner">')
     out.append('    ' + render_filters(crows, include_city=False))
@@ -1781,7 +1924,8 @@ def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
     out.append('    </div></aside>')
     out.append('    <div class="cal-list">')
     out.append('    ' + _render_bands(crows, nav_prefix, now, geocode,
-                                      include_jump=False))
+                                      include_jump=False, editorial=True,
+                                      city_context=city))
     out.append('    ' + _render_noresults())
     out.append('    </div>')
     out.append('    </div>')

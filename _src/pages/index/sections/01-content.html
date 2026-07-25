@@ -1,29 +1,18 @@
+<!-- CALENDAR_TICKER: the full-bleed coral broadcast ticker (CAL-28) —
+     tonight's real sessions, pure CSS, aria-hidden. Sits above the padded
+     section so it spans the viewport. -->
+<!-- CALENDAR_TICKER -->
 <section class="section section--light cal-main">
   <div class="container">
-    <!-- Centered identity block (CAL-23 phase A) — the list below keeps the
-         full container width. -->
+    <!-- The identity block (v5 Broadcast): left-set monument H1 over the
+         machine-extractable summary, stamp beneath (comp order). -->
     <div class="cal-hero">
-      <h1 class="cal-h1">Sound baths in Denver &amp; the Front Range</h1>
-      <p class="cal-updated">Last updated <!-- CALENDAR_LAST_UPDATED -->.</p>
+      <h1 class="cal-h1">Sound baths in Denver &amp; the Front&nbsp;Range</h1>
 
       <p class="cal-summary" id="cal-summary"><!-- CALENDAR_SUMMARY --></p>
 
+      <p class="cal-updated">Last updated <!-- CALENDAR_LAST_UPDATED -->.</p>
     </div>
-
-    <!-- Warm band (CAL-22 follow-up — Daniel opted the root in): the
-         og-default photograph, so the shared-link preview and the page
-         match. Stock (provenance: img/og/SOURCES.md); the alt describes
-         only what is pictured. -->
-    <figure class="cal-warmband">
-      <!-- CAL-UX-11: the band is the page's likely LCP — eager + high
-           priority; row thumbs below stay lazy. -->
-      <img src="img/warm/front-range-1600.jpg"
-           srcset="img/warm/front-range-800.jpg 800w, img/warm/front-range-1600.jpg 1600w"
-           sizes="(max-width: 900px) 100vw, 900px"
-           width="1600" height="500" loading="eager" fetchpriority="high"
-           decoding="async"
-           alt="Hands settling a mallet among singing bowls by candlelight">
-    </figure>
 
     <!-- CALENDAR_BODY -->
 

@@ -72,8 +72,8 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../styles.css?v=2e731584">
-  <style>.cal-warmband { margin: 0 0 2rem; } .cal-warmband img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 5; object-fit: cover; } @media (prefers-color-scheme: dark) { .cal-warmband img { filter: brightness(0.82); } }</style>
+  <link rel="stylesheet" href="../styles.css?v=ed4c5cfa">
+  
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
        Eventbrite, wsimg…) expire and hotlink-block routinely. Any <img> that
@@ -109,6 +109,13 @@
        focus, then a solid ink-on-paper pill (well above the muted-ink floor).
        Targets #main in the base layout. -->
   <a class="skip-link" href="#main">Skip to the calendar</a>
+  <!-- CAL-30 item 1 (pulled into CAL-28): one row at desktop widths — the
+       inline digest form is retired for an underlined text link (primary
+       demoted sitewide; closes the DESIGN.md §9 masthead-primary ruling).
+       SEO ruling: the 4 city links + Map + Learn are a load-bearing
+       internal-link class — always server-rendered <a> elements on every
+       page. They may visually collapse (the strip scrolls; below 900px it
+       drops to a second line) but never leave the HTML. -->
   <div class="container masthead-inner">
     <a href="../" class="wordmark">Sound Bath Calendar</a>
     <nav class="masthead-cities" aria-label="Primary navigation">
@@ -119,16 +126,7 @@
       <a href="../map/">Map</a>
       <a href="../learn/">Learn</a>
     </nav>
-    <!-- Slim digest capture: inline form on wide screens, an anchor link down
-         to the full form on small ones. Same Formspree seam as the main form. -->
-    <form class="masthead-digest" action="https://admin.soundbathcalendar.com/digest/subscribe" method="POST">
-      <input type="hidden" name="next" value="https://soundbathcalendar.com/thanks/">
-      <label class="visually-hidden" for="mh-email">Email for the Thursday digest</label>
-      <input id="mh-email" type="email" name="email" autocomplete="email"
-             placeholder="Email for the Thursday digest" required>
-      <button type="submit" class="btn btn-primary btn-slim">Get the digest</button>
-    </form>
-    <a class="masthead-digest-link" href="../#digest">The digest</a>
+    <a class="masthead-digest-link" href="../#digest">Get the Thursday digest</a>
   </div>
 </header>
 
@@ -136,19 +134,17 @@
        tabindex="-1" so fragment navigation reliably moves focus into the
        landmark; no visible ring (the focus-visible rule scopes to controls). -->
   <main id="main" tabindex="-1">
-  <section class="section section--light cal-main">
+  <div class="cal-ticker" aria-hidden="true"><div class="cal-ticker__in"><span>Tonight  /  Creative Poetry Sound Bath 5:00 East Colfax  /  Crystal &amp; Gong Sound Concert in the Salt Cave 6:30 West Washington Park $60  /  </span><span>Tonight  /  Creative Poetry Sound Bath 5:00 East Colfax  /  Crystal &amp; Gong Sound Concert in the Salt Cave 6:30 West Washington Park $60  /  </span></div></div>
+<section class="section section--light cal-main">
   <div class="container">
     <nav class="cal-crumbs" aria-label="Breadcrumb">
       <a href="../">Calendar</a> <span aria-hidden="true">/</span> <span>Denver</span>
     </nav>
     <div class="cal-hero">
     <h1 class="cal-h1">Sound baths in Denver</h1>
-    <p class="cal-updated">Last updated July 25, 2026.</p>
     <p class="cal-summary" id="cal-summary">This week in Denver: <strong>11 sound baths</strong>, priced $25 to $70.</p>
+    <p class="cal-updated">Last updated July 25, 2026.</p>
     </div>
-    <figure class="cal-warmband">
-      <img src="../img/warm/denver-1600.jpg" srcset="../img/warm/denver-800.jpg 800w, ../img/warm/denver-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 900px" width="1600" height="500" loading="eager" fetchpriority="high" decoding="async" alt="Singing bowls on a candlelit floor, mid-session">
-    </figure>
     <div class="cal-split">
     <aside class="cal-rail"><div class="cal-rail__inner">
     <div class="cal-filters" data-cal-filters hidden>
@@ -183,463 +179,264 @@
     </div></aside>
     <div class="cal-list">
     <section class="cal-band" id="today">
-  <h2 class="cal-band__h2">Tonight</h2>
-  <div class="cal-rows">
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.740218" data-lng="-104.933092">
-  <div class="cal-row__when">
-    <span class="cal-row__time">5:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1187647119%2F1972218088703%2F1%2Foriginal.20260625-154009?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=829de2defe9d91910b2fb506425cb42a" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+  <div class="cal-day cal-day--live">
+    <div class="cal-day__head">
+      <h2 class="cal-band__h2">Tonight</h2>
+      <span class="cal-day__ct">Saturday, July 25 · 2 sessions</span>
     </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · East Colfax</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/creative-poetry-sound-bath-2026-07-25-harmonist-sanctuary/">Creative Poetry Sound Bath</a></h3>
-      <p class="cal-row__meta">All Things Serene · Harmonist Sanctuary</p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/creative-poetry-sound-bath-tickets-1992576932243" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.harmonistsanctuary.org" target="_blank" rel="noopener">Harmonist Sanctuary</a></p>
-    </div>
-  </div>
+    <div class="cal-rows cal-rows--3">
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.740218" data-lng="-104.933092">
+  <span class="cal-card__im"><img src="../img/cards/creative-poetry-sound-bath-2026-07-25-harmonist-sanctuary-i.jpg" srcset="../img/cards/creative-poetry-sound-bath-2026-07-25-harmonist-sanctuary-i280.jpg 280w, ../img/cards/creative-poetry-sound-bath-2026-07-25-harmonist-sanctuary-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="eager" decoding="async"><img class="cal-card__im-c" src="../img/cards/creative-poetry-sound-bath-2026-07-25-harmonist-sanctuary-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/creative-poetry-sound-bath-2026-07-25-harmonist-sanctuary/">Creative Poetry Sound Bath</a></h3>
+    <p class="cal-card__meta cal-row__marks">5:00 PM · Harmonist Sanctuary — East Colfax<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/creative-poetry-sound-bath-tickets-1992576932243" target="_blank" rel="noopener" aria-label="Tickets — Creative Poetry Sound Bath"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.harmonistsanctuary.org" target="_blank" rel="noopener" aria-label="Harmonist Sanctuary website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="gong-bath" data-lat="39.703472" data-lng="-104.980219">
-  <div class="cal-row__when">
-    <span class="cal-row__time">6:30 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img1.wsimg.com/isteam/ip/52467a92-9014-436e-be8d-903fcdb5b87a/blob-cdbc9ec.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · West Washington Park</span>
-        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center/">Crystal &amp; Gong Sound Concert in the Salt Cave</a></h3>
-      <p class="cal-row__meta">5 Star Salt Caves Wellness Center · $60</p>
-      <p class="cal-row__with">with <a href="../practitioner/ann-martin/">Ann Martin</a></p>
-      <p class="cal-row__cta"><a href="https://5starsaltcaves.com/sound-bath-in-the-salt-cave/" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://5starsaltcaves.com" target="_blank" rel="noopener">Website</a></p>
-    </div>
-  </div>
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="gong-bath" data-lat="39.703472" data-lng="-104.980219">
+  <span class="cal-card__im"><img src="../img/cards/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center-i.jpg" srcset="../img/cards/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center-i280.jpg 280w, ../img/cards/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="eager" decoding="async"><img class="cal-card__im-c" src="../img/cards/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center/">Crystal &amp; Gong Sound Concert in the Salt Cave</a></h3>
+    <p class="cal-card__meta cal-row__marks">6:30 PM · 5 Star Salt Caves Wellness Center — West Washington Park · <span class="cal-row__with">with <a href="../practitioner/ann-martin/">Ann Martin</a></span> · <a class="cal-row__modality" href="../gong-bath/">Gong bath</a> · $60<span class="cal-card__acts"><a class="cal-card__ica" href="https://5starsaltcaves.com/sound-bath-in-the-salt-cave/" target="_blank" rel="noopener" aria-label="Tickets — Crystal &amp; Gong Sound Concert in the Salt Cave"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://5starsaltcaves.com" target="_blank" rel="noopener" aria-label="5 Star Salt Caves Wellness Center website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-</div>
+    </div>
+  </div>
 </section>
 <section class="cal-band" id="this-weekend">
-  <h2 class="cal-band__h2">This weekend</h2>
-  <div class="cal-rows">
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.769392" data-lng="-105.032509">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Sun</span>
-    <span class="cal-row__dnum">26</span>
-    <span class="cal-row__time">10:00 AM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://www.sacredsociety.com/og.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+  <div class="cal-day">
+    <div class="cal-day__head">
+      <h2 class="cal-band__h2">Sunday, July 26</h2>
+      <span class="cal-day__ct">2 sessions</span>
     </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · Highlands</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/sound-bath-sacred-rest-ritual-2026-07-26-sacred-society/">Sound Bath: Sacred Rest Ritual</a></h3>
-      <p class="cal-row__meta">Sacred Society</p>
-      <p class="cal-row__with">with <a href="../practitioner/deborah-green/">Deborah Green</a></p>
-      <p class="cal-row__cta"><a href="https://www.sacredsociety.com/offerings/sound-baths" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.sacredsociety.com" target="_blank" rel="noopener">Website</a></p>
-    </div>
-  </div>
+    <div class="cal-rows cal-rows--2">
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.769392" data-lng="-105.032509">
+  <span class="cal-card__im"><img src="../img/cards/sound-bath-sacred-rest-ritual-2026-07-26-sacred-society-i.jpg" srcset="../img/cards/sound-bath-sacred-rest-ritual-2026-07-26-sacred-society-i280.jpg 280w, ../img/cards/sound-bath-sacred-rest-ritual-2026-07-26-sacred-society-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/sound-bath-sacred-rest-ritual-2026-07-26-sacred-society-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/sound-bath-sacred-rest-ritual-2026-07-26-sacred-society/">Sound Bath: Sacred Rest Ritual</a></h3>
+    <p class="cal-card__meta cal-row__marks">10:00 AM · Sacred Society — Highlands · <span class="cal-row__with">with <a href="../practitioner/deborah-green/">Deborah Green</a></span><span class="cal-card__acts"><a class="cal-card__ica" href="https://www.sacredsociety.com/offerings/sound-baths" target="_blank" rel="noopener" aria-label="Tickets — Sound Bath: Sacred Rest Ritual"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.sacredsociety.com" target="_blank" rel="noopener" aria-label="Sacred Society website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.69837" data-lng="-104.873009">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Sun</span>
-    <span class="cal-row__dnum">26</span>
-    <span class="cal-row__time">6:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1172534889%2F572711759515%2F1%2Foriginal.20251208-164621?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=0a693f10700db3db98ac16fe85db6e3a" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/buck-moon-sound-bath-2026-07-26-the-denver-village/">Buck Moon Sound Bath</a></h3>
-      <p class="cal-row__meta">The Denver Village</p>
-      <p class="cal-row__with">with <a href="../practitioner/shelby-moor/">Shelby Moor</a></p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/buck-moon-sound-bath-tickets-1977297110886" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.thedenvervillage.com/events-workshop" target="_blank" rel="noopener">Website</a></p>
-    </div>
-  </div>
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.69837" data-lng="-104.873009">
+  <span class="cal-card__im"><img src="../img/cards/buck-moon-sound-bath-2026-07-26-the-denver-village-i.jpg" srcset="../img/cards/buck-moon-sound-bath-2026-07-26-the-denver-village-i280.jpg 280w, ../img/cards/buck-moon-sound-bath-2026-07-26-the-denver-village-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/buck-moon-sound-bath-2026-07-26-the-denver-village-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/buck-moon-sound-bath-2026-07-26-the-denver-village/">Buck Moon Sound Bath</a></h3>
+    <p class="cal-card__meta cal-row__marks">6:00 PM · The Denver Village · <span class="cal-row__with">with <a href="../practitioner/shelby-moor/">Shelby Moor</a></span><span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/buck-moon-sound-bath-tickets-1977297110886" target="_blank" rel="noopener" aria-label="Tickets — Buck Moon Sound Bath"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.thedenvervillage.com/events-workshop" target="_blank" rel="noopener" aria-label="The Denver Village website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-</div>
+    </div>
+  </div>
 </section>
+<a class="cal-edband" href="../what-to-expect/">
+  <span class="cal-edband__im"><img src="../img/cards/editorial-what-to-expect-i.jpg" width="1300" height="406" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/editorial-what-to-expect-c.jpg" width="1300" height="406" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-edband__cap"><span class="cal-edband__t">First time? What to expect at a sound bath</span><span class="cal-edband__arrow" aria-hidden="true">&rarr;</span></span>
+</a>
 <section class="cal-band" id="this-week">
-  <h2 class="cal-band__h2">This week</h2>
-  <div class="cal-rows">
-<article class="cal-row" data-city="denver" data-free="0" data-tags="breathwork-sound" data-lat="39.688525" data-lng="-104.980527">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Mon</span>
-    <span class="cal-row__dnum">27</span>
-    <span class="cal-row__time">7:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1170352253%2F1717123237503%2F1%2Foriginal.20251106-205809?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.508&amp;fp-y=0.463&amp;s=5b1948a987dc266472f80d80234128c3" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+  <div class="cal-day">
+    <div class="cal-day__head">
+      <h2 class="cal-band__h2">Monday, July 27</h2>
+      <span class="cal-day__ct">1 session</span>
     </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · Platt Park</span>
-        <a class="cal-row__modality" href="../breathwork-sound/">Breathwork + sound</a>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/breathwork-sound-healing-immersion-2026-07-27-1545-s-pearl-st/">Breathwork + Sound Healing Immersion</a></h3>
-      <p class="cal-row__meta">Soul Growth Network · 1545 S Pearl St</p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/breathwork-sound-healing-immersion-tickets-1993707871914" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://soulgrowthnetwork.com" target="_blank" rel="noopener">Soul Growth Network</a></p>
-    </div>
-  </div>
+    <div class="cal-rows cal-rows--3">
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="breathwork-sound" data-lat="39.688525" data-lng="-104.980527">
+  <span class="cal-card__im"><img src="../img/cards/breathwork-sound-healing-immersion-2026-07-27-1545-s-pearl-st-i.jpg" srcset="../img/cards/breathwork-sound-healing-immersion-2026-07-27-1545-s-pearl-st-i280.jpg 280w, ../img/cards/breathwork-sound-healing-immersion-2026-07-27-1545-s-pearl-st-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/breathwork-sound-healing-immersion-2026-07-27-1545-s-pearl-st-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/breathwork-sound-healing-immersion-2026-07-27-1545-s-pearl-st/">Breathwork + Sound Healing Immersion</a></h3>
+    <p class="cal-card__meta cal-row__marks">7:00 PM · 1545 S Pearl St — Platt Park · <a class="cal-row__modality" href="../breathwork-sound/">Breathwork + sound</a><span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/breathwork-sound-healing-immersion-tickets-1993707871914" target="_blank" rel="noopener" aria-label="Tickets — Breathwork + Sound Healing Immersion"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://soulgrowthnetwork.com" target="_blank" rel="noopener" aria-label="Soul Growth Network website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="gong-bath" data-lat="39.732465" data-lng="-104.96095">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Tue</span>
-    <span class="cal-row__dnum">28</span>
-    <span class="cal-row__time">5:30 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media cal-row__media--empty" aria-hidden="true"></div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · Cheesman Park</span>
-        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/singing-bowls-at-the-gardens-sunrise-to-starlight-2026-07-28-denver-botanic-gardens-mitchell-hall/">Singing Bowls at the Gardens: Sunrise to Starlight</a></h3>
-      <p class="cal-row__meta">Denver Botanic Gardens · Denver Botanic Gardens, Mitchell Hall · $25</p>
-      <p class="cal-row__with">with <a href="../practitioner/ann-martin/">Ann Martin</a></p>
-      <p class="cal-row__cta"><a href="https://tickets.botanicgardens.org/events/e492c0f2-f809-468c-0220-f900957a8dec" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.botanicgardens.org/programs/singing-bowls-gardens" target="_blank" rel="noopener">Denver Botanic Gardens</a></p>
     </div>
   </div>
+  <div class="cal-day">
+    <div class="cal-day__head">
+      <h2 class="cal-band__h2">Tuesday, July 28</h2>
+      <span class="cal-day__ct">2 sessions</span>
+    </div>
+    <div class="cal-rows cal-rows--2">
+<article class="cal-row cal-card cal-card--tile" data-city="denver" data-free="0" data-tags="gong-bath" data-lat="39.732465" data-lng="-104.96095">
+  <span class="cal-card__tin">
+    <h3 class="cal-row__name"><a href="../event/singing-bowls-at-the-gardens-sunrise-to-starlight-2026-07-28-denver-botanic-gardens-mitchell-hall/">Singing Bowls at the Gardens: Sunrise to Starlight</a></h3>
+    <p class="cal-card__meta cal-row__marks">5:30 PM · Denver Botanic Gardens, Mitchell Hall — Cheesman Park · <span class="cal-row__with">with <a href="../practitioner/ann-martin/">Ann Martin</a></span> · <a class="cal-row__modality" href="../gong-bath/">Gong bath</a> · $25<span class="cal-card__acts"><a class="cal-card__ica" href="https://tickets.botanicgardens.org/events/e492c0f2-f809-468c-0220-f900957a8dec" target="_blank" rel="noopener" aria-label="Tickets — Singing Bowls at the Gardens: Sunrise to Starlight"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.botanicgardens.org/programs/singing-bowls-gardens" target="_blank" rel="noopener" aria-label="Denver Botanic Gardens website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.750985" data-lng="-105.029641">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Tue</span>
-    <span class="cal-row__dnum">28</span>
-    <span class="cal-row__time">7:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1185331136%2F214699472161%2F1%2Foriginal.20260524-215804?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.492&amp;fp-y=0.547&amp;s=82f6c9a7e9ba5791d50bd21d0184ea8c" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/sound-immersion-with-the-harmonic-quintessence-hg-2026-07-28-merritt-wellness/">Sound Immersion with the Harmonic Quintessence (Hg)</a></h3>
-      <p class="cal-row__meta">Vialet B Rayne · Merritt Wellness · $70</p>
-      <p class="cal-row__with">with <a href="../practitioner/vialet-b-rayne/">Vialet B Rayne</a></p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/sound-immersion-with-the-harmonic-quintessence-hg-tickets-1990289025051" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.vialetrayne.com" target="_blank" rel="noopener">Vialet B Rayne</a></p>
-    </div>
-  </div>
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.750985" data-lng="-105.029641">
+  <span class="cal-card__im"><img src="../img/cards/sound-immersion-with-the-harmonic-quintessence-hg-2026-07-28-merritt-wellness-i.jpg" srcset="../img/cards/sound-immersion-with-the-harmonic-quintessence-hg-2026-07-28-merritt-wellness-i280.jpg 280w, ../img/cards/sound-immersion-with-the-harmonic-quintessence-hg-2026-07-28-merritt-wellness-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/sound-immersion-with-the-harmonic-quintessence-hg-2026-07-28-merritt-wellness-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/sound-immersion-with-the-harmonic-quintessence-hg-2026-07-28-merritt-wellness/">Sound Immersion with the Harmonic Quintessence (Hg)</a></h3>
+    <p class="cal-card__meta cal-row__marks">7:00 PM · Merritt Wellness · <span class="cal-row__with">with <a href="../practitioner/vialet-b-rayne/">Vialet B Rayne</a></span> · $70<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/sound-immersion-with-the-harmonic-quintessence-hg-tickets-1990289025051" target="_blank" rel="noopener" aria-label="Tickets — Sound Immersion with the Harmonic Quintessence (Hg)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.vialetrayne.com" target="_blank" rel="noopener" aria-label="Vialet B Rayne website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.740218" data-lng="-104.933092">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Wed</span>
-    <span class="cal-row__dnum">29</span>
-    <span class="cal-row__time">7:15 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1177332912%2F2263468207483%2F1%2Foriginal.20260211-234224?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.542&amp;fp-y=0.393&amp;s=06fa6132348379f73643ca16332f9ca0" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · East Colfax</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/candlelight-sound-bath-2026-07-29-harmonist-sanctuary/">Candlelight Sound Bath</a></h3>
-      <p class="cal-row__meta">Liminal Lemonade · Harmonist Sanctuary</p>
-      <p class="cal-row__with">with <a href="../practitioner/cyndi-ortiz/">Cyndi Ortiz</a></p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/candlelight-sound-bath-tickets-1982925649998" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.liminallemonade.com" target="_blank" rel="noopener">Liminal Lemonade</a></p>
     </div>
   </div>
+  <div class="cal-day">
+    <div class="cal-day__head">
+      <h2 class="cal-band__h2">Wednesday, July 29</h2>
+      <span class="cal-day__ct">1 session</span>
+    </div>
+    <div class="cal-rows cal-rows--3">
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.740218" data-lng="-104.933092">
+  <span class="cal-card__im"><img src="../img/cards/candlelight-sound-bath-2026-07-29-harmonist-sanctuary-i.jpg" srcset="../img/cards/candlelight-sound-bath-2026-07-29-harmonist-sanctuary-i280.jpg 280w, ../img/cards/candlelight-sound-bath-2026-07-29-harmonist-sanctuary-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/candlelight-sound-bath-2026-07-29-harmonist-sanctuary-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/candlelight-sound-bath-2026-07-29-harmonist-sanctuary/">Candlelight Sound Bath</a></h3>
+    <p class="cal-card__meta cal-row__marks">7:15 PM · Harmonist Sanctuary — East Colfax · <span class="cal-row__with">with <a href="../practitioner/cyndi-ortiz/">Cyndi Ortiz</a></span><span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/candlelight-sound-bath-tickets-1982925649998" target="_blank" rel="noopener" aria-label="Tickets — Candlelight Sound Bath"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.liminallemonade.com" target="_blank" rel="noopener" aria-label="Liminal Lemonade website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="1" data-tags="" data-lat="39.758957" data-lng="-104.978451">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Thu</span>
-    <span class="cal-row__dnum">30</span>
-    <span class="cal-row__time">6:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1046637953%2F1103626744413%2F1%2Foriginal.20250605-144301?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=3fa8eb2b05dcf90709635dabb1afc1c0" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · Five Points</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/full-moon-sound-bath-2026-07-30-929-29th-st/">Full Moon Sound Bath</a></h3>
-      <p class="cal-row__meta">Revive wellness · 929 29th St · <b>Donation</b></p>
-      <p class="cal-row__with">with <a href="../practitioner/amanda-rose/">Amanda Rose</a></p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/full-moon-sound-bath-tickets-1993611581908" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.revivewellnesscolorado.com/" target="_blank" rel="noopener">Revive wellness</a></p>
     </div>
   </div>
+  <div class="cal-day">
+    <div class="cal-day__head">
+      <h2 class="cal-band__h2">Thursday, July 30</h2>
+      <span class="cal-day__ct">1 session</span>
+    </div>
+    <div class="cal-rows cal-rows--3">
+<article class="cal-row cal-card" data-city="denver" data-free="1" data-tags="" data-lat="39.758957" data-lng="-104.978451">
+  <span class="cal-card__im"><img src="../img/cards/full-moon-sound-bath-2026-07-30-929-29th-st-i.jpg" srcset="../img/cards/full-moon-sound-bath-2026-07-30-929-29th-st-i280.jpg 280w, ../img/cards/full-moon-sound-bath-2026-07-30-929-29th-st-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/full-moon-sound-bath-2026-07-30-929-29th-st-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/full-moon-sound-bath-2026-07-30-929-29th-st/">Full Moon Sound Bath</a></h3>
+    <p class="cal-card__meta cal-row__marks">6:00 PM · 929 29th St — Five Points · <span class="cal-row__with">with <a href="../practitioner/amanda-rose/">Amanda Rose</a></span> · <b>Donation</b><span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/full-moon-sound-bath-tickets-1993611581908" target="_blank" rel="noopener" aria-label="Tickets — Full Moon Sound Bath"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.revivewellnesscolorado.com/" target="_blank" rel="noopener" aria-label="Revive wellness website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.769392" data-lng="-105.032509">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Fri</span>
-    <span class="cal-row__dnum">31</span>
-    <span class="cal-row__time">5:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media cal-row__media--empty" aria-hidden="true"></div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · Highlands</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/sound-bath-restorative-experience-2026-07-31-sacred-society/">Sound Bath: Restorative Experience</a></h3>
-      <p class="cal-row__meta">Sacred Society</p>
-      <p class="cal-row__with">with <a href="../practitioner/christina-epps/">Christina Epps</a></p>
-      <p class="cal-row__cta"><a href="https://www.sacredsociety.com/offerings/sound-baths" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.sacredsociety.com" target="_blank" rel="noopener">Website</a></p>
     </div>
   </div>
+  <div class="cal-day">
+    <div class="cal-day__head">
+      <h2 class="cal-band__h2">Friday, July 31</h2>
+      <span class="cal-day__ct">2 sessions</span>
+    </div>
+    <div class="cal-rows cal-rows--2">
+<article class="cal-row cal-card cal-card--tile" data-city="denver" data-free="0" data-tags="" data-lat="39.769392" data-lng="-105.032509">
+  <span class="cal-card__tin">
+    <h3 class="cal-row__name"><a href="../event/sound-bath-restorative-experience-2026-07-31-sacred-society/">Sound Bath: Restorative Experience</a></h3>
+    <p class="cal-card__meta cal-row__marks">5:00 PM · Sacred Society — Highlands · <span class="cal-row__with">with <a href="../practitioner/christina-epps/">Christina Epps</a></span><span class="cal-card__acts"><a class="cal-card__ica" href="https://www.sacredsociety.com/offerings/sound-baths" target="_blank" rel="noopener" aria-label="Tickets — Sound Bath: Restorative Experience"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.sacredsociety.com" target="_blank" rel="noopener" aria-label="Sacred Society website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.688525" data-lng="-104.980527">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Fri</span>
-    <span class="cal-row__dnum">31</span>
-    <span class="cal-row__time">7:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F919401093%2F1717123237503%2F1%2Foriginal.20241218-032412?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.370099672843&amp;s=8769b3a7b5fe1dba2175ba5a34e9bc68" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · Platt Park</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st/">Full Moon Sound Medicine Journey</a></h3>
-      <p class="cal-row__meta">Soul Growth Network · 1545 S Pearl St</p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/full-moon-sound-medicine-journey-tickets-1993708019355" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://soulgrowthnetwork.com" target="_blank" rel="noopener">Soul Growth Network</a></p>
-    </div>
-  </div>
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.688525" data-lng="-104.980527">
+  <span class="cal-card__im"><img src="../img/cards/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st-i.jpg" srcset="../img/cards/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st-i280.jpg 280w, ../img/cards/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st/">Full Moon Sound Medicine Journey</a></h3>
+    <p class="cal-card__meta cal-row__marks">7:00 PM · 1545 S Pearl St — Platt Park<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/full-moon-sound-medicine-journey-tickets-1993708019355" target="_blank" rel="noopener" aria-label="Tickets — Full Moon Sound Medicine Journey"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://soulgrowthnetwork.com" target="_blank" rel="noopener" aria-label="Soul Growth Network website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-</div>
+    </div>
+  </div>
 </section>
 <section class="cal-band" id="weeks-ahead">
-  <h2 class="cal-band__h2">The weeks ahead</h2>
-  <div class="cal-rows">
-<article class="cal-row" data-city="denver" data-free="1" data-tags="" data-lat="39.695178" data-lng="-104.964609">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Sat</span>
-    <span class="cal-row__dnum">1</span>
-    <span class="cal-row__mo">Aug</span>
-    <span class="cal-row__time">3:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fs3.amazonaws.com%2Feventbrite-dev%2Fimages%2F1189179907%2F2997668619628%2F1%2Foriginal.20260719-225321?w=1880&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;s=e800e6555deba7e97451f24abbfe5e9a" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+  <div class="cal-day">
+    <div class="cal-day__head">
+      <h2 class="cal-band__h2">Saturday, August 1</h2>
+      <span class="cal-day__ct">1 session</span>
     </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · Washington Park</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/psychic-sound-bath-wash-park-2026-08-01-washington-park/">Psychic Sound Bath Wash Park</a></h3>
-      <p class="cal-row__meta">Dr. Adrian Voss · Washington Park · <b>Free</b></p>
-      <p class="cal-row__with">with <a href="../practitioner/adrian-voss/">Adrian Voss</a></p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/psychic-sound-bath-wash-park-tickets-1994519064212" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://intuitivesounds.org/" target="_blank" rel="noopener">Dr. Adrian Voss</a></p>
-    </div>
-  </div>
+    <div class="cal-rows cal-rows--3">
+<article class="cal-row cal-card" data-city="denver" data-free="1" data-tags="" data-lat="39.695178" data-lng="-104.964609">
+  <span class="cal-card__im"><img src="../img/cards/psychic-sound-bath-wash-park-2026-08-01-washington-park-i.jpg" srcset="../img/cards/psychic-sound-bath-wash-park-2026-08-01-washington-park-i280.jpg 280w, ../img/cards/psychic-sound-bath-wash-park-2026-08-01-washington-park-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/psychic-sound-bath-wash-park-2026-08-01-washington-park-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/psychic-sound-bath-wash-park-2026-08-01-washington-park/">Psychic Sound Bath Wash Park</a></h3>
+    <p class="cal-card__meta cal-row__marks">3:00 PM · Washington Park — Washington Park · <span class="cal-row__with">with <a href="../practitioner/adrian-voss/">Adrian Voss</a></span> · <b>Free</b><span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/psychic-sound-bath-wash-park-tickets-1994519064212" target="_blank" rel="noopener" aria-label="Tickets — Psychic Sound Bath Wash Park"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://intuitivesounds.org/" target="_blank" rel="noopener" aria-label="Dr. Adrian Voss website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="breathwork-sound" data-lat="39.769392" data-lng="-105.032509">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Sun</span>
-    <span class="cal-row__dnum">2</span>
-    <span class="cal-row__mo">Aug</span>
-    <span class="cal-row__time">9:00 AM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media cal-row__media--empty" aria-hidden="true"></div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · Highlands</span>
-        <a class="cal-row__modality" href="../breathwork-sound/">Breathwork + sound</a>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/breath-sound-monthly-journey-2026-08-02-sacred-society/">Breath &amp; Sound: Monthly Journey</a></h3>
-      <p class="cal-row__meta">Sacred Society</p>
-      <p class="cal-row__with">with <a href="../practitioner/brookelin-barnhill/">Brookelin Barnhill</a></p>
-      <p class="cal-row__cta"><a href="https://www.sacredsociety.com/offerings/sound-baths" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.sacredsociety.com" target="_blank" rel="noopener">Website</a></p>
     </div>
   </div>
+  <div class="cal-day">
+    <div class="cal-day__head">
+      <h2 class="cal-band__h2">Sunday, August 2</h2>
+      <span class="cal-day__ct">2 sessions</span>
+    </div>
+    <div class="cal-rows cal-rows--2">
+<article class="cal-row cal-card cal-card--tile" data-city="denver" data-free="0" data-tags="breathwork-sound" data-lat="39.769392" data-lng="-105.032509">
+  <span class="cal-card__tin">
+    <h3 class="cal-row__name"><a href="../event/breath-sound-monthly-journey-2026-08-02-sacred-society/">Breath &amp; Sound: Monthly Journey</a></h3>
+    <p class="cal-card__meta cal-row__marks">9:00 AM · Sacred Society — Highlands · <span class="cal-row__with">with <a href="../practitioner/brookelin-barnhill/">Brookelin Barnhill</a></span> · <a class="cal-row__modality" href="../breathwork-sound/">Breathwork + sound</a><span class="cal-card__acts"><a class="cal-card__ica" href="https://www.sacredsociety.com/offerings/sound-baths" target="_blank" rel="noopener" aria-label="Tickets — Breath &amp; Sound: Monthly Journey"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.sacredsociety.com" target="_blank" rel="noopener" aria-label="Sacred Society website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.688525" data-lng="-104.980527">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Sun</span>
-    <span class="cal-row__dnum">2</span>
-    <span class="cal-row__mo">Aug</span>
-    <span class="cal-row__time">4:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F758480089%2F92682142139%2F1%2Foriginal.20240503-015112?w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;rect=0%2C504%2C4032%2C2016&amp;s=6a8355eea8f737d58cb4d4f4e3132437" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · Platt Park</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/energy-healing-sound-bath-immersion-2026-08-02-green-light-reiki/">Energy Healing + Sound Bath Immersion</a></h3>
-      <p class="cal-row__meta">Kathy Sietos · Green Light Reiki</p>
-      <p class="cal-row__with">with <a href="../practitioner/kathy-sietos/">Kathy Sietos</a></p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/energy-healing-sound-bath-immersion-tickets-1979113678288" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.greenlightreiki.com/" target="_blank" rel="noopener">Kathy Sietos</a></p>
-    </div>
-  </div>
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.688525" data-lng="-104.980527">
+  <span class="cal-card__im"><img src="../img/cards/energy-healing-sound-bath-immersion-2026-08-02-green-light-reiki-i.jpg" srcset="../img/cards/energy-healing-sound-bath-immersion-2026-08-02-green-light-reiki-i280.jpg 280w, ../img/cards/energy-healing-sound-bath-immersion-2026-08-02-green-light-reiki-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/energy-healing-sound-bath-immersion-2026-08-02-green-light-reiki-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/energy-healing-sound-bath-immersion-2026-08-02-green-light-reiki/">Energy Healing + Sound Bath Immersion</a></h3>
+    <p class="cal-card__meta cal-row__marks">4:00 PM · Green Light Reiki — Platt Park · <span class="cal-row__with">with <a href="../practitioner/kathy-sietos/">Kathy Sietos</a></span><span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/energy-healing-sound-bath-immersion-tickets-1979113678288" target="_blank" rel="noopener" aria-label="Tickets — Energy Healing + Sound Bath Immersion"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.greenlightreiki.com/" target="_blank" rel="noopener" aria-label="Kathy Sietos website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.763168" data-lng="-105.025758">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Tue</span>
-    <span class="cal-row__dnum">4</span>
-    <span class="cal-row__mo">Aug</span>
-    <span class="cal-row__time">7:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1186895672%2F68448586439%2F1%2Foriginal.20260615-005704?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=436920a6237389e510a11fffe2eb1094" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/deep-restorative-sound-bath-guided-meditation-2026-08-04-denver-public-library-woodbury-branch-library/">Deep Restorative Sound Bath &amp; Guided Meditation</a></h3>
-      <p class="cal-row__meta">IzaBelle Sweet · Denver Public Library: Woodbury Branch Library · $15–40</p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/deep-restorative-sound-bath-guided-meditation-tickets-1993053455537" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.eventbrite.com/o/13380693760" target="_blank" rel="noopener">IzaBelle Sweet</a></p>
     </div>
   </div>
+  <div class="cal-day">
+    <div class="cal-day__head">
+      <h2 class="cal-band__h2">Tuesday, August 4</h2>
+      <span class="cal-day__ct">1 session</span>
+    </div>
+    <div class="cal-rows cal-rows--3">
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.763168" data-lng="-105.025758">
+  <span class="cal-card__im"><img src="../img/cards/deep-restorative-sound-bath-guided-meditation-2026-08-04-denver-public-library-woodbury-branch-library-i.jpg" srcset="../img/cards/deep-restorative-sound-bath-guided-meditation-2026-08-04-denver-public-library-woodbury-branch-library-i280.jpg 280w, ../img/cards/deep-restorative-sound-bath-guided-meditation-2026-08-04-denver-public-library-woodbury-branch-library-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/deep-restorative-sound-bath-guided-meditation-2026-08-04-denver-public-library-woodbury-branch-library-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/deep-restorative-sound-bath-guided-meditation-2026-08-04-denver-public-library-woodbury-branch-library/">Deep Restorative Sound Bath &amp; Guided Meditation</a></h3>
+    <p class="cal-card__meta cal-row__marks">7:00 PM · Denver Public Library: Woodbury Branch Library · $15–40<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/deep-restorative-sound-bath-guided-meditation-tickets-1993053455537" target="_blank" rel="noopener" aria-label="Tickets — Deep Restorative Sound Bath &amp; Guided Meditation"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.eventbrite.com/o/13380693760" target="_blank" rel="noopener" aria-label="IzaBelle Sweet website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.780552" data-lng="-105.045088">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Wed</span>
-    <span class="cal-row__dnum">5</span>
-    <span class="cal-row__mo">Aug</span>
-    <span class="cal-row__time">7:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1186895672%2F68448586439%2F1%2Foriginal.20260615-005704?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=436920a6237389e510a11fffe2eb1094" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · Berkeley</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/denver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smiley-branch-library/">Denver Sound Bath Collective-Smiley</a></h3>
-      <p class="cal-row__meta">Denver Sound Bath Collective · Denver Public Library: Smiley Branch Library · $15–40</p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/denver-sound-bath-collective-smiley-tickets-1993054503672" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.eventbrite.com/o/13380693760" target="_blank" rel="noopener">Denver Sound Bath Collective</a></p>
     </div>
   </div>
+  <div class="cal-day">
+    <div class="cal-day__head">
+      <h2 class="cal-band__h2">Wednesday, August 5</h2>
+      <span class="cal-day__ct">1 session</span>
+    </div>
+    <div class="cal-rows cal-rows--3">
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.780552" data-lng="-105.045088">
+  <span class="cal-card__im"><img src="../img/cards/denver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smiley-branch-library-i.jpg" srcset="../img/cards/denver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smiley-branch-library-i280.jpg 280w, ../img/cards/denver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smiley-branch-library-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/denver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smiley-branch-library-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/denver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smiley-branch-library/">Denver Sound Bath Collective-Smiley</a></h3>
+    <p class="cal-card__meta cal-row__marks">7:00 PM · Denver Public Library: Smiley Branch Library — Berkeley · $15–40<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/denver-sound-bath-collective-smiley-tickets-1993054503672" target="_blank" rel="noopener" aria-label="Tickets — Denver Sound Bath Collective-Smiley"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.eventbrite.com/o/13380693760" target="_blank" rel="noopener" aria-label="Denver Sound Bath Collective website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.594303" data-lng="-104.901254">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Fri</span>
-    <span class="cal-row__dnum">7</span>
-    <span class="cal-row__mo">Aug</span>
-    <span class="cal-row__time">4:30 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188160149%2F214699472161%2F1%2Foriginal.20260703-151835?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.748&amp;fp-y=0.527&amp;s=c5a5dd34f618d51b8931bc134c8cec27" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/sacred-sound-bath-dawn-stratton-vialet-rayne-2026-08-07-discover-your-spiritual-gifts/">Sacred Sound Bath ❤ Dawn Stratton &amp; Vialet Rayne</a></h3>
-      <p class="cal-row__meta">Discover Your Spiritual Gifts · $40</p>
-      <p class="cal-row__with">with <a href="../practitioner/vialet-b-rayne/">Vialet B Rayne</a></p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/sacred-sound-bath-dawn-stratton-vialet-rayne-tickets-1993143495850" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://discoveryourspiritualgifts.com" target="_blank" rel="noopener">Website</a></p>
     </div>
   </div>
+  <div class="cal-day">
+    <div class="cal-day__head">
+      <h2 class="cal-band__h2">Friday, August 7</h2>
+      <span class="cal-day__ct">4 sessions</span>
+    </div>
+    <div class="cal-rows cal-rows--3">
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.594303" data-lng="-104.901254">
+  <span class="cal-card__im"><img src="../img/cards/sacred-sound-bath-dawn-stratton-vialet-rayne-2026-08-07-discover-your-spiritual-gifts-i.jpg" srcset="../img/cards/sacred-sound-bath-dawn-stratton-vialet-rayne-2026-08-07-discover-your-spiritual-gifts-i280.jpg 280w, ../img/cards/sacred-sound-bath-dawn-stratton-vialet-rayne-2026-08-07-discover-your-spiritual-gifts-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/sacred-sound-bath-dawn-stratton-vialet-rayne-2026-08-07-discover-your-spiritual-gifts-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/sacred-sound-bath-dawn-stratton-vialet-rayne-2026-08-07-discover-your-spiritual-gifts/">Sacred Sound Bath ❤ Dawn Stratton &amp; Vialet Rayne</a></h3>
+    <p class="cal-card__meta cal-row__marks">4:30 PM · Discover Your Spiritual Gifts · <span class="cal-row__with">with <a href="../practitioner/vialet-b-rayne/">Vialet B Rayne</a></span> · $40<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/sacred-sound-bath-dawn-stratton-vialet-rayne-tickets-1993143495850" target="_blank" rel="noopener" aria-label="Tickets — Sacred Sound Bath ❤ Dawn Stratton &amp; Vialet Rayne"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://discoveryourspiritualgifts.com" target="_blank" rel="noopener" aria-label="Discover Your Spiritual Gifts website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.740218" data-lng="-104.933092">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Fri</span>
-    <span class="cal-row__dnum">7</span>
-    <span class="cal-row__mo">Aug</span>
-    <span class="cal-row__time">6:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1177346676%2F2263468207483%2F1%2Foriginal.20260212-032933?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.508&amp;fp-y=0.498&amp;s=93b94479dee8306e495b7a77593363fe" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver · East Colfax</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/first-friday-flow-state-sound-bath-2026-08-07-harmonist-sanctuary/">First Friday: Flow State Sound Bath</a></h3>
-      <p class="cal-row__meta">Liminal Lemonade · Harmonist Sanctuary</p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/first-friday-flow-state-sound-bath-tickets-1982939514467" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.liminallemonade.com" target="_blank" rel="noopener">Liminal Lemonade</a></p>
-    </div>
-  </div>
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.740218" data-lng="-104.933092">
+  <span class="cal-card__im"><img src="../img/cards/first-friday-flow-state-sound-bath-2026-08-07-harmonist-sanctuary-i.jpg" srcset="../img/cards/first-friday-flow-state-sound-bath-2026-08-07-harmonist-sanctuary-i280.jpg 280w, ../img/cards/first-friday-flow-state-sound-bath-2026-08-07-harmonist-sanctuary-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/first-friday-flow-state-sound-bath-2026-08-07-harmonist-sanctuary-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/first-friday-flow-state-sound-bath-2026-08-07-harmonist-sanctuary/">First Friday: Flow State Sound Bath</a></h3>
+    <p class="cal-card__meta cal-row__marks">6:00 PM · Harmonist Sanctuary — East Colfax<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/first-friday-flow-state-sound-bath-tickets-1982939514467" target="_blank" rel="noopener" aria-label="Tickets — First Friday: Flow State Sound Bath"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.liminallemonade.com" target="_blank" rel="noopener" aria-label="Liminal Lemonade website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.69837" data-lng="-104.873009">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Fri</span>
-    <span class="cal-row__dnum">7</span>
-    <span class="cal-row__mo">Aug</span>
-    <span class="cal-row__time">6:00 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://images.squarespace-cdn.com/content/v1/661980168a4a1d082549c6b0/1764796815449-E1R3KVLG1RAUECW8U2EE/instruments+photo+caley+gardens.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/coregulation-sound-bath-2026-08-07-the-denver-village/">Co-Regulation Sound Bath</a></h3>
-      <p class="cal-row__meta">The Denver Village</p>
-      <p class="cal-row__cta"><a href="https://www.thedenvervillage.com/events-workshop/midweek-harmony-reset-sound-bath-effrw-hg9jg-xd2gg-bdrap-xecmp-hbzp6-4ltln-j9y36-jww6r-js8b5-8pswt-rtfnb-ft2ph-t36z9" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://www.thedenvervillage.com/events-workshop" target="_blank" rel="noopener">Website</a></p>
-    </div>
-  </div>
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.69837" data-lng="-104.873009">
+  <span class="cal-card__im"><img src="../img/cards/coregulation-sound-bath-2026-08-07-the-denver-village-i.jpg" srcset="../img/cards/coregulation-sound-bath-2026-08-07-the-denver-village-i280.jpg 280w, ../img/cards/coregulation-sound-bath-2026-08-07-the-denver-village-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/coregulation-sound-bath-2026-08-07-the-denver-village-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/coregulation-sound-bath-2026-08-07-the-denver-village/">Co-Regulation Sound Bath</a></h3>
+    <p class="cal-card__meta cal-row__marks">6:00 PM · The Denver Village<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.thedenvervillage.com/events-workshop/midweek-harmony-reset-sound-bath-effrw-hg9jg-xd2gg-bdrap-xecmp-hbzp6-4ltln-j9y36-jww6r-js8b5-8pswt-rtfnb-ft2ph-t36z9" target="_blank" rel="noopener" aria-label="Tickets — Co-Regulation Sound Bath"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.thedenvervillage.com/events-workshop" target="_blank" rel="noopener" aria-label="The Denver Village website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="" data-lat="39.594303" data-lng="-104.901254">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Fri</span>
-    <span class="cal-row__dnum">7</span>
-    <span class="cal-row__mo">Aug</span>
-    <span class="cal-row__time">6:30 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1188160149%2F214699472161%2F1%2Foriginal.20260703-151835?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.748&amp;fp-y=0.527&amp;s=c5a5dd34f618d51b8931bc134c8cec27" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver</span>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-2026-08-07-discover-your-spiritual-gifts/">Sacred Healing Sound Bath ❤ Vialet B Rayne &amp; Dawn Stratton</a></h3>
-      <p class="cal-row__meta">Discover Your Spiritual Gifts · $40</p>
-      <p class="cal-row__with">with <a href="../practitioner/vialet-b-rayne/">Vialet B Rayne</a></p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-tickets-1636336469429" target="_blank" rel="noopener">Tickets</a> <a class="cal-row__link" href="https://discoveryourspiritualgifts.com" target="_blank" rel="noopener">Website</a></p>
-    </div>
-  </div>
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.594303" data-lng="-104.901254">
+  <span class="cal-card__im"><img src="../img/cards/sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-2026-08-07-discover-your-spiritual-gifts-i.jpg" srcset="../img/cards/sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-2026-08-07-discover-your-spiritual-gifts-i280.jpg 280w, ../img/cards/sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-2026-08-07-discover-your-spiritual-gifts-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-2026-08-07-discover-your-spiritual-gifts-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-2026-08-07-discover-your-spiritual-gifts/">Sacred Healing Sound Bath ❤ Vialet B Rayne &amp; Dawn Stratton</a></h3>
+    <p class="cal-card__meta cal-row__marks">6:30 PM · Discover Your Spiritual Gifts · <span class="cal-row__with">with <a href="../practitioner/vialet-b-rayne/">Vialet B Rayne</a></span> · $40<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-tickets-1636336469429" target="_blank" rel="noopener" aria-label="Tickets — Sacred Healing Sound Bath ❤ Vialet B Rayne &amp; Dawn Stratton"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://discoveryourspiritualgifts.com" target="_blank" rel="noopener" aria-label="Discover Your Spiritual Gifts website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
 </article>
-<article class="cal-row" data-city="denver" data-free="0" data-tags="gong-bath" data-lat="39.618875" data-lng="-104.896049">
-  <div class="cal-row__when">
-    <span class="cal-row__dow">Sun</span>
-    <span class="cal-row__dnum">9</span>
-    <span class="cal-row__mo">Aug</span>
-    <span class="cal-row__time">3:30 PM</span>
-  </div>
-  <div class="cal-row__body">
-    <div class="cal-row__media">
-      <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F895544893%2F562040949077%2F1%2Foriginal.20241109-201833?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.00032196969697&amp;fp-y=0.00667910447761&amp;s=e91b86ac5cf0e131e887886e43cd4652" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    </div>
-    <div class="cal-row__text">
-      <div class="cal-row__marks">
-        <span class="cal-row__city">Denver</span>
-        <a class="cal-row__modality" href="../gong-bath/">Gong bath</a>
-      </div>
-      <h3 class="cal-row__name"><a href="../event/vibrations-of-peace-gong-bath-sound-immersion-2026-08-09-mile-high-mindfulness/">Vibrations of Peace: Gong Bath &amp; Sound Immersion</a></h3>
-      <p class="cal-row__meta">Mile High Mindfulness</p>
-      <p class="cal-row__with">with <a href="../practitioner/meg-munster/">Meg Munster</a></p>
-      <p class="cal-row__cta"><a href="https://www.eventbrite.com/e/vibrations-of-peace-gong-bath-sound-immersion-tickets-815845514897" target="_blank" rel="noopener">Tickets</a></p>
     </div>
   </div>
+  <div class="cal-day">
+    <div class="cal-day__head">
+      <h2 class="cal-band__h2">Sunday, August 9</h2>
+      <span class="cal-day__ct">1 session</span>
+    </div>
+    <div class="cal-rows cal-rows--3">
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="gong-bath" data-lat="39.618875" data-lng="-104.896049">
+  <span class="cal-card__im"><img src="../img/cards/vibrations-of-peace-gong-bath-sound-immersion-2026-08-09-mile-high-mindfulness-i.jpg" srcset="../img/cards/vibrations-of-peace-gong-bath-sound-immersion-2026-08-09-mile-high-mindfulness-i280.jpg 280w, ../img/cards/vibrations-of-peace-gong-bath-sound-immersion-2026-08-09-mile-high-mindfulness-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/vibrations-of-peace-gong-bath-sound-immersion-2026-08-09-mile-high-mindfulness-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/vibrations-of-peace-gong-bath-sound-immersion-2026-08-09-mile-high-mindfulness/">Vibrations of Peace: Gong Bath &amp; Sound Immersion</a></h3>
+    <p class="cal-card__meta cal-row__marks">3:30 PM · Mile High Mindfulness · <span class="cal-row__with">with <a href="../practitioner/meg-munster/">Meg Munster</a></span> · <a class="cal-row__modality" href="../gong-bath/">Gong bath</a><span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/vibrations-of-peace-gong-bath-sound-immersion-tickets-815845514897" target="_blank" rel="noopener" aria-label="Tickets — Vibrations of Peace: Gong Bath &amp; Sound Immersion"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a></span></p>
+  </span>
 </article>
-</div>
+    </div>
+  </div>
 </section>
     <p class="cal-empty" data-cal-noresults role="status" aria-live="polite" hidden>No sessions match those filters.</p>
     </div>

@@ -66,7 +66,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../../styles.css?v=2e731584">
+  <link rel="stylesheet" href="../../styles.css?v=ed4c5cfa">
   <style>.cal-past-banner { background: rgba(var(--ink-rgb),0.05); border-left: 3px solid rgba(var(--ink-rgb),0.4); padding: 0.9rem 1.2rem; margin: 0 0 2rem; font-size: 0.95rem; } .cal-past-banner a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; } .detail__h1 { margin: 0.4rem 0 1.4rem; } .detail__facts { gap: 0.6rem 1.6rem; margin: 2rem 0; max-width: 40rem; } @media (max-width: 640px) { .detail__facts { gap: 0.2rem; } } .cal-event__desc { font-size: 1.15rem; line-height: 1.6; max-width: 42rem; color: var(--ink); margin: 0 0 1rem; } .cal-event__note { font: 500 1.2rem var(--font-display); color: var(--ink); max-width: 40rem; line-height: 1.4; margin: 0 0 1.6rem; } .cal-event__figure { margin: 2rem 0; max-width: 640px; } .cal-event__figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: rgba(var(--ink-rgb),0.06); } .cal-event__figure figcaption { font-size: 0.82rem; color: var(--muted); margin-top: 0.6rem; } .cal-event__cta { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; margin: 2rem 0; } .cal-event__link { color: var(--ink); font: 600 0.9rem var(--font-body); text-decoration: none; } .cal-event__link:hover { text-decoration: underline; } .cal-event__firsttime { margin: 1.4rem 0 0; font-size: 0.88rem; color: var(--muted); }</style>
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -103,6 +103,13 @@
        focus, then a solid ink-on-paper pill (well above the muted-ink floor).
        Targets #main in the base layout. -->
   <a class="skip-link" href="#main">Skip to the calendar</a>
+  <!-- CAL-30 item 1 (pulled into CAL-28): one row at desktop widths — the
+       inline digest form is retired for an underlined text link (primary
+       demoted sitewide; closes the DESIGN.md §9 masthead-primary ruling).
+       SEO ruling: the 4 city links + Map + Learn are a load-bearing
+       internal-link class — always server-rendered <a> elements on every
+       page. They may visually collapse (the strip scrolls; below 900px it
+       drops to a second line) but never leave the HTML. -->
   <div class="container masthead-inner">
     <a href="../../" class="wordmark">Sound Bath Calendar</a>
     <nav class="masthead-cities" aria-label="Primary navigation">
@@ -113,16 +120,7 @@
       <a href="../../map/">Map</a>
       <a href="../../learn/">Learn</a>
     </nav>
-    <!-- Slim digest capture: inline form on wide screens, an anchor link down
-         to the full form on small ones. Same Formspree seam as the main form. -->
-    <form class="masthead-digest" action="https://admin.soundbathcalendar.com/digest/subscribe" method="POST">
-      <input type="hidden" name="next" value="https://soundbathcalendar.com/thanks/">
-      <label class="visually-hidden" for="mh-email">Email for the Thursday digest</label>
-      <input id="mh-email" type="email" name="email" autocomplete="email"
-             placeholder="Email for the Thursday digest" required>
-      <button type="submit" class="btn btn-primary btn-slim">Get the digest</button>
-    </form>
-    <a class="masthead-digest-link" href="../../#digest">The digest</a>
+    <a class="masthead-digest-link" href="../../#digest">Get the Thursday digest</a>
   </div>
 </header>
 

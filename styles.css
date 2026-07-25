@@ -12,8 +12,12 @@
   /* Meta/counts/fine print — the discrete NEUTRAL grey that replaced the
      muted-ink alpha ramp for text (5.21:1 here, 8.21:1 dark). */
   --muted: #676561;
-  /* Imageless type tiles (CAL-28) — ink slab light, raised violet-black dark. */
+  /* Imageless type tiles (CAL-28) — ink slab light, raised violet-black dark.
+     --surface-text is the tile's text: white-hot clears AA on BOTH surface
+     values (10.98:1 light / 14.9:1 dark), so it needs no dark override. */
   --surface: #352F5C;
+  --surface-text: #F5F2ED;
+  --surface-text-rgb: 245, 242, 237;
   /* The one signal hue. Budget law: ≤2 coral slabs per screen (ticker +
      TONIGHT) + Free/Donation marks + hover states. Nothing else. */
   --signal: #B93A2B;
@@ -112,7 +116,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; font-stretch: 7
      the sticky inner has zero travel and the "sticky rail" never sticks —
      align-items:start above was sizing it to its own content. */
   .cal-rail { align-self: stretch; }
-  .cal-rail__inner { position: sticky; top: 80px; }
+  .cal-rail__inner { position: sticky; top: var(--mast-offset); }
   /* Vertical variants of the relocated chrome. */
   .cal-rail .cal-filters { flex-direction: column; align-items: stretch; gap: 1rem; margin: 0 0 1.6rem; border-top: 0; padding-top: 0; }
   .cal-rail .cal-filters__primary { display: flex; flex-direction: column; align-items: stretch; gap: 0.9rem; }
@@ -135,14 +139,28 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .section--light { background: var(--paper); color: var(--ink); }
 .section--light a { color: var(--ink); }
 
-/* ---- masthead: compact, light, sticky. Wordmark · city anchors · slim
-        digest capture. Two rows on small screens, one on wide. ---- */
+/* ---- the broadcast ticker (CAL-28): a full-bleed coral slab under the
+        masthead (root + city pages) carrying tonight's real sessions —
+        pure CSS marquee (content duplicated 2x, -50% translate loop),
+        aria-hidden in the markup (it duplicates the live band). White on
+        --signal: 5.67:1. The .055em is the ONE sanctioned positive
+        letter-spacing on the site (tracking law, DESIGN.md §1.3). ---- */
+.cal-ticker { background: var(--signal); overflow: hidden; white-space: nowrap; padding: 10px 0; }
+.cal-ticker__in { display: inline-block; font: 700 16px var(--font-body); letter-spacing: 0.055em; text-transform: uppercase; color: #fff; animation: cal-tick 70s linear infinite; }
+.cal-ticker__in span { display: inline-block; padding-right: 8px; }
+@keyframes cal-tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .cal-ticker__in { animation: none; } }
+
+/* ---- masthead: compact, sticky, ONE ROW at desktop (CAL-30 item 1, pulled
+        into CAL-28). Wordmark 700 · city anchors 400 · underlined digest
+        text link right — the inline form is retired (primary demoted
+        sitewide; DESIGN.md §9's masthead-primary ruling closed). All-caps
+        15px. Below 900px the nav drops to a second scrollable line — the
+        links stay server-rendered <a>s on every page (load-bearing
+        internal-link class). ---- */
 .masthead { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 1px solid var(--line); }
-.masthead-inner { display: flex; align-items: center; gap: 1.4rem 2rem; padding-top: 0.7rem; padding-bottom: 0.7rem; flex-wrap: wrap; }
+.masthead-inner { display: flex; align-items: baseline; gap: 1.4rem 1.6rem; padding-top: 0.7rem; padding-bottom: 0.7rem; flex-wrap: wrap; }
 .wordmark { font: 700 15px var(--font-display); text-transform: uppercase; color: var(--ink); text-decoration: none; white-space: nowrap; }
-/* CAL-UX-9: the sixth nav link (Learn) is paid for by a hair off the nav gap
-   and the digest input below — six links + the inline form still fit on one
-   line inside the 1140 container (was 6.6px over at 1.3rem/15.5rem). */
 /* CAL-UX-11: the strip scrolls with hidden scrollbars — tabbing natively
    scrolls each focused link into view. The 4px padding + negative margin
    gives the focus ring (2px outline + 2px offset) room inside the scroll
@@ -151,16 +169,19 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .masthead-cities::-webkit-scrollbar { display: none; }
 .masthead-cities a { color: var(--ink); text-decoration: none; font: 400 15px var(--font-body); text-transform: uppercase; white-space: nowrap; }
 .masthead-cities a:hover { text-decoration: underline; text-underline-offset: 3px; }
-.masthead-digest { display: flex; gap: 0.5rem; align-items: center; }
-.masthead-digest input[type="email"] { width: 14.5rem; max-width: 38vw; background: transparent; border: 1px solid var(--field-line); padding: 0.45rem 0.7rem; font: 400 0.85rem var(--font-body); color: var(--ink); }
-.masthead-digest-link { display: none; font: 600 0.82rem var(--font-body); color: var(--ink); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
-.masthead-digest-link:hover { text-decoration: underline; }
+.masthead-digest-link { font: 400 15px var(--font-body); text-transform: uppercase; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; white-space: nowrap; }
 @media (max-width: 900px) {
-  .masthead-digest { display: none; }
-  .masthead-digest-link { display: inline; order: 2; }
+  .masthead-digest-link { order: 2; }
   .masthead-cities { order: 3; flex-basis: 100%; }
   .masthead-inner { row-gap: 0.5rem; }
 }
+/* Sticky-chrome clearance (CAL-28 offset audit): ONE token, measured against
+   the real masthead — one row (~42px) at >900px, two rows (~76px) below.
+   Every sticky top and jump-target scroll-margin rides it; a masthead layout
+   change means re-measuring HERE, not hunting literals. (filters.js keeps
+   its conservative -90px observer margin — visual-only, errs early.) */
+:root { --mast-offset: 96px; }
+@media (min-width: 901px) { :root { --mast-offset: 60px; } }
 
 /* ---- buttons (CAL-11/CAL-26) — primary is INK fill + PAPER text:
         high-contrast, editorial (10.98:1 light / 15.6:1 dark on the inverted
@@ -187,7 +208,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .detail-shell { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.2rem; }
 @media (min-width: 900px) {
   .detail-shell { grid-template-columns: minmax(0, 1fr) var(--aside); gap: 3rem; align-items: start; }
-  .detail-aside { position: sticky; top: 90px; }
+  .detail-aside { position: sticky; top: var(--mast-offset); }
 }
 .detail-main { min-width: 0; }
 .detail-main > p { max-width: var(--measure); }
@@ -246,7 +267,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
         (the reclaimed-width doctrine), one below 900px. The --dp-* tokens are
         the email's own palette (digest.ts LIGHT / dark layer), flipped by the
         same prefers-color-scheme media the site theme rides. ---- */
-.digest-block { margin-top: 4.5rem; padding-top: 2.6rem; border-top: 1px solid var(--line); scroll-margin-top: 90px; }
+.digest-block { margin-top: 4.5rem; padding-top: 2.6rem; border-top: 1px solid var(--line); scroll-margin-top: var(--mast-offset); }
 @media (min-width: 900px) {
   /* The preview column is deliberately narrow (a glimpse of the email, not a
      second calendar) — the pitch + form stay the section's dominant mass. */
@@ -291,21 +312,15 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .digest-preview__more { position: relative; margin: 0; padding-top: 0.4rem; font: 500 0.82rem var(--font-display); color: rgba(var(--ink-rgb),0.62); }
 .digest-preview__more::before { content: ""; position: absolute; bottom: 100%; left: -1rem; right: -1rem; height: 3.4rem; background: linear-gradient(to bottom, rgba(var(--dp-sheet-rgb),0), var(--dp-sheet)); pointer-events: none; }
 
-/* ---- calendar root: answer-first head (no hero, no image, no animation).
-        The H1 is the v5 monument — condensed caps at broadcast scale. ---- */
-.cal-h1 { font-size: clamp(56px, 8vw, 112px); font-weight: 800; font-stretch: 72%; text-transform: uppercase; line-height: 0.92; letter-spacing: -0.005em; margin: 0.6rem 0 0.9rem; }
-.cal-updated { color: var(--muted); font-size: 13px; margin: 0 0 1rem; }
-/* CAL-23 phase A: the centered identity block on listing pages (root + city).
-   The narrow text caps (summary 44rem etc.) read as a left-hugging stripe
-   inside the 1140 container — the design-research P1 finding the detail
-   shell fixed everywhere except here. Centering the identity mass squares
-   the top of the page; the LIST below keeps the full container width. */
-.cal-hero { text-align: center; }
-.cal-hero .cal-summary { margin-left: auto; margin-right: auto; }
-.cal-hero .cal-ics { justify-content: center; }
+/* ---- calendar root: answer-first head (no hero image, no animation).
+        The H1 is the v5 monument — condensed caps at broadcast scale,
+        LEFT-SET per the ratified comp (the CAL-23 centering is retired;
+        CAL-28). Order: H1 · summary · stamp. ---- */
+.cal-h1 { font-size: clamp(56px, 8vw, 112px); font-weight: 800; font-stretch: 72%; text-transform: uppercase; line-height: 0.92; letter-spacing: -0.005em; margin: 1rem 0 0; max-width: 16ch; }
+.cal-updated { color: var(--muted); font-size: 13px; margin: 0 0 1.2rem; }
 /* Answer-first, machine-extractable summary (speakable via schema): the
    24px normal-width answer voice, counts bolded (summary_html). */
-.cal-summary { font: 400 1.5rem var(--font-display); color: var(--ink); max-width: 44rem; margin: 0 0 1.6rem; line-height: 1.35; }
+.cal-summary { font: 400 1.5rem var(--font-display); color: var(--ink); max-width: 44rem; margin: 1.6rem 0 0.75rem; line-height: 1.35; }
 .cal-summary strong, .cal-summary b { font-weight: 700; }
 
 .cal-jump { display: flex; flex-wrap: wrap; gap: 0.7rem 1.5rem; margin: 0 0 2.2rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line); }
@@ -323,8 +338,12 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-filters__field select { background: transparent; border: 1px solid var(--field-line); padding: 0.4rem 0.7rem; font: 400 0.9rem var(--font-body); color: var(--ink); }
 .cal-filters__check { display: inline-flex; align-items: center; gap: 0.45rem; font: 600 0.86rem var(--font-body); color: var(--ink); cursor: pointer; }
 .cal-filters__check input { width: 1rem; height: 1rem; accent-color: var(--ink); }
-/* .cal-jump/.cal-nearme carry display:flex/inline styles, so the UA [hidden]
-   rule (a low-specificity display:none) loses to them — restate it here. */
+/* LOCKSTEP LAW (CAL-28): this rule must always out-rank whatever display the
+   card/band/jump elements carry, or client filtering dies silently. Today
+   the type tile is the only .cal-row variant with its own display
+   (.cal-card--tile, flex — 0-1-0 vs this 0-2-0), .cal-jump is flex, and
+   .cal-band draws no display of its own. Change a display value there →
+   re-verify THIS rule still wins. */
 .cal-filters[hidden], .cal-row[hidden], .cal-band[hidden], .cal-jump[hidden], .cal-filters__nearme[hidden] { display: none; }
 
 /* ---- near-me distance sort (CAL-05): a toggle in the primary controls +
@@ -353,7 +372,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 /* Scroll-target offset: clearing from the chip scrolls the bar back into
    view (and tab-focus can scroll to a control) — both must clear the sticky
    masthead (the house 90px, matching .cal-band's scroll-margin-top). */
-.cal-filters, .cal-filters select, .cal-filters input, .cal-filters button { scroll-margin-top: 90px; }
+.cal-filters, .cal-filters select, .cal-filters input, .cal-filters button { scroll-margin-top: var(--mast-offset); }
 .cal-row__dist { font: 600 0.66rem var(--font-body); color: var(--ink); border: 1px solid rgba(var(--ink-rgb),0.25); padding: 0.05rem 0.4rem; line-height: 1.5; }
 
 /* ---- filter facet: primary controls (area + free) stacked over the tag
@@ -404,67 +423,105 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-ics__sub { color: var(--ink); font: 600 0.86rem var(--font-body); }
 .cal-ics__dl { color: var(--muted); font: 600 0.82rem var(--font-body); }
 
-/* ---- temporal bands: the root's axis (Today · This weekend · This week ·
-        The weeks ahead). Each renders only when it has rooms. ---- */
-.cal-band { margin-bottom: 3.4rem; scroll-margin-top: 90px; }
-.cal-band:last-of-type { margin-bottom: 2rem; }
-.cal-band__h2 { font-size: clamp(36px, 4.5vw, 64px); line-height: 0.95; text-transform: uppercase; margin: 0 0 1.2rem; }
+/* ---- the Program Grid (CAL-28, ratified 2026-07-25): the four temporal
+        .cal-band wrappers survive INVISIBLY — they keep the CAL-16 ids and
+        the filters.js contract — while the visible structure is day
+        sections: a date monument head over a card grid. ---- */
+.cal-band { scroll-margin-top: var(--mast-offset); }
+.cal-day { margin: 0 0 clamp(56px, 9vw, 128px); }
+.cal-day__head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; border-bottom: 2px solid var(--ink); padding-bottom: 12px; margin-bottom: 26px; }
+.cal-band__h2 { font-size: clamp(34px, 4.5vw, 64px); line-height: 0.95; text-transform: uppercase; margin: 0; letter-spacing: 0.005em; }
+.cal-day__ct { font-size: 16px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* The LIVE day (Today/Tonight): the white-on-coral slab head + coral rule —
+   the signal budget's second sanctioned slab (ticker + live head ONLY). */
+.cal-day--live .cal-day__head { border-bottom-color: var(--signal); }
+.cal-day--live .cal-band__h2 { background: var(--signal); color: #fff; padding: 4px 18px 7px; }
+/* A tag/free facet can empty one day of a still-visible temporal band —
+   hide the day head with its grid. Progressive (:has): older engines show
+   an empty head, never broken content; filters.js stays untouched. */
+.cal-day:not(:has(.cal-row:not([hidden]))) { display: none; }
 
-/* ---- calendar rows: dense on desktop, cards on mobile (B.3) ---- */
-/* CAL-12: tighter vertical rhythm (was 1.15rem) — more rooms per screen on a
-   scan surface, without crowding. */
-.cal-rows { border-top: 1px solid var(--line); }
-.cal-row { display: grid; grid-template-columns: 78px 1fr; gap: 0 1.5rem; padding: 0.85rem 0; border-bottom: 1px solid var(--line); align-items: start; }
+/* ---- cards: every session is one card. Tracks are ALWAYS
+        repeat(N, minmax(0,1fr)) + min-width:0 — never bare 1fr (the square
+        tiles would inflate track minimums). Density is computed per day:
+        2-up featured / 3-up / 4-up (build-time class). ---- */
+.cal-rows { display: grid; gap: 26px 24px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 720px) {
+  /* Unclassed .cal-rows defaults to 3-up too — filters.js builds a bare
+     .cal-rows for the near-me flat list, and it must land on the grid. */
+  .cal-rows, .cal-rows--3, .cal-rows--4 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cal-rows--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .cal-rows--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+/* position:relative hosts the stretched name link (the whole card is the
+   event link — addendum #3). */
+.cal-row { position: relative; min-width: 0; }
+.cal-card__im { display: block; position: relative; aspect-ratio: 1; overflow: hidden; background: var(--surface); }
+.cal-card__im img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* The coral hover layer: a second committed derivative stacked over the
+   indigo one — the crossfade is pure CSS opacity (fine under
+   prefers-reduced-motion: color only, no movement). */
+.cal-card__im-c { position: absolute; inset: 0; opacity: 0; transition: opacity 0.18s ease; }
+.cal-card:hover .cal-card__im-c, .cal-edband:hover .cal-card__im-c { opacity: 1; }
+.cal-card__cap { display: block; padding-top: 12px; }
+.cal-row__name { font-size: clamp(17px, 1.2vw + 12px, 30px); font-weight: 750; font-stretch: 78%; text-transform: uppercase; margin: 0; line-height: 1.02; letter-spacing: 0.005em; }
+.cal-rows--2 .cal-row__name { font-size: clamp(22px, 2.2vw + 12px, 44px); line-height: 0.98; }
+/* Card names are UNDERLINED at rest (Daniel ruling 2026-07-25) — clickability
+   unmistakable; hover moves the name to --signal-text, underline stays. */
+.cal-row__name a { color: inherit; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
+.cal-card:hover .cal-row__name a, .cal-row__name a:hover { color: var(--signal-text); }
+/* The stretched link: the name anchor's ::after covers the card, so the
+   image/tile face clicks through to the permalink — one anchor, no dead
+   surface, h3>a stays the crawlable name link. */
+.cal-card .cal-row__name a::after { content: ""; position: absolute; inset: 0; }
+.cal-card__meta { color: var(--muted); font-size: 16px; line-height: 1.45; margin: 7px 0 0; font-variant-numeric: tabular-nums; }
+/* Free/Donation (CAL-26): the one text-signal role — coral, bold. */
+.cal-card__meta b { color: var(--signal-text); font-weight: 700; }
+/* Caption sub-links (practitioner, modality, access icons) lift above the
+   stretched card link. Links are ink; hover restores the underline. */
+.cal-card .cal-card__meta a, .cal-card .cal-card__acts { position: relative; z-index: 2; }
+.cal-card .cal-card__meta a { color: var(--ink); text-decoration: none; }
+.cal-card .cal-card__meta a:hover { text-decoration: underline; }
+/* Ticket/website access as ICONOGRAPHY (addendum #4): line-drawn sprite
+   glyphs, muted at rest, signal on hover; 18px art in a 40px hit target
+   (11px padding, negative margins keep the caption line's rhythm). */
+.cal-card__acts { display: inline-flex; align-items: center; vertical-align: middle; margin-left: 0.4rem; }
+.cal-card a.cal-card__ica { display: inline-flex; align-items: center; justify-content: center; padding: 11px; margin: -8px -3px; color: var(--muted); }
+.cal-card a.cal-card__ica:hover, .cal-card a.cal-card__ica:focus-visible { color: var(--signal-text); }
+.cal-card__ica svg { width: 18px; height: 18px; display: block; }
+/* Near-me distance chip (CAL-05) — filters.js appends it to the caption. */
+.cal-card__meta .cal-row__dist { margin-left: 0.45rem; }
+/* Daniel's one line — the moat — kept as a caption voice under the meta. */
+.cal-row__note { font: 500 0.98rem var(--font-display); color: var(--ink); margin: 0.55rem 0 0; padding-left: 0.9rem; border-left: 2px solid var(--ink); line-height: 1.4; }
 
-/* Tear-off date rail: weekday over numeral over time. The Today band omits the
-   date, so a time-only rail sits at the top of the column. */
-.cal-row__when { display: flex; flex-direction: column; align-items: flex-start; gap: 0.02rem; line-height: 1.05; }
-.cal-row__dow { font: 600 0.72rem var(--font-body); text-transform: uppercase; color: var(--muted); }
-.cal-row__dnum { font: 500 1.5rem var(--font-display); color: var(--ink); letter-spacing: -0.02em; }
-.cal-row__mo { font: 600 0.62rem var(--font-body); text-transform: uppercase; color: var(--muted); }
-.cal-row__time { color: var(--muted); font-size: 0.85rem; margin-top: 0.15rem; }
+/* Type tile: a session with no honest image is a DESIGNED poster — solid
+   --surface square, name + meta bottom-left (comp anatomy). Hover flips the
+   tile to the signal fill with white text. */
+.cal-card--tile { background: var(--surface); aspect-ratio: 1; display: flex; align-items: flex-end; transition: background 0.15s ease; }
+.cal-card__tin { display: block; padding: 22px; min-width: 0; }
+.cal-card--tile .cal-row__name a { color: var(--surface-text); }
+.cal-card--tile .cal-card__meta { color: rgba(var(--surface-text-rgb), 0.78); }
+.cal-card--tile .cal-card__meta b { color: var(--surface-text); }
+.cal-card--tile .cal-card__meta a { color: var(--surface-text); text-decoration: none; }
+.cal-card--tile a.cal-card__ica { color: rgba(var(--surface-text-rgb), 0.78); }
+.cal-card--tile .cal-row__note { color: var(--surface-text); border-left-color: var(--surface-text); }
+.cal-card--tile:hover { background: var(--signal); }
+.cal-card--tile:hover .cal-row__name a { color: #fff; }
+.cal-card--tile:hover .cal-card__meta { color: rgba(255, 255, 255, 0.85); }
+.cal-card--tile:hover .cal-card__meta b, .cal-card--tile:hover .cal-card__meta a { color: #fff; }
 
-/* Body = optional flyer thumbnail (one consistent frame) + the text column.
-   Rows with no image render with no frame — the text simply fills the row. */
-.cal-row__body { display: flex; gap: 1.1rem; align-items: flex-start; min-width: 0; }
-.cal-row__media { flex: 0 0 auto; width: 104px; aspect-ratio: 3 / 2; overflow: hidden; background: rgba(var(--ink-rgb),0.05); border-radius: 2px; }
-.cal-row__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-/* CAL-12/CAL-26: reserved placeholder for an image-less row — a bare tint tile
-   (the ∿ mark is retired from all chrome), so the column holds its width and
-   every text column shares one left edge without reading as a broken image.
-   .img-broken (a load-time failure, marked by the base-layout fallback script)
-   collapses to the same designed state. CAL-29 brings the type-tile language. */
-.cal-row__media--empty, .cal-row__media.img-broken { display: flex; align-items: center; justify-content: center; }
-.cal-row__text { min-width: 0; flex: 1 1 auto; }
-
-/* Marks line above the name: the city chip (every row) + the modality kicker
-   (CAL-12). */
-.cal-row__marks { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.7rem; margin-bottom: 0.25rem; }
-.cal-row__city { font: 600 0.68rem var(--font-body); text-transform: uppercase; color: var(--muted); }
-/* Modality kicker — 'what kind of sound bath' beside the city, a quiet middot
-   apart. Links to its tag page when one exists (CAL-09). */
-.cal-row__modality { font: 600 0.68rem var(--font-body); text-transform: uppercase; color: var(--muted); text-decoration: none; }
-.cal-row__modality::before { content: "\00B7"; margin-right: 0.6rem; color: rgba(var(--ink-rgb),0.35); }
-a.cal-row__modality:hover { text-decoration: underline; }
-.cal-row__tag { font: 600 0.66rem var(--font-body); text-transform: uppercase; color: var(--muted); }
-.cal-row__ours { font: 600 0.62rem var(--font-body); text-transform: uppercase; color: var(--muted); }
-
-.cal-row__name { font-size: 30px; font-weight: 750; font-stretch: 78%; text-transform: uppercase; margin: 0 0 0.15rem; line-height: 1.02; }
-.cal-row__name a { color: inherit; text-decoration: none; }
-.cal-row__name a:hover { color: var(--signal-text); }
-.cal-row__meta { color: var(--muted); font-size: 1rem; margin: 0.35rem 0 0; max-width: 42rem; }
-/* Free/Donation marks (CAL-26): the one text-signal role — coral, bold. */
-.cal-row__meta b { color: var(--signal-text); font-weight: 700; }
-/* Practitioner cross-link on a row (CAL-02) — quiet, discovery not decoration. */
-.cal-row__with { font-size: 0.85rem; color: var(--muted); margin: 0.15rem 0 0; }
-.cal-row__with a { color: var(--ink); text-decoration: none; }
-.cal-row__with a:hover { text-decoration: underline; }
-/* Daniel's one line — the moat — as a margin voice: display face, set off from
-   the facts by a solid ink rule (v5: no third hue exists). */
-.cal-row__note { font: 500 1.02rem var(--font-display); color: var(--ink); margin: 0.55rem 0 0; padding-left: 0.9rem; border-left: 2px solid var(--ink); max-width: 38rem; line-height: 1.4; }
-.cal-row__cta { display: flex; flex-wrap: wrap; gap: 0.35rem 1.2rem; margin: 0.55rem 0 0; }
-.cal-row__cta a { color: var(--ink); font: 600 0.86rem var(--font-body); text-decoration: none; }
-.cal-row__cta a:hover { text-decoration: underline; }
+/* ---- the editorial band (CAL-28): full-width what-to-expect promo between
+        day monuments — treated stock (generic-editorial only), duotone at
+        rest, coral on hover, 2px ink frame. ---- */
+.cal-edband { display: block; position: relative; text-decoration: none; margin: 0 0 clamp(56px, 9vw, 128px); border: 2px solid var(--ink); }
+.cal-edband__im { display: block; position: relative; aspect-ratio: 1300 / 406; overflow: hidden; }
+.cal-edband__im img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cal-edband__cap { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 14px 20px 18px; }
+.cal-edband__t { font-family: var(--font-display); font-weight: 750; font-stretch: 78%; font-size: clamp(19px, 2.2vw, 30px); line-height: 1.02; text-transform: uppercase; color: var(--ink); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
+.cal-edband:hover .cal-edband__t { color: var(--signal-text); }
+.cal-edband__arrow { font-family: var(--font-display); font-weight: 800; font-size: clamp(19px, 2.2vw, 30px); color: var(--ink); }
 
 .cal-empty { color: var(--muted); font-size: 1rem; margin: 0; padding: 1.6rem 0; }
 .cal-empty--all { padding: 2.6rem 0; }
@@ -490,7 +547,7 @@ a.cal-row__modality:hover { text-decoration: underline; }
 .cal-cities a:hover { text-decoration: underline; }
 
 /* ---- FAQ — an answer surface for search/AI. Always visible for extraction. */
-.cal-faq { margin: 5rem 0 0; padding-top: 3rem; border-top: 1px solid var(--line); scroll-margin-top: 90px; }
+.cal-faq { margin: 5rem 0 0; padding-top: 3rem; border-top: 1px solid var(--line); scroll-margin-top: var(--mast-offset); }
 .cal-faq__item { margin: 0 0 1.8rem; max-width: 44rem; }
 .cal-faq__q { font-size: 1.15rem; font-weight: 500; margin: 0 0 0.5rem; }
 .cal-faq__a { color: var(--ink); font-size: 0.98rem; line-height: 1.6; margin: 0; }
@@ -507,7 +564,10 @@ a.cal-row__modality:hover { text-decoration: underline; }
         above restate their designed empty state for it; standalone figures
         (event flyer, warm bands, article images) simply disappear — a caption
         with no picture, or an empty frame, must never remain. ---- */
-.cal-event__figure.img-broken, .cal-warmband.img-broken, figure.img-broken { display: none; }
+.cal-event__figure.img-broken, figure.img-broken { display: none; }
+/* A card whose committed derivative somehow fails collapses to the type-tile
+   ground (the .cal-card__im background is already --surface). */
+.cal-card__im.img-broken { display: block; }
 
 /* ---- entity directories (/practitioners/, /venues/, /operators/): one
         shared card design (rendered by _src/lib/directory.py). Media tile on
@@ -662,22 +722,23 @@ a.cal-row__modality:hover { text-decoration: underline; }
 }
 
 @media (max-width: 640px) {
-  /* Rows become self-contained cards; the day+time rail runs as one line. */
-  .cal-rows { border-top: none; }
-  /* CAL-12: radius 0 per the doctrine (was 6px) — sharp editorial card edge; the
-     media tile keeps its 2px (photographic content). */
-  .cal-row { grid-template-columns: 1fr; gap: 0.5rem; padding: 1rem 1.1rem; border: 1px solid var(--line); margin-bottom: 0.85rem; }
-  .cal-row__when { flex-direction: row; gap: 0.55rem; align-items: baseline; }
-  .cal-row__dnum { font-size: 1.1rem; }
-  .cal-row__time { margin-top: 0; }
-  .cal-row__media { width: 84px; }
-  /* First-viewport budget: stamp + summary + first rows above the fold. */
+  /* The Program Grid runs 2-up on phones (CAL-28: the poster wall holds);
+     captions tighten, tiles shrink their inner padding. */
+  .cal-rows { gap: 20px 14px; }
+  .cal-card__cap { padding-top: 9px; }
+  .cal-card__meta { font-size: 13px; margin-top: 5px; }
+  .cal-card__tin { padding: 13px; }
+  .cal-day__head { padding-bottom: 8px; margin-bottom: 16px; }
+  .cal-day__ct { font-size: 12px; }
+  .cal-day--live .cal-band__h2 { padding: 3px 10px 5px; }
+  .cal-ticker { padding: 8px 0; }
+  .cal-ticker__in { font-size: 13px; }
+  .cal-edband__cap { padding: 10px 12px 12px; }
+  /* First-viewport budget: summary + the live head above the fold. */
   .section { padding-top: 1.4rem; }
   .cal-h1 { margin-top: 0.2rem; }
-  .cal-row__name { font-size: 22px; }
-  .cal-summary { font-size: 1.15rem; margin-bottom: 1.2rem; }
+  .cal-summary { font-size: 1.15rem; margin-top: 1rem; }
   .cal-jump { margin-bottom: 1.6rem; gap: 0.55rem 1.2rem; padding-bottom: 1rem; }
-  .cal-band { margin-bottom: 3rem; }
 }
 
 /* ---- dark mode (CAL-14 / v5 "Night", CAL-26): a prefers-color-scheme token

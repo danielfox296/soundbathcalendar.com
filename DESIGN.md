@@ -46,7 +46,7 @@ RULE — **the signal budget:** coral appears as at most **2 slabs** per screen 
 
 RULE: every structural alpha (hairline, border, tint wash) is written as `rgba(var(--ink-rgb), a)` — never a hardcoded gray. This single convention is what makes dark mode a one-token flip (§6). A hex gray in a component is a defect.
 
-RULE: links are `--ink`. Prose links keep the UA underline; chrome links (nav rows, CTA rows, crumbs) may drop it where position and weight carry the affordance, and hover restores it. Hover MAY move name-class text to `--signal-text` (the comp's card-hover language). Focus rings are `--ink` (10.98:1 / 17.41:1 — 2.4.11 clears on both grounds).
+RULE: links are `--ink`. Prose links keep the UA underline; chrome links (nav rows, crumbs, caption sub-links) may drop it where position and weight carry the affordance, and hover restores it. **Card names are UNDERLINED at rest** (Daniel ruling 2026-07-25, CAL-28): every `h3 > a` card name carries a persistent underline (offset 4px, thickness 1.5px) so clickability is unmistakable — hover moves the name to `--signal-text`, underline stays. The masthead digest link and the editorial-band title ride the same underlined register. Hover MAY move name-class text to `--signal-text` (the comp's card-hover language). Focus rings are `--ink` (10.98:1 / 17.41:1 — 2.4.11 clears on both grounds).
 
 RULE: form-control borders use `--field-line`, not `--line`. WCAG 1.4.11 asks 3:1 for the *visual boundary of a control*; the 0.14 hairline is a decorative divider between blocks (exempt) and lands at 1.2:1. The two are not interchangeable, and a control edge on `--line` — or on the old 0.25 literal (1.77:1) — is a defect. Decorative borders around already-legible text (e.g. `.cal-row__dist`) are not controls and keep their lighter edge.
 
@@ -68,7 +68,7 @@ One file, two voices: the condensed display voice (`font-stretch: 72–78%`, hea
 |---|---|
 | H1 monument `.cal-h1` | `clamp(56px, 8vw, 112px)` · wdth 72 · wght 800 · UPPERCASE · lh .92 · ls −.005em |
 | Band heads `.cal-band__h2` | `clamp(36px, 4.5vw, 64px)` · wdth 72 · wght 800 · UPPERCASE · lh .95 |
-| Card names `.cal-row__name` (h3>a) | 30px (22 mobile) · wdth 78 · wght 750 · UPPERCASE · lh 1.02; featured 2-up cards 44px (CAL-28) |
+| Card names `.cal-row__name` (h3>a) | `clamp(17px, 1.2vw+12px, 30px)` · wdth 78 · wght 750 · UPPERCASE · lh 1.02 · **underlined at rest** (§1.1); featured 2-up cards `clamp(22px, 2.2vw+12px, 44px)` (CAL-28) |
 | Detail/directory H1s (`.detail__h1`, `.dir-h1`) | `clamp(2.4rem, 5vw, 4rem)` · UPPERCASE · lh .95 (CAL-29 refines) |
 | Answer-first summary `.cal-summary` | 24px · wdth 100 · wght 400 · lh 1.35 · **bold counts** (`summary_html`) |
 | Meta / UI / forms | 16px · wdth 100 · `--muted` · lh 1.45 |
@@ -91,8 +91,8 @@ Reading measure (D-13, ratified 2026-07-22): one physical family, two roles. `--
 No abstract spacing scale — rem values tuned per surface. The load-bearing ones:
 
 - Container padding `clamp(24px, 4vw, 64px)`; masthead keeps tight `24px` (`.masthead-inner`).
-- Section `2.2rem 0 4rem`. Band stride `3.4rem`. Row padding `0.85rem 0` (CAL-12 — was 1.15rem; density is a feature).
-- Sticky offsets: masthead is the sticky chrome; rail sticks at `top: 80px`, detail aside at `90px`; every jump target carries `scroll-margin-top: 90px` (`.cal-band`, `.cal-faq`, `.digest-block`). New sticky/jump surfaces must respect these clearances.
+- Section `2.2rem 0 4rem`. **Day-monument stride `clamp(56px, 9vw, 128px)`** (CAL-28 — the expanded spacing IS the grid); card grid gap `26px 24px` (`20px 14px` mobile).
+- RULE — sticky offsets ride ONE token: `--mast-offset` (`88px` under 901px — the two-row masthead — else `60px`), measured against the real masthead height (CAL-28 audit; the one-row masthead is ~42px at desktop). The rail, the detail aside, the map pane, and every jump-target `scroll-margin-top` (`.cal-band`, `.cal-faq`, `.digest-block`, the filter bar) use `var(--mast-offset)` — a masthead layout change means re-measuring the token, never hunting literals. (`filters.js` keeps its conservative `-90px` observer margin — visual-only, errs early.)
 
 ### 1.5 Radius (the identity)
 
@@ -110,10 +110,9 @@ The state-of-sound report's 14px/999px family is the sanctioned editorial regist
 ### 2.1 Containers & the listing rail (CAL-23 A / A2 / B)
 
 - `.container`: max 1140px — the default shell (detail pages, learn pages).
-- Listing pages (`.cal-main`, i.e. root + city + tag): container caps at **1024px** — "stingy margins, aggressively left justified" — so row text (~42rem) nearly fills its track (phase A2).
-- At **≥1080px** (`styles.css:61`) listing pages widen to **1320px** and split: `.cal-split` = sticky rail `clamp(232px, 19vw, 272px)` + `minmax(0, 1fr)` list, gap `clamp(2.4rem, 3vw, 3.4rem)`. `.cal-rail__inner` sticks at `top: 80px`.
-- The rail is a build-time **relocation** of the same markup `filters.js` binds (filters · jump chips · standing links) — selector-based and position-agnostic. Below 1080px the wrappers are inert and the page is the phase-A stack.
-- Phase A: the identity block on listing pages is centered (`.cal-hero`); the list below keeps the full track.
+- Listing pages (`.cal-main`, i.e. root + city + tag): container caps at **1024px**; at **≥1080px** they widen to **1320px** and split: `.cal-split` = sticky rail `clamp(232px, 19vw, 272px)` + `minmax(0, 1fr)` grid, gap `clamp(2.4rem, 3vw, 3.4rem)`. `.cal-rail__inner` sticks at `var(--mast-offset)`.
+- The rail is a build-time **relocation** of the same markup `filters.js` binds (filters · jump chips · standing links) — selector-based and position-agnostic. Below 1080px the wrappers are inert and the page is a single stack. (The rail's own restyling is CAL-38.)
+- The identity block on listing pages is **left-set** (CAL-28 — the CAL-23 centering is retired by the ratified comp): H1 monument (max 16ch) · summary · stamp, in that order.
 
 ### 2.2 The detail shell (CAL-10)
 
@@ -124,18 +123,28 @@ One primitive for every detail page (event, venue, practitioner, organizer):
 - RULE: reading text never widens to fill the shell; structure may span it.
 - Entity pages cross-link the trio (venue ↔ practitioner ↔ organizer) and end with "Upcoming sessions" rendered by the **same row component** as the calendar (§2.3) — every entity page is a live mini-calendar.
 
-### 2.3 Bands & rows (the core surface)
+### 2.3 The Program Grid (CAL-28, ratified 2026-07-25 — the core surface; replaces the list rows entirely)
 
-**Bands** — the site's signature IA. `Today`/`Tonight` (Tonight when every remaining session starts in the evening — `today_band_label`, `external_events.py`) · `This weekend` · `This week` · `The weeks ahead`. A band renders only when it has sessions. Jump chips double as filters (CAL-16): pressed state is ink-fill-on-paper with negative margins canceling the padding so toggling never shifts layout (`styles.css:215`); with JS off they are plain anchors and every row is visible.
+The list is gone on listing surfaces (root, city, tag). The four temporal bands survive **invisibly** as the IA — each `section.cal-band` wrapper keeps its id (`today` / `this-weekend` / `this-week` / `weeks-ahead`), renders only when it has sessions, and remains the `filters.js` + CAL-16 contract (rows record the temporal band id; jump chips stay `Today · This weekend · …` and still double as filters, pressed state unchanged). Inside each wrapper, the visible structure is **day sections** (`.cal-day`): a **date monument** head over a card grid, one per Denver-local day, chronological, only when non-empty.
 
-**Row anatomy** (`.cal-row`: grid `78px 1fr`, gap 1.5rem):
+**Day head** (`.cal-day__head`): `h2.cal-band__h2` condensed-caps date monument (`SATURDAY, JULY 25`; year appended only across a year seam) + computed count right (`.cal-day__ct`, `--muted`, `N sessions` — computed, never typed), over a 2px ink rule. Dates-as-monuments replaced the old tear-off date rail — cards on listing surfaces carry **no dates**. **The LIVE day** (`Today`/`Tonight` — `today_band_label` unchanged) is the exception both ways: its h2 is the label as a **white-on-coral slab** (`--signal` fill, padding 4px 18px 7px, coral rule), and its count line carries the full date (`Saturday, July 25 · 6 sessions`) since its cards say no date. RULE — the slab is the signal budget's second sanctioned slab (ticker + live head ONLY, §1.1); coral on any other band head is a defect requiring Daniel's explicit budget amendment.
 
-1. **Tear-off date rail** (`.cal-row__when`): weekday (`__dow`, uppercase, 0.62) over numeral (`__dnum`, display 500, 1.5rem) over time (`__time`). The Today band omits the date — a time-only rail is correct there.
-2. **Month marker** (`.cal-row__mo`, CAL-UX-2): any row whose Denver-time month differs from the build month stamps the muted month abbreviation (`Aug`) in the rail. Per-row on purpose — client-side filters can hide the rollover, so the marker must survive filtering. Entity-page session lists get it too.
-3. **Media tile** (`.cal-row__media`): fixed 104px, 3:2, radius 2px, `object-fit: cover` — flyers of any source aspect are framed, never raw. Image-less rows render the reserved placeholder (`--empty`: a bare tint tile — the ∿ glyph is retired, CAL-26; CAL-29 brings the type-tile language) so every text column shares one left edge (CAL-12). On mobile: 84px.
-4. **Text column**: marks line (`__marks`: city chip + modality kicker, §3.2) → name → meta (one line where it fits, capped 42rem) → optional practitioner cross-link (`__with`) → optional editorial note (`__note`: Daniel's one line, display 500, 2px accent left rule, capped 38rem) → ghost-link CTA row (`__cta`).
+**Card anatomy** (`.cal-row.cal-card` — the `.cal-row` class + `data-city/free/tags/lat/lng` hooks are load-bearing for `filters.js`, which binds unchanged):
 
-Mobile ≤640px: rows become bordered cards (radius 0), the date rail runs inline, `.cal-rows` drops its top rule. First-viewport budget: stamp + summary + first rows above the fold.
+1. **Image card**: square committed duotone derivative (§4 pipeline; `560/280 srcset`, width/height pinned, lazy below the live band's first three) + caption below: underlined `h3 > a` name + one `--muted` 16px line — `time · venue — locality · with practitioner · modality · price`. Free/Donation rides `<b>` on `--signal-text`. The **hover crossfade** is a second stacked committed `<img>` (`-c`, coral ramp) fading in at 180ms — pure CSS opacity, fine under `prefers-reduced-motion`.
+2. **Type tile** (`.cal-card--tile`, no honest image): solid `--surface` square, same h3>a + caption bottom-left in `--surface-text` (white-hot — AA on both surface values, no dark override). A **designed poster variant, not a fallback state**. Hover flips the tile to the `--signal` fill with white text. Known AA exception of record: Free/Donation inside a tile rides `--surface-text` bold, not coral — `--signal-text` cannot clear AA on the indigo surface.
+3. **The whole card is the event link** (addendum ruling): the name anchor stretches over the card via `::after` — one anchor, no dead image surface, `h3 > a` stays the crawlable name link. Caption sub-links (practitioner, modality term, access icons) z-lift above it.
+4. **Access iconography** (addendum ruling — the worded `Tickets · Website` row is dead): ticket glyph → organizer ticket URL, globe glyph → operator/venue site; line-drawn sprite symbols (`img/social-sprite.svg#icon-ticket/#icon-globe`) in `currentColor`, `aria-label`ed, 18px art in a 40px hit target. Direct-to-tickets from the listing survives — it's the site's pitch.
+5. **Editorial note**: Daniel's one line keeps its 2px-rule margin voice as a caption line under the meta.
+6. The caption line is the near-me distance chip's mount (`cal-row__marks` rides on it); month markers are gone — the day head IS the date, and entity-list cards carry `Sat, Aug 1` in-caption (`show_date=True`).
+
+**Grid density** (computed per day, build-time class): live day 3-up; a 2-session day runs **featured 2-up** (44px names); a dense day (≥7) 4-up (3-up under 1024px); else 3-up. Phones run 2-up everywhere. RULE: tracks are always `repeat(N, minmax(0, 1fr))` + `min-width: 0` — never bare `1fr` (the square tiles inflate track minimums). A day emptied by a client-side facet hides via `:has()` (progressive; `filters.js` untouched — it still toggles rows and the temporal wrappers). The `[hidden]` display rule in `styles.css` is LOCKSTEP LAW: it must out-rank every card/band display value or filtering dies silently.
+
+**The ticker** (root + city pages): a full-bleed coral slab under the masthead — tonight's real sessions from the same `cal_rows` (`NAME TIME NEIGHBORHOOD [price]`, `/` separators), a pure-CSS ~70s marquee (content duplicated 2×, −50% loop), `aria-hidden` (it duplicates the live band), static under `prefers-reduced-motion`. An empty tonight shows the next day's computed date line — honest, never fabricated. Its `.055em` is the site's ONE positive tracking (§1.3).
+
+**The editorial band** (`.cal-edband`): full-width what-to-expect promo inserted after the second-or-third day monument (root + city) — treated stock (generic-editorial only), 1300×406 duotone with the coral hover layer, 2px ink frame, underlined caption title.
+
+First-viewport budget (mobile): summary + the live slab head above the fold.
 
 ### 2.4 List + map (`/map/`, CAL-10 phase C)
 
@@ -147,7 +156,7 @@ One shared card design (`_src/lib/directory.py`): `.dir-grid` auto-fill `minmax(
 
 ### 2.6 Masthead & footer
 
-Masthead (`_src/partials/header.html`): sticky, compact — wordmark · scrolling city anchors · slim digest capture (inline form ≥900px, anchor link below). Footer: brand column + three link columns over a fine-print bar (`Sound Bath Calendar` · `Denver, Colorado · Privacy` — the `/privacy/` link rides every page); footer links ride the muted-ink ramp, **not** accent — reference furniture, not a call to action.
+Masthead (`_src/partials/header.html`, CAL-30 item 1 — pulled into CAL-28): sticky, all-caps 15px, **one row at desktop** — wordmark 700 · scrolling city anchors 400 · **underlined digest text link** right (`Get the Thursday digest` → `#digest`; the inline form is retired, primary demoted sitewide — §9 closed). Below 900px the nav drops to a second scrollable line. RULE — the 4 city links + Map + Learn are a load-bearing internal-link class: always server-rendered `<a>` elements on every page; they may visually collapse but never leave the HTML or move to JS. Footer: brand column + three link columns over a fine-print bar (`Sound Bath Calendar` · `Denver, Colorado · Privacy` — the `/privacy/` link rides every page); footer links ride `--ink` on muted heads — reference furniture, not a call to action.
 
 ### 2.7 Digest block (CAL-18)
 
@@ -161,8 +170,8 @@ Signup pitch + form beside a build-time mini-render of this week's **actual** Th
 
 - `.btn-primary`: `--ink` fill, `--paper` text (10.98:1 light / 15.6:1 dark). Hover: `inset 0 -3px 0 var(--signal)` — a coral underline (a sanctioned hover state), never a fill swap. Auto-inverts to a light button in dark mode.
 - `.btn-secondary`: transparent, ink text, `--line` border; hover border `--ink`.
-- `.btn-slim`: the compact variant (masthead). Ghost tier = plain ink 600 link CTAs (`.cal-row__cta`, `.cal-event__link`).
-- RULE: **exactly one `.btn-primary` per view intent.** Everything else is secondary or ghost. Known open violation: the masthead digest button on event pages — §9.
+- `.btn-slim`: the compact variant. Ghost tier = plain ink 600 link CTAs (`.cal-event__link`); listing access CTAs are the card icon links (§2.3).
+- RULE: **exactly one `.btn-primary` per view intent.** Everything else is secondary or ghost. The masthead violation is closed (D-15, §9 — the digest form is now a text link).
 - RULE: every button's text ≥ 4.5:1 on its own fill. Pressed states are ink-fill-on-paper (`.cal-filters__nearme[aria-pressed="true"]`, the jump chips) — coral is never a pressed/selected fill (budget law, §1.1).
 - Specificity note: anchor buttons inside `.section--light` need the label pin (`.section--light a.btn-primary { color: var(--paper) }`, `styles.css:112`) — keep it when adding button contexts.
 
@@ -190,7 +199,9 @@ Signup pitch + form beside a build-time mini-render of this week's **actual** Th
 
 **The warmth register:** warm, human, held — hands on bowls, candlelit rooms, soft fabric, wood, plants, human presence. Never institutional, empty, or eerie. No AI-generated stock (`img/og/SOURCES.md` — AI-studio results were deliberately skipped).
 
-**Placement:** warmth lives on city pages (`.cal-warmband`, 16:5 band under the H1), the what-to-expect hero, and share cards. The listing root stays utilitarian — answer-first, no hero (§0).
+**Placement (CAL-28):** listing surfaces carry imagery as the Program Grid's **duotone card derivatives** and the treated editorial band — the CAL-22 warm bands are retired there (the root's and the city pages' photo strips are gone; `CITY_WARM` deleted). Natural warmth photography survives on the what-to-expect hero and share cards. The listing root stays answer-first — no hero (§0).
+
+**The duotone treatment (CAL-28, `scripts/treat.py` — the ratified house process, shared with og.py in spirit):** grayscale → `autocontrast(cutoff 2)` → contrast 1.2 → grain (`Image.effect_noise` sigma 52 blended at alpha 0.19 **pre-colorize**, so the grain prints in ink) → `ImageOps.colorize`: `-i` indigo `#352F5C`→white (the rest layer, both grounds) and `-c` coral `#B93A2B`→white (the hover layer). 560×560 center-square JPEG q75 (+280 srcset variant); editorial band 1300×406. Source hierarchy per event: the event's own flyer (snapshotted once — the committed derivative is the rot-proof copy), else the linked practitioner's committed photo for THEIR sessions only, else the type tile. Derivatives are committed under `img/cards/`; past events are pruned each run; **CI never runs it** (og.py precedent). RULE — imagery honesty holds: flyers never stand in for people, stock never attaches to a specific session, entity photos are real-only.
 
 **Pipeline (CAL-22):** `scripts/warm.py` emits committed `img/warm/<surface>-1600/800.jpg` (q80, progressive) from the same stock as the surface's OG card, so a shared link and the page it opens feel like one thing. Photos ship natural — no scrim, no type baked in; dark mode dims via CSS (`filter: brightness(0.82)`), never in the file. Local-only; CI never runs it.
 
@@ -267,10 +278,8 @@ Commits `0330c4c` (D-17) and `d57d296` (D-20). Applies to all public copy: pages
 **D-14 · The editorial register (2026-07-22): the State of Sound report look is blessed.**
 The `/state-of-sound-healing/` "report look" (`.soh-*`, `_src/lib/insights.py`) — rounded (14px radii on stat tiles/tables/figures, the 999px credit pill), the softer `--soh-*` surface palette (white and ink full-bleed bands), a px type scale up to 66px, count-up motion — is the official editorial/data sub-style. **When it applies:** report-class pages only — published, citable data artifacts (State of Sound Healing editions, and future reports of that class) where reading as a *document* beats reading as calendar chrome. **Never** on listing, entity, or chrome surfaces: the calendar proper keeps radius 0 and the utility register (§1.5). Constraints carried into the ruling: stays fully namespaced (its own `--soh-*`-style token prefix and dark block), sources root tokens where it can, and nothing leaks into `styles.css`.
 
-### Open
-
-**The masthead primary.**
-The masthead ships `.btn-primary.btn-slim` "Get the digest" on every page (`_src/partials/header.html:18`). On event pages the aside's Tickets is also `.btn-primary` (`external_events.py:2165`) — two ink fills in view, against §3.1's one-primary rule. Candidate fixes: demote the masthead button to `.btn-secondary` sitewide, or scope the demotion to detail pages. Unresolved; the rule stands and the violation is known.
+**D-15 · The masthead primary (CLOSED 2026-07-25 by CAL-28/CAL-30 item 1).**
+The masthead's `.btn-primary` digest form is retired for an underlined text link — the primary is demoted sitewide, so event pages' Tickets is the only `.btn-primary` in view and §3.1's one-primary rule holds everywhere.
 
 ---
 
@@ -297,3 +306,5 @@ The masthead ships `.btn-primary.btn-slim` "Get the digest" on every page (`_src
 | D-14 editorial register ratified | §1.5, §9 |
 | CAL-26 v5 Broadcast tokens | §0, §1.1, §1.2, §5, §6, §8 |
 | CAL-27 Archivo type system | §1.3 |
+| CAL-28 Program Grid + treat pipeline + ticker + editorial band | §1.1, §1.3, §1.4, §2.1, §2.3, §4 |
+| CAL-30 item 1 masthead (pulled forward) + D-15 closed | §2.6, §3.1, §9 |
