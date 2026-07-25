@@ -31,7 +31,10 @@ _ENT_ART = set()
 # Places imagery (terms: resize/crop yes, recolor no) so venues plate here and
 # keep their unmodified photo on the profile page; operators have no photo of
 # their own at all. See scripts/treat.py:treat_entities.
-_KIND_PREFIX = {'practitioner': 'pract'}
+# 'post' is the blog's cover slot (CAL-36): img/blog/<slug>.jpg, treated by
+# the same pipeline. No committed cover -> the post plates, exactly like an
+# entity with no photo. Cover art is never invented to fill the grid.
+_KIND_PREFIX = {'practitioner': 'pract', 'post': 'post'}
 
 
 def set_entity_art(stems):

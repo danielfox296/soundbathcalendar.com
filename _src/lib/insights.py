@@ -98,20 +98,20 @@ def render_report(agg, nav_prefix, other_editions):
     window = _fmt_window(ed)
     cp = nav_prefix  # css/asset prefix
 
-    # ---- Stat tiles (the citable set). Pure numbers sit in [data-n] spans so
-    # the count-up can animate them; everything renders complete without JS. ----
+    # ---- Stat tiles (the citable set) — CAL-36 data monuments. Plain text:
+    # the [data-n] count-up spans went with the scroll-reveal script. ----
     tiles = [
-        (f'~<span data-n="{round(vol["per_week"])}">{round(vol["per_week"])}</span><span class="u">/wk</span>',
+        (f'~{round(vol["per_week"])}<span class="u">/wk</span>',
          'sound bath sessions across the Front Range'),
-        (f'<span class="u">$</span><span data-n="{pr["median"]:g}">{pr["median"]:g}</span>',
+        (f'<span class="u">$</span>{pr["median"]:g}',
          f'median ticket price (${pr["low"]:g}–${pr["high"]:g} range)'),
         ('1<span class="u">in</span>3',
          'known-price sessions are free or by donation'),
-        (f'<span data-n="{tim["evening_pct"]:.0f}">{tim["evening_pct"]:.0f}</span><span class="u">%</span>',
+        (f'{tim["evening_pct"]:.0f}<span class="u">%</span>',
          'start after 5 p.m. — a weeknight ritual'),
-        (f'<span data-n="{vol["venues"]}">{vol["venues"]}</span>',
+        (f'{vol["venues"]}',
          f'venues · {vol["operators"]} operators · {vol["cities"]} metros'),
-        (f'~<span data-n="{geo["corridor_miles"]}">{geo["corridor_miles"]}</span><span class="u">mi</span>',
+        (f'~{geo["corridor_miles"]}<span class="u">mi</span>',
          'north–south corridor, FoCo to the Springs'),
     ]
     tiles_html = '\n'.join(
@@ -166,7 +166,6 @@ def render_report(agg, nav_prefix, other_editions):
 
   <section class="soh-band soh-band--paper soh-band--mast">
     <div class="soh-wrap">
-      <p class="soh-eyebrow">Front Range · Colorado · {_esc(ed['label'])}</p>
       <h1 class="soh-h1">The Front Range Sound Bath Scene: <span class="soh-h1__accent">A {_esc(ed['label'])} Snapshot</span></h1>
       <p class="soh-dek">The first count of a quietly widespread ritual — every public sound bath across Denver, Boulder, Fort Collins, and Colorado Springs. A <em>point-in-time snapshot</em>, not a trend: simply what is verifiably true of the calendar right now.</p>
       <div class="soh-meta">
@@ -179,7 +178,7 @@ def render_report(agg, nav_prefix, other_editions):
   </section>
 
   <figure class="soh-hero">
-    <img src="{cp}img/insights/front-range-foothills.jpg" width="1400" height="1050" alt="The Flatirons rising over open grassland in Boulder County, Colorado — the Front Range foothills." fetchpriority="high">
+    <img src="{cp}img/cards/hero-state-of-sound-i.jpg" width="1600" height="900" alt="The Flatirons rising over open grassland in Boulder County, Colorado — the Front Range foothills." fetchpriority="high">
     <figcaption class="soh-hero__credit">The Front Range foothills, Boulder County · CC0, Mike Pascoe / <a href="https://commons.wikimedia.org/w/index.php?curid=176702599" rel="nofollow">Wikimedia Commons</a></figcaption>
   </figure>
 
@@ -217,7 +216,7 @@ def render_report(agg, nav_prefix, other_editions):
       <h2 class="soh-h2">A ${pr['median']:g} median — and about a third are free or by donation</h2>
       <div class="soh-split">
         <figure class="soh-split__fig">
-          <img src="{cp}img/insights/singing-bowls.jpg" width="1000" height="667" alt="Overhead view of a set of Tibetan singing bowls and mallets on a plain surface." loading="lazy">
+          <img src="{cp}img/cards/fig-singing-bowls-i.jpg" width="1200" height="800" alt="Overhead view of a set of Tibetan singing bowls and mallets on a plain surface." loading="lazy">
           <figcaption class="soh-credit">CC0 via rawpixel</figcaption>
         </figure>
         <div class="soh-split__body">
@@ -303,50 +302,13 @@ def render_report(agg, nav_prefix, other_editions):
   </section>
 </div>
 """
-    return body + _SCRIPT
+    return body
 
 
-# Progressive enhancement only: bands fade/rise in, bars grow to --w, and stat
-# figures count up, each the first time it scrolls into view. Without JS (or
-# with reduced motion) the 'soh-js' class is never added and everything renders
-# complete and static. Plain string (not an f-string) — braces are JS.
-_SCRIPT = """
-<script>
-(function () {
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (!('IntersectionObserver' in window)) return;
-  var root = document.getElementById('soh');
-  if (!root) return;
-  root.classList.add('soh-js');
-
-  function countUp(el) {
-    var target = parseFloat(el.getAttribute('data-n'));
-    if (!isFinite(target)) return;
-    var t0 = null, DUR = 900;
-    function tick(t) {
-      if (t0 === null) t0 = t;
-      var p = Math.min((t - t0) / DUR, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = String(Math.round(target * eased));
-      if (p < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  var seen = new WeakSet();
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (en) {
-      if (!en.isIntersecting || seen.has(en.target)) return;
-      seen.add(en.target);
-      en.target.classList.add('in-view');
-      en.target.querySelectorAll('[data-n]').forEach(countUp);
-      io.unobserve(en.target);
-    });
-  }, { threshold: 0.18 });
-
-  root.querySelectorAll('.soh-band, .soh-hero').forEach(function (b) { io.observe(b); });
-})();
-</script>"""
+# CAL-36: the IntersectionObserver scroll-reveal is retired. The report is a
+# citable artifact — crawlers, print, and readers who scroll fast all get the
+# same complete page, with nothing depending on a viewport event to become
+# visible. Bars are drawn at their real width; figures render as text.
 
 
 # ---------------------------------------------------------------------------
@@ -360,166 +322,137 @@ _SCRIPT = """
 # row cleanly at every width.
 # ---------------------------------------------------------------------------
 INSIGHTS_HEAD = """<style>
-  .soh { --soh-white: #fff; --soh-dim: #5d6570; --soh-wash: rgba(98,182,232,0.14);
-         --soh-line: var(--line);
-         /* CAL-26: the report keeps its OWN v4 ice/blue accents (frozen until
-            the CAL-36 editorial pass) — the site tokens no longer carry them. */
-         --soh-accent: #62B6E8; --soh-link: #1F6FA8;
-         --soh-ink-bg: #0A0B0D; --soh-ink-text: #F5F7FA;
-         --soh-ink-dim: rgba(245,247,250,0.62); --soh-ink-line: rgba(245,247,250,0.14); }
-  /* Dark scheme: the site swaps --ink/--paper/--muted (styles.css),
-     so the prose adapts on its own — these keep the report's OWN surfaces in
-     step: "white" bands become an elevated dark card, dims lighten, and the
-     hairlines flip light (--line is a static dark rgba and would vanish). */
-  @media (prefers-color-scheme: dark) {
-    .soh { --soh-white: #16191E; --soh-dim: rgba(245,247,250,0.62);
-           --soh-wash: rgba(98,182,232,0.17); --soh-line: rgba(245,247,250,0.14);
-           --soh-link: #7CC3EC; }
-    /* Photos are the one surface tokens can't fix: a daylight landscape and a
-       white-tabletop still-life read as glowing blocks on the dark ground.
-       Pull them down toward the page instead of letting them blast through. */
-    .soh-hero img { filter: brightness(.8) saturate(.95); }
-    .soh-split__fig img { filter: brightness(.68) saturate(.9); }
-  }
-  .soh :is(h1,h2,h3) { font-family: var(--font-display); }
-  .soh p { line-height: 1.7; }
-  .soh a { color: var(--soh-link); text-underline-offset: 3px; }
+  /* The report in the v5 Broadcast register (CAL-36). The --soh-* ice palette
+     is retired: this page now rides the site tokens like everything else, so
+     the dark scheme flips it for free — and the legacy #0A0B0D ink band, which
+     was hardcoded in BOTH schemes and read as a dead near-black slab on the
+     night ground, is gone with it. Two grounds only: --paper and --surface.
+     Radius 0 throughout (the doctrine); no blur, no pills, no gradients.
+     Namespaced under .soh so nothing leaks into styles.css. */
+  .soh :is(h1,h2,h3) { font-family: var(--font-display); font-weight: 800; font-stretch: 72%; letter-spacing: -0.005em; text-transform: uppercase; }
+  .soh p { line-height: 1.65; }
+  .soh a { color: var(--signal-text); text-decoration: underline; text-underline-offset: 3px; }
 
-  /* ---- Bands: full-bleed rooms with a generous shared rhythm ---- */
-  .soh-band { padding: clamp(3.5rem, 7vw, 6rem) 0; }
+  /* ---- Bands: full-bleed rooms, alternating the two committed grounds ---- */
+  .soh-band { padding: clamp(3.2rem, 6vw, 5.5rem) 0; }
   .soh-band--paper { background: var(--paper); }
-  .soh-band--white { background: var(--soh-white); border-top: 1px solid var(--soh-line); border-bottom: 1px solid var(--soh-line); }
-  .soh-band--ink { background: var(--soh-ink-bg); color: var(--soh-ink-text); }
-  .soh-band--ink a { color: var(--soh-accent); }
+  /* The former "white" band: same ground, held apart by rules instead of a
+     third surface value (there is no third ground in v5). */
+  .soh-band--white { background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  /* The former "ink" band. --surface flips with the scheme, so the stats band
+     reads as a raised block on both grounds instead of a permanent near-black. */
+  .soh-band--ink { background: var(--surface); color: var(--surface-text); }
+  .soh-band--ink a { color: var(--surface-text); }
+  .soh-band--ink b { color: var(--surface-text); }
   .soh-wrap { max-width: 71rem; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
 
   /* ---- Masthead ---- */
-  .soh-band--mast { padding-top: clamp(4rem, 9vw, 7rem); padding-bottom: clamp(3rem, 6vw, 4.5rem); }
-  .soh-eyebrow { font: 500 13px/1 var(--font-display); letter-spacing: .22em;
-    text-transform: uppercase; color: var(--soh-link); margin: 0 0 22px; }
-  .soh-h1 { font-size: clamp(34px, 6vw, 66px); line-height: 1.02; font-weight: 700;
-    letter-spacing: -0.022em; margin: 0 0 26px; max-width: 20ch; }
-  .soh-h1__accent { color: var(--soh-link); }
-  .soh-dek { font: 500 clamp(18px, 2.2vw, 22px)/1.5 var(--font-display); color: var(--ink);
-    max-width: 46rem; margin: 0 0 34px; }
-  .soh-dek em { font-style: normal; border-bottom: 3px solid var(--soh-accent); }
-  .soh-meta { display: flex; flex-wrap: wrap; gap: 10px 26px; font-size: 13.5px;
-    color: var(--soh-dim); padding-top: 24px; border-top: 1px solid var(--soh-line); }
-  .soh-meta b { color: var(--ink); font-weight: 600; }
+  .soh-band--mast { padding-top: clamp(2.4rem, 5vw, 4rem); padding-bottom: clamp(2.6rem, 5vw, 4rem); }
+  .soh-h1 { font-size: clamp(38px, 6.4vw, 84px); line-height: 0.95; margin: 0 0 22px; max-width: 20ch; }
+  /* The accent half of the title is the same ink — the title is one monument,
+     not two colours (the coral budget is slabs + marks, never headline text). */
+  .soh-h1__accent { color: inherit; }
+  .soh-dek { font-size: clamp(18px, 2.2vw, 24px); line-height: 1.4; color: var(--ink); max-width: 42rem; margin: 0 0 30px; }
+  .soh-dek em { font-style: normal; border-bottom: 3px solid var(--signal); }
+  .soh-meta { display: flex; flex-wrap: wrap; gap: 10px 26px; font-size: 14px;
+    color: var(--muted); padding-top: 18px; border-top: 2px solid var(--ink); font-variant-numeric: tabular-nums; }
+  .soh-meta b { color: var(--ink); font-weight: 700; }
 
-  /* ---- Full-bleed hero photo ---- */
+  /* ---- Full-bleed hero (the committed duotone — CAL-36) ---- */
   .soh-hero { margin: 0; position: relative; }
   .soh-hero img { display: block; width: 100%; height: clamp(300px, 52vw, 540px);
     object-fit: cover; object-position: center 62%; }
-  .soh-hero__credit { position: absolute; right: 14px; bottom: 12px;
-    font-size: 11px; color: rgba(245,247,250,0.9); background: rgba(10,11,13,0.55);
-    padding: 5px 12px; border-radius: 999px; backdrop-filter: blur(4px); }
-  .soh-hero__credit a { color: rgba(245,247,250,0.9); }
+  .soh-hero__credit { position: absolute; right: 0; bottom: 0;
+    font-size: 12px; color: var(--surface-text); background: var(--surface);
+    padding: 6px 12px; }
+  .soh-hero__credit a { color: var(--surface-text); }
 
-  /* ---- Section furniture ---- */
-  .soh-kicker { font: 500 12.5px/1 var(--font-display); letter-spacing: .18em;
-    text-transform: uppercase; color: var(--soh-link); margin: 0 0 14px;
-    display: flex; align-items: baseline; gap: 14px; }
-  .soh-kicker::after { content:""; flex: 1; height: 1px; background: var(--soh-line); }
-  .soh-band--ink .soh-kicker { color: var(--soh-accent); }
-  .soh-band--ink .soh-kicker::after { background: var(--soh-ink-line); }
-  .soh-h2 { font-size: clamp(25px, 3.6vw, 36px); line-height: 1.1; font-weight: 700;
-    letter-spacing: -0.018em; margin: 0 0 18px; max-width: 26ch; }
-  .soh p { max-width: 44rem; }
+  /* ---- Section furniture: caps 13, ZERO tracking (the tracking law) ---- */
+  .soh-kicker { font: 700 13px/1.2 var(--font-body); letter-spacing: 0;
+    text-transform: uppercase; color: var(--muted); margin: 0 0 14px;
+    display: flex; align-items: center; gap: 14px; }
+  .soh-kicker::after { content:""; flex: 1; height: 1px; background: var(--line); }
+  .soh-band--ink .soh-kicker { color: rgba(var(--surface-text-rgb), 0.78); }
+  .soh-band--ink .soh-kicker::after { background: rgba(var(--surface-text-rgb), 0.24); }
+  .soh-h2 { font-size: clamp(26px, 3.6vw, 44px); line-height: 1.0; margin: 0 0 18px; max-width: 26ch; }
+  .soh p { max-width: 640px; }
   .soh-lead { font-size: 19px; }
-  .soh-intro { color: var(--soh-ink-dim); }
+  .soh-intro { color: rgba(var(--surface-text-rgb), 0.78); }
 
-  /* ---- Stat grid: explicit columns so tiles always fill the row ---- */
-  .soh-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 38px; }
+  /* ---- The stat grid: DATA MONUMENTS. The numerals are the largest type on
+         the page after the H1 — the report reads like a broadcast rundown. ---- */
+  .soh-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 34px; border-top: 1px solid rgba(var(--surface-text-rgb), 0.24); }
   @media (max-width: 899px) { .soh-stats { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 519px) { .soh-stats { grid-template-columns: 1fr; } }
-  .soh-stat { background: rgba(255,255,255,0.045); border: 1px solid var(--soh-ink-line);
-    border-radius: 14px; padding: 26px 24px 22px; }
-  .soh-stat__fig { font: 500 clamp(38px, 5vw, 54px)/1 var(--font-display);
-    letter-spacing: -0.02em; color: var(--soh-ink-text); font-variant-numeric: tabular-nums; }
-  .soh-stat__fig .u { font-size: .48em; color: var(--soh-accent); }
-  .soh-stat__lab { margin-top: 12px; font-size: 14px; color: var(--soh-ink-dim); line-height: 1.45; }
+  .soh-stat { padding: 22px 22px 26px 0; border-bottom: 1px solid rgba(var(--surface-text-rgb), 0.24); }
+  .soh-stat__fig { font-family: var(--font-display); font-weight: 800; font-stretch: 62%;
+    font-size: clamp(56px, 7vw, 96px); line-height: 0.9; letter-spacing: -0.01em;
+    color: var(--surface-text); font-variant-numeric: tabular-nums; }
+  .soh-stat__fig .u { font-size: .34em; font-stretch: 72%; }
+  .soh-stat__lab { margin-top: 12px; font-size: 15px; color: rgba(var(--surface-text-rgb), 0.78); line-height: 1.45; max-width: 22ch; }
 
   /* ---- Two-column prose + chart ---- */
   .soh-cols { display: grid; grid-template-columns: 1fr; gap: 34px 56px; align-items: center; margin-top: 8px; }
   @media (min-width: 860px) { .soh-cols { grid-template-columns: 1fr 1fr; } }
 
-  /* ---- Bars ---- */
-  .soh-chart { display: grid; gap: 11px; }
+  /* ---- Bars: ink fills on an ink-tint track, drawn at their real width ---- */
+  .soh-chart { display: grid; gap: 10px; }
   .soh-row { display: grid; grid-template-columns: 118px 1fr 44px; align-items: center; gap: 14px; }
-  .soh-row__name { font-size: 14px; color: var(--soh-dim); text-align: right; }
-  .soh-row__track { background: var(--soh-wash); border-radius: 5px; height: 26px; overflow: hidden; }
-  .soh-row__fill { display: block; height: 100%; background: var(--soh-accent); border-radius: 5px; width: var(--w); }
-  .soh-row__val { font: 500 15px var(--font-display); text-align: right; color: var(--ink);
+  .soh-row__name { font: 700 13px/1.2 var(--font-body); letter-spacing: 0; text-transform: uppercase; color: var(--muted); text-align: right; }
+  .soh-row__track { background: rgba(var(--ink-rgb), 0.10); height: 24px; overflow: hidden; }
+  .soh-row__fill { display: block; height: 100%; background: var(--ink); width: var(--w); }
+  .soh-row__val { font: 700 15px var(--font-body); text-align: right; color: var(--ink);
     font-variant-numeric: tabular-nums; }
   @media (max-width: 560px) { .soh-row { grid-template-columns: 96px 1fr 38px; gap: 10px; }
-    .soh-row__name { font-size: 13px; } }
+    .soh-row__name { font-size: 12px; } }
 
   /* ---- Table ---- */
-  .soh-tbl-scroll { overflow-x: auto; margin-top: 30px; background: var(--soh-white);
-    border: 1px solid var(--soh-line); border-radius: 14px; }
-  .soh-tbl { border-collapse: collapse; width: 100%; min-width: 360px; font-size: 15.5px; }
-  .soh-tbl th, .soh-tbl td { text-align: left; padding: 14px 20px; border-bottom: 1px solid var(--soh-line); }
-  .soh-tbl th { font: 500 11.5px var(--font-display); letter-spacing: .12em;
-    text-transform: uppercase; color: var(--soh-dim); }
-  .soh-num { text-align: right; font-family: var(--font-display); font-weight: 500;
-    font-variant-numeric: tabular-nums; }
-  .soh-tbl tbody tr:last-child td { border-bottom: none; }
+  .soh-tbl-scroll { overflow-x: auto; margin-top: 28px; border-top: 2px solid var(--ink); }
+  .soh-tbl { border-collapse: collapse; width: 100%; min-width: 360px; font-size: 16px; }
+  .soh-tbl th, .soh-tbl td { text-align: left; padding: 13px 20px 13px 0; border-bottom: 1px solid var(--line); }
+  .soh-tbl th { font: 700 13px/1.2 var(--font-body); letter-spacing: 0;
+    text-transform: uppercase; color: var(--muted); }
+  .soh-num { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
   .soh-bc { position: relative; }
-  .soh-mini { position: absolute; left: 20px; bottom: 7px; height: 3px;
-    background: var(--soh-accent); border-radius: 2px; opacity: .5; }
+  .soh-mini { position: absolute; left: 0; bottom: 5px; height: 3px;
+    background: var(--signal); opacity: .85; }
 
   /* ---- Split figure (price) — aspect preserved, never stretched ---- */
   .soh-split { display: grid; grid-template-columns: 1fr; gap: 30px; align-items: center; margin-top: 8px; }
   @media (min-width: 780px) { .soh-split { grid-template-columns: 1.05fr 1fr; } }
   .soh-split__fig { margin: 0; }
   .soh-split__fig img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2;
-    object-fit: cover; border-radius: 14px; border: 1px solid var(--soh-line); }
+    object-fit: cover; }
   .soh-split__body > p:first-child { margin-top: 0; }
-  .soh-credit { font-size: 11.5px; color: var(--soh-dim); margin-top: 8px; }
+  .soh-credit { font-size: 12px; color: var(--muted); margin-top: 8px; }
 
-  /* ---- Note / callout ---- */
-  .soh-note { background: var(--paper); border: 1px solid var(--soh-line);
-    border-left: 3px solid var(--soh-accent); border-radius: 12px; padding: 22px 26px;
-    margin-top: 30px; max-width: 44rem; }
-  .soh-band--paper .soh-note { background: var(--soh-white); }
-  .soh-note h3 { font: 700 15px var(--font-body); margin: 0 0 8px; }
-  .soh-note p { margin: 0; font-size: 15.5px; color: var(--soh-dim); }
+  /* ---- Note / callout: the honest caveats, on the ink rule ---- */
+  .soh-note { border-left: 3px solid var(--ink); padding: 0.2rem 0 0.2rem 1.1rem;
+    margin-top: 28px; max-width: 640px; }
+  .soh-note h3 { font-size: 18px; margin: 0 0 8px; }
+  .soh-note p { margin: 0; font-size: 16px; color: var(--ink); }
 
-  /* ---- Dark pull-quote band ---- */
-  .soh-band--pull { padding: clamp(3.5rem, 7vw, 5.5rem) 0; }
-  .soh-pull { font: 500 clamp(24px, 3.6vw, 38px)/1.32 var(--font-display);
-    letter-spacing: -0.015em; margin: 0; max-width: 30ch; }
-  .soh-pull b { color: var(--soh-accent); font-weight: 500; }
+  /* ---- Pull band ---- */
+  .soh-band--pull { padding: clamp(3.2rem, 6vw, 5rem) 0; }
+  .soh-pull { font-family: var(--font-display); font-weight: 800; font-stretch: 72%;
+    font-size: clamp(26px, 3.8vw, 46px); line-height: 1.05; text-transform: uppercase;
+    margin: 0; max-width: 24ch; color: var(--surface-text); }
+  .soh-pull b { color: var(--surface-text); font-weight: 800; }
+  .soh-band--pull p { max-width: none; }
 
   /* ---- Methodology ---- */
   .soh-band--method { border-bottom: 0; }
-  .soh-list { max-width: 46rem; padding-left: 0; list-style: none; display: grid; gap: 16px; margin-top: 6px; }
-  .soh-list li { position: relative; padding-left: 28px; font-size: 15px;
-    color: var(--soh-dim); line-height: 1.6; }
-  .soh-list li::before { content:""; position: absolute; left: 0; top: 8px;
-    width: 9px; height: 9px; border: 1.5px solid var(--soh-accent); border-radius: 50%; }
+  .soh-list { max-width: 640px; padding-left: 0; list-style: none; display: grid; gap: 14px; margin-top: 6px; }
+  .soh-list li { position: relative; padding-left: 22px; font-size: 16px;
+    color: var(--ink); line-height: 1.6; }
+  .soh-list li::before { content:""; position: absolute; left: 0; top: 9px;
+    width: 8px; height: 8px; background: var(--signal); }
   .soh-list li b { color: var(--ink); }
-  .soh-cite { font-size: 13.5px; line-height: 1.7; color: var(--soh-dim);
-    background: var(--paper); border: 1px dashed var(--soh-line); border-radius: 12px;
-    padding: 18px 22px; margin-top: 28px; max-width: 46rem; }
+  .soh-cite { font-size: 14px; line-height: 1.7; color: var(--muted);
+    border: 1px solid var(--line); padding: 18px 22px; margin-top: 28px; max-width: 640px; }
   .soh-cite b { color: var(--ink); }
-  .soh-archive { padding-top: 42px; }
+  .soh-archive { padding-top: 38px; }
   .soh-archive ul { list-style: none; padding: 0; display: grid; gap: 8px; }
-  .soh-firstnote, .soh-press { max-width: 46rem; font-size: 14.5px; color: var(--soh-dim);
-    margin-top: 30px; }
-
-  /* ---- Scroll-in animation (JS adds .soh-js; bands rise, bars grow,
-         numbers count). Reduced-motion users never get .soh-js. ---- */
-  .soh-js .soh-band .soh-wrap, .soh-js .soh-hero img { opacity: 0; transform: translateY(18px);
-    transition: opacity .7s ease, transform .7s cubic-bezier(.22,.61,.36,1); }
-  .soh-js .soh-band.in-view .soh-wrap, .soh-js .soh-hero.in-view img { opacity: 1; transform: none; }
-  .soh-js .soh-row__fill { width: 0; transition: width .9s cubic-bezier(.22,.61,.36,1); }
-  .soh-js .in-view .soh-row__fill { width: var(--w); }
-  .soh-js .in-view .soh-row:nth-child(2) .soh-row__fill { transition-delay: .08s; }
-  .soh-js .in-view .soh-row:nth-child(3) .soh-row__fill { transition-delay: .16s; }
-  .soh-js .in-view .soh-row:nth-child(4) .soh-row__fill { transition-delay: .24s; }
-  .soh-js .in-view .soh-row:nth-child(5) .soh-row__fill { transition-delay: .32s; }
-  .soh-js .in-view .soh-row:nth-child(6) .soh-row__fill { transition-delay: .40s; }
-  .soh-js .in-view .soh-row:nth-child(7) .soh-row__fill { transition-delay: .48s; }
+  .soh-firstnote, .soh-press { max-width: 640px; font-size: 15px; color: var(--muted);
+    margin-top: 28px; }
 </style>"""

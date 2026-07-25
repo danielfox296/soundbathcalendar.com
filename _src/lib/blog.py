@@ -21,8 +21,8 @@ Front matter ('---'-delimited `key: value` lines at the top of the file):
     title        required — the H1 and Article headline
     dek          one-line subtitle under the H1
     date         required — YYYY-MM-DD publication date (sort + schema)
-    kind         eyebrow label + index tag ('Essay', 'Roundup'). Defaults to
-                 'Post' on the page and shows no tag on the index.
+    kind         label on the byline line + index card ('Essay',
+                 'Roundup'). Omitted entirely when absent.
     byline       author credit; defaults to the site name. Today that is
                  "Sound Bath Calendar" (Organization author in schema); a
                  personal byline renders as a Person author — Daniel's call.
@@ -203,12 +203,14 @@ def render_post(post, nav_prefix):
     dek = (f'\n    <p class="cal-summary">{esc(post["dek"])}</p>'
            if post.get('dek') else '')
     byline = post.get('byline') or 'Sound Bath Calendar'
+    # CAL-36: no eyebrow (standing ruling) — the kind joins the byline line,
+    # which is where a reader looks for "what is this and who wrote it".
+    kind = f'{esc(post["kind"])} · ' if post.get('kind') else ''
     return f'''<section class="section section--light post">
   <div class="container post-narrow">
     <p class="cal-crumbs"><a href="{nav_prefix}">Calendar</a> &rsaquo; <a href="{nav_prefix}blog/">Blog</a> &rsaquo; {esc(post["title"])}</p>
-    <span class="eyebrow">{esc(post.get('kind') or 'Post')}</span>
     <h1 class="cal-h1">{esc(post["title"])}</h1>{dek}
-    <p class="post-meta">By {esc(byline)} · {esc(fmt_date(post["date"]))}</p>
+    <p class="post-meta">{kind}By {esc(byline)} · {esc(fmt_date(post["date"]))}</p>
     <div class="post-body">
 {render_body(post["body"], nav_prefix)}
     </div>
@@ -218,29 +220,37 @@ def render_post(post, nav_prefix):
 
 
 def render_index(posts, nav_prefix):
+    """The index in the CAL-28 card anatomy (CAL-36): a cover duotone when the
+    post has a committed one, else the type-plate — the same face vocabulary
+    the entity directories use. Cover art is never invented for a post: with
+    no img/blog/<slug>.jpg, the post plates."""
+    from _src.lib import directory
     esc = lambda s: html_mod.escape(s, quote=False)
     rows = []
     for p in posts:
-        dek = (f'\n        <p class="post-item__dek">{esc(p["dek"])}</p>'
+        dek = (f'\n          <p class="post-item__dek">{esc(p["dek"])}</p>'
                if p.get('dek') else '')
-        kind = (f'<span class="post-item__kind">{esc(p["kind"])}</span> · '
-                if p.get('kind') else '')
-        rows.append(f'''      <li class="post-item">
-        <a class="post-item__title" href="{nav_prefix}blog/{p["slug"]}/">{esc(p["title"])}</a>{dek}
-        <p class="post-item__meta">{kind}{esc(fmt_date(p["date"]))}</p>
-      </li>''')
+        kind = (f'{esc(p["kind"])} · ' if p.get('kind') else '')
+        face = directory.portrait_html(
+            'post', p['slug'], p['title'], nav_prefix, cls='cal-card__im',
+            sizes='(max-width: 719px) 92vw, 45vw')
+        rows.append(f'''      <article class="cal-card dir-card post-card">
+        {face}
+        <span class="cal-card__cap">
+          <h2 class="cal-row__name"><a href="{nav_prefix}blog/{p["slug"]}/">{esc(p["title"])}</a></h2>
+          <p class="cal-card__meta">{kind}{esc(fmt_date(p["date"]))}</p>{dek}
+        </span>
+      </article>''')
     listing = ('\n'.join(rows) if rows else
-               '      <li class="post-item"><p class="post-item__dek">'
-               'The first post is on its way.</p></li>')
+               '      <p class="post-item__dek">The first post is on its way.</p>')
     return f'''<section class="section section--light post">
-  <div class="container post-narrow">
+  <div class="container">
     <p class="cal-crumbs"><a href="{nav_prefix}">Calendar</a> &rsaquo; Blog</p>
-    <span class="eyebrow">Blog</span>
     <h1 class="cal-h1">Blog</h1>
     <p class="cal-summary">Writing from the calendar: essays on what an hour of sound actually does, and occasional cuts of the listings showing which venues are busy, what costs nothing, and what only happens once.</p>
-    <ul class="post-list">
+    <div class="cal-rows cal-rows--2 post-list">
 {listing}
-    </ul>
+    </div>
   </div>
 </section>'''
 
@@ -249,41 +259,27 @@ def render_index(posts, nav_prefix):
 # _src/pages/ style.css files). Ink goes through --ink-rgb so dark mode
 # (CAL-14 token flip) holds.
 BLOG_HEAD = '''<style>
+/* CAL-36: posts read in the CAL-34 reading register; the index is the program
+   grid. Everything shared (prose measure, caps heads, signal links, the card
+   anatomy) lives in styles.css — only the post-only pieces are here. */
 .post-narrow { max-width: 48rem; }
-.post-meta { font-size: 0.85rem; color: var(--muted); margin: 0 0 2.2rem; }
-.post-body h2 {
-  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  margin: 2.4rem 0 0.6rem;
-}
-.post-body h3 { font-size: 1.1rem; font-weight: 600; margin: 1.8rem 0 0.5rem; }
-.post-body p { color: var(--ink); line-height: 1.68; margin: 0 0 0.9rem; }
-.post-body ul { margin: 0 0 0.9rem; padding-left: 1.2rem; }
-.post-body li { color: var(--ink); line-height: 1.6; margin: 0 0 0.35rem; }
-/* Blockquote = Daniel's verbatim note. Quiet accent rule, same family as the
-   what-to-expect health note — set apart, never loud. */
-.post-body blockquote {
-  border-left: 3px solid var(--ink);
-  padding: 0.15rem 0 0.15rem 1rem;
-  margin: 1.2rem 0;
-}
-.post-body blockquote p { color: var(--ink); font: 500 1.05rem var(--font-display); }
-.post-cta { margin: 2.2rem 0 0; }
-.post-list { list-style: none; margin: 0.4rem 0 0; padding: 0; }
-.post-item { border-top: 1px solid var(--line); padding: 1.1rem 0 1.2rem; }
-.post-item__title { font: 500 1.2rem var(--font-display); letter-spacing: -0.01em; }
-.post-item__dek { color: var(--ink); line-height: 1.6; margin: 0.35rem 0 0; }
-.post-item__meta { font-size: 0.82rem; color: var(--muted); margin: 0.35rem 0 0; }
-/* The kind tag ("Essay" / "Roundup") — caps micro-furniture on --muted
-   (v5: zero tracking, no accent tokens; CAL-36 owns this surface's full
-   v5 pass). The branch's v4 values (tracked caps, --accent-on-light) were
-   corrected to law at landing. */
-.post-item__kind {
-  font-weight: 600;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  font-size: 0.72rem;
-  color: var(--muted);
-}
+.post .cal-h1 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: 0.95; max-width: 20ch; margin: 0.2rem 0 0; }
+.post .cal-summary { font-size: 24px; line-height: 1.4; color: var(--ink); max-width: 640px; margin: 1.3rem 0 0; }
+.post-meta { font: 700 13px/1.2 var(--font-body); letter-spacing: 0; text-transform: uppercase; color: var(--muted); margin: 1.1rem 0 2.4rem; }
+.post-body { max-width: 640px; }
+.post-body h2 { font-size: 24px; line-height: 1.1; text-transform: uppercase; margin: 2.6rem 0 0.7rem; }
+.post-body h3 { font-size: 19px; text-transform: uppercase; margin: 1.9rem 0 0.5rem; }
+.post-body p { color: var(--ink); font-size: 17px; line-height: 1.65; margin: 0 0 1rem; }
+.post-body ul { margin: 0 0 1rem; padding-left: 1.2rem; }
+.post-body li { color: var(--ink); font-size: 17px; line-height: 1.6; margin: 0 0 0.35rem; }
+.post-body a { color: var(--signal-text); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+/* Blockquote = Daniel's verbatim note — the condensed voice on an ink rule,
+   the same device as the entity pull-quote (CAL-29). */
+.post-body blockquote { border-left: 2px solid var(--ink); padding: 0.15rem 0 0.15rem 1.1rem; margin: 1.4rem 0; }
+.post-body blockquote p { color: var(--ink); font-family: var(--font-display); font-weight: 700; font-stretch: 72%; font-size: 24px; line-height: 1.25; margin: 0; }
+.post-cta { margin: 2.6rem 0 0; }
+/* Index cards: the shared anatomy plus the dek, which the calendar's cards
+   have no equivalent of. */
+.post-list { margin-top: 2rem; }
+.post-item__dek { color: var(--muted); font-size: 16px; line-height: 1.5; margin: 0.5rem 0 0; }
 </style>'''

@@ -429,7 +429,7 @@ def _render_related(slug, built_map, nav_prefix):
 
 
 def render_tag_page(rows, slug, nav_prefix, built_map, now=None, geocode=None):
-    """The <main> body for one tag page: crumb · eyebrow · H1 · stamp · intro ·
+    """The <main> body for one tag page: crumb · H1 · stamp · intro ·
     answer-first summary · filters · the filtered temporal bands · related · FAQ ·
     digest · submission line. Mirrors render_city_page."""
     now = X._now_utc(now)

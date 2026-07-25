@@ -258,6 +258,16 @@ RULE — **entity photos are real-only.** A practitioner portrait or venue photo
 
 ---
 
+### 4.1 The State of Sound report + the blog (CAL-36)
+
+**The report** (`insights.py`) rides the site tokens now — the `--soh-*` ice palette is retired, and with it the `#0A0B0D` band that was hardcoded in both schemes and read as a dead near-black slab on the night ground. Two grounds only (`--paper` / `--surface`), radius 0, zero tracking, no blur or pills. The stats are **data monuments**: condensed-800 numerals at clamp(56–96px) on the surface band, so the report reads as a broadcast rundown. Both photographs are committed duotones (`hero-state-of-sound-i.jpg`, `fig-singing-bowls-i.jpg`) — which is also what retired the dark-mode brightness hacks that kept a daylight landscape from blasting through the night ground. CC0 credits are unchanged: they ride the caption, not the pixels.
+
+RULE — **the frozen-edition law is untouched.** Every figure still renders from `data/insights/*.json`; Dataset + Report + CC-BY schema is byte-compatible; "How these numbers were made" and the press line stay. The IntersectionObserver scroll-reveal is **gone** (CAL-36): a citable artifact must render complete for crawlers, print, and fast scrollers alike — nothing waits on a viewport event to become visible.
+
+**The blog** reads in the reading register (§3.6): detail-clamp H1, 24 dek, 17/1.65 prose, caps section heads, `--signal-text` links, and Daniel's verbatim `> ` notes as condensed-24 pull-quotes on an ink rule. The index is the program grid — a committed cover duotone (`img/blog/<slug>.jpg` → `post-<slug>-{i,c}`) or the type-plate. RULE: **cover art is never invented to fill the grid**; a post with no committed cover plates, exactly like an entity with no photo. Article schema, bylines and dates are unchanged; the post `kind` moved from a retired eyebrow onto the byline line.
+
+---
+
 ## 5 · OG cards (CAL-17)
 
 **Spec:** 1200×630 **JPEG**, quality 82, progressive — photographic cards land ~200KB. Hard cap **< 600KB**: WhatsApp drops link previews above that, which is why these are JPEG, not PNG (`scripts/og.py:113`).

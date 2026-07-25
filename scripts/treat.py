@@ -231,6 +231,22 @@ def main(force=False):
                            w=1300, h=406, small=False)
     print(f'  ok editorial-what-to-expect ({sizes["i"]}+{sizes["c"]}KB)')
 
+    # The State of Sound report's two photographs (CAL-36): the CC0 hero and
+    # the still-life beside the price section, in the house treatment — which
+    # is also what retires the dark-mode brightness hacks that used to keep a
+    # daylight landscape from blasting through the night ground. Credits are
+    # unaffected (they ride the caption, not the pixels).
+    INSIGHTS_SRC = os.path.join(REPO, 'img', 'insights')
+    for stem, fname, w, h in (
+            ('hero-state-of-sound', 'front-range-foothills.jpg', 1600, 900),
+            ('fig-singing-bowls', 'singing-bowls.jpg', 1200, 800)):
+        src = os.path.join(INSIGHTS_SRC, fname)
+        if not os.path.exists(src):
+            continue
+        with Image.open(src) as im:
+            sizes = treat_pair(im, stem, w=w, h=h, small=False)
+        print(f'  ok {stem} ({sizes["i"]}+{sizes["c"]}KB)')
+
     # /what-to-expect/ hero (CAL-34): the same photograph at the page's own
     # 21:10 crop, in the same treatment — the reading page opens in the house
     # register instead of a stray natural photo. -c is written and unused
@@ -245,7 +261,7 @@ def main(force=False):
     pruned = 0
     for name in os.listdir(CARDS_DIR):
         if (not name.endswith('.jpg') or name.startswith('editorial-')
-                or name.startswith('hero-')):
+                or name.startswith('hero-') or name.startswith('fig-')):
             continue
         stem = name.rsplit('-', 1)[0]
         if stem not in keep:
