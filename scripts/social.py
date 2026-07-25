@@ -26,8 +26,9 @@ ON THE EVENT IMAGES: these are the operators' own promotional flyers, which
 the site already renders on-page with attribution and an outbound link. Every
 slide names the operator and the caption's link points at their listing. An
 event with no usable image (about 9% of the feed, plus anything whose CDN
-fetch fails) falls back to a type-only slide on the same ground, which is
-also what a network failure in CI degrades to — never a broken build.
+fetch fails) renders as the site's type tile — a designed poster variant on
+the --surface ground, which is also what a network failure in CI degrades
+to — never a broken build. Event photos ship as the CAL-28 duotone (v5).
 
 Run from the repo root:
 
@@ -40,7 +41,6 @@ import argparse
 import html
 import io
 import json
-import math
 import os
 import re
 import sys
@@ -54,8 +54,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from _src.lib.datetime_fmt import DENVER, fmt_time, parse_iso  # noqa: E402
 from scripts.social_theme import (  # noqa: E402
-    ACCENT, H, INK, MARGIN, MUTED, RULE, W,
-    font, ground, palette_for,
+    H, INK, LINE, LINE_SURFACE, MARGIN, MUTED, SCHEME, SIGNAL_TEXT, SURFACE, W,
+    duotone, font, ground, slab, slab_h,
 )
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -128,18 +128,28 @@ MAX_MENTIONS = 10
 
 
 # ---------- text helpers ----------
+#
+# v5 chrome (CAL-37): the ∿ wave and the tracked eyebrow are retired — the
+# mark is dead sitewide and the tracking law (§1.3) allows no positive
+# letter-spacing. Their slot is taken by the wordmark line (quiet, ink or
+# muted) and the card's ONE coral slab kicker.
 
-def _wave(draw, x, y, width=60, amp=7, color=ACCENT):
-    pts = [(x + i, y + amp * math.sin(i / width * 2 * math.pi))
-           for i in range(0, width + 1, 2)]
-    draw.line(pts, fill=color, width=3)
+WORDMARK = 'SOUND BATH CALENDAR'
+KICKER_F = (31, 700)               # the slab kicker voice, every kind
+WORDMARK_Y = 96
 
 
-def _eyebrow(draw, x, y, text, f, tracking=3, color=ACCENT):
-    for ch in text:
-        draw.text((x, y), ch, font=f, fill=color)
-        x += draw.textlength(ch, font=f) + tracking
-    return x
+def _wordmark(draw, color=INK, y=WORDMARK_Y):
+    draw.text((MARGIN, y), WORDMARK, font=font(30, 700), fill=color)
+
+
+def _kicker(draw, text, y=WORDMARK_Y, size=None):
+    """The card's one coral slab, at the old eyebrow station. Clips chrome
+    text (an essay title, a long name) with an ellipsis — slab text is
+    furniture, never verbatim prose. Returns the slab's bottom edge."""
+    f = font(*(KICKER_F if size is None else (size, 700)))
+    text = _fit(draw, text, f, COL - 36)
+    return slab(draw, MARGIN, y, text, f)[1]
 
 
 def _wrap(draw, text, f, max_w, max_lines):
@@ -171,35 +181,24 @@ def _fit(draw, text, f, max_w):
     return lines[0] if lines else ''
 
 
-def _eyebrow_text(draw, text, f, max_w, tracking=3):
-    """Clip an eyebrow string to what fits `max_w` at the tracked pitch —
-    _eyebrow draws char by char and has no wrap, so a long essay title would
-    otherwise run off the right margin."""
-    out, x = '', 0.0
-    for ch in text:
-        adv = draw.textlength(ch, font=f) + tracking
-        if x + adv > max_w:
-            break
-        out += ch
-        x += adv
-    return out
-
-
-def _fit_block(draw, text, weight, max_w, max_h, sizes, max_lines):
+def _fit_block(draw, text, weight, max_w, max_h, sizes, max_lines,
+               width=100, lh=1.2):
     """Largest font from `sizes` (try in the given, descending, order) whose
     wrap fits inside max_lines AND max_h WITHOUT ellipsis. Returns (font, lines).
 
     The no-ellipsis rule matters: excerpt and quote text is verbatim from the
     essays, so dropping a trailing word to make it fit is not allowed — we
-    shrink the type instead. Falls back to the smallest size if nothing fits."""
+    shrink the type instead. Falls back to the smallest size if nothing fits.
+    `width` is the Archivo wdth axis (72 for monuments); `lh` must match the
+    line advance the caller will draw with, or the height check lies."""
     for size in sizes:
-        f = font(size, weight)
+        f = font(size, weight, width)
         lines = _wrap(draw, text, f, max_w, max_lines)
-        line_h = round(f.size * 1.2)
+        line_h = round(f.size * lh)
         if (len(lines) <= max_lines and len(lines) * line_h <= max_h
                 and not lines[-1].endswith('…')):
             return f, lines
-    f = font(sizes[-1], weight)
+    f = font(sizes[-1], weight, width)
     return f, _wrap(draw, text, f, max_w, max_lines)
 
 
@@ -454,158 +453,191 @@ def _credit(event):
 
 # ---------- slide chrome ----------
 
-def _footer(d, left=None, right=None, right_color=ACCENT):
+def _footer(d, left=None, right=None, right_color=MUTED, line=LINE):
+    """Hairline + the domain, ink; the right slot is a muted cue unless a
+    Free/Donation mark claims its coral."""
     f_foot = font(28, 500)
     y = H - MARGIN - 30
-    d.line([(MARGIN, y - 30), (W - MARGIN, y - 30)], fill=RULE, width=2)
-    d.text((MARGIN, y), left or 'soundbathcalendar.com', font=f_foot, fill=ACCENT)
+    d.line([(MARGIN, y - 30), (W - MARGIN, y - 30)], fill=line, width=2)
+    d.text((MARGIN, y), left or 'soundbathcalendar.com', font=f_foot, fill=INK)
     if right:
         d.text((W - MARGIN - d.textlength(right, font=f_foot), y),
                right, font=f_foot, fill=right_color)
 
 
+def _price_mark(price):
+    """(text, color) for the footer price slot. Free/Donation is the one
+    sanctioned coral TEXT mark (§1.1); a priced session rides ink."""
+    p = (price or '').strip()
+    if not p:
+        return None, MUTED
+    if p.lower().startswith(('free', 'donation')):
+        return p, SIGNAL_TEXT
+    return p, INK
+
+
 # ---------- slides ----------
 
-def slide_cover(palette, day, rows, kind):
-    """Near-textless opener: the count, the date, and a swipe cue."""
-    img = ground(palette, rotate=0)
+def slide_cover(day, rows, kind):
+    """Near-textless opener, OG-card anatomy: the coral slab carries the
+    date, the count runs as a condensed-caps monument, the cities as a muted
+    sub. The one slab on this card is the date (the ticket's 'coral slab
+    date')."""
+    img = ground()
     d = ImageDraw.Draw(img)
-
-    _wave(d, MARGIN, 116)
-    _eyebrow(d, MARGIN + 80, 100, 'SOUND BATH CALENDAR', font(26, 600))
+    _wordmark(d)
 
     if kind == 'weekend':
         headline = f'{_count_word(len(rows))} sound baths this weekend'
-        sub = f'{_short_stamp(day)} – {_short_stamp(day + timedelta(days=2))}'
+        date_line = f'{_short_stamp(day)} – {_short_stamp(day + timedelta(days=2))}'
     else:
         headline = _headline(rows)
-        sub = _stamp(day)
-    cities = _cities(rows)
-    if cities:
-        sub = f'{sub} · {_city_line(cities)}'
+        date_line = _stamp(day)
+    cities = _city_line(_cities(rows))
 
-    f_head = font(104, 500)
-    lines = _wrap(d, headline, f_head, COL, 4)
-    if len(lines) > 3:
-        f_head = font(86, 500)
-        lines = _wrap(d, headline, f_head, COL, 3)
-    line_h = round(f_head.size * 1.12)
+    f_head, lines = _fit_block(d, headline.upper(), 800, COL, 640,
+                               [148, 132, 118, 104, 92], 4, width=72, lh=1.0)
+    line_h = round(f_head.size * 1.0)
 
-    block_h = len(lines) * line_h + 70
-    y = max(300, (H - block_h) // 2 - 40)
+    f_date = font(40, 700)
+    date_h = slab_h(d, f_date)
+    block_h = date_h + 40 + len(lines) * line_h + (58 if cities else 0)
+    y = max(280, (H - block_h) // 2 - 40)
+
+    slab(d, MARGIN, y, date_line.upper(), f_date)
+    y += date_h + 40
     for line in lines:
         d.text((MARGIN, y), line, font=f_head, fill=INK)
         y += line_h
-    d.text((MARGIN, y + 24), sub, font=font(38, 500), fill=MUTED)
+    if cities:
+        d.text((MARGIN, y + 18), cities, font=font(38, 500), fill=MUTED)
 
     _footer(d, right='swipe →')
     return img
 
 
-def slide_event(palette, event, rotate, photo):
-    """One session. Photo band on top, pastel panel below.
+def slide_event(event, photo):
+    """One session. Duotoned photo band on top, Night panel below — the same
+    committed derivative treatment the site's Program Grid cards carry, so a
+    shared card and the site read as one system.
 
-    A panel rather than a scrim over a full-bleed photo: a dark scrim is what
-    the ink cards did, and it would fight the pastel identity on every slide.
-    The panel also keeps type legibility independent of whatever the operator
-    happened to upload.
+    The slide's one coral slab is the TIME — the decision datum, the card
+    translation of the site's white-on-coral live slab. The name is the
+    condensed-caps card-name voice (wdth 78); meta rides muted.
+
+    An event with no usable image renders as the site's TYPE TILE instead: a
+    solid --surface poster, name set large and anchored bottom-left — a
+    designed variant, not a fallback state.
     """
-    img = ground(palette, rotate=rotate)
+    tile = photo is None
+    img = ground(SURFACE) if tile else ground()
     d = ImageDraw.Draw(img)
 
-    if photo is not None:
-        img.paste(_cover_crop(photo, (W, PHOTO_H)), (0, 0))
-        d.line([(0, PHOTO_H), (W, PHOTO_H)], fill=RULE, width=2)
-        f_time, f_name, f_meta, name_lines_max = (
-            font(44, 600), font(56, 500), font(34, 400), 2)
-    else:
-        # Type-only fallback: no photo band, so the name is set large and the
-        # block is centred in the card. Anchoring it at the top instead left
-        # two thirds of the slide visibly empty.
-        _wave(d, MARGIN, 116)
-        _eyebrow(d, MARGIN + 80, 100, 'SOUND BATH CALENDAR', font(26, 600))
-        f_time, f_name, f_meta, name_lines_max = (
-            font(48, 600), font(80, 500), font(36, 400), 3)
-
-    name_lines = _wrap(d, event['name'], f_name, COL, name_lines_max)
-    name_h = round(f_name.size * 1.16)
+    time_text = fmt_time(event['starts_at']).upper()
+    f_time = font(40, 700)
     credit = _credit(event)
 
-    block_h = (round(f_time.size * 1.36) + len(name_lines) * name_h + 10
-               + round(f_meta.size * 1.36) + (round(f_meta.size * 1.2) if credit else 0))
-    if photo is not None:
-        y = PHOTO_H + max(40, (H - PHOTO_H - 96 - block_h) // 2)
+    if not tile:
+        img.paste(duotone(_cover_crop(photo, (W, PHOTO_H))), (0, 0))
+        f_name, f_meta, name_lines_max = font(58, 750, 78), font(34, 400), 2
     else:
-        y = max(300, (H - block_h) // 2 - 40)
+        _wordmark(d, color=MUTED)
+        f_name, f_meta, name_lines_max = font(84, 750, 78), font(36, 400), 3
 
-    d.text((MARGIN, y), fmt_time(event['starts_at']).lower(), font=f_time, fill=ACCENT)
-    y += round(f_time.size * 1.36)
+    name_lines = _wrap(d, event['name'].upper(), f_name, COL, name_lines_max)
+    name_h = round(f_name.size * 1.06)
+
+    time_h = slab_h(d, f_time)
+    block_h = (time_h + 26 + len(name_lines) * name_h + 14
+               + round(f_meta.size * 1.36)
+               + (round(f_meta.size * 1.36) if credit else 0))
+    if not tile:
+        y = PHOTO_H + max(44, (H - PHOTO_H - 96 - block_h) // 2)
+    else:
+        # Bottom-anchored above the footer, the way the site tile sets its
+        # caption bottom-left.
+        y = (H - MARGIN - 60) - 44 - block_h
+
+    slab(d, MARGIN, y, time_text, f_time)
+    y += time_h + 26
 
     for line in name_lines:
         d.text((MARGIN, y), line, font=f_name, fill=INK)
         y += name_h
 
-    y += 10
+    y += 14
     d.text((MARGIN, y), _where(d, event, f_meta, COL), font=f_meta, fill=MUTED)
     y += round(f_meta.size * 1.36)
 
     if credit:
         d.text((MARGIN, y), _fit(d, credit, f_meta, COL), font=f_meta, fill=MUTED)
 
-    _footer(d, right=(event.get('price') or '').strip() or None)
+    price, price_color = _price_mark(event.get('price'))
+    _footer(d, right=price, right_color=price_color,
+            line=LINE_SURFACE if tile else LINE)
     return img
 
 
-def slide_day_list(palette, day, rows, rotate, limit=6):
-    """A weekend slide: one day, listed short."""
-    img = ground(palette, rotate=rotate)
+def slide_day_list(day, rows, limit=6):
+    """A weekend slide: one day, listed short, in the site's day-head
+    anatomy — a condensed-caps date monument with the computed count over a
+    2px ink rule. The card's one slab is the THIS WEEKEND kicker; the day
+    head itself stays ink (only the site's LIVE day earns a slab head)."""
+    img = ground()
     d = ImageDraw.Draw(img)
+    _kicker(d, 'THIS WEEKEND')
 
-    _wave(d, MARGIN, 116)
-    _eyebrow(d, MARGIN + 80, 100, day.strftime('%A').upper(), font(26, 600))
+    f_head = font(78, 800, 72)
+    d.text((MARGIN, 190), _stamp(day).upper(), font=f_head, fill=INK)
+    n = len(rows)
+    ct = f'{n} session{"" if n == 1 else "s"}'
+    f_ct = font(30, 400)
+    d.text((W - MARGIN - d.textlength(ct, font=f_ct), 238), ct,
+           font=f_ct, fill=MUTED)
+    d.line([(MARGIN, 300), (W - MARGIN, 300)], fill=INK, width=2)
 
-    d.text((MARGIN, 186), _stamp(day), font=font(64, 500), fill=INK)
-    d.line([(MARGIN, 292), (W - MARGIN, 292)], fill=RULE, width=2)
-
-    f_time, f_name, f_venue = font(38, 600), font(44, 500), font(30, 400)
-    time_col = round(max(d.textlength(fmt_time(e['starts_at']).lower(), font=f_time)
-                         for e in rows[:limit]) + 28)
+    f_time, f_name, f_venue = font(36, 600), font(44, 750, 78), font(30, 400)
+    time_col = round(max(d.textlength(fmt_time(e['starts_at']).upper(), font=f_time)
+                         for e in rows[:limit]) + 30)
     name_w = COL - time_col
 
     # Centre the list between the rule and the footer, so a three-session day
     # doesn't leave the bottom half of the slide empty.
     shown = rows[:limit]
     block_h = len(shown) * 122 + (44 if len(rows) > limit else 0)
-    y = 356 + max(0, ((H - 150) - 356 - block_h) // 2)
+    y = 360 + max(0, ((H - 150) - 360 - block_h) // 2)
     for e in shown:
-        d.text((MARGIN, y + 4), fmt_time(e['starts_at']).lower(), font=f_time, fill=ACCENT)
-        d.text((MARGIN + time_col, y), _fit(d, e['name'], f_name, name_w),
+        d.text((MARGIN, y + 6), fmt_time(e['starts_at']).upper(),
+               font=f_time, fill=INK)
+        d.text((MARGIN + time_col, y), _fit(d, e['name'].upper(), f_name, name_w),
                font=f_name, fill=INK)
-        d.text((MARGIN + time_col, y + 54), _where(d, e, f_venue, name_w),
+        d.text((MARGIN + time_col, y + 56), _where(d, e, f_venue, name_w),
                font=f_venue, fill=MUTED)
         y += 122
 
     if len(rows) > limit:
         d.text((MARGIN + time_col, y), f'+{len(rows) - limit} more on the site',
-               font=f_venue, fill=ACCENT)
+               font=f_venue, fill=MUTED)
 
-    _footer(d, right=_city_line(_cities(rows)) or None, right_color=MUTED)
+    _footer(d, right=_city_line(_cities(rows)) or None)
     return img
 
 
-def slide_overflow(palette, count, rotate):
-    """Closer for a day too long for one carousel."""
-    img = ground(palette, rotate=rotate)
+def slide_overflow(count):
+    """Closer for a day too long for one carousel. Monument only — no slab;
+    the budget is a maximum, and this card's job is a quiet handoff."""
+    img = ground()
     d = ImageDraw.Draw(img)
-    _wave(d, MARGIN, 116)
-    _eyebrow(d, MARGIN + 80, 100, 'SOUND BATH CALENDAR', font(26, 600))
+    _wordmark(d)
 
-    f_head = font(96, 500)
-    lines = _wrap(d, f'+{count} more sound baths today', f_head, COL, 3)
-    y = (H - len(lines) * round(f_head.size * 1.12)) // 2 - 60
+    f_head, lines = _fit_block(d, f'+{count} more sound baths today'.upper(),
+                               800, COL, 560, [132, 116, 102, 90], 3,
+                               width=72, lh=1.0)
+    line_h = round(f_head.size * 1.0)
+    y = (H - len(lines) * line_h) // 2 - 60
     for line in lines:
         d.text((MARGIN, y), line, font=f_head, fill=INK)
-        y += round(f_head.size * 1.12)
+        y += line_h
     d.text((MARGIN, y + 24), 'Times, tickets and directions on the site',
            font=font(36, 400), fill=MUTED)
     _footer(d)
@@ -681,7 +713,6 @@ def build_daily(events, day, quiet=False):
             print(f'  -- {day}: no approved sessions, skipping')
         return None
 
-    palette = palette_for(day)
     stamp = day.isoformat()
     folder = f'img/social/{stamp}'
 
@@ -689,20 +720,20 @@ def build_daily(events, day, quiet=False):
     shown = rows if len(rows) <= room else rows[:room - 1]
     overflow = len(rows) - len(shown)
 
-    slides = [_write(slide_cover(palette, day, rows, 'daily'), f'{folder}/01-cover.jpg')]
+    slides = [_write(slide_cover(day, rows, 'daily'), f'{folder}/01-cover.jpg')]
     photos_used = 0
     for i, event in enumerate(shown, start=2):
         photo = fetch_image(event.get('image_url', ''))
         photos_used += photo is not None
-        slides.append(_write(slide_event(palette, event, i % 4, photo),
+        slides.append(_write(slide_event(event, photo),
                              f'{folder}/{i:02d}-event.jpg'))
     if overflow:
-        slides.append(_write(slide_overflow(palette, overflow, 0),
+        slides.append(_write(slide_overflow(overflow),
                              f'{folder}/{len(slides) + 1:02d}-more.jpg'))
 
     fb, ig = captions(day, rows, 'daily')
     manifest = {
-        'date': stamp, 'kind': 'daily', 'palette': palette,
+        'date': stamp, 'kind': 'daily', 'palette': SCHEME,
         'slides': slides, 'event_count': len(rows),
         'sessions_on_slides': len(shown), 'photos_used': photos_used,
         'cities': _cities(rows), 'landing_url': _landing_url(_cities(rows)),
@@ -711,7 +742,7 @@ def build_daily(events, day, quiet=False):
     _write_manifest(f'img/social/{stamp}.json', manifest)
     if not quiet:
         print(f'  ok {folder} — {len(slides)} slides, {len(rows)} session(s), '
-              f'{photos_used}/{len(shown)} with photos, palette {palette}')
+              f'{photos_used}/{len(shown)} with photos')
     return manifest
 
 
@@ -726,19 +757,18 @@ def build_weekend(events, thursday, quiet=False):
             print(f'  -- weekend of {days[0]}: no approved sessions, skipping')
         return None
 
-    palette = palette_for(thursday)
     stamp = thursday.isoformat()
     folder = f'img/social/{stamp}-weekend'
 
-    slides = [_write(slide_cover(palette, days[0], rows, 'weekend'),
+    slides = [_write(slide_cover(days[0], rows, 'weekend'),
                      f'{folder}/01-cover.jpg')]
     for i, (d_, day_rows) in enumerate(per_day, start=2):
-        slides.append(_write(slide_day_list(palette, d_, day_rows, i % 4),
+        slides.append(_write(slide_day_list(d_, day_rows),
                              f'{folder}/{i:02d}-{d_.strftime("%a").lower()}.jpg'))
 
     fb, ig = captions(days[0], rows, 'weekend', per_day)
     manifest = {
-        'date': stamp, 'kind': 'weekend', 'palette': palette,
+        'date': stamp, 'kind': 'weekend', 'palette': SCHEME,
         'slides': slides, 'event_count': len(rows),
         'days': [d_.isoformat() for d_, _ in per_day],
         'cities': _cities(rows), 'landing_url': _landing_url(_cities(rows)),
@@ -747,7 +777,7 @@ def build_weekend(events, thursday, quiet=False):
     _write_manifest(f'img/social/{stamp}-weekend.json', manifest)
     if not quiet:
         print(f'  ok {folder} — {len(slides)} slides, {len(rows)} session(s) '
-              f'across {len(per_day)} day(s), palette {palette}')
+              f'across {len(per_day)} day(s)')
     return manifest
 
 
@@ -825,47 +855,46 @@ def _first_name(name):
     return (name or '').split()[0] if name else 'them'
 
 
-def slide_practitioner_cover(palette, p):
-    """Portrait band + name. The face is the hook, so it gets the top half."""
-    img = ground(palette, rotate=0)
+def slide_practitioner_cover(p):
+    """Portrait band + name. The face is the hook, so it gets the top half —
+    duotoned like every card image, so the spotlight and the site's cards
+    are one treatment. The slab is the PRACTITIONER kicker."""
+    img = ground()
     d = ImageDraw.Draw(img)
     try:
         photo = Image.open(p['_photo']).convert('RGB')
-        img.paste(_cover_crop(photo, (W, PHOTO_H)), (0, 0))
-        d.line([(0, PHOTO_H), (W, PHOTO_H)], fill=RULE, width=2)
+        img.paste(duotone(_cover_crop(photo, (W, PHOTO_H))), (0, 0))
     except (OSError, ValueError):
         pass
 
-    y = PHOTO_H + 54
-    _wave(d, MARGIN, y + 6)
-    _eyebrow(d, MARGIN + 80, y - 8, 'PRACTITIONER', font(26, 600))
-    y += 58
+    y = PHOTO_H + 44
+    y = _kicker(d, 'PRACTITIONER', y=y) + 30
 
-    f_name = font(72, 500)
-    for line in _wrap(d, p.get('name', ''), f_name, COL, 2):
+    f_name = font(74, 800, 72)
+    for line in _wrap(d, p.get('name', '').upper(), f_name, COL, 2):
         d.text((MARGIN, y), line, font=f_name, fill=INK)
-        y += round(f_name.size * 1.12)
+        y += round(f_name.size * 1.02)
 
     essence = _first_sentence(p.get('bio', ''))
     if essence:
-        for line in _wrap(d, essence, font(34, 400), COL, 2):
-            d.text((MARGIN, y + 6), line, font=font(34, 400), fill=MUTED)
-            y += 44
+        y += 10
+        for line in _wrap(d, essence, font(32, 400), COL, 2):
+            d.text((MARGIN, y), line, font=font(32, 400), fill=MUTED)
+            y += 42
     _footer(d, right='swipe →')
     return img
 
 
-def slide_practitioner_bio(palette, p, rotate):
-    """Their story, in their own words. A pulled quote gets set large; the
-    rest of the bio runs beneath it."""
-    img = ground(palette, rotate=rotate)
+def slide_practitioner_bio(p):
+    """Their story, in their own words — verbatim, so it stays sentence-case
+    text voice, never caps. A pulled quote gets set large in ink; the rest
+    of the bio runs beneath it, muted."""
+    img = ground()
     d = ImageDraw.Draw(img)
-    _wave(d, MARGIN, 116)
-    _eyebrow(d, MARGIN + 80, 100, _first_name(p.get('name')).upper(), font(26, 600))
+    y = _kicker(d, _first_name(p.get('name')).upper()) + 50
 
     bio = ' '.join((p.get('bio') or '').split())
     quote = _pull_quote(bio)
-    y = 210
     if quote:
         # Drop the quote from the running body so it is not said twice.
         bio = bio.replace(f'“{quote}”', '').replace(f'"{quote}"', '').strip(' ,.')
@@ -883,31 +912,31 @@ def slide_practitioner_bio(palette, p, rotate):
     return img
 
 
-def slide_practitioner_find(palette, p, rotate, session):
+def slide_practitioner_find(p, session):
     """Where to find them: next session if there is one, plus their own links.
 
     The block is measured and vertically centred, because whether a person has
     an upcoming session swings the content between full and sparse — a fixed
     top anchor left the no-session version stranded above a half-empty card.
     """
-    img = ground(palette, rotate=rotate)
+    img = ground()
     d = ImageDraw.Draw(img)
-    _wave(d, MARGIN, 116)
-    _eyebrow(d, MARGIN + 80, 100, 'WHERE TO FIND THEM', font(26, 600))
+    _kicker(d, 'WHERE TO FIND THEM')
 
-    f_title = font(72, 500)
-    f_lead = font(28, 600)
-    f_big = font(38, 500)
+    f_title = font(84, 800, 72)
+    f_lead = font(28, 700)
+    f_big = font(40, 600)
     f_body = font(34, 400)
     f_small = font(30, 400)
 
     # Build the block as (font, colour, text) rows, then measure and centre.
-    rows = [(f_title, INK, f'Find {_first_name(p.get("name"))}'), (None, None, 24)]
+    rows = [(f_title, INK, f'FIND {_first_name(p.get("name")).upper()}'),
+            (None, None, 24)]
     when = parse_iso(session['starts_at']).astimezone(DENVER) if session else None
     if session:
         rows += [
-            (f_lead, ACCENT, 'NEXT SESSION'),
-            (f_big, INK, f'{when.strftime("%a %b %-d")} · {fmt_time(session["starts_at"]).lower()}'),
+            (f_lead, MUTED, 'NEXT SESSION'),
+            (f_big, INK, f'{when.strftime("%a %b %-d")} · {fmt_time(session["starts_at"]).upper()}'),
             (f_body, MUTED, _fit(d, session.get('name', ''), f_body, COL)),
             (f_small, MUTED, _fit(d, _where(d, session, f_small, COL), f_small, COL)),
             (None, None, 40),
@@ -976,27 +1005,26 @@ def build_practitioner(events, day, quiet=False):
             print(f'  -- {day}: no practitioner with a photo, skipping')
         return None
 
-    palette = palette_for(day)
     stamp = day.isoformat()
     slug = p['slug']
     folder = f'img/social/{stamp}-practitioner'
     session = practitioner_next_session(events, p.get('name', ''), day)
 
     slides = [
-        _write(slide_practitioner_cover(palette, p), f'{folder}/01-cover.jpg'),
-        _write(slide_practitioner_bio(palette, p, 2), f'{folder}/02-story.jpg'),
-        _write(slide_practitioner_find(palette, p, 3, session), f'{folder}/03-find.jpg'),
+        _write(slide_practitioner_cover(p), f'{folder}/01-cover.jpg'),
+        _write(slide_practitioner_bio(p), f'{folder}/02-story.jpg'),
+        _write(slide_practitioner_find(p, session), f'{folder}/03-find.jpg'),
     ]
     fb, ig = practitioner_captions(p, session)
     manifest = {
-        'date': stamp, 'kind': 'practitioner', 'palette': palette,
+        'date': stamp, 'kind': 'practitioner', 'palette': SCHEME,
         'slides': slides, 'practitioner': p.get('name', ''), 'slug': slug,
         'landing_url': f'{SITE_URL}/practitioner/{slug}/',
         'caption_facebook': fb, 'caption_instagram': ig,
     }
     _write_manifest(f'img/social/{stamp}-practitioner.json', manifest)
     if not quiet:
-        print(f'  ok {folder} — {p.get("name")}, palette {palette}'
+        print(f'  ok {folder} — {p.get("name")}'
               f'{" (+next session)" if session else ""}')
     return manifest
 
@@ -1193,16 +1221,17 @@ def quote_for(day):
 
 # ---------- blog slides ----------
 
-def slide_blog_cover(palette, title, hook):
-    """Essay title + hook. No photo — the type is the hero, on the pastel."""
-    img = ground(palette, rotate=0)
+def slide_blog_cover(title, hook):
+    """Essay title + hook. No photo — the title is a condensed-caps monument
+    on the Night ground, the hook the muted text voice. Slab: FROM THE
+    JOURNAL."""
+    img = ground()
     d = ImageDraw.Draw(img)
-    _wave(d, MARGIN, 116)
-    _eyebrow(d, MARGIN + 80, 100, 'FROM THE JOURNAL', font(26, 600))
+    _kicker(d, 'FROM THE JOURNAL')
 
-    f_title, lines = _fit_block(d, title, 500, COL, 560,
-                                [104, 92, 80, 70, 60], 4)
-    line_h = round(f_title.size * 1.1)
+    f_title, lines = _fit_block(d, title.upper(), 800, COL, 560,
+                                [116, 102, 90, 78, 66], 4, width=72, lh=1.0)
+    line_h = round(f_title.size * 1.0)
     hook_lines = _wrap(d, hook, font(36, 400), COL, 4) if hook else []
     hook_h = len(hook_lines) * round(36 * 1.34) + (34 if hook_lines else 0)
     block_h = len(lines) * line_h + hook_h
@@ -1220,12 +1249,15 @@ def slide_blog_cover(palette, title, hook):
     return img
 
 
-def slide_blog_passage(palette, passage, eyebrow, rotate):
-    """One verbatim excerpt, set as large as it fits and vertically centred."""
-    img = ground(palette, rotate=rotate)
+def slide_blog_passage(passage, eyebrow):
+    """One verbatim excerpt, set as large as it fits and vertically centred.
+    The excerpt is the essay's own prose, so it keeps the sentence-case text
+    voice in ink — caps are for chrome, never for quoted writing. The slab
+    carries the essay title, so a reshared middle slide still names its
+    source."""
+    img = ground()
     d = ImageDraw.Draw(img)
-    _wave(d, MARGIN, 116)
-    _eyebrow(d, MARGIN + 80, 100, eyebrow, font(26, 600))
+    _kicker(d, eyebrow)
 
     top, bottom = 250, H - 170
     f, lines = _fit_block(d, passage, 500, COL, bottom - top,
@@ -1240,21 +1272,21 @@ def slide_blog_passage(palette, passage, eyebrow, rotate):
     return img
 
 
-def slide_blog_close(palette, title, slug, rotate):
+def slide_blog_close(title, slug):
     """Closer: the title again and the call to read it. Link in bio."""
-    img = ground(palette, rotate=rotate)
+    img = ground()
     d = ImageDraw.Draw(img)
-    _wave(d, MARGIN, 116)
-    _eyebrow(d, MARGIN + 80, 100, 'READ THE FULL PIECE', font(26, 600))
+    _kicker(d, 'READ THE FULL PIECE')
 
-    f_head, lines = _fit_block(d, title, 500, COL, 520, [88, 76, 66, 58], 4)
-    line_h = round(f_head.size * 1.12)
+    f_head, lines = _fit_block(d, title.upper(), 800, COL, 520,
+                               [98, 86, 74, 64], 4, width=72, lh=1.0)
+    line_h = round(f_head.size * 1.0)
     block_h = len(lines) * line_h + 90
     y = max(300, (H - block_h) // 2 - 20)
     for line in lines:
         d.text((MARGIN, y), line, font=f_head, fill=INK)
         y += line_h
-    d.text((MARGIN, y + 30), 'Link in bio', font=font(42, 500), fill=ACCENT)
+    d.text((MARGIN, y + 30), 'Link in bio', font=font(40, 600), fill=INK)
 
     _footer(d, left='soundbathcalendar.com', right=f'/{slug}')
     return img
@@ -1262,32 +1294,31 @@ def slide_blog_close(palette, title, slug, rotate):
 
 # ---------- quote card ----------
 
-def slide_quote(palette, line, essay_title):
-    """A single 4:5 card: one line centred large, attributed. No swipe cue —
+def slide_quote(line, essay_title):
+    """A single 4:5 card: one verbatim line set large, attributed. Left-set
+    like every v5 surface, sentence case because the words are the essay's
+    own. The slab is the wordmark — on a card that IS a quotation, the
+    calendar's name is the one piece of chrome that matters. No swipe cue —
     this is a one-slide post, not a carousel."""
-    img = ground(palette, rotate=0)
+    img = ground()
     d = ImageDraw.Draw(img)
-    _wave(d, (W - 60) // 2, 190)
+    _kicker(d, WORDMARK)
 
-    top, bottom = 300, H - 300
+    top, bottom = 280, H - 300
     f, lines = _fit_block(d, f'“{line}”', 500, COL, bottom - top,
                           [96, 84, 74, 64, 56, 48, 42], 8)
     line_h = round(f.size * 1.2)
     y = top + max(0, (bottom - top - len(lines) * line_h) // 2)
     for ln in lines:
-        w = d.textlength(ln, font=f)
-        d.text(((W - w) // 2, y), ln, font=f, fill=INK)
+        d.text((MARGIN, y), ln, font=f, fill=INK)
         y += line_h
 
-    fa = font(30, 500)
-    attrib = 'soundbathcalendar.com'
-    wa = d.textlength(attrib, font=fa)
-    d.text(((W - wa) // 2, y + 46), attrib, font=fa, fill=ACCENT)
+    d.text((MARGIN, y + 46), '— soundbathcalendar.com', font=font(30, 500),
+           fill=INK)
     if essay_title:
         fe = font(28, 400)
-        et = _fit(d, f'from “{essay_title}”', fe, COL)
-        we = d.textlength(et, font=fe)
-        d.text(((W - we) // 2, y + 96), et, font=fe, fill=MUTED)
+        d.text((MARGIN, y + 96), _fit(d, f'from “{essay_title}”', fe, COL),
+               font=fe, fill=MUTED)
     return img
 
 
@@ -1337,32 +1368,28 @@ def build_blog(events, day, quiet=False):
             print(f'  -- {day}: essay {slug} yielded no passages, skipping')
         return None
 
-    palette = palette_for(day)
     stamp = day.isoformat()
     folder = f'img/social/{stamp}-blog'
-    # A blank scratch canvas for text measurement — cheaper than rendering a
-    # mesh ground just to size the eyebrow.
-    eyebrow = _eyebrow_text(ImageDraw.Draw(Image.new('RGB', (W, H))),
-                            title.upper(), font(26, 600), COL - 90)
 
-    slides = [_write(slide_blog_cover(palette, title, hook), f'{folder}/01-cover.jpg')]
+    slides = [_write(slide_blog_cover(title, hook), f'{folder}/01-cover.jpg')]
     for i, passage in enumerate(passages, start=2):
-        slides.append(_write(slide_blog_passage(palette, passage, eyebrow, i % 4),
+        # The kicker slab clips a long title itself, so it goes in raw.
+        slides.append(_write(slide_blog_passage(passage, title.upper()),
                              f'{folder}/{i:02d}-passage.jpg'))
     n = len(slides) + 1
-    slides.append(_write(slide_blog_close(palette, title, slug, n % 4),
+    slides.append(_write(slide_blog_close(title, slug),
                          f'{folder}/{n:02d}-read.jpg'))
 
     fb, ig = blog_captions(title, hook, slug)
     manifest = {
-        'date': stamp, 'kind': 'blog', 'palette': palette,
+        'date': stamp, 'kind': 'blog', 'palette': SCHEME,
         'slides': slides, 'essay': slug, 'title': title,
         'landing_url': f'{SITE_URL}/{slug}/',
         'caption_facebook': fb, 'caption_instagram': ig,
     }
     _write_manifest(f'img/social/{stamp}-blog.json', manifest)
     if not quiet:
-        print(f'  ok {folder} — “{title}”, {len(slides)} slides, palette {palette}')
+        print(f'  ok {folder} — “{title}”, {len(slides)} slides')
     return manifest
 
 
@@ -1375,21 +1402,20 @@ def build_quote(events, day, quiet=False):
     except OSError:
         title = ''
 
-    palette = palette_for(day)
     stamp = day.isoformat()
     folder = f'img/social/{stamp}-quote'
-    slides = [_write(slide_quote(palette, line, title), f'{folder}/01-quote.jpg')]
+    slides = [_write(slide_quote(line, title), f'{folder}/01-quote.jpg')]
 
     fb, ig = quote_captions(line, title, slug)
     manifest = {
-        'date': stamp, 'kind': 'quote', 'palette': palette,
+        'date': stamp, 'kind': 'quote', 'palette': SCHEME,
         'slides': slides, 'essay': slug, 'quote': line, 'title': title,
         'landing_url': f'{SITE_URL}/{slug}/',
         'caption_facebook': fb, 'caption_instagram': ig,
     }
     _write_manifest(f'img/social/{stamp}-quote.json', manifest)
     if not quiet:
-        print(f'  ok {folder} — quote from {slug}, palette {palette}')
+        print(f'  ok {folder} — quote from {slug}')
     return manifest
 
 
