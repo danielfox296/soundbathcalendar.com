@@ -162,7 +162,11 @@ RULE — **a session flyer never stands in for a face.** The pre-CAL-29 fallback
 
 ### 2.6 Masthead & footer
 
-Masthead (`_src/partials/header.html`, CAL-30 item 1 — pulled into CAL-28): sticky, all-caps 15px, **one row at desktop** — wordmark 700 · scrolling city anchors 400 · **underlined digest text link** right (`Get the Thursday digest` → `#digest`; the inline form is retired, primary demoted sitewide — §9 closed). Below 900px the nav drops to a second scrollable line. RULE — the 4 city links + Map + Learn are a load-bearing internal-link class: always server-rendered `<a>` elements on every page; they may visually collapse but never leave the HTML or move to JS. Footer: brand column + three link columns over a fine-print bar (`Sound Bath Calendar` · `Denver, Colorado · Privacy` — the `/privacy/` link rides every page); footer links ride `--ink` on muted heads — reference furniture, not a call to action.
+Masthead (`_src/partials/header.html`, CAL-30 item 1 — pulled into CAL-28): sticky, all-caps 15px, **one row at desktop** — wordmark 700 · scrolling city anchors 400 · **underlined digest text link** right (`Get the Thursday digest` → `#digest`; the inline form is retired, primary demoted sitewide — §9 closed). Below 900px the nav drops to a second scrollable line. RULE — the 4 city links + Map + Learn are a load-bearing internal-link class: always server-rendered `<a>` elements on every page; they may visually collapse but never leave the HTML or move to JS. Footer (CAL-30 item 5): brand column + three link columns over a fine-print bar (`Sound Bath Calendar` · `Denver, Colorado · About · Privacy` — the `/privacy/` link rides every page). Column heads are caps 13/700 on `--muted`, links plain 15px `--ink` underlining on hover — reference furniture, not a call to action. Every link is preserved; the footer is the site's second internal-link class after the masthead.
+
+**The other-areas switcher (CAL-30 item 7, city pages):** a caps-13 band label over the area names at listing weight (condensed 750, clamp 19–26px), each carrying its **honest count** from the same rows the page was built from. A city with nothing upcoming renders bare rather than printing a zero (§3.4).
+
+**404 (CAL-30 item 6):** the condensed-caps monument over a 3px `--signal` rule — the one place the accent runs as a plain line — then the lead, the primary back-to-calendar, and every redirect link preserved verbatim.
 
 ### 2.7 Digest block (CAL-18)
 
@@ -198,6 +202,10 @@ Signup pitch + form beside a build-time mini-render of this week's **actual** Th
 
 - RULE: never a bare "…on the way." floating above the footer.
 - RULE: **never fabricate.** Every count, price span, and "next up" is computed from the feed at build time. Entity fallback paragraphs state only what the data holds (`venues.py` / `operators.py` fallbacks). No fake scarcity, no invented urgency badges, no "+N more" unless N is real (§2.7). If we don't know it, the surface doesn't say it.
+
+### 3.4b Forms (CAL-30 item 4)
+
+The filter deck's control language, carried to every surface a person types into: radius 0, **44px minimum target**, 1px `--field-line` edge (`--ink` on hover), caps 13/700 labels, 16px values (kills iOS focus-zoom), and the **coral `--signal-text` focus ring** at offset 2 — CAL-38's D6 amendment to §8 now covers every control and button, not just the module. `/submit/` runs two columns ≥900px: the form beside a "What happens next" aside (`.submit-aside`, 2px ink rule) holding the who-reads-this and privacy copy that used to sit under the send button. Below 900px it stacks, aside last.
 
 ### 3.5 The filter & control module (CAL-38, ratified 2026-07-25)
 

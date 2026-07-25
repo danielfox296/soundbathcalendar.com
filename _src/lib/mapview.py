@@ -167,7 +167,6 @@ def render_map_page(pins, nav_prefix, updated_str, cal_rows=None, now=None, geoc
     the list is fully usable and the map box simply stays empty."""
     out = ['<section class="section section--light map-wrap">', '  <div class="container">']
     out.append('    <div class="map-intro">')
-    out.append('      <span class="eyebrow">Front Range calendar</span>')
     out.append('      <h1 class="cal-h1">Sound baths on the map</h1>')
     out.append('      <p class="cal-summary">Every upcoming session, pinned by venue, '
                'beside the list. Tap a marker for what is on there and when.</p>')

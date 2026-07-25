@@ -72,7 +72,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../styles.css?v=0940db22">
+  <link rel="stylesheet" href="../styles.css?v=b5a1c6b3">
   
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -461,9 +461,11 @@
     </div>
     <nav class="cal-cities" aria-label="Other areas">
   <span class="cal-cities__label">Other areas</span>
-  <a href="../boulder/">Boulder</a>
-  <a href="../fort-collins/">Fort Collins</a>
-  <a href="../colorado-springs/">Colorado Springs</a>
+  <span class="cal-cities__list">
+    <a href="../boulder/">Boulder<span class="cal-cities__ct">11</span></a>
+    <a href="../fort-collins/">Fort Collins<span class="cal-cities__ct">11</span></a>
+    <a href="../colorado-springs/">Colorado Springs<span class="cal-cities__ct">10</span></a>
+  </span>
 </nav>
     <section class="cal-faq" id="faq">
   <h2 class="cal-band__h2">Common questions</h2>
@@ -482,7 +484,6 @@
 </section>
     <div class="digest-block" id="digest">
     <div class="digest-pitch">
-      <span class="eyebrow">The digest</span>
       <h2 class="digest-h2">The week&rsquo;s sound baths, Thursday mornings.</h2>
       <!-- HUMAN REVIEW -->
       <p class="form-note">One email a week: every sound bath on the Front Range

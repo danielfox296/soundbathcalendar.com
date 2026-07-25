@@ -1,11 +1,8 @@
 <section class="section submit-form-section">
-  <div class="container wte-narrow">
+  <div class="container">
     <h2 class="digest-h2">Tell us what you have.</h2>
-    <p class="form-note">A person reads every one of these &mdash; usually within a few
-    days. We do not list everything we are sent: the calendar covers facilitated group
-    sound sessions on the Front Range, so a yoga class with a bowl at the end is probably
-    not a fit. If yours is not, we will say so rather than leave you wondering.</p>
-
+    <div class="submit-shell">
+    <div class="submit-main">
     <form class="contact-form submit-form"
           action="https://admin.soundbathcalendar.com/submit" method="POST">
       <input type="hidden" name="next" value="https://soundbathcalendar.com/submitted/">
@@ -56,9 +53,18 @@
 
       <button type="submit" class="btn btn-primary">Send it</button>
     </form>
+    </div>
 
-    <p class="form-note submit-fine">We use your email to answer you, and to check
-    details if something changes. It does not go on the digest list unless you ask, and it
-    never goes to anyone else. See the <a href="{{css_path}}privacy/">privacy page</a>.</p>
+    <aside class="submit-aside">
+      <h2 class="submit-aside__h">What happens next</h2>
+      <p>A person reads every one of these &mdash; usually within a few days. We do not
+      list everything we are sent: the calendar covers facilitated group sound sessions on
+      the Front Range, so a yoga class with a bowl at the end is probably not a fit. If
+      yours is not, we will say so rather than leave you wondering.</p>
+      <p>We use your email to answer you, and to check details if something changes. It
+      does not go on the digest list unless you ask, and it never goes to anyone else. See
+      the <a href="{{css_path}}privacy/">privacy page</a>.</p>
+    </aside>
+    </div>
   </div>
 </section>

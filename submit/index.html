@@ -63,7 +63,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../styles.css?v=0940db22">
+  <link rel="stylesheet" href="../styles.css?v=b5a1c6b3">
   <style>.submit-ways { margin-top: 2.5rem; display: grid; gap: 1.75rem; } .submit-way__h { font-size: 1.05rem; font-weight: 600; margin: 0 0 0.4rem; color: var(--ink); } .submit-way p { margin: 0; color: var(--ink); } .submit-form-section .contact-form { margin-top: 1.5rem; } .submit-form textarea { resize: vertical; min-height: 8rem; } .form-optional { font-style: normal; font-weight: 400; opacity: 0.62; } .submit-fine { margin-top: 1.5rem; } .submit-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; } @media (min-width: 40rem) { .submit-ways { gap: 2rem; } }</style>
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -148,9 +148,8 @@
   <main id="main" tabindex="-1">
   <!-- HUMAN REVIEW: supply-side front door, Daniel to review tone -->
 <section class="section section--light submit-main">
-  <div class="container wte-narrow">
+  <div class="container lrn-narrow">
     <p class="cal-crumbs"><a href="../">Calendar</a> &rsaquo; Add to the calendar</p>
-    <span class="eyebrow">For practitioners, organizers and venues</span>
     <h1 class="cal-h1">Add to the calendar</h1>
     <p class="cal-summary">This calendar is built by hand from what we can find, which
     means we miss things and get things wrong. If you run sessions on the Front Range,
@@ -182,13 +181,10 @@
 </section>
 
 <section class="section submit-form-section">
-  <div class="container wte-narrow">
+  <div class="container">
     <h2 class="digest-h2">Tell us what you have.</h2>
-    <p class="form-note">A person reads every one of these &mdash; usually within a few
-    days. We do not list everything we are sent: the calendar covers facilitated group
-    sound sessions on the Front Range, so a yoga class with a bowl at the end is probably
-    not a fit. If yours is not, we will say so rather than leave you wondering.</p>
-
+    <div class="submit-shell">
+    <div class="submit-main">
     <form class="contact-form submit-form"
           action="https://admin.soundbathcalendar.com/submit" method="POST">
       <input type="hidden" name="next" value="https://soundbathcalendar.com/submitted/">
@@ -239,10 +235,19 @@
 
       <button type="submit" class="btn btn-primary">Send it</button>
     </form>
+    </div>
 
-    <p class="form-note submit-fine">We use your email to answer you, and to check
-    details if something changes. It does not go on the digest list unless you ask, and it
-    never goes to anyone else. See the <a href="../privacy/">privacy page</a>.</p>
+    <aside class="submit-aside">
+      <h2 class="submit-aside__h">What happens next</h2>
+      <p>A person reads every one of these &mdash; usually within a few days. We do not
+      list everything we are sent: the calendar covers facilitated group sound sessions on
+      the Front Range, so a yoga class with a bowl at the end is probably not a fit. If
+      yours is not, we will say so rather than leave you wondering.</p>
+      <p>We use your email to answer you, and to check details if something changes. It
+      does not go on the digest list unless you ask, and it never goes to anyone else. See
+      the <a href="../privacy/">privacy page</a>.</p>
+    </aside>
+    </div>
   </div>
 </section>
   </main>

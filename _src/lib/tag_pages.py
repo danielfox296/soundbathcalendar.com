@@ -443,7 +443,6 @@ def render_tag_page(rows, slug, nav_prefix, built_map, now=None, geocode=None):
                f'<span>{_esc(label)}</span>')
     out.append('    </nav>')
 
-    out.append('    <span class="eyebrow">Front Range calendar</span>')
     out.append(f'    <h1 class="cal-h1">{_esc(label)}</h1>')
     out.append(f'    <p class="cal-updated">Last updated {_esc(X.fmt_stamp_date(now))}.</p>')
 
@@ -581,7 +580,6 @@ def render_browse(entries, nav_prefix):
     out.append(f'      <a href="{nav_prefix}">Calendar</a> <span aria-hidden="true">/</span> '
                '<span>Browse</span>')
     out.append('    </nav>')
-    out.append('    <span class="eyebrow">Front Range calendar</span>')
     out.append('    <h1 class="browse__h1">Browse sound baths</h1>')
     out.append('    <!-- HUMAN REVIEW -->')
     out.append('    <p class="browse__lede">Every kind of session the calendar '

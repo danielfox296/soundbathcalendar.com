@@ -1780,15 +1780,29 @@ def city_faq(city):
     )
 
 
-def render_city_switcher(current_city, nav_prefix):
-    """Links to the OTHER city pages — the internal-link graph plus reader nav
-    across areas. The root is reachable from the masthead wordmark."""
+def render_city_switcher(current_city, nav_prefix, rows=None):
+    """The OTHER areas — a BAND LABEL over a row of areas with their honest
+    session counts (CAL-30 item 7), not a chip strip. The internal-link graph
+    plus reader nav across areas; the root is reachable from the wordmark.
+
+    Counts come from the same rows the page was built from, so a switcher
+    never promises rooms that aren't there. No rows passed (or a city with
+    none) → the link renders bare rather than claiming zero.
+    """
+    counts = {}
+    for r in (rows or []):
+        counts[r['city']] = counts.get(r['city'], 0) + 1
     out = ['<nav class="cal-cities" aria-label="Other areas">',
-           '  <span class="cal-cities__label">Other areas</span>']
+           '  <span class="cal-cities__label">Other areas</span>',
+           '  <span class="cal-cities__list">']
     for c in CITIES:
         if c == current_city:
             continue
-        out.append(f'  <a href="{nav_prefix}{city_page_path(c)}">{_esc(c)}</a>')
+        n = counts.get(c, 0)
+        ct = (f'<span class="cal-cities__ct">{n}</span>' if n else '')
+        out.append(f'    <a href="{nav_prefix}{city_page_path(c)}">'
+                   f'{_esc(c)}{ct}</a>')
+    out.append('  </span>')
     out.append('</nav>')
     return '\n'.join(out)
 
@@ -1944,7 +1958,6 @@ def render_digest_block(selected_city='all', rows=None, now=None):
     preview_html = f'\n    {preview}' if preview else ''
     return f'''<div class="digest-block" id="digest">
     <div class="digest-pitch">
-      <span class="eyebrow">The digest</span>
       <h2 class="digest-h2">The week&rsquo;s sound baths, Thursday mornings.</h2>
       <!-- HUMAN REVIEW -->
       <p class="form-note">One email a week: every sound bath on the Front Range
@@ -2016,7 +2029,7 @@ def render_city_page(rows, city, nav_prefix, now=None, geocode=None):
     out.append('    ' + _render_noresults())
     out.append('    </div>')
     out.append('    </div>')
-    out.append('    ' + render_city_switcher(city, nav_prefix))
+    out.append('    ' + render_city_switcher(city, nav_prefix, rows))
     out.append('    ' + _render_faq(city_faq(city)))
     out.append('    ' + render_digest_block(selected_city=slug, rows=rows, now=now))
 
