@@ -221,11 +221,26 @@ RULE — the `[hidden]` lockstep (CAL-28 carries it forward): every display-bear
 
 ---
 
+### 3.6 The reading register (CAL-34)
+
+/learn/, the eight explainers, /what-to-expect/, /about/, /privacy/ — twelve pages, one vocabulary (`.lrn-*`). v5 is loud on index surfaces and calm on reading ones: **poster outside, liner notes inside.**
+
+- **H1**: the detail clamp in condensed caps — never the 112px listing monument.
+- **The answer**: the opening paragraph at **24/1.4, full ink**. It is the page's thesis and its GEO surface; the text itself never changes for design reasons.
+- **Prose**: 17/1.65, wdth 100, **full ink — never `--muted`**, measure **640px** (narrower than the 48rem container, so heads and figures can run wider than the read).
+- **Section heads + Q&A heads**: 24 condensed caps (`.lrn-h2`; `.wte-q`/`.about-h2`/`.prv-h2` are the same thing under historical names).
+- **Links**: `--signal-text`, underlined — the reading surfaces are the one place on the site a link is coloured.
+- **FAQ pattern** (shared with listing pages): 24 condensed caps questions, 17/1.6 ink answers, **always visible, never an accordion** — it is an extraction surface.
+- No drop caps, no italic extras. The explainers' inline `DefinedTerm`/`FAQPage` JSON-LD carries forward verbatim (invariant #29).
+- `/about/` and `/privacy/` ship **no page-local stylesheet** — CAL-34 folded them into the shared vocabulary, as CAL-31 did the nine explainer sheets.
+
+---
+
 ## 4 · Imagery
 
 **The warmth register:** warm, human, held — hands on bowls, candlelit rooms, soft fabric, wood, plants, human presence. Never institutional, empty, or eerie. No AI-generated stock (`img/og/SOURCES.md` — AI-studio results were deliberately skipped).
 
-**Placement (CAL-28):** listing surfaces carry imagery as the Program Grid's **duotone card derivatives** and the treated editorial band — the CAL-22 warm bands are retired there (the root's and the city pages' photo strips are gone; `CITY_WARM` deleted). Natural warmth photography survives on the what-to-expect hero and share cards. The listing root stays answer-first — no hero (§0).
+**Placement (CAL-28):** listing surfaces carry imagery as the Program Grid's **duotone card derivatives** and the treated editorial band — the CAL-22 warm bands are retired there (the root's and the city pages' photo strips are gone; `CITY_WARM` deleted). Share cards keep natural warmth photography; the what-to-expect hero joined the duotone in CAL-34 (`img/cards/hero-what-to-expect-i.jpg`, 1600×762, same stock and same process) so the reading page opens in the house register — the dark-mode dim rule retired with it. The listing root stays answer-first — no hero (§0).
 
 **The duotone treatment (CAL-28, `scripts/treat.py` — the ratified house process, shared with og.py in spirit):** grayscale → `autocontrast(cutoff 2)` → contrast 1.2 → grain (`Image.effect_noise` sigma 52 blended at alpha 0.19 **pre-colorize**, so the grain prints in ink) → `ImageOps.colorize`: `-i` indigo `#352F5C`→white (the rest layer, both grounds) and `-c` coral `#B93A2B`→white (the hover layer). 560×560 center-square JPEG q75 (+280 srcset variant); editorial band 1300×406. Source hierarchy per event: the event's own flyer (snapshotted once — the committed derivative is the rot-proof copy), else the linked practitioner's committed photo for THEIR sessions only, else the type tile. Derivatives are committed under `img/cards/`; past events are pruned each run; **CI never runs it** (og.py precedent). RULE — imagery honesty holds: flyers never stand in for people, stock never attaches to a specific session, entity photos are real-only.
 

@@ -672,9 +672,12 @@ button:focus-visible, .btn:focus-visible { outline: 2px solid var(--signal-text)
 
 /* ---- FAQ — an answer surface for search/AI. Always visible for extraction. */
 .cal-faq { margin: 5rem 0 0; padding-top: 3rem; border-top: 1px solid var(--line); scroll-margin-top: var(--mast-offset); }
-.cal-faq__item { margin: 0 0 1.8rem; max-width: 44rem; }
-.cal-faq__q { font-size: 1.15rem; font-weight: 500; margin: 0 0 0.5rem; }
-.cal-faq__a { color: var(--ink); font-size: 0.98rem; line-height: 1.6; margin: 0; }
+/* The FAQ pattern (CAL-34) — one shape on listing pages and reading pages
+   alike: 24 condensed caps questions, 17/1.6 ink answers, ALWAYS visible.
+   Never an accordion: this is an extraction surface. */
+.cal-faq__item { margin: 0 0 2rem; max-width: 640px; }
+.cal-faq__q { font-size: 24px; line-height: 1.1; text-transform: uppercase; margin: 0 0 0.6rem; }
+.cal-faq__a { color: var(--ink); font-size: 17px; line-height: 1.6; margin: 0; }
 
 .cal-submit { margin: 3.5rem 0 0; padding-top: 2.4rem; border-top: 1px solid var(--line); color: var(--muted); }
 .cal-submit a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
@@ -756,54 +759,103 @@ button:focus-visible, .btn:focus-visible { outline: 2px solid var(--signal-text)
   .ent-quote { font-size: 21px; }
 }
 
-/* ---- learn sheets (/learn/ + the eight explainers, CAL-20; /what-to-expect/,
-        CAL-07): one .lrn-* vocabulary here, replacing nine byte-identical
-        page style.css files + the near-clone .wte-* sheet (CAL-31). The
-        what-to-expect templates reuse the .lrn-* names for every shared rule;
-        only its Q&A rhythm (.wte-qa/.wte-q — different margins than .lrn-h2's
-        landmark scale) and warm hero stay its own. ---- */
-.lrn-narrow { max-width: 48rem; }
+/* ---- THE READING REGISTER (CAL-34): /learn/ + the eight explainers,
+        /what-to-expect/, /about/, /privacy/. v5 is loud on index surfaces and
+        calm on reading ones — poster outside, liner notes inside. One
+        vocabulary (`.lrn-*`) for all twelve pages: CAL-31 folded nine
+        byte-identical explainer sheets and the what-to-expect near-clone into
+        it; CAL-34 folds /about/ and /privacy/ in too, so those two ship no
+        page-local stylesheet either. The register:
+
+          H1        detail clamp, condensed caps (never the listing monument)
+          answer    24/1.4 FULL INK — the page's thesis and its GEO surface
+          prose     17/1.65, wdth 100, full ink, measure 640
+          h2        24 condensed caps
+          links     --signal-text, underlined (the reading surfaces are the
+                    one place a link is coloured — nothing else here is)
+
+        No drop caps, no italic extras, no accordions. ---- */
+.lrn-narrow, .prv-narrow { max-width: 48rem; }
+/* The head steps down from the 112px listing monument to the detail clamp:
+   a reading page announces itself, it doesn't shout. */
+.lrn .cal-h1, .wte .cal-h1, .about-main .cal-h1, .prv .cal-h1 {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 0.95;
+  max-width: 20ch;
+  margin: 0.2rem 0 0;
+}
+/* The answer-first opening paragraph — unchanged text, the page's thesis. */
+.lrn .cal-summary, .wte .cal-summary, .about-main .cal-summary, .prv .cal-summary {
+  font-size: 24px;
+  line-height: 1.4;
+  color: var(--ink);
+  max-width: 640px;
+  margin: 1.3rem 0 0;
+}
 /* Trim the stacked-section rhythm under the intro. */
 .lrn--body { padding-top: 0.6rem; }
 .lrn--next { padding-top: 1rem; }
 .lrn-cta { margin: 1.8rem 0 0; }
-/* Prose paragraphs — comfortable measure, slightly quieted ink. */
-.lrn-p {
+/* Prose — the measure is 640, narrower than the container, so heads and
+   figures can run wider than the line a person actually reads. */
+.lrn-p, .about-main p, .prv-p, .prv-list {
   color: var(--ink);
-  font-size: 1rem;
-  line-height: 1.68;
-  margin: 0 0 0.9rem;
+  font-size: 17px;
+  line-height: 1.65;
+  max-width: 640px;
+  margin: 0 0 1rem;
 }
 .lrn-p:last-child { margin-bottom: 0; }
-/* H2 landmarks — same scale as the what-to-expect questions. */
-.lrn-h2 {
-  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  margin: 2.2rem 0 0.6rem;
+.prv-list { padding-left: 1.2rem; }
+.prv-list li + li { margin-top: 0.6rem; }
+/* Reading links carry the signal — underlined, coloured, unmistakable in a
+   wall of prose (the one place on the site a link is not plain ink). */
+.lrn-p a, .about-main p a, .prv-p a, .prv-list a, .lrn-links a,
+.lrn .cal-summary a, .wte .cal-summary a, .about-main .cal-summary a, .prv .cal-summary a {
+  color: var(--signal-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+/* Section landmarks + the Q&A heads: 24 condensed caps, the reading
+   register's one loud element. .wte-q / .lrn-h2 / .about-h2 / .prv-h2 are the
+   same thing under four historical names — kept so no template has to change
+   in this commit; new work uses .lrn-h2. */
+.lrn-h2, .wte-q, .about-h2, .prv-h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 72%;
+  font-size: 24px;
+  line-height: 1.1;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  margin: 2.4rem 0 0.7rem;
 }
 .lrn-h2:first-child { margin-top: 0; }
-/* Q&A blocks (the FAQPage-backed section). */
 .lrn-qa { margin: 0 0 2rem; }
 .lrn-qa:last-child { margin-bottom: 0; }
+.wte-qa { margin: 0 0 2.4rem; }
+.wte-qa:last-child { margin-bottom: 0; }
 /* An honest-note aside — quiet ink rule, no alarm. */
 .lrn-note {
   border-left: 3px solid var(--ink);
   padding: 0.15rem 0 0.15rem 1rem;
   background: rgba(var(--ink-rgb), 0.05);
+  max-width: 640px;
 }
-/* "Keep going" — quiet link list. */
-.lrn-links { list-style: none; margin: 0.4rem 0 0; padding: 0; }
+/* "Keep going" — the related-links list under a caps head. */
+.lrn-links { list-style: none; margin: 0.4rem 0 0; padding: 0; max-width: 640px; }
 .lrn-links li {
   color: var(--ink);
-  font-size: 1rem;
+  font-size: 17px;
   line-height: 1.6;
   padding: 0.35rem 0 0.35rem 1rem;
   border-left: 1px solid var(--line);
   margin: 0 0 0.35rem;
 }
 .lrn-links a { font-weight: 600; }
-/* Card directory (/learn/ index + the what-to-expect "ready to find one?"). */
+/* Card directory (/learn/ index + the what-to-expect "ready to find one?") —
+   caps labels on the field-line family, coral on hover. */
 .lrn-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -813,7 +865,7 @@ button:focus-visible, .btn:focus-visible { outline: 2px solid var(--signal-text)
 .lrn-card {
   display: block;
   padding: 1.1rem 1.2rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--field-line);
   text-decoration: none;
   color: var(--ink);
   transition: border-color .15s, background .15s;
@@ -821,35 +873,27 @@ button:focus-visible, .btn:focus-visible { outline: 2px solid var(--signal-text)
 .lrn-card:hover { border-color: var(--signal-text); background: rgba(var(--signal-rgb), 0.06); }
 .lrn-card__label {
   display: block;
-  font: 600 0.72rem var(--font-body);
-
+  font: 700 15px/1.2 var(--font-body);
+  letter-spacing: 0;
   text-transform: uppercase;
   color: var(--ink);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
 }
 .lrn-card__desc {
   display: block;
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: 15px;
   line-height: 1.5;
 }
 @media (max-width: 560px) {
   .lrn-grid { grid-template-columns: 1fr; }
 }
-/* What-to-expect's own Q&A rhythm: roomier blocks, flush question heads. */
-.wte-qa { margin: 0 0 2.4rem; }
-.wte-qa:last-child { margin-bottom: 0; }
-.wte-q {
-  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  margin: 0 0 0.6rem;
-}
-/* Warm hero (CAL-22, WARMTH RULE). Natural photo, no scrim; the dark scheme
-   dims it slightly so it sits on the ink ground like the report photos. */
+/* Warm hero (CAL-22 → CAL-34): the first-timer photograph, now the committed
+   duotone derivative like every other index image, so the page opens in the
+   house treatment instead of a stray natural photo. No dark-mode dim: the
+   duotone already sits on both grounds. */
 .wte-hero { margin: 2.4rem 0 0; }
 .wte-hero img { display: block; width: 100%; height: auto; }
-@media (prefers-color-scheme: dark) { .wte-hero img { filter: brightness(0.82); } }
 
 /* ---- footer: brand column + three quiet link columns over a fine-print
         bar. Headings and fine print sit on --muted, links in plain ink — the

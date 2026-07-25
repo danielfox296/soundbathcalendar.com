@@ -231,11 +231,21 @@ def main(force=False):
                            w=1300, h=406, small=False)
     print(f'  ok editorial-what-to-expect ({sizes["i"]}+{sizes["c"]}KB)')
 
+    # /what-to-expect/ hero (CAL-34): the same photograph at the page's own
+    # 21:10 crop, in the same treatment — the reading page opens in the house
+    # register instead of a stray natural photo. -c is written and unused
+    # (the hero doesn't hover); it costs one file and keeps the pair rule.
+    with Image.open(os.path.join(STOCK_DIR, 'pexels-6914822.jpg')) as hero:
+        sizes = treat_pair(hero, 'hero-what-to-expect',
+                           w=1600, h=762, small=False)
+    print(f'  ok hero-what-to-expect ({sizes["i"]}+{sizes["c"]}KB)')
+
     # Prune derivatives of events that left the future set (past/renamed/
     # dropped) — the directory reflects only the current program + editorial.
     pruned = 0
     for name in os.listdir(CARDS_DIR):
-        if not name.endswith('.jpg') or name.startswith('editorial-'):
+        if (not name.endswith('.jpg') or name.startswith('editorial-')
+                or name.startswith('hero-')):
             continue
         stem = name.rsplit('-', 1)[0]
         if stem not in keep:
