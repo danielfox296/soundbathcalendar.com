@@ -66,7 +66,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../../styles.css?v=ed4c5cfa">
+  <link rel="stylesheet" href="../../styles.css?v=693a62a1">
   <style>.cal-past-banner { background: rgba(var(--ink-rgb),0.05); border-left: 3px solid rgba(var(--ink-rgb),0.4); padding: 0.9rem 1.2rem; margin: 0 0 2rem; font-size: 0.95rem; } .cal-past-banner a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; } .detail__h1 { margin: 0.4rem 0 1.4rem; } .detail__facts { gap: 0.6rem 1.6rem; margin: 2rem 0; max-width: 40rem; } @media (max-width: 640px) { .detail__facts { gap: 0.2rem; } } .cal-event__desc { font-size: 1.15rem; line-height: 1.6; max-width: 42rem; color: var(--ink); margin: 0 0 1rem; } .cal-event__note { font: 500 1.2rem var(--font-display); color: var(--ink); max-width: 40rem; line-height: 1.4; margin: 0 0 1.6rem; } .cal-event__figure { margin: 2rem 0; max-width: 640px; } .cal-event__figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: rgba(var(--ink-rgb),0.06); } .cal-event__figure figcaption { font-size: 0.82rem; color: var(--muted); margin-top: 0.6rem; } .cal-event__cta { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; margin: 2rem 0; } .cal-event__link { color: var(--ink); font: 600 0.9rem var(--font-body); text-decoration: none; } .cal-event__link:hover { text-decoration: underline; } .cal-event__firsttime { margin: 1.4rem 0 0; font-size: 0.88rem; color: var(--muted); }</style>
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -93,6 +93,22 @@
         Array.prototype.slice.call(document.images).forEach(function (img) {
           if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
         });
+        // CAL-38 D4: the refine deck ships `open`; on small screens the
+        // mobile stack starts collapsed. Tracks the query both ways because
+        // above 640px the summary is a mouse-inert static head — a deck
+        // closed at mobile width must reopen itself when the viewport
+        // crosses up. Lives here, NOT in filters.js — that file is frozen
+        // by design.
+        var deck = document.querySelector('details[data-cal-filters]');
+        if (deck) {
+          var mq = matchMedia('(max-width: 640px)');
+          var syncDeck = function () {
+            if (mq.matches) deck.removeAttribute('open');
+            else deck.setAttribute('open', '');
+          };
+          syncDeck();
+          if (mq.addEventListener) mq.addEventListener('change', syncDeck);
+        }
       });
     })();
   </script>
@@ -213,7 +229,7 @@
         <span class="footer-col__h">Learn</span>
         <a href="../../what-to-expect/">What to expect</a>
         <a href="../../learn/">Learn</a>
-        <a href="../../roundups/">Roundups</a>
+        <a href="../../blog/">Blog</a>
         <a href="../../#digest">The Thursday digest</a>
         <a href="../../feed.xml">RSS</a>
       </nav>

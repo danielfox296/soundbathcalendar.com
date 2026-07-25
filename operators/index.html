@@ -66,7 +66,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../styles.css?v=ed4c5cfa">
+  <link rel="stylesheet" href="../styles.css?v=693a62a1">
   
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -93,6 +93,22 @@
         Array.prototype.slice.call(document.images).forEach(function (img) {
           if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
         });
+        // CAL-38 D4: the refine deck ships `open`; on small screens the
+        // mobile stack starts collapsed. Tracks the query both ways because
+        // above 640px the summary is a mouse-inert static head — a deck
+        // closed at mobile width must reopen itself when the viewport
+        // crosses up. Lives here, NOT in filters.js — that file is frozen
+        // by design.
+        var deck = document.querySelector('details[data-cal-filters]');
+        if (deck) {
+          var mq = matchMedia('(max-width: 640px)');
+          var syncDeck = function () {
+            if (mq.matches) deck.removeAttribute('open');
+            else deck.setAttribute('open', '');
+          };
+          syncDeck();
+          if (mq.addEventListener) mq.addEventListener('change', syncDeck);
+        }
       });
     })();
   </script>
@@ -167,7 +183,7 @@
       <a class="dir-card" href="../operator/sacred-society/"><span class="dir-card__media" data-monogram="S" aria-hidden="true"><img src="https://www.sacredsociety.com/og.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Sacred Society</span><span class="dir-card__meta">3 upcoming</span></a>
       <a class="dir-card" href="../operator/singing-bowls-of-the-rockies/"><span class="dir-card__media" data-monogram="S" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1187669216%2F365104895489%2F1%2Foriginal.20260625-203048?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=8e93f23beb19dcba4966137411d27fa8" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Singing Bowls of the Rockies</span><span class="dir-card__meta">7 upcoming</span></a>
       <a class="dir-card" href="../operator/soul-growth-network/"><span class="dir-card__media" data-monogram="S" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1170352253%2F1717123237503%2F1%2Foriginal.20251106-205809?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.508&amp;fp-y=0.463&amp;s=5b1948a987dc266472f80d80234128c3" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Soul Growth Network</span><span class="dir-card__meta">2 upcoming</span></a>
-      <a class="dir-card" href="../operator/soul-light-llc/"><span class="dir-card__media" data-monogram="S" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1121785743%2F1415215040793%2F1%2Foriginal.20250911-233753?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=f3b9bc9d2654a496ad03f3c8c3ab6c94" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Soul Light, LLC</span><span class="dir-card__meta">1 upcoming</span></a>
+      <a class="dir-card" href="../operator/soul-light-llc/"><span class="dir-card__media dir-card__media--ph" data-monogram="S" aria-hidden="true"></span><span class="dir-card__name">Soul Light, LLC</span><span class="dir-card__meta">Organizer</span></a>
       <a class="dir-card" href="../operator/sound-murals/"><span class="dir-card__media dir-card__media--ph" data-monogram="S" aria-hidden="true"></span><span class="dir-card__name">Sound Murals</span><span class="dir-card__meta">Organizer</span></a>
       <a class="dir-card" href="../operator/terri-slezak/"><span class="dir-card__media" data-monogram="T" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1189098051%2F162273044203%2F1%2Foriginal.20260717-205704?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=e0bd785debea4721b96e52e08265ef81" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Terri Slezak</span><span class="dir-card__meta">1 upcoming</span></a>
       <a class="dir-card" href="../operator/the-denver-village/"><span class="dir-card__media" data-monogram="T" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1172534889%2F572711759515%2F1%2Foriginal.20251208-164621?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=0a693f10700db3db98ac16fe85db6e3a" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">The Denver Village</span><span class="dir-card__meta">2 upcoming</span></a>
@@ -234,7 +250,7 @@
         <span class="footer-col__h">Learn</span>
         <a href="../what-to-expect/">What to expect</a>
         <a href="../learn/">Learn</a>
-        <a href="../roundups/">Roundups</a>
+        <a href="../blog/">Blog</a>
         <a href="../#digest">The Thursday digest</a>
         <a href="../feed.xml">RSS</a>
       </nav>

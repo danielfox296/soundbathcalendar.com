@@ -7,13 +7,13 @@
   <meta name="msvalidate.01" content="9C97AFC25A8EE199FF51C4C6D7C46F2E" />
   <link rel="canonical" href="https://soundbathcalendar.com/learn/">
   <meta name="robots" content="index, follow">
-  <title>Learn: Sound Bath Glossary & Explainers | Sound Bath Calendar</title>
+  <title>Learn: Sound Bath Glossary &amp; Explainers | Sound Bath Calendar</title>
   <meta name="description" content="Plain-language definitions and explainers: what a gong bath is, bowls vs. gongs, 432 Hz explained, what the science actually says, whether a sound bath is religious, and where the practice really comes from.">
   <!-- CAL-UX-11: paired theme-colors so mobile browser chrome follows the
-       scheme instead of fighting it — light = --paper, dark = the CAL-14
-       dark ground (#101216, styles.css dark flip). -->
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F5F7FA">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101216">
+       scheme instead of fighting it — the v5 grounds (CAL-26): warm white
+       day, near-black violet-cast night. -->
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F5F2ED">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0E0C12">
 
   <!-- RSS feed discovery (CAL-05). Root feed by default; city pages override
        https://soundbathcalendar.com/feed.xml with their own region feed. -->
@@ -25,58 +25,25 @@
   <meta property="og:url" content="https://soundbathcalendar.com/learn/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://soundbathcalendar.com/img/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Learn: Sound Bath Glossary &amp; Explainers — Sound Bath Calendar">
   <meta property="og:site_name" content="Sound Bath Calendar">
   <meta property="og:locale" content="en_US">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@soundbathcalendar">
   <meta name="twitter:title" content="Learn: Sound Bath Glossary &amp; Explainers | Sound Bath Calendar">
   <meta name="twitter:description" content="Plain-language definitions and explainers: what a gong bath is, bowls vs. gongs, 432 Hz explained, what the science actually says, whether a sound bath is religious, and where the practice really comes from.">
   <meta name="twitter:image" content="https://soundbathcalendar.com/img/og-default.jpg">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Sound Bath Calendar",
-  "url": "https://soundbathcalendar.com",
-  "description": "A curated, weekly-updated calendar of sound baths across Denver and the Front Range: Boulder, Fort Collins, and Colorado Springs. Every sound bath worth knowing.",
-  "areaServed": {
-    "@type": "AdministrativeArea",
-    "name": "Denver metro and the Colorado Front Range"
-  },
-  "knowsAbout": [
-    "sound baths",
-    "gong baths",
-    "sound healing",
-    "breathwork with sound",
-    "guided meditation with sound"
-  ],
-  "sameAs": [
-    "https://www.instagram.com/soundbathcalendar/",
-    "https://www.facebook.com/profile.php?id=61592057895510"
-  ]
-}
+{"@context":"https://schema.org","@type":"Organization","name":"Sound Bath Calendar","url":"https://soundbathcalendar.com","description":"A curated, weekly-updated calendar of sound baths across Denver and the Front Range: Boulder, Fort Collins, and Colorado Springs. Every sound bath worth knowing.","areaServed":{"@type":"AdministrativeArea","name":"Denver metro and the Colorado Front Range"},"knowsAbout":["sound baths","gong baths","sound healing","breathwork with sound","guided meditation with sound"],"sameAs":["https://www.instagram.com/soundbathcalendar/","https://www.facebook.com/profile.php?id=61592057895510"]}
   </script>
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Calendar",
-      "item": "https://soundbathcalendar.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Learn"
-    }
-  ]
-}
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Calendar","item":"https://soundbathcalendar.com/"},{"@type":"ListItem","position":2,"name":"Learn"}]}
   </script>
 
   <!-- Google tag (gtag.js) — Sound Bath Calendar's own GA4 property
@@ -90,101 +57,14 @@
   </script>
 
   <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=6f23dfb0">
-  <style>
-/* /learn/ pages — glossary + explainers (CAL-20). Page-only styles; leans on
-   the shared tokens and section/eyebrow/cal-h1/btn classes in styles.css.
-   Radius 0 per the design law. Secondary ink rides rgba(var(--ink-rgb),a)
-   so the CAL-14 dark scheme inverts it for free. */
-
-/* A single reading column for the whole page. */
-.lrn-narrow { max-width: 48rem; }
-
-/* Trim the stacked-section rhythm under the intro. */
-.lrn--body { padding-top: 0.6rem; }
-.lrn--next { padding-top: 1rem; }
-
-.lrn-cta { margin: 1.8rem 0 0; }
-
-/* Prose paragraphs — comfortable measure, slightly quieted ink. */
-.lrn-p {
-  color: rgba(var(--ink-rgb), 0.74);
-  font-size: 1rem;
-  line-height: 1.68;
-  margin: 0 0 0.9rem;
-}
-.lrn-p:last-child { margin-bottom: 0; }
-
-/* H2 landmarks — same scale as the what-to-expect questions. */
-.lrn-h2 {
-  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  margin: 2.2rem 0 0.6rem;
-}
-.lrn-h2:first-child { margin-top: 0; }
-
-/* Q&A blocks (the FAQPage-backed section). */
-.lrn-qa { margin: 0 0 2rem; }
-.lrn-qa:last-child { margin-bottom: 0; }
-
-/* An honest-note aside — quiet accent rule, no alarm. */
-.lrn-note {
-  border-left: 3px solid var(--accent);
-  padding: 0.15rem 0 0.15rem 1rem;
-  background: rgba(98, 182, 232, 0.06);
-}
-
-/* "Keep going" — quiet link list, mirrors .wte-links. */
-.lrn-links { list-style: none; margin: 0.4rem 0 0; padding: 0; }
-.lrn-links li {
-  color: rgba(var(--ink-rgb), 0.74);
-  font-size: 1rem;
-  line-height: 1.6;
-  padding: 0.35rem 0 0.35rem 1rem;
-  border-left: 1px solid var(--line);
-  margin: 0 0 0.35rem;
-}
-.lrn-links a { font-weight: 600; }
-
-/* /learn/ index — card directory, mirrors .wte-next. */
-.lrn-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.9rem;
-  margin: 1.6rem 0 0;
-}
-.lrn-card {
-  display: block;
-  padding: 1.1rem 1.2rem;
-  border: 1px solid var(--line);
-  text-decoration: none;
-  color: var(--ink);
-  transition: border-color .15s, background .15s;
-}
-.lrn-card:hover { border-color: var(--accent-on-light); background: rgba(98, 182, 232, 0.05); }
-.lrn-card__label {
-  display: block;
-  font: 600 0.72rem var(--font-body);
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--accent-on-light);
-  margin-bottom: 0.3rem;
-}
-.lrn-card__desc {
-  display: block;
-  color: rgba(var(--ink-rgb), 0.68);
-  font-size: 0.92rem;
-  line-height: 1.5;
-}
-
-@media (max-width: 560px) {
-  .lrn-grid { grid-template-columns: 1fr; }
-}
-  </style>
+  <!-- CAL-27: Archivo variable is the site's ONLY typeface — self-hosted
+       (no Google Fonts requests survive), one ~88KB latin woff2 carrying
+       both axes (wdth 62..125, wght 100..900). Preloaded because every
+       heading on every page needs it; crossorigin is required for font
+       preloads even same-origin. @font-face lives in styles.css. -->
+  <link rel="preload" href="../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../styles.css?v=693a62a1">
+  
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
        Eventbrite, wsimg…) expire and hotlink-block routinely. Any <img> that
@@ -210,6 +90,22 @@
         Array.prototype.slice.call(document.images).forEach(function (img) {
           if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
         });
+        // CAL-38 D4: the refine deck ships `open`; on small screens the
+        // mobile stack starts collapsed. Tracks the query both ways because
+        // above 640px the summary is a mouse-inert static head — a deck
+        // closed at mobile width must reopen itself when the viewport
+        // crosses up. Lives here, NOT in filters.js — that file is frozen
+        // by design.
+        var deck = document.querySelector('details[data-cal-filters]');
+        if (deck) {
+          var mq = matchMedia('(max-width: 640px)');
+          var syncDeck = function () {
+            if (mq.matches) deck.removeAttribute('open');
+            else deck.setAttribute('open', '');
+          };
+          syncDeck();
+          if (mq.addEventListener) mq.addEventListener('change', syncDeck);
+        }
       });
     })();
   </script>
@@ -220,6 +116,13 @@
        focus, then a solid ink-on-paper pill (well above the muted-ink floor).
        Targets #main in the base layout. -->
   <a class="skip-link" href="#main">Skip to the calendar</a>
+  <!-- CAL-30 item 1 (pulled into CAL-28): one row at desktop widths — the
+       inline digest form is retired for an underlined text link (primary
+       demoted sitewide; closes the DESIGN.md §9 masthead-primary ruling).
+       SEO ruling: the 4 city links + Map + Learn are a load-bearing
+       internal-link class — always server-rendered <a> elements on every
+       page. They may visually collapse (the strip scrolls; below 900px it
+       drops to a second line) but never leave the HTML. -->
   <div class="container masthead-inner">
     <a href="../" class="wordmark">Sound Bath Calendar</a>
     <nav class="masthead-cities" aria-label="Primary navigation">
@@ -230,16 +133,7 @@
       <a href="../map/">Map</a>
       <a href="../learn/">Learn</a>
     </nav>
-    <!-- Slim digest capture: inline form on wide screens, an anchor link down
-         to the full form on small ones. Same Formspree seam as the main form. -->
-    <form class="masthead-digest" action="https://admin.soundbathcalendar.com/digest/subscribe" method="POST">
-      <input type="hidden" name="next" value="https://soundbathcalendar.com/thanks/">
-      <label class="visually-hidden" for="mh-email">Email for the Thursday digest</label>
-      <input id="mh-email" type="email" name="email" autocomplete="email"
-             placeholder="Email for the Thursday digest" required>
-      <button type="submit" class="btn btn-primary btn-slim">Get the digest</button>
-    </form>
-    <a class="masthead-digest-link" href="../#digest">The digest</a>
+    <a class="masthead-digest-link" href="../#digest">Get the Thursday digest</a>
   </div>
 </header>
 
@@ -370,8 +264,10 @@
           <li>
             <a href="https://www.instagram.com/soundbathcalendar/" rel="me noopener"
                target="_blank" aria-label="Sound Bath Calendar on Instagram">
+              <!-- Icon paths live in img/social-sprite.svg (CAL-31) — one cached
+                   file instead of inline paths on every page. -->
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                <use href="../img/social-sprite.svg#icon-instagram"/>
               </svg>
             </a>
           </li>
@@ -379,7 +275,7 @@
             <a href="https://www.facebook.com/profile.php?id=61592057895510" rel="me noopener"
                target="_blank" aria-label="Sound Bath Calendar on Facebook">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                <use href="../img/social-sprite.svg#icon-facebook"/>
               </svg>
             </a>
           </li>
@@ -418,8 +314,6 @@
   </div>
 </footer>
 
-  <!-- Progressive-enhancement calendar filters (Track B B.5). The page is fully
-       usable without it — it only reveals and wires the filter bar. -->
-  <script defer src="../filters.js?v=8d2736ac"></script>
+  
 </body>
 </html>

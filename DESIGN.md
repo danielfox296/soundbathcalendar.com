@@ -40,7 +40,7 @@ Defined at `:root` in `styles.css:4`. Dark mode flips the same names (§6). All 
 | `--line` | `rgba(var(--ink-rgb), 0.14)` | follows the flip | hairlines **between blocks** — never a control edge |
 | `--field-line` | `rgba(var(--ink-rgb), 0.56)` (3.19:1) | follows the flip (5.89:1) | the edge of anything a person types or clicks into — alpha re-tuned by CAL-38 D7 (0.46 was tuned for v4's near-black ink and fell to 2.51:1 on the v5 day ground) |
 
-There is no third hue. The ice accent, the link blue, and `--gray` are deleted — the only sanctioned survivors are the frozen `--soh-*` (until CAL-36) and `--dp-*` (until CAL-37) namespaces, which depict artifacts that still ship v4.
+There is no third hue. The ice accent, the link blue, and `--gray` are deleted — the only sanctioned survivor is the frozen `--soh-*` namespace (until CAL-36), which depicts an artifact that still ships v4. The `--dp-*` namespace remains as the digest preview's depiction seam, but since CAL-37 it carries the shipped v5 email's own committed values (ground/ink/muted/signal-text + the email's system stack) — no non-v5 hue lives in it.
 
 RULE — **the signal budget:** coral appears as at most **2 slabs** per screen (ticker + TONIGHT) + Free/Donation marks + hover states. Nothing else. A third slab, a coral label, a coral border at rest — defects.
 
@@ -76,7 +76,7 @@ One file, two voices: the condensed display voice (`font-stretch: 72–78%`, hea
 | Masthead | 15px · UPPERCASE · wordmark 700, nav 400 · no added tracking |
 | Ticker (CAL-28) | 16px · 700 · UPPERCASE · **ls .055em** — the single sanctioned positive tracking on the site (Daniel-ruled) · `/` separators |
 
-RULE — **the tracking law: zero positive letter-spacing everywhere except the ticker.** The small-caps tracked-label vocabulary no longer exists — dates-as-monuments replaced it (CAL-28). Negative tracking on monuments is fine. (The digest-preview miniature keeps its tracked depiction of the shipping email until CAL-37.)
+RULE — **the tracking law: zero positive letter-spacing everywhere except the ticker.** The small-caps tracked-label vocabulary no longer exists — dates-as-monuments replaced it (CAL-28). Negative tracking on monuments is fine. (The digest-preview miniature's tracked exception ended with CAL-37 — the shipping email has zero letter-spacing, so its depiction does too.)
 
 RULE: `font-variant-numeric: tabular-nums` on times, prices, and counts (`.cal-row__when`, `.cal-row__meta`, `.cal-updated`, summary counts).
 
@@ -98,7 +98,7 @@ No abstract spacing scale — rem values tuned per surface. The load-bearing one
 
 RULE: `border-radius: 0` on all chrome — buttons, chips, cards, inputs, the mobile row-card (CAL-12 killed the 6px). Two sanctioned exceptions:
 
-1. **2px on photographic tiles only** — `.cal-row__media`, `.dir-card__media`, `.digest-preview__thumb`. A hairline round reads better on photos; it never applies to non-photo boxes.
+1. **2px on photographic tiles only** — `.cal-row__media`, `.dir-card__media`. A hairline round reads better on photos; it never applies to non-photo boxes. (`.digest-preview__thumb` left this list with CAL-37: the v5 email's thumbnails are radius 0, and the miniature depicts the actual email.)
 2. **Map pins are circles** (`.sbc-pin`, 50%) — a designed marker shape, not a rounded rectangle.
 
 The state-of-sound report's 14px/999px family is the sanctioned editorial register — **ratified, D-14, §9.**
@@ -162,7 +162,7 @@ Masthead (`_src/partials/header.html`, CAL-30 item 1 — pulled into CAL-28): st
 
 ### 2.7 Digest block (CAL-18)
 
-Signup pitch + form beside a build-time mini-render of this week's **actual** Thursday email, in the email's own `--dp-*` palette (from `digest.ts`, both schemes). The preview column is deliberately narrow (19rem) — a glimpse, not a second calendar. The tear-off fade and "+N more" line render **only when the week actually holds more sessions than shown** — a fully shown week gets no false "more."
+Signup pitch + form beside a build-time mini-render of this week's **actual** Thursday email — since CAL-37, the v5 Broadcast digest: the email's own committed ground, caps day monuments with computed per-day counts (the full week's, not the glimpse's), the answer-first count-and-cities summary, coral Free/Donation `<b>` marks, radius-0 thumbnails. Everything inside the frame rides the `--dp-*` namespace (the email's committed values from `digest.ts`, both schemes) plus `--dp-font`, the email's system stack — Archivo never leaks into the depiction because the email honestly has none. The frame around it is site chrome: the 2px `--ink` editorial frame (the desk tint + sheet shadow retired with the email's desk metaphor). The preview column is deliberately narrow (19rem) — a glimpse, not a second calendar. The tear-off fade and "+N more" line render **only when the week actually holds more sessions than shown** — a fully shown week gets no false "more." Preview == email stays lockstep law: `_digest_preview_meta` mirrors `renderDigestEventRow` (the CAL-UX-12 fold and the Free/Donation mark both included).
 
 ---
 
@@ -186,7 +186,7 @@ Signup pitch + form beside a build-time mini-render of this week's **actual** Th
 
 ### 3.3 Cards
 
-`.detail-card` (aside decision card) and `.dir-card` (§2.5) are the only card primitives. Both radius 0; borders are 1px `--line` or nothing (media carries the mass). No shadows on chrome — the only shadows shipped are the digest-preview sheet (depicting an email on a desk) and map pins.
+`.detail-card` (aside decision card) and `.dir-card` (§2.5) are the only card primitives. Both radius 0; borders are 1px `--line` or nothing (media carries the mass). No shadows on chrome — the only shadows shipped are map pins (the digest-preview sheet shadow retired with CAL-37's desk metaphor; the miniature now sits in a 2px ink frame).
 
 ### 3.4 Empty states & honest lines (CAL-13)
 
@@ -257,7 +257,7 @@ Mechanism (v5): flipping `--ink-rgb` inverts every `rgba(var(--ink-rgb), a)` hai
 
 RULE: new components get dark mode for free **only** if they follow §1.1's `--ink-rgb` rule. A component needing its own dark block is a smell; justify it.
 
-Sanctioned exceptions: the digest preview flips to the email's own `--dp-*` dark layer (its v4 accents pinned in that namespace until CAL-37); OSM tiles are CSS-inverted into a dark basemap (`.leaflet-tile` only — markers/popups untouched); warm photos and report photos dim via `filter`, not new assets; the state-of-sound report keeps its own `--soh-*` surface AND accent tokens with its own dark block until CAL-36 (§9 D-14).
+Sanctioned exceptions: the digest preview flips to the email's own `--dp-*` dark layer (the shipped v5 email's night values since CAL-37 — the namespace stays as the depiction seam; the email's night ground and the site's are the same committed `#0E0C12`, and the flipped 2px `--ink` frame keeps the depiction reading as an object); OSM tiles are CSS-inverted into a dark basemap (`.leaflet-tile` only — markers/popups untouched); warm photos and report photos dim via `filter`, not new assets; the state-of-sound report keeps its own `--soh-*` surface AND accent tokens with its own dark block until CAL-36 (§9 D-14).
 
 ---
 
@@ -309,6 +309,7 @@ The masthead's `.btn-primary` digest form is retired for an underlined text link
 | CAL-16 bands as filters | §2.3 |
 | CAL-17 OG cards | §5 |
 | CAL-18 digest preview | §2.7 |
+| CAL-37 digest email v5 + preview re-cut | §1.1, §1.3, §1.5, §2.7, §3.3, §6 |
 | CAL-21 entity two-column | §2.2 |
 | CAL-22 warm imagery | §4 |
 | CAL-23 listing phases A/A2/B | §2.1 |

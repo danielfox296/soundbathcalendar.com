@@ -1793,44 +1793,57 @@ def render_city_switcher(current_city, nav_prefix):
     return '\n'.join(out)
 
 
-# CAL-18: how many rooms the digest preview shows before the fade. Small on
+# CAL-18: how many sessions the digest preview shows before the fade. Small on
 # purpose — the preview is a glimpse of the email, not a second calendar.
 _PREVIEW_MAX_ROWS = 3
 
 
 def _digest_preview_meta(row):
-    """operator · venue · price, de-duplicated — mirrors renderDigestEventRow in
-    digest.ts, sameEntity fold included: operator and venue are frequently the
-    same entity in the feed — the same string, or one name under a legal suffix
-    ("X" vs "X LLC", _same_entity) — and printing it twice is a display defect,
-    not an extra fact. §2.7 requires the preview to show the actual email, so
-    this compare stays in lockstep with the email side's."""
+    """operator · venue · price as escaped HTML, de-duplicated — mirrors
+    renderDigestEventRow in digest.ts, sameEntity fold included: operator and
+    venue are frequently the same entity in the feed — the same string, or one
+    name under a legal suffix ("X" vs "X LLC", _same_entity) — and printing it
+    twice is a display defect, not an extra fact. Free/Donation prices ride the
+    coral text mark exactly as the email's do (CAL-37). §2.7 requires the
+    preview to show the actual email, so both stay in lockstep with the email
+    side's logic."""
     parts = []
     for part in (row.get('operator'), row.get('venue')):
         t = (part or '').strip()
         if t and not any(_same_entity(t, p) for p in parts):
             parts.append(t)
+    parts = [_esc(p) for p in parts]
     price = (row.get('price') or '').strip()
     if price:
-        parts.append(price)
+        marked = (f'<b class="digest-preview__free">{_esc(price)}</b>'
+                  if _is_free_or_donation(row) else _esc(price))
+        parts.append(marked)
     return ' · '.join(parts)
 
 
 def render_digest_preview(rows, now=None):
     """A REAL mini-preview of this week's Thursday digest (CAL-18), rendered at
-    build time from the same rows the calendar shows — the email's tear-off-rail
-    look (soundbathcalendar-admin digest.ts) recreated in site CSS: paper sheet
-    on a desk tint, day rail, the first few rooms, then a soft fade and an
-    honest count of the rest. An empty week renders the email's actual empty
-    state — never fabricated events. The sheet is a picture of the email
+    build time from the same rows the calendar shows — the v5 Broadcast email
+    (soundbathcalendar-admin digest.ts, CAL-37) recreated at reduced scale in
+    site CSS: the email's own committed ground inside a 2px ink frame, caps day
+    monuments with computed counts, the first few sessions, then a soft fade
+    and an honest count of the rest. An empty week renders the email's actual
+    empty state — never fabricated events. The frame is a picture of the email
     (aria-hidden; the figcaption carries the meaning), so nothing inside it
     links or duplicates the page's interactive list."""
     week = week_rows(rows, now)
     shown = week[:_PREVIEW_MAX_ROWS]
     remaining = len(week) - len(shown)
-    # Reserve the thumbnail column for the whole preview when any shown room
+    # Reserve the thumbnail column for the whole preview when any shown session
     # has an image — the email's showThumb rule, so text columns share an edge.
     show_thumb = any(r.get('image_url') for r in shown)
+    # Per-day session counts over the FULL week — the counts the email itself
+    # prints on its day monuments (computed, never typed), regardless of where
+    # the preview's fade cuts off.
+    day_counts = {}
+    for r in week:
+        k = _denver(r['starts_at']).strftime('%Y-%m-%d')
+        day_counts[k] = day_counts.get(k, 0) + 1
 
     out = ['<figure class="digest-preview">',
            '      <figcaption class="digest-preview__caption">This is what lands '
@@ -1840,22 +1853,41 @@ def render_digest_preview(rows, now=None):
            '          <span class="digest-preview__brand">Sound Bath Calendar</span>']
 
     if not shown:
-        out.append('          <p class="digest-preview__h1">No sound baths are on '
-                   'the Front Range calendar for the next seven days yet.</p>')
+        out.append('          <p class="digest-preview__h1 digest-preview__h1--empty">'
+                   'No sound baths are on the Front Range calendar for the next '
+                   'seven days yet.</p>')
     else:
         out.append('          <p class="digest-preview__h1">This week&rsquo;s sound '
                    'baths on the Front Range</p>')
+        # The email's answer-first summary line: computed count + the cities
+        # actually on the list (digestSummaryHtml in digest.ts).
+        cities = []
+        for r in week:
+            c = (r.get('city') or '').strip()
+            if c and c not in cities:
+                cities.append(c)
+        n = len(week)
+        count = f'<b>{n} session{"" if n == 1 else "s"}</b>'
+        if cities:
+            listed = (', '.join(cities) if len(cities) <= 3
+                      else ', '.join(cities[:3]) + ' and more')
+            out.append(f'          <p class="digest-preview__sum">{count} &mdash; '
+                       f'{_esc(listed)}.</p>')
+        else:
+            out.append(f'          <p class="digest-preview__sum">{count}.</p>')
         current_day = None
         for r in shown:
             ts = r['starts_at']
             d = _denver(ts)
             day_key = d.strftime('%Y-%m-%d')
             if day_key != current_day:
-                divider = '' if current_day is None else ' digest-preview__day--next'
-                out.append(f'          <div class="digest-preview__day{divider}">')
-                out.append(f'            <span class="digest-preview__dow">{_esc(d.strftime("%A"))}</span>')
-                out.append(f'            <span class="digest-preview__date">'
-                           f'{_esc(d.strftime("%B"))} {_day(d.strftime("%d"))}</span>')
+                ct = day_counts[day_key]
+                out.append('          <div class="digest-preview__day">')
+                out.append(f'            <span class="digest-preview__daylabel">'
+                           f'{_esc(d.strftime("%A"))}, {_esc(d.strftime("%B"))} '
+                           f'{_day(d.strftime("%d"))}</span>')
+                out.append(f'            <span class="digest-preview__dayct">'
+                           f'{ct} session{"" if ct == 1 else "s"}</span>')
                 out.append('          </div>')
                 current_day = day_key
             thumb = ''
@@ -1879,7 +1911,7 @@ def render_digest_preview(rows, now=None):
             out.append(f'              <span class="digest-preview__name">{_esc(r.get("name", ""))}</span>')
             meta = _digest_preview_meta(r)
             if meta:
-                out.append(f'              <span class="digest-preview__meta">{_esc(meta)}</span>')
+                out.append(f'              <span class="digest-preview__meta">{meta}</span>')
             out.append('            </span>')
             out.append('          </div>')
         if remaining > 0:

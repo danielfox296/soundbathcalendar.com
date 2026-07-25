@@ -64,7 +64,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../../styles.css?v=ed4c5cfa">
+  <link rel="stylesheet" href="../../styles.css?v=693a62a1">
   <style>.pract__head { display: flex; gap: 1.6rem; align-items: flex-start; flex-wrap: wrap; margin: 0 0 1.6rem; } .pract__photo { flex: 0 0 auto; width: 132px; height: 132px; object-fit: cover; background: rgba(var(--ink-rgb),0.06); } .pract__headtext { flex: 1 1 16rem; min-width: 14rem; } .detail__h1 { margin: 0.2rem 0 0.6rem; } @media (max-width: 560px) { .pract__photo { width: 96px; height: 96px; } }</style>
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -91,6 +91,22 @@
         Array.prototype.slice.call(document.images).forEach(function (img) {
           if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
         });
+        // CAL-38 D4: the refine deck ships `open`; on small screens the
+        // mobile stack starts collapsed. Tracks the query both ways because
+        // above 640px the summary is a mouse-inert static head — a deck
+        // closed at mobile width must reopen itself when the viewport
+        // crosses up. Lives here, NOT in filters.js — that file is frozen
+        // by design.
+        var deck = document.querySelector('details[data-cal-filters]');
+        if (deck) {
+          var mq = matchMedia('(max-width: 640px)');
+          var syncDeck = function () {
+            if (mq.matches) deck.removeAttribute('open');
+            else deck.setAttribute('open', '');
+          };
+          syncDeck();
+          if (mq.addEventListener) mq.addEventListener('change', syncDeck);
+        }
       });
     })();
   </script>
@@ -226,7 +242,7 @@
         <span class="footer-col__h">Learn</span>
         <a href="../../what-to-expect/">What to expect</a>
         <a href="../../learn/">Learn</a>
-        <a href="../../roundups/">Roundups</a>
+        <a href="../../blog/">Blog</a>
         <a href="../../#digest">The Thursday digest</a>
         <a href="../../feed.xml">RSS</a>
       </nav>

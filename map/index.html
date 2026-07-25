@@ -66,7 +66,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../styles.css?v=ed4c5cfa">
+  <link rel="stylesheet" href="../styles.css?v=693a62a1">
   <link rel="stylesheet" href="../vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="../vendor/markercluster/MarkerCluster.css">
   <style>.map-wrap { margin: 0; } .map-intro { margin: 0 0 1.4rem; } .map-intro .cal-updated { color: var(--muted); font-size: 0.85rem; margin: 0.2rem 0 0; } .map-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; } .map-split__map { position: relative; } @media (min-width: 900px) { .map-split { grid-template-columns: minmax(340px, 5fr) 7fr; gap: 2.4rem; align-items: start; } .map-split__map { position: sticky; top: var(--mast-offset); } } .map-split__list .cal-card__im { display: none; } .map-split__list .cal-rows { grid-template-columns: minmax(0, 1fr); gap: 16px; } .map-split__list .cal-card--tile { background: transparent; aspect-ratio: auto; } .map-split__list .cal-card__tin { padding: 0; } .map-split__list .cal-row__name { font-size: 22px; } .map-split__list .cal-card--tile .cal-row__name a { color: var(--ink); } .map-split__list .cal-card--tile .cal-card__meta { color: var(--muted); } .map-split__list .cal-card--tile .cal-card__meta b { color: var(--signal-text); } .map-split__list .cal-card--tile:hover { background: transparent; } .map-split__list .cal-card--tile:hover .cal-card__meta { color: var(--muted); } @media (max-width: 899px) { .map-split__map { order: -1; } } #sbc-map { width: 100%; height: 680px; border: 1px solid var(--line); background: var(--paper); } @media (max-width: 899px) { #sbc-map { height: 440px; } } .map-hint { position: absolute; inset: 0; z-index: 1200; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 1.4rem; background: rgba(var(--ink-rgb),0.45); opacity: 0; transition: opacity .25s; pointer-events: none; } .map-hint--on { opacity: 1; } .map-hint span { background: var(--paper); color: var(--ink); border: 1px solid var(--line); padding: 0.6rem 1rem; font: 600 0.9rem var(--font-body); } .sbc-pin { width: 100%; height: 100%; background: var(--ink); color: var(--paper); border: 2px solid var(--paper); border-radius: 50%; display: flex; align-items: center; justify-content: center; font: 600 12px/1 var(--font-body); box-shadow: 0 1px 4px rgba(var(--shadow-rgb),0.35); } .sbc-pin--cluster { font-size: 13px; } .sbc-pin--hot { background: var(--signal); color: #fff; border-color: var(--paper); } .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--paper); color: var(--ink); } .sbc-pop__name { font: 600 0.98rem var(--font-body); margin: 0 0 0.3rem; } .sbc-pop__name a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; } .sbc-pop__list { margin: 0; padding-left: 1.05rem; } .sbc-pop__list li { font-size: 0.86rem; line-height: 1.5; } .sbc-pop__list a { color: var(--ink); } .sbc-pop__more { list-style: none; margin-left: -1.05rem; color: var(--muted); } .leaflet-container { font: inherit; } .map-empty { color: var(--muted); } @media (prefers-color-scheme: dark) { .leaflet-tile { filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9); } }</style>
@@ -95,6 +95,22 @@
         Array.prototype.slice.call(document.images).forEach(function (img) {
           if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
         });
+        // CAL-38 D4: the refine deck ships `open`; on small screens the
+        // mobile stack starts collapsed. Tracks the query both ways because
+        // above 640px the summary is a mouse-inert static head — a deck
+        // closed at mobile width must reopen itself when the viewport
+        // crosses up. Lives here, NOT in filters.js — that file is frozen
+        // by design.
+        var deck = document.querySelector('details[data-cal-filters]');
+        if (deck) {
+          var mq = matchMedia('(max-width: 640px)');
+          var syncDeck = function () {
+            if (mq.matches) deck.removeAttribute('open');
+            else deck.setAttribute('open', '');
+          };
+          syncDeck();
+          if (mq.addEventListener) mq.addEventListener('change', syncDeck);
+        }
       });
     })();
   </script>
@@ -141,25 +157,18 @@
     <div class="map-split">
       <div class="map-split__list">
 <nav class="cal-jump" aria-label="Jump to a time">
-  <a href="#today" data-band="today">Today</a>
-  <a href="#this-weekend" data-band="this-weekend">This weekend</a>
-  <a href="#this-week" data-band="this-week">This week</a>
-  <a href="#weeks-ahead" data-band="weeks-ahead">The weeks ahead</a>
+  <a href="#today" data-band="today">Today <span class="cal-jump__ct">3</span></a>
+  <a href="#this-weekend" data-band="this-weekend">This weekend <span class="cal-jump__ct">4</span></a>
+  <a href="#this-week" data-band="this-week">This week <span class="cal-jump__ct">19</span></a>
+  <a href="#weeks-ahead" data-band="weeks-ahead">The weeks ahead <span class="cal-jump__ct">28</span></a>
 </nav>
 <section class="cal-band" id="today">
   <div class="cal-day cal-day--live">
     <div class="cal-day__head">
       <h2 class="cal-band__h2">Today</h2>
-      <span class="cal-day__ct">Saturday, July 25 · 4 sessions</span>
+      <span class="cal-day__ct">Saturday, July 25 · 3 sessions</span>
     </div>
     <div class="cal-rows cal-rows--3">
-<article class="cal-row cal-card" data-city="colorado-springs" data-free="0" data-tags="">
-  <span class="cal-card__im"><img src="../img/cards/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center-i.jpg" srcset="../img/cards/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center-i280.jpg 280w, ../img/cards/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="eager" decoding="async"><img class="cal-card__im-c" src="../img/cards/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
-  <span class="cal-card__cap">
-    <h3 class="cal-row__name"><a href="../event/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center/">Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections</a></h3>
-    <p class="cal-card__meta cal-row__marks">12:00 PM · La Foret Conference &amp; Retreat Center — Colorado Springs · <span class="cal-row__with">with <a href="../practitioner/sharay/">Sharay Fay</a></span> · $35-$50<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-tickets-1689648747889" target="_blank" rel="noopener" aria-label="Tickets — Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://msha.ke/soullightllc" target="_blank" rel="noopener" aria-label="Soul Light, LLC website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
-  </span>
-</article>
 <article class="cal-row cal-card" data-city="colorado-springs" data-free="0" data-tags="" data-lat="38.832995" data-lng="-104.829159">
   <span class="cal-card__im"><img src="../img/cards/a-sound-bath-to-unwind-releasing-stress-from-body-mind-2026-07-25-singing-bowls-of-the-rockies-i.jpg" srcset="../img/cards/a-sound-bath-to-unwind-releasing-stress-from-body-mind-2026-07-25-singing-bowls-of-the-rockies-i280.jpg 280w, ../img/cards/a-sound-bath-to-unwind-releasing-stress-from-body-mind-2026-07-25-singing-bowls-of-the-rockies-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="eager" decoding="async"><img class="cal-card__im-c" src="../img/cards/a-sound-bath-to-unwind-releasing-stress-from-body-mind-2026-07-25-singing-bowls-of-the-rockies-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
   <span class="cal-card__cap">
@@ -175,7 +184,7 @@
   </span>
 </article>
 <article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="gong-bath" data-lat="39.703472" data-lng="-104.980219">
-  <span class="cal-card__im"><img src="../img/cards/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center-i.jpg" srcset="../img/cards/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center-i280.jpg 280w, ../img/cards/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__im"><img src="../img/cards/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center-i.jpg" srcset="../img/cards/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center-i280.jpg 280w, ../img/cards/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="eager" decoding="async"><img class="cal-card__im-c" src="../img/cards/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
   <span class="cal-card__cap">
     <h3 class="cal-row__name"><a href="../event/crystal-gong-sound-concert-in-the-salt-cave-2026-07-25-5-star-salt-caves-wellness-center/">Crystal &amp; Gong Sound Concert in the Salt Cave</a></h3>
     <p class="cal-card__meta cal-row__marks">6:30 PM · 5 Star Salt Caves Wellness Center — West Washington Park, Denver · <span class="cal-row__with">with <a href="../practitioner/ann-martin/">Ann Martin</a></span> · <a class="cal-row__modality" href="../gong-bath/">Gong bath</a> · $60<span class="cal-card__acts"><a class="cal-card__ica" href="https://5starsaltcaves.com/sound-bath-in-the-salt-cave/" target="_blank" rel="noopener" aria-label="Tickets — Crystal &amp; Gong Sound Concert in the Salt Cave"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://5starsaltcaves.com" target="_blank" rel="noopener" aria-label="5 Star Salt Caves Wellness Center website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
@@ -377,18 +386,18 @@
     <p class="cal-card__meta cal-row__marks">6:00 PM · The Next Us — Colorado Springs · <b>Donation</b><span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/community-candle-lit-sound-bath-tickets-1993889907387" target="_blank" rel="noopener" aria-label="Tickets — Community Candle lit sound bath"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.thinkpositiveclub.com/" target="_blank" rel="noopener" aria-label="Think Positive Club website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
   </span>
 </article>
-<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.688525" data-lng="-104.980527">
-  <span class="cal-card__im"><img src="../img/cards/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st-i.jpg" srcset="../img/cards/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st-i280.jpg 280w, ../img/cards/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
-  <span class="cal-card__cap">
-    <h3 class="cal-row__name"><a href="../event/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st/">Full Moon Sound Medicine Journey</a></h3>
-    <p class="cal-card__meta cal-row__marks">7:00 PM · 1545 S Pearl St — Platt Park, Denver<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/full-moon-sound-medicine-journey-tickets-1993708019355" target="_blank" rel="noopener" aria-label="Tickets — Full Moon Sound Medicine Journey"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://soulgrowthnetwork.com" target="_blank" rel="noopener" aria-label="Soul Growth Network website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
-  </span>
-</article>
 <article class="cal-row cal-card" data-city="colorado-springs" data-free="0" data-tags="" data-lat="38.832995" data-lng="-104.829159">
   <span class="cal-card__im"><img src="../img/cards/vagus-nerve-activation-sound-bath-reconnect-with-inner-peace-2026-07-31-singing-bowls-of-the-rockies-i.jpg" srcset="../img/cards/vagus-nerve-activation-sound-bath-reconnect-with-inner-peace-2026-07-31-singing-bowls-of-the-rockies-i280.jpg 280w, ../img/cards/vagus-nerve-activation-sound-bath-reconnect-with-inner-peace-2026-07-31-singing-bowls-of-the-rockies-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/vagus-nerve-activation-sound-bath-reconnect-with-inner-peace-2026-07-31-singing-bowls-of-the-rockies-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
   <span class="cal-card__cap">
     <h3 class="cal-row__name"><a href="../event/vagus-nerve-activation-sound-bath-reconnect-with-inner-peace-2026-07-31-singing-bowls-of-the-rockies/">Vagus Nerve Activation Sound Bath - Reconnect with Inner Peace</a></h3>
     <p class="cal-card__meta cal-row__marks">7:00 PM · Singing Bowls of the Rockies — Colorado Springs · <span class="cal-row__with">with <a href="../practitioner/gigi-martins/">Gigi Martins</a></span> · $39<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/vagus-nerve-activation-sound-bath-reconnect-with-inner-peace-tickets-1992093067992" target="_blank" rel="noopener" aria-label="Tickets — Vagus Nerve Activation Sound Bath - Reconnect with Inner Peace"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://www.singingbowlsoftherockies.com" target="_blank" rel="noopener" aria-label="Singing Bowls of the Rockies website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
+  </span>
+</article>
+<article class="cal-row cal-card" data-city="denver" data-free="0" data-tags="" data-lat="39.688525" data-lng="-104.980527">
+  <span class="cal-card__im"><img src="../img/cards/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st-i.jpg" srcset="../img/cards/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st-i280.jpg 280w, ../img/cards/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../img/cards/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
+  <span class="cal-card__cap">
+    <h3 class="cal-row__name"><a href="../event/full-moon-sound-medicine-journey-2026-07-31-1545-s-pearl-st/">Full Moon Sound Medicine Journey</a></h3>
+    <p class="cal-card__meta cal-row__marks">7:00 PM · 1545 S Pearl St — Platt Park, Denver<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/full-moon-sound-medicine-journey-tickets-1993708019355" target="_blank" rel="noopener" aria-label="Tickets — Full Moon Sound Medicine Journey"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://soulgrowthnetwork.com" target="_blank" rel="noopener" aria-label="Soul Growth Network website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
   </span>
 </article>
     </div>
@@ -805,7 +814,7 @@
         <span class="footer-col__h">Learn</span>
         <a href="../what-to-expect/">What to expect</a>
         <a href="../learn/">Learn</a>
-        <a href="../roundups/">Roundups</a>
+        <a href="../blog/">Blog</a>
         <a href="../#digest">The Thursday digest</a>
         <a href="../feed.xml">RSS</a>
       </nav>

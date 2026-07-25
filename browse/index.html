@@ -69,7 +69,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../styles.css?v=ed4c5cfa">
+  <link rel="stylesheet" href="../styles.css?v=693a62a1">
   <style>.browse__crumbs { font-size: 0.82rem; color: var(--muted); margin: 0 0 2rem; } .browse__crumbs a { color: var(--ink); text-decoration: none; } .browse__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.8rem; } .browse__lede { font-size: 1.1rem; color: var(--ink); max-width: 42rem; margin: 0 0 2.4rem; } .browse__axis { margin: 0 0 2.4rem; } .browse__axis-h2 { font: 600 0.78rem var(--font-body); text-transform: uppercase; color: var(--muted); margin: 0 0 0.9rem; } .browse__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.9rem; } .browse__card { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; text-decoration: none; color: inherit; border: 1px solid rgba(var(--ink-rgb),0.14); padding: 0.8rem 0.95rem; } a.browse__card:hover { border-color: var(--signal-text); } a.browse__card:hover .browse__name { color: var(--signal-text); } .browse__name { font: 500 1.02rem var(--font-display); color: var(--ink); } .browse__count { font-size: 0.82rem; color: var(--muted); white-space: nowrap; } .browse__tracked { font-size: 0.9rem; color: var(--muted); max-width: 46rem; margin: 0.9rem 0 0; line-height: 1.55; } .browse__foot { font-size: 0.95rem; color: var(--muted); max-width: 42rem; margin: 0.4rem 0 0; }</style>
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -96,6 +96,22 @@
         Array.prototype.slice.call(document.images).forEach(function (img) {
           if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
         });
+        // CAL-38 D4: the refine deck ships `open`; on small screens the
+        // mobile stack starts collapsed. Tracks the query both ways because
+        // above 640px the summary is a mouse-inert static head — a deck
+        // closed at mobile width must reopen itself when the viewport
+        // crosses up. Lives here, NOT in filters.js — that file is frozen
+        // by design.
+        var deck = document.querySelector('details[data-cal-filters]');
+        if (deck) {
+          var mq = matchMedia('(max-width: 640px)');
+          var syncDeck = function () {
+            if (mq.matches) deck.removeAttribute('open');
+            else deck.setAttribute('open', '');
+          };
+          syncDeck();
+          if (mq.addEventListener) mq.addEventListener('change', syncDeck);
+        }
       });
     })();
   </script>
@@ -218,7 +234,7 @@
         <span class="footer-col__h">Learn</span>
         <a href="../what-to-expect/">What to expect</a>
         <a href="../learn/">Learn</a>
-        <a href="../roundups/">Roundups</a>
+        <a href="../blog/">Blog</a>
         <a href="../#digest">The Thursday digest</a>
         <a href="../feed.xml">RSS</a>
       </nav>

@@ -72,7 +72,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../styles.css?v=ed4c5cfa">
+  <link rel="stylesheet" href="../styles.css?v=693a62a1">
   
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -99,6 +99,22 @@
         Array.prototype.slice.call(document.images).forEach(function (img) {
           if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
         });
+        // CAL-38 D4: the refine deck ships `open`; on small screens the
+        // mobile stack starts collapsed. Tracks the query both ways because
+        // above 640px the summary is a mouse-inert static head — a deck
+        // closed at mobile width must reopen itself when the viewport
+        // crosses up. Lives here, NOT in filters.js — that file is frozen
+        // by design.
+        var deck = document.querySelector('details[data-cal-filters]');
+        if (deck) {
+          var mq = matchMedia('(max-width: 640px)');
+          var syncDeck = function () {
+            if (mq.matches) deck.removeAttribute('open');
+            else deck.setAttribute('open', '');
+          };
+          syncDeck();
+          if (mq.addEventListener) mq.addEventListener('change', syncDeck);
+        }
       });
     })();
   </script>
@@ -145,15 +161,20 @@
     <!-- HUMAN REVIEW -->
     <p class="cal-intro">These sessions are free or offered by donation, so cost is not a barrier to trying one. The experience is the same as a paid sound bath — you lie down and rest while the instruments play — so it is a low-stakes way to find out whether sound baths are for you.</p>
     <p class="cal-summary" id="cal-summary">9 free or donation sessions are on the Front Range calendar right now.</p>
-    <div class="cal-filters" data-cal-filters hidden>
+    <nav class="cal-jump" aria-label="Jump to a time">
+  <a href="#this-week" data-band="this-week">This week <span class="cal-jump__ct">4</span></a>
+  <a href="#weeks-ahead" data-band="weeks-ahead">The weeks ahead <span class="cal-jump__ct">5</span></a>
+  <a href="#faq">FAQ</a>
+</nav>
+    <details class="cal-filters" data-cal-filters hidden open>
+  <summary><span class="cal-filters__summary">Filter + sort<span class="cal-filters__caret" aria-hidden="true"></span></span></summary>
   <div class="cal-filters__primary">
     <label class="cal-filters__field">
-      <span class="visually-hidden">Filter by area</span>
-      <select data-filter-city><option value="">All areas</option><option value="denver">Denver</option><option value="boulder">Boulder</option><option value="fort-collins">Fort Collins</option><option value="colorado-springs">Colorado Springs</option></select>
+      <span class="cal-filters__flab" aria-hidden="true">Area</span>
+      <select data-filter-city aria-label="Filter by area"><option value="">All areas</option><option value="denver">Denver</option><option value="boulder">Boulder</option><option value="fort-collins">Fort Collins</option><option value="colorado-springs">Colorado Springs</option></select>
     </label>
     <label class="cal-filters__check"><input type="checkbox" data-filter-free> <span>Free / donation only</span></label>
     <button type="button" class="cal-filters__nearme" data-nearme aria-pressed="false" hidden>Sort by distance</button>
-    <button type="button" class="cal-filters__clear" data-filter-clear hidden>Clear filters</button>
   </div>
   <div class="cal-filters__tags" role="group" aria-label="Filter by tag">
     <div class="cal-filters__axis">
@@ -162,13 +183,9 @@
       <label class="cal-tag cal-tag--toggle"><input type="checkbox" data-filter-tag="breathwork-sound"> <span>Breathwork + sound</span></label>
     </div>
   </div>
-</div>
-    <nav class="cal-jump" aria-label="Jump to a time">
-  <a href="#this-week" data-band="this-week">This week</a>
-  <a href="#weeks-ahead" data-band="weeks-ahead">The weeks ahead</a>
-  <a href="#faq">FAQ</a>
-</nav>
-<section class="cal-band" id="this-week">
+  <button type="button" class="cal-filters__clear" data-filter-clear hidden>Clear filters</button>
+</details>
+    <section class="cal-band" id="this-week">
   <div class="cal-day">
     <div class="cal-day__head">
       <h2 class="cal-band__h2">Monday, July 27</h2>
@@ -354,18 +371,10 @@
         <div class="digest-preview__sheet">
           <span class="digest-preview__brand">Sound Bath Calendar</span>
           <p class="digest-preview__h1">This week&rsquo;s sound baths on the Front Range</p>
+          <p class="digest-preview__sum"><b>26 sessions</b> &mdash; Colorado Springs, Denver, Boulder and more.</p>
           <div class="digest-preview__day">
-            <span class="digest-preview__dow">Saturday</span>
-            <span class="digest-preview__date">July 25</span>
-          </div>
-          <div class="digest-preview__row">
-            <span class="digest-preview__time">12:00 PM</span>
-            <span class="digest-preview__thumb"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1121785743%2F1415215040793%2F1%2Foriginal.20250911-233753?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.5&amp;fp-y=0.5&amp;s=f3b9bc9d2654a496ad03f3c8c3ab6c94" alt="" loading="lazy" referrerpolicy="no-referrer"></span>
-            <span class="digest-preview__text">
-              <span class="digest-preview__city">Colorado Springs</span>
-              <span class="digest-preview__name">Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections</span>
-              <span class="digest-preview__meta">Soul Light, LLC · La Foret Conference &amp; Retreat Center · $35-$50</span>
-            </span>
+            <span class="digest-preview__daylabel">Saturday, July 25</span>
+            <span class="digest-preview__dayct">3 sessions</span>
           </div>
           <div class="digest-preview__row">
             <span class="digest-preview__time">2:00 PM</span>
@@ -385,7 +394,16 @@
               <span class="digest-preview__meta">All Things Serene · Harmonist Sanctuary</span>
             </span>
           </div>
-          <p class="digest-preview__more">&hellip;and 24 more sound baths in Thursday&rsquo;s email</p>
+          <div class="digest-preview__row">
+            <span class="digest-preview__time">6:30 PM</span>
+            <span class="digest-preview__thumb"><img src="https://img1.wsimg.com/isteam/ip/52467a92-9014-436e-be8d-903fcdb5b87a/blob-cdbc9ec.png" alt="" loading="lazy" referrerpolicy="no-referrer"></span>
+            <span class="digest-preview__text">
+              <span class="digest-preview__city">Denver</span>
+              <span class="digest-preview__name">Crystal &amp; Gong Sound Concert in the Salt Cave</span>
+              <span class="digest-preview__meta">5 Star Salt Caves Wellness Center · $60</span>
+            </span>
+          </div>
+          <p class="digest-preview__more">&hellip;and 23 more sound baths in Thursday&rsquo;s email</p>
         </div>
       </div>
     </figure>
@@ -444,7 +462,7 @@
         <span class="footer-col__h">Learn</span>
         <a href="../what-to-expect/">What to expect</a>
         <a href="../learn/">Learn</a>
-        <a href="../roundups/">Roundups</a>
+        <a href="../blog/">Blog</a>
         <a href="../#digest">The Thursday digest</a>
         <a href="../feed.xml">RSS</a>
       </nav>

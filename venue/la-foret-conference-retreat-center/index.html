@@ -64,7 +64,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../../styles.css?v=ed4c5cfa">
+  <link rel="stylesheet" href="../../styles.css?v=693a62a1">
   <style>.venue__figure { margin: 0 0 1.6rem; max-width: 640px; } .venue__photo { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: rgba(var(--ink-rgb),0.06); display: block; } .venue__credit { margin: 0.4rem 0 0; font-size: 0.74rem; color: var(--muted); } .venue__credit a { color: var(--muted); text-decoration: none; } .venue__credit a:hover { text-decoration: underline; }</style>
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -91,6 +91,22 @@
         Array.prototype.slice.call(document.images).forEach(function (img) {
           if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
         });
+        // CAL-38 D4: the refine deck ships `open`; on small screens the
+        // mobile stack starts collapsed. Tracks the query both ways because
+        // above 640px the summary is a mouse-inert static head — a deck
+        // closed at mobile width must reopen itself when the viewport
+        // crosses up. Lives here, NOT in filters.js — that file is frozen
+        // by design.
+        var deck = document.querySelector('details[data-cal-filters]');
+        if (deck) {
+          var mq = matchMedia('(max-width: 640px)');
+          var syncDeck = function () {
+            if (mq.matches) deck.removeAttribute('open');
+            else deck.setAttribute('open', '');
+          };
+          syncDeck();
+          if (mq.addEventListener) mq.addEventListener('change', syncDeck);
+        }
       });
     })();
   </script>
@@ -147,8 +163,6 @@
     <dl class="detail__facts">
       <dt>Address</dt><dd>6145 Shoup Road, Colorado Springs, CO 80908</dd>
       <dt>Area</dt><dd>Colorado Springs</dd>
-      <dt>Next up</dt><dd><a href="../../event/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center/">July 25 · Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections</a></dd>
-      <dt>Facilitators</dt><dd><a href="../../practitioner/sharay/">Sharay Fay</a></dd>
     </dl>
     <iframe class="detail-card__map" src="https://maps.google.com/maps?q=6145+Shoup+Road%2C+Colorado+Springs%2C+CO+80908%2C+Colorado+Springs%2C+CO&amp;z=15&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map of La Foret Conference &amp; Retreat Center"></iframe>
     <p class="detail__links"><a href="https://www.google.com/maps/search/?api=1&amp;query=6145+Shoup+Road%2C+Colorado+Springs%2C+CO+80908%2C+Colorado+Springs%2C+CO" target="_blank" rel="noopener">Open in Maps</a></p>
@@ -156,15 +170,7 @@
       </aside>
     </div>
     <h2 class="detail__section-h">Upcoming sessions here</h2>
-    <div class="cal-rows cal-rows--3">
-<article class="cal-row cal-card" data-city="colorado-springs" data-free="0" data-tags="">
-  <span class="cal-card__im"><img src="../../img/cards/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center-i.jpg" srcset="../../img/cards/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center-i280.jpg 280w, ../../img/cards/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center-i.jpg 560w" sizes="(max-width: 719px) 46vw, (max-width: 1079px) 30vw, 310px" width="560" height="560" alt="" loading="lazy" decoding="async"><img class="cal-card__im-c" src="../../img/cards/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center-c.jpg" width="560" height="560" alt="" loading="lazy" decoding="async" aria-hidden="true"></span>
-  <span class="cal-card__cap">
-    <h3 class="cal-row__name"><a href="../../event/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-2026-07-25-la-foret-conference-retreat-center/">Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections</a></h3>
-    <p class="cal-card__meta cal-row__marks">Sat, Jul 25 · 12:00 PM · La Foret Conference &amp; Retreat Center — Colorado Springs · <span class="cal-row__with">with <a href="../../practitioner/sharay/">Sharay Fay</a></span> · $35-$50<span class="cal-card__acts"><a class="cal-card__ica" href="https://www.eventbrite.com/e/circles-of-connection-sound-bath-medicine-wheel-nature-reflections-tickets-1689648747889" target="_blank" rel="noopener" aria-label="Tickets — Circles of Connection: Sound Bath, Medicine Wheel, Nature Reflections"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../img/social-sprite.svg#icon-ticket"/></svg></a><a class="cal-card__ica" href="https://msha.ke/soullightllc" target="_blank" rel="noopener" aria-label="Soul Light, LLC website"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../img/social-sprite.svg#icon-globe"/></svg></a></span></p>
-  </span>
-</article>
-</div>
+    <p class="detail__empty">No upcoming sessions listed here right now. <a href="../../">See the full calendar →</a></p>
     <p class="detail__back"><a href="../../venues/">All venues →</a></p>
   </div>
 </section>
@@ -219,7 +225,7 @@
         <span class="footer-col__h">Learn</span>
         <a href="../../what-to-expect/">What to expect</a>
         <a href="../../learn/">Learn</a>
-        <a href="../../roundups/">Roundups</a>
+        <a href="../../blog/">Blog</a>
         <a href="../../#digest">The Thursday digest</a>
         <a href="../../feed.xml">RSS</a>
       </nav>

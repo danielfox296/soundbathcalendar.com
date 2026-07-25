@@ -273,13 +273,16 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: 2px solid var(--ink); outline-offset: 1px; border-color: transparent; }
 .form-note { max-width: 34rem; color: var(--muted); margin: 0 0 1.4rem; }
 
-/* ---- digest signup + live preview (CAL-18). The pitch + form pair with a
-        build-time mini-render of this week's ACTUAL Thursday email — the
-        digest.ts tear-off-rail look (desk tint, paper sheet, day rail, accent
-        day dividers) recreated at reduced scale. Two columns on wide screens
-        (the reclaimed-width doctrine), one below 900px. The --dp-* tokens are
-        the email's own palette (digest.ts LIGHT / dark layer), flipped by the
-        same prefers-color-scheme media the site theme rides. ---- */
+/* ---- digest signup + live preview (CAL-18; re-cut by CAL-37). The pitch +
+        form pair with a build-time mini-render of this week's ACTUAL Thursday
+        email — the v5 Broadcast digest (digest.ts: the committed ground, caps
+        day monuments with computed counts, coral Free/Donation marks)
+        recreated at reduced scale inside a 2px ink frame. Two columns on wide
+        screens (the reclaimed-width doctrine), one below 900px. The --dp-*
+        tokens are the email's own committed palette (digest.ts DAY / its dark
+        layer), flipped by the same prefers-color-scheme media the site theme
+        rides; --dp-font is the email's system stack — Archivo never leaks
+        into the depiction, because the email honestly has none. ---- */
 .digest-block { margin-top: 4.5rem; padding-top: 2.6rem; border-top: 1px solid var(--line); scroll-margin-top: var(--mast-offset); }
 @media (min-width: 900px) {
   /* The preview column is deliberately narrow (a glimpse of the email, not a
@@ -291,39 +294,45 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 @media (min-width: 900px) { .digest-preview { margin-top: 0; } }
 .digest-preview__caption { font: 500 0.85rem var(--font-display); color: var(--muted); margin: 0 0 0.7rem; }
 .digest-preview {
-  --dp-desk: #EAEEF3;            /* digest.ts LIGHT.desk */
-  --dp-sheet: #F5F7FA;           /* LIGHT.sheet */
-  --dp-sheet-rgb: 245, 247, 250; /* the fade gradient's transparent end */
-  --dp-rule: #D8DCE2;            /* LIGHT.rule */
-  --dp-thumbbg: #E1E6EC;         /* LIGHT.imageBg */
-  /* The email still ships the v4 ice/blue accents until CAL-37 restyles it —
-     the preview depicts THAT artifact, so its accents are pinned here (the
-     sanctioned --dp-* namespace), not inherited from the v5 site tokens. */
-  --dp-accent: #62B6E8;          /* digest.ts accent (day rule, underlines) */
-  --dp-city: #1F6FA8;            /* LIGHT city label */
+  --dp-ground: #F5F2ED;          /* digest.ts DAY.paper — the one committed ground */
+  --dp-ground-rgb: 245, 242, 237; /* the fade gradient's transparent end */
+  --dp-ink: #352F5C;             /* DAY.ink */
+  --dp-muted: #676561;           /* DAY.muted */
+  --dp-rule: #DAD7D9;            /* DAY.rule (the .14 hairline flattened) */
+  --dp-thumbbg: #EBE8E6;         /* DAY.imageBg */
+  --dp-signal-text: #B93A2B;     /* DAY.signalText — Free/Donation marks */
+  --dp-font: system-ui, 'Helvetica Neue', Helvetica, Arial, sans-serif; /* the email's honest face */
 }
-.digest-preview__frame { background: var(--dp-desk); padding: 1rem 0.9rem; }
-.digest-preview__sheet { background: var(--dp-sheet); box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 6px 16px rgba(0,0,0,0.06); padding: 1rem 1rem 0.85rem; }
-.digest-preview__brand { display: block; font: 700 0.6rem var(--font-body); letter-spacing: 0.18em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.5); }
-.digest-preview__h1 { font: 500 1.08rem var(--font-display); letter-spacing: -0.015em; line-height: 1.2; color: var(--ink); margin: 0.55rem 0 0; max-width: 16em; }
-.digest-preview__day { display: flex; flex-direction: column; gap: 0.1rem; margin: 1.05rem 0 0.55rem; }
-.digest-preview__day--next { border-top: 2px solid var(--dp-accent); padding-top: 0.85rem; }
-.digest-preview__dow { font: 700 0.56rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.5); }
-.digest-preview__date { font: 500 0.95rem var(--font-display); letter-spacing: -0.015em; color: var(--ink); }
+/* The frame is site chrome around the depiction — the v5 2px ink frame (the
+   editorial band's vocabulary), no desk tint, no shadow (§3.3: the sheet
+   shadow retired with the email's desk metaphor). Inside it, everything is
+   the email's own: its ground, its ink, its muted grey, its system face. */
+.digest-preview__frame { border: 2px solid var(--ink); }
+.digest-preview__sheet { background: var(--dp-ground); padding: 1rem 1rem 0.85rem; }
+.digest-preview__brand { display: block; font: 700 0.6rem var(--dp-font); text-transform: uppercase; color: var(--dp-ink); }
+.digest-preview__h1 { font: 800 1rem var(--dp-font); text-transform: uppercase; line-height: 1.05; color: var(--dp-ink); margin: 0.6rem 0 0; }
+.digest-preview__h1--empty { font: 400 0.82rem var(--dp-font); text-transform: none; line-height: 1.45; }
+.digest-preview__sum { font: 400 0.72rem var(--dp-font); line-height: 1.5; color: var(--dp-ink); margin: 0.4rem 0 0; }
+.digest-preview__day { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; border-bottom: 2px solid var(--dp-ink); padding-bottom: 0.3rem; margin: 1.05rem 0 0; }
+.digest-preview__daylabel { font: 800 0.72rem var(--dp-font); text-transform: uppercase; line-height: 1.15; color: var(--dp-ink); }
+.digest-preview__dayct { font: 400 0.6rem var(--dp-font); color: var(--dp-muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .digest-preview__row { display: flex; gap: 0.7rem; align-items: flex-start; padding: 0.6rem 0; border-top: 1px solid var(--dp-rule); }
-.digest-preview__time { flex: 0 0 3.1rem; font: 600 0.68rem var(--font-body); color: rgba(var(--ink-rgb),0.62); white-space: nowrap; padding-top: 0.15rem; }
-.digest-preview__thumb { flex: 0 0 auto; width: 56px; height: 38px; background: var(--dp-thumbbg); border-radius: 2px; overflow: hidden; }
+.digest-preview__day + .digest-preview__row { border-top: 0; } /* the monument rule IS that boundary (email: first-in-day rows carry no hairline) */
+.digest-preview__time { flex: 0 0 3.1rem; font: 700 0.6rem var(--dp-font); color: var(--dp-muted); white-space: nowrap; padding-top: 0.2rem; font-variant-numeric: tabular-nums; }
+.digest-preview__thumb { flex: 0 0 auto; width: 56px; height: 38px; background: var(--dp-thumbbg); overflow: hidden; }
 .digest-preview__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .digest-preview__thumb--empty, .digest-preview__thumb.img-broken { background: transparent; }
-.digest-preview__text { min-width: 0; display: flex; flex-direction: column; gap: 0.1rem; }
-.digest-preview__city { font: 600 0.56rem var(--font-body); letter-spacing: 0.09em; text-transform: uppercase; color: var(--dp-city); }
-.digest-preview__name { font: 500 0.88rem var(--font-display); letter-spacing: -0.01em; line-height: 1.3; color: var(--ink); text-decoration: underline; text-decoration-color: var(--dp-accent); text-underline-offset: 2px; }
-.digest-preview__meta { font: 400 0.76rem var(--font-body); line-height: 1.45; color: rgba(var(--ink-rgb),0.62); }
-/* The tear-off bottom: the last rows dissolve into the sheet, then the honest
-   count of what the fade hides. Renders only when the week holds more rooms
-   than the preview shows — a fully shown week gets no false "more". */
-.digest-preview__more { position: relative; margin: 0; padding-top: 0.4rem; font: 500 0.82rem var(--font-display); color: rgba(var(--ink-rgb),0.62); }
-.digest-preview__more::before { content: ""; position: absolute; bottom: 100%; left: -1rem; right: -1rem; height: 3.4rem; background: linear-gradient(to bottom, rgba(var(--dp-sheet-rgb),0), var(--dp-sheet)); pointer-events: none; }
+.digest-preview__text { min-width: 0; display: flex; flex-direction: column; gap: 0.12rem; }
+.digest-preview__city { font: 700 0.5rem var(--dp-font); text-transform: uppercase; color: var(--dp-muted); }
+.digest-preview__name { font: 800 0.78rem var(--dp-font); text-transform: uppercase; line-height: 1.2; color: var(--dp-ink); text-decoration: underline; text-underline-offset: 2px; }
+.digest-preview__meta { font: 400 0.68rem var(--dp-font); line-height: 1.45; color: var(--dp-muted); }
+.digest-preview__free { font-weight: 700; color: var(--dp-signal-text); }
+/* The tear-off bottom: the last rows dissolve into the email's ground, then
+   the honest count of what the fade hides. Renders only when the week holds
+   more sessions than the preview shows — a fully shown week gets no false
+   "more". */
+.digest-preview__more { position: relative; margin: 0; padding-top: 0.4rem; font: 500 0.72rem var(--dp-font); color: var(--dp-muted); }
+.digest-preview__more::before { content: ""; position: absolute; bottom: 100%; left: -1rem; right: -1rem; height: 3.4rem; background: linear-gradient(to bottom, rgba(var(--dp-ground-rgb),0), var(--dp-ground)); pointer-events: none; }
 
 /* ---- calendar root: answer-first head (no hero image, no animation).
         The H1 is the v5 monument — condensed caps at broadcast scale,
@@ -841,16 +850,17 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
     --signal-text: #E2724E;    /* coral AS TEXT on near-black (6.25:1) */
     --shadow-rgb: 0, 0, 0;     /* true black — never a light glow */
   }
-  /* CAL-18: the digest preview flips to the email's own dark layer (digest.ts).
-     The sheet sits a step LIGHTER than the page ground so it still reads as
-     a sheet on a desk; all values are the depicted email's own (until CAL-37). */
+  /* CAL-18/CAL-37: the digest preview flips to the email's own night layer
+     (digest.ts dark-scheme values). The email's ground and the site's night
+     ground are the same committed #0E0C12 — the 2px ink frame (site --ink,
+     already flipped) is what keeps the depiction reading as an object. */
   .digest-preview {
-    --dp-desk: #08090B;
-    --dp-sheet: #16191E;
-    --dp-sheet-rgb: 22, 25, 30;
-    --dp-rule: #24282D;
-    --dp-thumbbg: #1B1F24;
-    --dp-accent: #62B6E8;
-    --dp-city: #7CC3EC;
+    --dp-ground: #0E0C12;
+    --dp-ground-rgb: 14, 12, 18;
+    --dp-ink: #F5F2ED;
+    --dp-muted: #ABA8A3;
+    --dp-rule: #2E2C31;
+    --dp-thumbbg: #1C1826;
+    --dp-signal-text: #E2724E;
   }
 }

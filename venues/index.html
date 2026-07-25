@@ -66,7 +66,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../styles.css?v=ed4c5cfa">
+  <link rel="stylesheet" href="../styles.css?v=693a62a1">
   
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -93,6 +93,22 @@
         Array.prototype.slice.call(document.images).forEach(function (img) {
           if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail(img);
         });
+        // CAL-38 D4: the refine deck ships `open`; on small screens the
+        // mobile stack starts collapsed. Tracks the query both ways because
+        // above 640px the summary is a mouse-inert static head — a deck
+        // closed at mobile width must reopen itself when the viewport
+        // crosses up. Lives here, NOT in filters.js — that file is frozen
+        // by design.
+        var deck = document.querySelector('details[data-cal-filters]');
+        if (deck) {
+          var mq = matchMedia('(max-width: 640px)');
+          var syncDeck = function () {
+            if (mq.matches) deck.removeAttribute('open');
+            else deck.setAttribute('open', '');
+          };
+          syncDeck();
+          if (mq.addEventListener) mq.addEventListener('change', syncDeck);
+        }
       });
     })();
   </script>
@@ -157,7 +173,7 @@
       <a class="dir-card" href="../venue/harmonist-sanctuary/"><span class="dir-card__media" data-monogram="H" aria-hidden="true"><img src="https://soundbathcalendar.com/img/venues/harmonist-sanctuary.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Harmonist Sanctuary</span><span class="dir-card__meta">East Colfax, Denver · 3 upcoming</span></a>
       <a class="dir-card" href="../venue/inca-street-collective/"><span class="dir-card__media dir-card__media--ph" data-monogram="I" aria-hidden="true"></span><span class="dir-card__name">Inca Street Collective</span><span class="dir-card__meta">La Alma - Lincoln Park, Denver</span></a>
       <a class="dir-card" href="../venue/karma-yoga-center/"><span class="dir-card__media" data-monogram="K" aria-hidden="true"><img src="https://soundbathcalendar.com/img/venues/karma-yoga-center.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Karma Yoga Center</span><span class="dir-card__meta">Denver</span></a>
-      <a class="dir-card" href="../venue/la-foret-conference-retreat-center/"><span class="dir-card__media" data-monogram="L" aria-hidden="true"><img src="https://soundbathcalendar.com/img/venues/la-foret-conference-retreat-center.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">La Foret Conference &amp; Retreat Center</span><span class="dir-card__meta">Colorado Springs · 1 upcoming</span></a>
+      <a class="dir-card" href="../venue/la-foret-conference-retreat-center/"><span class="dir-card__media" data-monogram="L" aria-hidden="true"><img src="https://soundbathcalendar.com/img/venues/la-foret-conference-retreat-center.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">La Foret Conference &amp; Retreat Center</span><span class="dir-card__meta">Colorado Springs</span></a>
       <a class="dir-card" href="../venue/live-beyond-limit/"><span class="dir-card__media" data-monogram="L" aria-hidden="true"><img src="https://soundbathcalendar.com/img/venues/live-beyond-limit.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Live Beyond Limit</span><span class="dir-card__meta">Fort Collins · 1 upcoming</span></a>
       <a class="dir-card" href="../venue/merritt-wellness/"><span class="dir-card__media" data-monogram="M" aria-hidden="true"><img src="https://soundbathcalendar.com/img/venues/merritt-wellness.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Merritt Wellness</span><span class="dir-card__meta">Denver · 1 upcoming</span></a>
       <a class="dir-card" href="../venue/mile-high-mindfulness/"><span class="dir-card__media" data-monogram="M" aria-hidden="true"><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F895544893%2F562040949077%2F1%2Foriginal.20241109-201833?crop=focalpoint&amp;fit=crop&amp;w=940&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;fp-x=0.00032196969697&amp;fp-y=0.00667910447761&amp;s=e91b86ac5cf0e131e887886e43cd4652" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span><span class="dir-card__name">Mile High Mindfulness</span><span class="dir-card__meta">Denver · 1 upcoming</span></a>
@@ -233,7 +249,7 @@
         <span class="footer-col__h">Learn</span>
         <a href="../what-to-expect/">What to expect</a>
         <a href="../learn/">Learn</a>
-        <a href="../roundups/">Roundups</a>
+        <a href="../blog/">Blog</a>
         <a href="../#digest">The Thursday digest</a>
         <a href="../feed.xml">RSS</a>
       </nav>
