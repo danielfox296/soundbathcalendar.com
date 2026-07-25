@@ -121,7 +121,9 @@ One primitive for every detail page (event, venue, practitioner, organizer):
 - `.detail-shell`: one column; at **≥900px** → `minmax(0, 1fr) var(--aside)` (`--aside: 340px`), gap 3rem, `.detail-aside` sticky at `top: 90px`.
 - Reading column: prose capped at `--measure`. Aside: `.detail-card` decision cards (1px `--line` border, radius 0) — facts `<dl>`, mini-map (`.detail-card__map`, 4:3), tickets, add-to-calendar.
 - RULE: reading text never widens to fill the shell; structure may span it.
-- Entity pages cross-link the trio (venue ↔ practitioner ↔ organizer) and end with "Upcoming sessions" rendered by the **same row component** as the calendar (§2.3) — every entity page is a live mini-calendar.
+- Entity pages cross-link the trio (venue ↔ practitioner ↔ organizer) and end with "Upcoming sessions" rendered by the **same card component** as the calendar (§2.3) — every entity page is a live mini-calendar.
+- **Entity head (CAL-29):** the name opens the page — no eyebrow, no kicker (§9). `.ent-head` = the face (§4 portrait duotone at 200px, else the type-plate) beside `.detail__h1` + one `--muted` 16px `.ent-plays` line (where they play / what the room is / how many sessions — only ever what the feed holds). Bio `.ent-bio` at 16/1.5 full ink; `.ent-quote` at condensed 24 when — and only when — the source text carries a real quoted whole thought (`directory.pull_quote`). Section heads on detail pages are condensed CAPS.
+- **Event page (CAL-29):** the flyer renders UNTREATED (`.cal-event__figure`) — it is source information (dates, lineups, prices), and the duotone is an index aesthetic that never touches art that informs. The aside is deduped: an organizer who IS the room is named once (`_same_entity`). Below the shell, three related card-strips — `.cal-more--venue` (More at {venue}) · `.cal-more--practitioner` (More with {person}) · `.cal-more--window` (Else that weekend/week in {city}, labelled to match the real window) — each rendering only when non-empty, max 3 cards, no session repeated between them. They are internal-linking surfaces first; the class names make that legible in a crawl.
 
 ### 2.3 The Program Grid (CAL-28, ratified 2026-07-25 — the core surface; replaces the list rows entirely)
 
@@ -154,7 +156,9 @@ First-viewport budget (mobile): summary + the live slab head above the fold.
 
 ### 2.5 Entity directories (`/venues/`, `/practitioners/`, `/operators/`)
 
-One shared card design (`_src/lib/directory.py`): `.dir-grid` auto-fill `minmax(13.5rem, 1fr)`; `.dir-card` is borderless — the 3:2 media tile carries the mass (entity photo, else next session's listing image, else the monogram placeholder). Placeholder = the entity's initial via `data-monogram` over the tint with a 2px ink-alpha baseline — designed absence, not a broken image; `.img-broken` collapses to the same state. (CAL-29 replaces these with letterform type-plates.)
+The directory IS the Program Grid (CAL-29, `_src/lib/directory.py`): `.cal-rows--4` tracks, `.cal-card` anatomy — face on top, then `h3 > a` name (underlined, stretched over the card) and one `--muted` meta line. The face is the entity's **portrait duotone** (§4) or its **type-plate**: a `--surface` square carrying the initial letterform in condensed 800, coral on hover. A plate is a designed poster variant, not a fallback state.
+
+RULE — **a session flyer never stands in for a face.** The pre-CAL-29 fallback ("else the next session's listing image") is retired: an entity with no photo of its own plates. Directory cards carry `.dir-card`, never `.cal-row` — they hold no filter data and must stay outside the `[hidden]` lockstep rules (§2.3).
 
 ### 2.6 Masthead & footer
 
@@ -221,7 +225,9 @@ RULE — the `[hidden]` lockstep (CAL-28 carries it forward): every display-bear
 
 RULE — **the honesty line:** stock is atmosphere, never evidence. Alt text and captions state what the photo literally shows ("Two practitioners playing singing bowls in a sunlit studio") and never present stock as a specific Front Range venue, session, or person.
 
-RULE — **entity photos are real-only.** A venue photo, practitioner portrait, or organizer image is a real photo of that entity (`photo_url`) or the designed monogram placeholder — stock never stands in for a real place or person.
+RULE — **entity photos are real-only.** A practitioner portrait or venue photo is a real photo of that entity (`photo_url`) or the designed type-plate (§2.5) — stock never stands in for a real place or person, and neither does a session flyer.
+
+**Entity portraits (CAL-29, `scripts/treat.py:treat_entities`):** practitioner headshots run the same duotone process as the cards, committed to `img/entities/pract-<slug>-{i,i280,c}.jpg` (560/280 squares) from the reviewed originals in `img/practitioners/` (provenance in its `SOURCES.md`). **Venues are deliberately excluded**: `img/venues/*.jpg` are Google Places photos, whose terms allow resizing and cropping but not recoloring — so venue heads and cards draw the type-plate and the venue page keeps its photograph unmodified with its attribution. Organizers have no photo of their own; a logo is not a face. Nothing here is fetched at build time and CI never runs the script.
 
 **Flyers:** always framed — letterboxed into the fixed 3:2 tile in lists (§2.3), max-640px 3:2 figure on event pages. Source art never renders raw in-list.
 

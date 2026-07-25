@@ -16,6 +16,7 @@ import os
 import urllib.request
 from urllib.parse import quote_plus
 
+from _src.lib import directory
 from _src.lib import external_events as X
 
 DEFAULT_FEED_URL = 'https://admin.soundbathcalendar.com/feeds/venues.json'
@@ -252,11 +253,19 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None, credit=No
     # map · next session · links) in the sticky aside. Collapses <900px.
     out.append('    <div class="detail-shell">')
     out.append('      <div class="detail-main">')
-    out.append('    <span class="eyebrow">Venue</span>')
-    out.append(f'    <h1 class="detail__h1">{_esc(name)}</h1>')
 
     place = v['neighborhood'] if v.get('city') == 'Denver' and v.get('neighborhood') else None
     area = f'{place}, {v["city"]}' if place else v.get('city', '')
+
+    # CAL-29: the name opens the page (no eyebrow), beside the type-plate —
+    # a venue's committed photo is Google Places imagery, which stays
+    # unmodified in the figure below rather than becoming a duotone face.
+    n_sessions = len(session_rows)
+    plays_bits = [x for x in (area, (f'{n_sessions} upcoming session'
+                                     f'{"" if n_sessions == 1 else "s"}'
+                                     if n_sessions else '')) if x]
+    out.append(directory.render_entity_head(
+        'venue', v['slug'], name, ' · '.join(plays_bits), nav_prefix))
 
     photo = X._safe_image_url(v.get('photo_url') or '')
     if photo:
@@ -272,7 +281,7 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None, credit=No
     # when Daniel has written one, else an honest factual line — most of the
     # published set is import-seeded, and a bare H1 next to a full aside would
     # read as a broken column.
-    out.append('    <div class="detail__desc">')
+    out.append('    <div class="ent-bio">')
     if (v.get('description') or '').strip():
         out.append(_paras(v['description']))
     else:
@@ -400,11 +409,9 @@ def place_schema(v, canonical_url, session_rows, credit=None):
 # Index (/venues/)
 # ---------------------------------------------------------------------------
 
-# The directory design (.dir-*) is shared with /practitioners/ and /operators/
-# and lives in styles.css; no page-specific style block remains.
-def render_index(venues, count_by_slug, nav_prefix, art_by_slug=None):
-    from _src.lib import directory
-    art_by_slug = art_by_slug or {}
+# The directory design is the shared program grid (CAL-29, styles.css) — the
+# same one /practitioners/ and /operators/ render.
+def render_index(venues, count_by_slug, nav_prefix):
     out = ['<section class="section section--light venues">', '  <div class="container">']
     out.append(directory.render_head(
         nav_prefix, 'Venues', 'Venues',
@@ -417,7 +424,7 @@ def render_index(venues, count_by_slug, nav_prefix, art_by_slug=None):
             'get there, and what it is like inside. Every venue is already on the '
             'calendar and the map.'))
     else:
-        out.append('    <div class="dir-grid">')
+        cards = []
         for v in venues:
             slug = v['slug']
             href = f'{nav_prefix}{venue_path(slug)}'
@@ -425,9 +432,9 @@ def render_index(venues, count_by_slug, nav_prefix, art_by_slug=None):
             area = f'{place}, {v["city"]}' if place else v.get('city', '')
             n = count_by_slug.get(slug, 0)
             meta = ' · '.join(x for x in (area, (f'{n} upcoming' if n else '')) if x) or 'Venue'
-            out.append(directory.render_card(
-                href, v['name'], meta, art_by_slug.get(slug, '')))
-        out.append('    </div>')
+            cards.append(directory.render_card(
+                href, v['name'], meta, 'venue', slug, nav_prefix))
+        out.append(directory.render_grid(cards))
     out.append('  </div>')
     out.append('</section>')
     return '\n'.join(out)

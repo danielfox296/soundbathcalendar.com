@@ -2223,7 +2223,99 @@ EVENT_PAGE_STYLE = """<style>
   </style>"""
 
 
-def render_event_page(row, nav_prefix, site_url, now=None):
+def _module_rows(row, cal_rows, key, limit=3):
+    """Rows for one related module (CAL-29), excluding this session itself.
+
+    key: 'venue'        — more at this venue (published venue_ref, else the
+                          venue string, so unlinked rooms still relate)
+         'practitioner' — more with this facilitator (published ref only)
+         'window'       — else that weekend/week in this city
+    """
+    me = event_slug(row)
+    out = []
+    if key == 'venue':
+        vr = (row.get('venue_ref') or {})
+        vslug = vr.get('slug') if isinstance(vr, dict) else None
+        vname = (row.get('venue') or '').strip().lower()
+        for r in cal_rows:
+            rvr = (r.get('venue_ref') or {})
+            rslug = rvr.get('slug') if isinstance(rvr, dict) else None
+            same = (vslug and rslug == vslug) or (
+                not vslug and vname and (r.get('venue') or '').strip().lower() == vname)
+            if same and event_slug(r) != me:
+                out.append(r)
+    elif key == 'practitioner':
+        pr = (row.get('practitioner') or {})
+        pslug = pr.get('slug') if isinstance(pr, dict) else None
+        if pslug:
+            out = [r for r in cal_rows
+                   if ((r.get('practitioner') or {}) or {}).get('slug') == pslug
+                   and event_slug(r) != me]
+    elif key == 'window':
+        start = parse_iso(row['starts_at']).astimezone(DENVER)
+        # The window is the session's own weekend when it falls Fri–Sun,
+        # else the two days either side — labelled to match (never "that
+        # weekend" for a Tuesday).
+        if start.weekday() >= 4:                       # Fri/Sat/Sun
+            first = (start - timedelta(days=start.weekday() - 4)).date()
+            last = first + timedelta(days=2)
+        else:
+            first = (start - timedelta(days=2)).date()
+            last = (start + timedelta(days=2)).date()
+        for r in cal_rows:
+            local = parse_iso(r['starts_at']).astimezone(DENVER)
+            if (r['city'] == row['city'] and first <= local.date() <= last
+                    and event_slug(r) != me):
+                out.append(r)
+    out.sort(key=lambda r: parse_iso(r['starts_at']))
+    return out[:limit]
+
+
+def _window_label(row):
+    """'that weekend' / 'that week' — whichever the window actually is."""
+    return ('that weekend'
+            if parse_iso(row['starts_at']).astimezone(DENVER).weekday() >= 4
+            else 'that week')
+
+
+def render_related_modules(row, cal_rows, nav_prefix, now=None):
+    """The three related card-strips under an event page (CAL-29) — more at
+    this venue · more with this facilitator · else that weekend in this city.
+    Each renders only when it is non-empty; each carries its own internal-link
+    class so the linking these create is legible in a crawl."""
+    if not cal_rows:
+        return ''
+    modules = []
+    venue_name = (row.get('venue') or '').strip()
+    if venue_name:
+        modules.append(('venue', f'More at {venue_name}', 'cal-more--venue'))
+    pr = row.get('practitioner') or {}
+    if isinstance(pr, dict) and pr.get('slug') and pr.get('name'):
+        modules.append(('practitioner', f'More with {pr["name"]}',
+                        'cal-more--practitioner'))
+    modules.append(('window', f'Else {_window_label(row)} in {row["city"]}',
+                    'cal-more--window'))
+
+    seen = set()
+    out = []
+    for key, heading, cls in modules:
+        rows = [r for r in _module_rows(row, cal_rows, key)
+                if event_slug(r) not in seen]
+        if not rows:
+            continue
+        seen.update(event_slug(r) for r in rows)
+        inner = '\n'.join(
+            _render_row(r, show_date=True, nav_prefix=nav_prefix, now=now)
+            for r in rows)
+        out.append(f'    <section class="cal-more {cls}">')
+        out.append(f'      <h2 class="detail__section-h">{_esc(heading)}</h2>')
+        out.append(f'      <div class="cal-rows cal-rows--3 cal-rows--strip">\n'
+                   f'{inner}\n      </div>')
+        out.append('    </section>')
+    return '\n'.join(out)
+
+
+def render_event_page(row, nav_prefix, site_url, now=None, cal_rows=None):
     """The <main> content for one external event's permalink page."""
     now = _now_utc(now)
     is_past = parse_iso(row['starts_at']) <= now
@@ -2256,7 +2348,7 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     # sticky aside. Collapses to one column below 900px via styles.css.
     out.append('    <div class="detail-shell">')
     out.append('      <div class="detail-main">')
-    out.append('    <span class="eyebrow">Front Range calendar</span>')
+    # CAL-29: no eyebrow (standing ruling) — the name opens the page.
     out.append(f'    <h1 class="detail__h1">{esc(row["name"])}</h1>')
 
     out.append(f'    <p class="cal-event__desc">{esc(factual_description(row))}</p>')
@@ -2324,7 +2416,13 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     # published one (CAL-08); otherwise the plain listing string.
     orf = row.get('operator_ref') or {}
     orf_slug = orf.get('slug') if isinstance(orf, dict) else None
-    if orf_slug:
+    # CAL-29 aside dedupe: when the organizer IS the room (the common
+    # studio-runs-its-own-sessions case), "Where" already named them — the
+    # card doesn't say it twice.
+    _org_name = (orf.get('name') if isinstance(orf, dict) else '') or row.get('operator') or ''
+    if _org_name and _same_entity(_org_name, row.get('venue') or ''):
+        pass
+    elif orf_slug:
         orf_href = f'{nav_prefix}operator/{orf_slug}/'
         out.append(
             f'      <dt>Organizer</dt><dd><a class="cal-event__link" '
@@ -2400,6 +2498,11 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     out.append('        </div>')  # .detail-card
     out.append('      </aside>')  # .detail-aside
     out.append('    </div>')      # .detail-shell
+
+    # The three related card-strips (CAL-29) — each only when non-empty.
+    related = render_related_modules(row, cal_rows, nav_prefix, now=now)
+    if related:
+        out.append(related)
 
     out.append(
         f'    <p class="detail__back"><a href="{nav_prefix}">'

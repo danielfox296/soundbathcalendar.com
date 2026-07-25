@@ -64,7 +64,7 @@
        heading on every page needs it; crossorigin is required for font
        preloads even same-origin. @font-face lives in styles.css. -->
   <link rel="preload" href="../../vendor/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../../styles.css?v=693a62a1">
+  <link rel="stylesheet" href="../../styles.css?v=0940db22">
   <style>.venue__figure { margin: 0 0 1.6rem; max-width: 640px; } .venue__photo { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: rgba(var(--ink-rgb),0.06); display: block; } .venue__credit { margin: 0.4rem 0 0; font-size: 0.74rem; color: var(--muted); } .venue__credit a { color: var(--muted); text-decoration: none; } .venue__credit a:hover { text-decoration: underline; }</style>
 
   <!-- Systemic image fallback: external listing images (operator CDNs,
@@ -154,12 +154,17 @@
     </nav>
     <div class="detail-shell">
       <div class="detail-main">
-    <span class="eyebrow">Venue</span>
-    <h1 class="detail__h1">The StarHouse</h1>
+    <div class="ent-head">
+      <span class="ent-portrait plate" data-initial="T" aria-hidden="true"></span>
+      <div class="ent-headtext">
+        <h1 class="detail__h1">The StarHouse</h1>
+        <p class="ent-plays">Boulder · 1 upcoming session</p>
+      </div>
+    </div>
     <figure class="venue__figure">
       <img class="venue__photo" src="https://soundbathcalendar.com/img/venues/the-starhouse.jpg" alt="The StarHouse" loading="lazy" decoding="async" referrerpolicy="no-referrer">
     </figure>
-    <div class="detail__desc">
+    <div class="ent-bio">
       <p>A nonprofit sacred sanctuary in the Boulder foothills on Sunshine Canyon Drive, built on sacred-geometry principles with its axis aligned to the North Star. Founded in 1990, it sits on some 70 acres of land and hosts workshops, trainings, and retreats.</p>
     </div>
       </div>

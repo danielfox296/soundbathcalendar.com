@@ -50,7 +50,9 @@ if REPO not in sys.path:
 from _src.lib import external_events  # noqa: E402
 
 CARDS_DIR = os.path.join(REPO, 'img', 'cards')
+ENT_DIR = os.path.join(REPO, 'img', 'entities')   # CAL-29 entity portraits
 PRACT_DIR = os.path.join(REPO, 'img', 'practitioners')
+
 STOCK_DIR = os.path.join(REPO, 'scripts', 'assets', 'stock')
 
 INK = (0x35, 0x2F, 0x5C)      # --ink light: indigo — the -i shadow end
@@ -85,22 +87,74 @@ def _save(img, path):
     return os.path.getsize(path) // 1024
 
 
-def treat_pair(src_img, stem, w=SIZE, h=SIZE, small=True):
+def treat_pair(src_img, stem, w=SIZE, h=SIZE, small=True, outdir=None):
     """Write the -i / -c (and -i<small>) derivatives for one source image."""
+    outdir = outdir or CARDS_DIR
     base = _cover(src_img.convert('RGB'), w, h)
     g = _treat_gray(base)
     sizes = {}
     sizes['i'] = _save(ImageOps.colorize(g, black=INK, white=WHITE),
-                       os.path.join(CARDS_DIR, f'{stem}-i.jpg'))
+                       os.path.join(outdir, f'{stem}-i.jpg'))
     sizes['c'] = _save(ImageOps.colorize(g, black=SIGNAL, white=WHITE),
-                       os.path.join(CARDS_DIR, f'{stem}-c.jpg'))
+                       os.path.join(outdir, f'{stem}-c.jpg'))
     if small:
         small_g = _treat_gray(_cover(src_img.convert('RGB'),
                                      SIZE_SMALL, SIZE_SMALL))
         sizes['i280'] = _save(
             ImageOps.colorize(small_g, black=INK, white=WHITE),
-            os.path.join(CARDS_DIR, f'{stem}-i280.jpg'))
+            os.path.join(outdir, f'{stem}-i280.jpg'))
     return sizes
+
+
+def treat_entities(force=False):
+    """CAL-29: the entity portraits — practitioner headshots as the SAME
+    duotone pair the Program Grid cards ride, so a directory index and a
+    profile head read as one index aesthetic.
+
+    Sources are the repo's own committed, reviewed images (img/practitioners/,
+    provenance in its SOURCES.md — the practitioners' own promotional
+    material); nothing is fetched. A practitioner with no committed photo gets
+    no derivative and the site draws its type-plate: flyers never stand in for
+    faces (imagery law), so there is deliberately no session-image fallback.
+
+    VENUES ARE DELIBERATELY EXCLUDED. img/venues/*.jpg are Google Places
+    photos (scripts/harvest_venue_photos.py); Google's terms allow resizing
+    and cropping but not recoloring, so venue heads and cards draw the
+    type-plate and the venue page keeps its photograph UNMODIFIED with its
+    attribution. Do not "fix" this by adding VENUE_DIR here.
+
+    Outputs, committed under img/entities/:
+        pract-<slug>-{i,i280,c}.jpg      560/280 squares
+    """
+    os.makedirs(ENT_DIR, exist_ok=True)
+    keep, made, skipped = set(), 0, 0
+    for prefix, src_dir in (('pract', PRACT_DIR),):
+        if not os.path.isdir(src_dir):
+            continue
+        for name in sorted(os.listdir(src_dir)):
+            if not name.lower().endswith(('.jpg', '.jpeg', '.png')):
+                continue
+            stem = f'{prefix}-{os.path.splitext(name)[0]}'
+            keep.add(stem)
+            if os.path.exists(os.path.join(ENT_DIR, f'{stem}-i.jpg')) and not force:
+                skipped += 1
+                continue
+            try:
+                with Image.open(os.path.join(src_dir, name)) as src:
+                    sizes = treat_pair(src, stem, outdir=ENT_DIR)
+                print(f'  ok {stem} ({sizes["i"]}+{sizes["c"]}KB)')
+                made += 1
+            except Exception as e:
+                print(f'  !! {stem}: {type(e).__name__}: {e} — type-plate')
+
+    pruned = 0
+    for name in os.listdir(ENT_DIR):
+        if not name.endswith('.jpg'):
+            continue
+        if name.rsplit('-', 1)[0] not in keep:
+            os.remove(os.path.join(ENT_DIR, name))
+            pruned += 1
+    print(f'  entities: {made} generated, {skipped} kept, {pruned} pruned')
 
 
 def fetch(url, referer=None):
@@ -187,6 +241,9 @@ def main(force=False):
         if stem not in keep:
             os.remove(os.path.join(CARDS_DIR, name))
             pruned += 1
+
+    # CAL-29: entity portraits, from the repo's own committed photos.
+    treat_entities(force=force)
 
     total_kb = sum(
         os.path.getsize(os.path.join(CARDS_DIR, n))

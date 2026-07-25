@@ -254,7 +254,9 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 @media (max-width: 640px) { .detail__facts { grid-template-columns: 1fr; gap: 0.2rem; } .detail__facts dd { margin-bottom: 0.8rem; } }
 .detail__desc { max-width: var(--measure); }
 .detail__desc p { font-size: 1.08rem; line-height: 1.7; color: var(--ink); margin: 0 0 1rem; }
-.detail__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
+/* v5: detail-page section heads are the condensed caps voice (CAL-29) — the
+   same monument family as the day heads, one step down. */
+.detail__section-h { font-size: clamp(1.3rem, 2.4vw, 1.8rem); text-transform: uppercase; margin: 2.4rem 0 1rem; }
 .detail__empty { color: var(--muted); }
 .detail__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
 .detail__back a { color: var(--ink); text-decoration: none; }
@@ -542,6 +544,17 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 @media (min-width: 1024px) {
   .cal-rows--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
+/* The card STRIP (CAL-29): the same anatomy at reference scale — the event
+   page's three related modules (more at this venue / more with this
+   practitioner / else that weekend). Names step down so a strip never
+   competes with the page's own H1. */
+.cal-rows--strip .cal-row__name { font-size: clamp(16px, 0.9vw + 11px, 21px); }
+.cal-rows--strip .cal-card__meta { font-size: 14px; }
+/* The event page's related modules (CAL-29): rules separate the three, each
+   headed by the shared section-h. They are internal-linking surfaces first —
+   .cal-more--venue / --practitioner / --window name them in a crawl. */
+.cal-more { margin: 3.2rem 0 0; padding-top: 2rem; border-top: 1px solid var(--line); }
+.cal-more .detail__section-h { margin-top: 0; }
 /* position:relative hosts the stretched name link (the whole card is the
    event link — addendum #3). */
 .cal-row { position: relative; min-width: 0; }
@@ -656,37 +669,58 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
    ground (the .cal-card__im background is already --surface). */
 .cal-card__im.img-broken { display: block; }
 
-/* ---- entity directories (/practitioners/, /venues/, /operators/): one
-        shared card design (rendered by _src/lib/directory.py). Media tile on
-        top — the entity's photo, else its next session's listing image, else
-        the monogram placeholder — so the grid reads as a photographic
-        directory, not a text list. Cards are borderless (the media carries the
-        mass); radius 0 per the doctrine, 2px on the tile (photographic
-        content, same as .cal-row__media). ---- */
+/* ---- entity presence (CAL-29): the type-plate — a --surface square carrying
+        the entity's initial in the condensed display voice. A DESIGNED poster
+        variant (the type tile's sibling), never a fallback state and never a
+        flyer standing in for a face (imagery law). One vocabulary, two hosts:
+        the directory card's media slot and the profile head's portrait. ---- */
+.plate { display: grid; place-items: center; background: var(--surface); }
+.plate::before { content: attr(data-initial); font-family: var(--font-display); font-weight: 800; font-stretch: 62%; font-size: clamp(56px, 9vw, 132px); line-height: 1; color: var(--surface-text); }
+.cal-card:hover .plate { background: var(--signal); }
+.cal-card:hover .plate::before { color: #fff; }
+
+/* ---- entity directories (/practitioners/, /venues/, /operators/): the
+        PROGRAM GRID (CAL-29) — the same card anatomy as the calendar's own
+        listing surfaces, faced with portrait duotones and type-plates. The
+        cards are .cal-card without .cal-row: they carry no filter data and
+        must never be swept by the [hidden] lockstep rules. ---- */
 .dir-crumbs { font-size: 0.82rem; color: var(--muted); margin: 0 0 2rem; }
 .dir-crumbs a { color: var(--ink); text-decoration: none; }
 .dir-crumbs a:hover { text-decoration: underline; }
-.dir-head { text-align: center; margin: 0 0 2.8rem; }
-.dir-h1 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: 0.95; text-transform: uppercase; margin: 0.2rem 0 0.8rem; }
-.dir-lede { font-size: 1.1rem; line-height: 1.55; color: var(--ink); max-width: 40rem; margin: 0 auto; }
-.dir-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr)); gap: 2.2rem 1.4rem; }
-.dir-card { display: block; text-decoration: none; color: inherit; }
-.dir-card__media { display: block; aspect-ratio: 3 / 2; border-radius: 2px; overflow: hidden; background: rgba(var(--ink-rgb),0.05); }
-.dir-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
-.dir-card:hover .dir-card__media img { transform: scale(1.03); }
-/* Placeholder tile: the entity's initial as a quiet monogram over the tint,
-   with a thin ink baseline — designed absence, not a broken image. The
-   same state serves .img-broken (an image that failed at load time, swapped
-   in by the base-layout fallback script): the monogram rides data-monogram
-   so CSS can draw it with no image and no extra markup. */
-.dir-card__media--ph, .dir-card__media.img-broken { display: grid; place-items: center; position: relative; }
-.dir-card__media--ph::after, .dir-card__media.img-broken::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: rgba(var(--ink-rgb), 0.45); }
-.dir-card__media--ph::before, .dir-card__media.img-broken::before { content: attr(data-monogram); font: 300 2.6rem var(--font-display); letter-spacing: -0.02em; color: rgba(var(--ink-rgb),0.32); }
-.dir-card__name { display: block; margin-top: 0.75rem; font: 500 1.02rem var(--font-display); letter-spacing: -0.01em; line-height: 1.3; color: var(--ink); }
-.dir-card:hover .dir-card__name { color: var(--signal-text); text-decoration: none; }
-.dir-card__meta { display: block; margin-top: 0.2rem; font-size: 0.82rem; color: var(--muted); }
+.dir-head { margin: 0 0 2.6rem; }
+.dir-h1 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: 0.95; text-transform: uppercase; margin: 0.2rem 0 0.9rem; }
+.dir-lede { font-size: 1.1rem; line-height: 1.55; color: var(--ink); max-width: 40rem; margin: 0; }
+/* .cal-row supplies these to session cards; directory cards are their own
+   positioning context so the stretched name link covers the card. */
+.dir-card { position: relative; min-width: 0; }
+
+/* ---- entity profile heads (CAL-29): name opens the page beside the face —
+        no eyebrow, no kicker (standing ruling). The portrait is the duotone
+        square at ~200px with the coral hover layer; the plate replaces it
+        when the entity has no committed photo. ---- */
+.ent-head { display: flex; gap: 1.6rem; align-items: flex-start; flex-wrap: wrap; margin: 0 0 1.6rem; }
+.ent-portrait { flex: 0 0 auto; position: relative; display: block; width: 200px; aspect-ratio: 1; overflow: hidden; background: var(--surface); transition: background 0.15s ease; }
+.ent-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ent-portrait:hover .cal-card__im-c { opacity: 1; }
+.ent-portrait.plate:hover { background: var(--signal); }
+.ent-portrait.plate::before { font-size: 104px; }
+.ent-headtext { flex: 1 1 18rem; min-width: 14rem; }
+.ent-head .detail__h1 { margin: 0 0 0.2rem; }
+/* The one meta line under the name: where they play / what the room is. */
+.ent-plays { color: var(--muted); font-size: 16px; line-height: 1.45; margin: 0.7rem 0 0; font-variant-numeric: tabular-nums; }
+.ent-plays a { color: var(--ink); text-decoration: none; }
+.ent-plays a:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* Bio: 16/1.5 full ink (never muted — it is the page's reading matter). */
+.ent-bio { max-width: var(--measure); }
+.ent-bio p { font-size: 16px; line-height: 1.5; color: var(--ink); margin: 0 0 0.9rem; }
+.ent-bio p:last-child { margin-bottom: 0; }
+/* Pull-quote — REAL quoted spans only (never composed): the condensed 24
+   voice, ink rule, no italic (the face has none and none is faked). */
+.ent-quote { font-family: var(--font-display); font-weight: 700; font-stretch: 72%; font-size: 24px; line-height: 1.25; color: var(--ink); max-width: 34rem; margin: 1.6rem 0; padding-left: 1.1rem; border-left: 2px solid var(--ink); }
 @media (max-width: 560px) {
-  .dir-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.8rem 1rem; }
+  .ent-portrait { width: 148px; }
+  .ent-portrait.plate::before { font-size: 76px; }
+  .ent-quote { font-size: 21px; }
 }
 
 /* ---- learn sheets (/learn/ + the eight explainers, CAL-20; /what-to-expect/,

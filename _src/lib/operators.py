@@ -21,6 +21,7 @@ import json
 import os
 import urllib.request
 
+from _src.lib import directory
 from _src.lib import external_events as X
 
 DEFAULT_FEED_URL = 'https://admin.soundbathcalendar.com/feeds/operators.json'
@@ -172,13 +173,23 @@ def render_operator_page(o, session_rows, nav_prefix, site_url, now=None):
     # sticky aside card. Collapses <900px.
     out.append('    <div class="detail-shell">')
     out.append('      <div class="detail-main">')
-    out.append('    <span class="eyebrow">Organizer</span>')
-    out.append(f'    <h1 class="detail__h1">{_esc(name)}</h1>')
+
+    # CAL-29: name opens the page (no eyebrow) beside the type-plate — an
+    # organizer has no photograph of its own, and a logo is not a face.
+    _rooms = _venue_names(session_rows)
+    _plays = ''
+    if _rooms:
+        _shown = _rooms[:3]
+        _plays = 'Programs ' + ', '.join(_esc(r) for r in _shown)
+        if len(_rooms) > len(_shown):
+            _plays += f' + {len(_rooms) - len(_shown)} more'
+    out.append(directory.render_entity_head(
+        'operator', o['slug'], name, _plays, nav_prefix))
 
     # The reading column always carries a paragraph: the curated description
     # when written, else an honest factual line (most operators are
     # import-seeded and description-less).
-    out.append('    <div class="detail__desc">')
+    out.append('    <div class="ent-bio">')
     if (o.get('description') or '').strip():
         out.append(_paras(o['description']))
     else:
@@ -282,9 +293,7 @@ def organization_schema(o, canonical_url):
 
 # The directory design (.dir-*) is shared with /practitioners/ and /venues/
 # and lives in styles.css; no page-specific style block remains.
-def render_index(operators, count_by_slug, nav_prefix, art_by_slug=None):
-    from _src.lib import directory
-    art_by_slug = art_by_slug or {}
+def render_index(operators, count_by_slug, nav_prefix):
     out = ['<section class="section section--light operators">', '  <div class="container">']
     out.append(directory.render_head(
         nav_prefix, 'Organizers', 'Organizers',
@@ -297,15 +306,15 @@ def render_index(operators, count_by_slug, nav_prefix, art_by_slug=None):
             'studios running these sessions, with every session they host in one place. '
             'For now, browse them by session on the calendar.'))
     else:
-        out.append('    <div class="dir-grid">')
+        cards = []
         for o in operators:
             slug = o['slug']
             href = f'{nav_prefix}{operator_path(slug)}'
             n = count_by_slug.get(slug, 0)
             meta = (f'{n} upcoming' if n else 'Organizer')
-            out.append(directory.render_card(
-                href, o['name'], meta, art_by_slug.get(slug, '')))
-        out.append('    </div>')
+            cards.append(directory.render_card(
+                href, o['name'], meta, 'operator', slug, nav_prefix))
+        out.append(directory.render_grid(cards))
     out.append('  </div>')
     out.append('</section>')
     return '\n'.join(out)

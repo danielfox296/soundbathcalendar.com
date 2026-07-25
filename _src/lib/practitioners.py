@@ -16,6 +16,7 @@ import json
 import os
 import urllib.request
 
+from _src.lib import directory
 from _src.lib import external_events as X
 
 DEFAULT_FEED_URL = 'https://admin.soundbathcalendar.com/feeds/practitioners.json'
@@ -155,15 +156,9 @@ def _practitioner_tag_slugs(session_rows):
 # Render
 # ---------------------------------------------------------------------------
 
-# Only the profile-head rules are page-local; everything else rides the shared
-# .detail__* vocabulary in styles.css (CAL-31).
-PRACTITIONER_PAGE_STYLE = """<style>
-    .pract__head { display: flex; gap: 1.6rem; align-items: flex-start; flex-wrap: wrap; margin: 0 0 1.6rem; }
-    .pract__photo { flex: 0 0 auto; width: 132px; height: 132px; object-fit: cover; background: rgba(var(--ink-rgb),0.06); }
-    .pract__headtext { flex: 1 1 16rem; min-width: 14rem; }
-    .detail__h1 { margin: 0.2rem 0 0.6rem; }
-    @media (max-width: 560px) { .pract__photo { width: 96px; height: 96px; } }
-  </style>"""
+# CAL-29: the profile head is the shared .ent-* anatomy (directory.py +
+# styles.css) and the body rides the shared .detail__* vocabulary (CAL-31) —
+# this template carries no page-local stylesheet at all.
 
 
 def _paras(text):
@@ -190,41 +185,9 @@ def render_practitioner_page(pract, session_rows, nav_prefix, site_url, now=None
     # the sticky aside card. Collapses <900px.
     out.append('    <div class="detail-shell">')
     out.append('      <div class="detail-main">')
-    out.append('    <div class="pract__head">')
-    photo = X._safe_image_url(pract.get('photo_url') or '')
-    if photo:
-        out.append(
-            f'      <img class="pract__photo" src="{_esc(photo)}" '
-            f'alt="{_esc(name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer">')
-    out.append('      <div class="pract__headtext">')
-    out.append('        <span class="eyebrow">Practitioner</span>')
-    out.append(f'        <h1 class="detail__h1">{_esc(name)}</h1>')
-    # Modality chips from their sessions.
-    tag_slugs = _practitioner_tag_slugs(session_rows)
-    if tag_slugs:
-        from _src.lib import taxonomy
-        chips = ''.join(
-            f'<span class="cal-tag">{_esc(taxonomy.label_for(s))}</span>' for s in tag_slugs)
-        out.append(f'        <p class="cal-event__tags">{chips}</p>')
-    out.append('      </div>')  # headtext
-    out.append('    </div>')  # head
-
-    if (pract.get('bio') or '').strip():
-        out.append('    <div class="detail__desc">')
-        out.append(_paras(pract['bio']))
-        out.append('    </div>')
-
-    if (pract.get('interview') or '').strip():
-        out.append('    <h2 class="detail__section-h">In their words</h2>')
-        out.append('    <div class="detail__desc">')
-        out.append(_paras(pract['interview']))
-        out.append('    </div>')
-
-    # End the reading column; open the sticky decision aside.
-    out.append('      </div>')  # .detail-main
 
     # Rooms they play, linked when the session carries a published venue_ref
-    # (CAL-03) — the entity-trio cross-link.
+    # (CAL-03) — the entity-trio cross-link, and the head's "plays" line.
     rooms, seen = [], set()
     for r in session_rows:
         vname = (r.get('venue') or '').strip()
@@ -237,13 +200,44 @@ def render_practitioner_page(pract, session_rows, nav_prefix, site_url, now=None
             rooms.append(f'<a href="{_esc(f"{nav_prefix}venue/{slug}/")}">{_esc(vname)}</a>')
         else:
             rooms.append(_esc(vname))
-    facts = []
+    # CAL-29: the one --muted line under the name. Only ever what is true —
+    # a person with nothing upcoming gets no line rather than a hedge.
+    plays = ''
     if rooms:
-        shown = rooms[:6]
-        rooms_dd = ', '.join(shown)
+        shown = rooms[:3]
+        plays = 'Plays ' + ', '.join(shown)
         if len(rooms) > len(shown):
-            rooms_dd += f' + {len(rooms) - len(shown)} more'
-        facts.append(f'      <dt>Venues</dt><dd>{rooms_dd}</dd>')
+            plays += f' + {len(rooms) - len(shown)} more'
+    out.append(directory.render_entity_head(
+        'practitioner', pract['slug'], name, plays, nav_prefix))
+
+    # Modality chips from their sessions.
+    tag_slugs = _practitioner_tag_slugs(session_rows)
+    if tag_slugs:
+        from _src.lib import taxonomy
+        chips = ''.join(
+            f'<span class="cal-tag">{_esc(taxonomy.label_for(s))}</span>' for s in tag_slugs)
+        out.append(f'    <p class="cal-event__tags">{chips}</p>')
+
+    if (pract.get('bio') or '').strip():
+        out.append('    <div class="ent-bio">')
+        out.append(_paras(pract['bio']))
+        out.append('    </div>')
+        # A pull-quote ONLY when the bio genuinely quotes them.
+        quote = directory.render_pull_quote(pract['bio'])
+        if quote:
+            out.append(quote)
+
+    if (pract.get('interview') or '').strip():
+        out.append('    <h2 class="detail__section-h">In their words</h2>')
+        out.append('    <div class="ent-bio">')
+        out.append(_paras(pract['interview']))
+        out.append('    </div>')
+
+    # End the reading column; open the sticky decision aside.
+    out.append('      </div>')  # .detail-main
+
+    facts = []
     next_up = X.entity_next_up(session_rows, nav_prefix)
     if next_up:
         facts.append(f'      <dt>Next up</dt><dd>{next_up}</dd>')
@@ -326,12 +320,10 @@ def person_schema(pract, canonical_url, session_rows):
 # the caller noindexes it until enough profiles exist to be a real page.
 # ---------------------------------------------------------------------------
 
-# The directory design (.dir-*) is shared with /venues/ and /operators/ and
-# lives in styles.css; no page-specific style block remains.
-def render_index(practs, count_by_slug, nav_prefix, art_by_slug=None):
+# The directory design is the shared program grid (CAL-29, styles.css) — the
+# same one /venues/ and /operators/ render; no page-specific style block.
+def render_index(practs, count_by_slug, nav_prefix):
     """The <main> for /practitioners/ — a directory card per published profile."""
-    from _src.lib import directory
-    art_by_slug = art_by_slug or {}
     out = ['<section class="section section--light practs">', '  <div class="container">']
     out.append(directory.render_head(
         nav_prefix, 'Practitioners', 'Practitioners',
@@ -344,15 +336,15 @@ def render_index(practs, count_by_slug, nav_prefix, art_by_slug=None):
             'instruments they play, and when they are next leading a session. Until then, '
             'find them by session on the calendar.'))
     else:
-        out.append('    <div class="dir-grid">')
+        cards = []
         for p in practs:
             slug = p['slug']
             href = f'{nav_prefix}{practitioner_path(slug)}'
             n = count_by_slug.get(slug, 0)
             meta = f'{n} upcoming session{"" if n == 1 else "s"}' if n else 'Profile'
-            out.append(directory.render_card(
-                href, p['name'], meta, art_by_slug.get(slug, '')))
-        out.append('    </div>')
+            cards.append(directory.render_card(
+                href, p['name'], meta, 'practitioner', slug, nav_prefix))
+        out.append(directory.render_grid(cards))
     out.append('  </div>')
     out.append('</section>')
     return '\n'.join(out)

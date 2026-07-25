@@ -337,6 +337,16 @@ def build():
     external_events.set_card_art(card_art)
     print(f'Card art: {len(card_art)} committed derivative pair(s)')
 
+    # CAL-29: which entities have committed portrait derivatives (same
+    # local-only pipeline). An entity without one renders its type-plate.
+    _ent_dir = os.path.join(REPO, 'img', 'entities')
+    ent_art = set()
+    if os.path.isdir(_ent_dir):
+        ent_art = {n[:-len('-i.jpg')] for n in os.listdir(_ent_dir)
+                   if n.endswith('-i.jpg') and not n.endswith('-i280.jpg')}
+    directory_lib.set_entity_art(ent_art)
+    print(f'Entity portraits: {len(ent_art)} committed derivative pair(s)')
+
     page_dirs = []
     for root, dirs, files in os.walk(PAGES):
         if 'config.json' in files:
@@ -559,7 +569,7 @@ def build():
 
     # --- Per-event permalink pages (/event/<slug>/) ---
     _event_outputs, _event_sitemap = build_event_pages(
-        base, header, footer, cal_feed, cal_now)
+        base, header, footer, cal_feed, cal_rows, cal_now)
     pages_built.extend(_event_outputs)
 
     # --- Practitioner pages (/practitioner/<slug>/) + index — CAL-02 ---
@@ -757,7 +767,7 @@ def build_city_pages(base, header, footer, cal_rows, now, geocode=None):
     return built, sitemap_entries
 
 
-def build_event_pages(base, header, footer, cal_feed, now):
+def build_event_pages(base, header, footer, cal_feed, cal_rows, now):
     """Emit one permalink page per approved external event at
     /event/<slug>/index.html, from the feed data (not a _src/pages dir).
 
@@ -850,7 +860,8 @@ def build_event_pages(base, header, footer, cal_feed, now):
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(breadcrumb_schema)}\n  </script>')
 
-        content = external_events.render_event_page(row, nav_prefix, SITE_URL, now=now)
+        content = external_events.render_event_page(
+            row, nav_prefix, SITE_URL, now=now, cal_rows=cal_rows)
         page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
         page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
 
@@ -903,13 +914,13 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
     # rows so the index page can carry the newest date across all of them.
     _index_rows = []
 
-    # Upcoming-session counts + card art per practitioner (for the index cards):
-    # curated photo first, else the next session's listing image.
-    count_by_slug, art_by_slug = {}, {}
+    # Upcoming-session counts per practitioner (the index cards' meta line).
+    # The card FACE is the committed portrait or the type-plate (CAL-29) —
+    # a session flyer never stands in for a person.
+    count_by_slug = {}
     for p in practs:
         sessions = practitioners_lib.sessions_for(p['slug'], cal_rows)
         count_by_slug[p['slug']] = len(sessions)
-        art_by_slug[p['slug']] = directory_lib.art_for(p, sessions)
 
     # --- individual profile pages ---
     for p in practs:
@@ -965,7 +976,7 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
             'meta_description': meta_desc,
             'canonical_url': canonical_url,
             'css_path': nav_prefix,
-            'page_style': practitioners_lib.PRACTITIONER_PAGE_STYLE,
+            'page_style': '',   # CAL-29: the profile head rides the shared .ent-* vocabulary
             'og_tags': og_tags,
             'twitter_tags': twitter_tags,
             'schema_json': schema_json,
@@ -1017,7 +1028,7 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
                     f'{_ldjson(index_breadcrumb)}\n  </script>')
 
     index_content = practitioners_lib.render_index(
-        practs, count_by_slug, index_nav, art_by_slug)
+        practs, count_by_slug, index_nav)
     page_header = header.strip().replace('{{nav_prefix}}', index_nav)
     page_footer = footer.strip().replace('{{nav_prefix}}', index_nav)
     html = _assemble(base, {
@@ -1070,12 +1081,11 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
     # profiles' rows so the /venues/ index carries the newest date among them.
     _index_rows = []
 
-    # Counts + card art (curated photo, else the next session's listing image).
-    count_by_slug, art_by_slug = {}, {}
+    # Counts (the index cards' meta line); the face is the type-plate (CAL-29).
+    count_by_slug = {}
     for v in venue_list:
         sessions = venues_lib.sessions_for(v['slug'], cal_rows)
         count_by_slug[v['slug']] = len(sessions)
-        art_by_slug[v['slug']] = directory_lib.art_for(v, sessions)
 
     for v in venue_list:
         slug = v['slug']
@@ -1187,7 +1197,7 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
                     f'{_ldjson(index_breadcrumb)}\n  </script>')
 
     index_content = venues_lib.render_index(
-        venue_list, count_by_slug, index_nav, art_by_slug)
+        venue_list, count_by_slug, index_nav)
     page_header = header.strip().replace('{{nav_prefix}}', index_nav)
     page_footer = footer.strip().replace('{{nav_prefix}}', index_nav)
     html = _assemble(base, {
@@ -1238,11 +1248,10 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
 
     # Counts + card art (operators carry no curated photo; the next session's
     # listing image stands in).
-    count_by_slug, art_by_slug = {}, {}
+    count_by_slug = {}
     for o in operator_list:
         sessions = operators_lib.sessions_for(o['slug'], cal_rows)
         count_by_slug[o['slug']] = len(sessions)
-        art_by_slug[o['slug']] = directory_lib.art_for(o, sessions)
 
     for o in operator_list:
         slug = o['slug']
@@ -1352,7 +1361,7 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
                     f'{_ldjson(index_breadcrumb)}\n  </script>')
 
     index_content = operators_lib.render_index(
-        operator_list, count_by_slug, index_nav, art_by_slug)
+        operator_list, count_by_slug, index_nav)
     page_header = header.strip().replace('{{nav_prefix}}', index_nav)
     page_footer = footer.strip().replace('{{nav_prefix}}', index_nav)
     html = _assemble(base, {
