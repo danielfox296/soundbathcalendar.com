@@ -155,32 +155,13 @@ def _practitioner_tag_slugs(session_rows):
 # Render
 # ---------------------------------------------------------------------------
 
+# Only the profile-head rules are page-local; everything else rides the shared
+# .detail__* vocabulary in styles.css (CAL-31).
 PRACTITIONER_PAGE_STYLE = """<style>
-    .pract { }
-    .pract__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
-    .pract__crumbs a { color: var(--accent-on-light); text-decoration: none; }
-    .pract__crumbs a:hover { text-decoration: underline; }
     .pract__head { display: flex; gap: 1.6rem; align-items: flex-start; flex-wrap: wrap; margin: 0 0 1.6rem; }
     .pract__photo { flex: 0 0 auto; width: 132px; height: 132px; object-fit: cover; background: rgba(var(--ink-rgb),0.06); }
     .pract__headtext { flex: 1 1 16rem; min-width: 14rem; }
-    .pract__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.6rem; }
-    .pract__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 1.1rem 0 0; }
-    .pract__links a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
-    .pract__links a:hover { text-decoration: underline; }
-    /* CAL-13/CAL-21: decision facts in the sticky aside card. */
-    .pract__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.2rem; margin: 0; }
-    .pract__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); align-self: baseline; }
-    .pract__facts dd { margin: 0; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
-    .pract__facts a { color: var(--accent-on-light); text-decoration: none; font-weight: 600; }
-    .pract__facts a:hover { text-decoration: underline; }
-    @media (max-width: 640px) { .pract__facts { grid-template-columns: 1fr; gap: 0.2rem; } .pract__facts dd { margin-bottom: 0.8rem; } }
-    .pract__bio, .pract__interview { max-width: var(--measure); }
-    .pract__bio p, .pract__interview p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); margin: 0 0 1rem; }
-    .pract__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
-    .pract__empty { color: rgba(var(--ink-rgb),0.62); }
-    .pract__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
-    .pract__back a { color: var(--accent-on-light); text-decoration: none; }
-    .pract__back a:hover { text-decoration: underline; }
+    .detail__h1 { margin: 0.2rem 0 0.6rem; }
     @media (max-width: 560px) { .pract__photo { width: 96px; height: 96px; } }
   </style>"""
 
@@ -197,7 +178,7 @@ def render_practitioner_page(pract, session_rows, nav_prefix, site_url, now=None
     name = pract['name']
     out = ['<section class="section section--light pract">', '  <div class="container">']
 
-    out.append('    <nav class="pract__crumbs" aria-label="Breadcrumb">')
+    out.append('    <nav class="detail__crumbs" aria-label="Breadcrumb">')
     out.append(
         f'      <a href="{nav_prefix}">Calendar</a> <span aria-hidden="true">/</span> '
         f'<a href="{nav_prefix}practitioners/">Practitioners</a> '
@@ -217,7 +198,7 @@ def render_practitioner_page(pract, session_rows, nav_prefix, site_url, now=None
             f'alt="{_esc(name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer">')
     out.append('      <div class="pract__headtext">')
     out.append('        <span class="eyebrow">Practitioner</span>')
-    out.append(f'        <h1 class="pract__h1">{_esc(name)}</h1>')
+    out.append(f'        <h1 class="detail__h1">{_esc(name)}</h1>')
     # Modality chips from their sessions.
     tag_slugs = _practitioner_tag_slugs(session_rows)
     if tag_slugs:
@@ -229,13 +210,13 @@ def render_practitioner_page(pract, session_rows, nav_prefix, site_url, now=None
     out.append('    </div>')  # head
 
     if (pract.get('bio') or '').strip():
-        out.append('    <div class="pract__bio">')
+        out.append('    <div class="detail__desc">')
         out.append(_paras(pract['bio']))
         out.append('    </div>')
 
     if (pract.get('interview') or '').strip():
-        out.append('    <h2 class="pract__section-h">In their words</h2>')
-        out.append('    <div class="pract__interview">')
+        out.append('    <h2 class="detail__section-h">In their words</h2>')
+        out.append('    <div class="detail__desc">')
         out.append(_paras(pract['interview']))
         out.append('    </div>')
 
@@ -284,26 +265,26 @@ def render_practitioner_page(pract, session_rows, nav_prefix, site_url, now=None
         out.append('      <aside class="detail-aside">')
         out.append('        <div class="detail-card">')
         if facts:
-            out.append('    <dl class="pract__facts">')
+            out.append('    <dl class="detail__facts">')
             out.extend(facts)
             out.append('    </dl>')
         if links:
-            out.append('    <p class="pract__links">' + ' '.join(links) + '</p>')
+            out.append('    <p class="detail__links">' + ' '.join(links) + '</p>')
         out.append('        </div>')  # .detail-card
         out.append('      </aside>')  # .detail-aside
     out.append('    </div>')      # .detail-shell
 
     # Upcoming sessions this person leads.
-    out.append('    <h2 class="pract__section-h">Upcoming sessions</h2>')
+    out.append('    <h2 class="detail__section-h">Upcoming sessions</h2>')
     if session_rows:
         out.append('    ' + X._render_rows(session_rows, True, nav_prefix, now=now))
     else:
         out.append(
-            f'    <p class="pract__empty">No upcoming sessions listed right now. '
+            f'    <p class="detail__empty">No upcoming sessions listed right now. '
             f'<a href="{nav_prefix}">See the full calendar →</a></p>')
 
     out.append(
-        f'    <p class="pract__back"><a href="{nav_prefix}practitioners/">'
+        f'    <p class="detail__back"><a href="{nav_prefix}practitioners/">'
         'All practitioners →</a></p>')
 
     out.append('  </div>')
@@ -347,9 +328,6 @@ def person_schema(pract, canonical_url, session_rows):
 
 # The directory design (.dir-*) is shared with /venues/ and /operators/ and
 # lives in styles.css; no page-specific style block remains.
-INDEX_STYLE = ''
-
-
 def render_index(practs, count_by_slug, nav_prefix, art_by_slug=None):
     """The <main> for /practitioners/ — a directory card per published profile."""
     from _src.lib import directory

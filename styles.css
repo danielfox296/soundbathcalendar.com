@@ -9,9 +9,18 @@
   --paper: #F5F7FA;
   --gray: #98A1AB;
   --accent: #62B6E8;
+  /* --accent-rgb powers rgba(var(--accent-rgb),a) tint values (CAL-31: no more
+     hardcoded 98,182,232 literals). The ice accent is a MARK on both grounds,
+     so it has no dark override — but a tint authored against the token follows
+     automatically when CAL-26 re-values the accent. */
+  --accent-rgb: 98, 182, 232;
   /* Accessible link blue on the paper ground: #1F6FA8 on #F5F7FA = 5.02:1
      (WCAG AA needs 4.5:1). The ice --accent stays for marks, not text. */
   --accent-on-light: #1F6FA8;
+  /* Its rgba() companion — flips with the dark scheme like the hex it mirrors,
+     so link-tint washes (e.g. .cal-tag--link:hover) follow the scheme instead
+     of freezing at the light value (CAL-31 token fix). */
+  --accent-on-light-rgb: 31, 111, 168;
   --line: rgba(var(--ink-rgb), 0.14);
   /* Form-control boundaries carry their own token, a step heavier than --line.
      WCAG 1.4.11 wants 3:1 for the visual boundary of a control, and --line's
@@ -160,8 +169,35 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .detail-card { border: 1px solid var(--line); padding: 1.25rem 1.4rem; }
 .detail-card + .detail-card { margin-top: 1.2rem; }
 .detail-card__map { display: block; width: 100%; aspect-ratio: 4 / 3; border: 0; margin-top: 1.1rem; background: rgba(var(--ink-rgb),0.05); }
-.detail-card .cal-event__facts, .detail-card .cal-event__cta { margin: 0; max-width: none; }
+.detail-card .detail__facts, .detail-card .cal-event__cta { margin: 0; max-width: none; }
 .detail-card .cal-event__cta { margin-top: 1.1rem; }
+
+/* ---- detail-page vocabulary (CAL-31): the crumbs/H1/facts/links/back
+        design the event + venue + practitioner + operator templates shared as
+        four namespace-renamed inline clones (~430KB shipped across 193
+        pages). One cached copy here; each template keeps only its genuinely
+        unique rules (and small overrides) inline. CAL-28/29 edit THIS block,
+        not four constants. ---- */
+.detail__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
+.detail__crumbs a { color: var(--accent-on-light); text-decoration: none; }
+.detail__crumbs a:hover { text-decoration: underline; }
+.detail__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.4rem; }
+.detail__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 1.1rem 0 0; }
+.detail__links a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
+.detail__links a:hover { text-decoration: underline; }
+.detail__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.2rem; margin: 0; }
+.detail__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); align-self: baseline; }
+.detail__facts dd { margin: 0; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
+.detail__facts a { color: var(--accent-on-light); text-decoration: none; font-weight: 600; }
+.detail__facts a:hover { text-decoration: underline; }
+@media (max-width: 640px) { .detail__facts { grid-template-columns: 1fr; gap: 0.2rem; } .detail__facts dd { margin-bottom: 0.8rem; } }
+.detail__desc { max-width: var(--measure); }
+.detail__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); margin: 0 0 1rem; }
+.detail__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
+.detail__empty { color: rgba(var(--ink-rgb),0.62); }
+.detail__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
+.detail__back a { color: var(--accent-on-light); text-decoration: none; }
+.detail__back a:hover { text-decoration: underline; }
 
 /* ---- forms (digest capture) ---- */
 .contact-form { max-width: 34rem; }
@@ -306,7 +342,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cal-tag--toggle:hover { border-color: var(--accent-on-light); }
 /* A chip that links to its tag landing page (CAL-09) — same chip, clickable. */
 .cal-tag--link { text-decoration: none; cursor: pointer; }
-.cal-tag--link:hover { border-color: var(--accent-on-light); background: rgba(31,111,168,0.06); }
+.cal-tag--link:hover { border-color: var(--accent-on-light); background: rgba(var(--accent-on-light-rgb),0.06); }
 .cal-row__tags, .cal-event__tags { display: flex; flex-wrap: wrap; gap: 0.3rem 0.4rem; margin: 0.5rem 0 0; padding: 0; }
 .cal-event__tags { margin: 0.4rem 0 1.4rem; }
 
@@ -470,8 +506,102 @@ a.cal-row__modality:hover { text-decoration: underline; }
 .dir-card__meta { display: block; margin-top: 0.2rem; font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); }
 @media (max-width: 560px) {
   .dir-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.8rem 1rem; }
-  .dir-card__monogram { font-size: 2.1rem; }
 }
+
+/* ---- learn sheets (/learn/ + the eight explainers, CAL-20; /what-to-expect/,
+        CAL-07): one .lrn-* vocabulary here, replacing nine byte-identical
+        page style.css files + the near-clone .wte-* sheet (CAL-31). The
+        what-to-expect templates reuse the .lrn-* names for every shared rule;
+        only its Q&A rhythm (.wte-qa/.wte-q — different margins than .lrn-h2's
+        landmark scale) and warm hero stay its own. ---- */
+.lrn-narrow { max-width: 48rem; }
+/* Trim the stacked-section rhythm under the intro. */
+.lrn--body { padding-top: 0.6rem; }
+.lrn--next { padding-top: 1rem; }
+.lrn-cta { margin: 1.8rem 0 0; }
+/* Prose paragraphs — comfortable measure, slightly quieted ink. */
+.lrn-p {
+  color: rgba(var(--ink-rgb), 0.74);
+  font-size: 1rem;
+  line-height: 1.68;
+  margin: 0 0 0.9rem;
+}
+.lrn-p:last-child { margin-bottom: 0; }
+/* H2 landmarks — same scale as the what-to-expect questions. */
+.lrn-h2 {
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 2.2rem 0 0.6rem;
+}
+.lrn-h2:first-child { margin-top: 0; }
+/* Q&A blocks (the FAQPage-backed section). */
+.lrn-qa { margin: 0 0 2rem; }
+.lrn-qa:last-child { margin-bottom: 0; }
+/* An honest-note aside — quiet accent rule, no alarm. */
+.lrn-note {
+  border-left: 3px solid var(--accent);
+  padding: 0.15rem 0 0.15rem 1rem;
+  background: rgba(var(--accent-rgb), 0.06);
+}
+/* "Keep going" — quiet link list. */
+.lrn-links { list-style: none; margin: 0.4rem 0 0; padding: 0; }
+.lrn-links li {
+  color: rgba(var(--ink-rgb), 0.74);
+  font-size: 1rem;
+  line-height: 1.6;
+  padding: 0.35rem 0 0.35rem 1rem;
+  border-left: 1px solid var(--line);
+  margin: 0 0 0.35rem;
+}
+.lrn-links a { font-weight: 600; }
+/* Card directory (/learn/ index + the what-to-expect "ready to find one?"). */
+.lrn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  margin: 1.6rem 0 0;
+}
+.lrn-card {
+  display: block;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color .15s, background .15s;
+}
+.lrn-card:hover { border-color: var(--accent-on-light); background: rgba(var(--accent-rgb), 0.05); }
+.lrn-card__label {
+  display: block;
+  font: 600 0.72rem var(--font-body);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent-on-light);
+  margin-bottom: 0.3rem;
+}
+.lrn-card__desc {
+  display: block;
+  color: rgba(var(--ink-rgb), 0.68);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+@media (max-width: 560px) {
+  .lrn-grid { grid-template-columns: 1fr; }
+}
+/* What-to-expect's own Q&A rhythm: roomier blocks, flush question heads. */
+.wte-qa { margin: 0 0 2.4rem; }
+.wte-qa:last-child { margin-bottom: 0; }
+.wte-q {
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.6rem;
+}
+/* Warm hero (CAL-22, WARMTH RULE). Natural photo, no scrim; the dark scheme
+   dims it slightly so it sits on the ink ground like the report photos. */
+.wte-hero { margin: 2.4rem 0 0; }
+.wte-hero img { display: block; width: 100%; height: auto; }
+@media (prefers-color-scheme: dark) { .wte-hero img { filter: brightness(0.82); } }
 
 /* ---- footer: brand column + three quiet link columns over a fine-print
         bar. Links ride the muted ink ramp (not accent) so the footer reads as
@@ -529,6 +659,7 @@ a.cal-row__modality:hover { text-decoration: underline; }
     --paper: #101216;          /* the dark ground (digest --sheet dark) */
     --ink-rgb: 245, 247, 250;  /* flips every rgba(var(--ink-rgb),a) light */
     --accent-on-light: #7CC3EC;/* links/accent text — AA on #101216 */
+    --accent-on-light-rgb: 124, 195, 236;
   }
   body { background: #08090B; } /* the desk behind the sheet, per the digest */
   /* CAL-18: the digest preview flips to the email's own dark layer (digest.ts).

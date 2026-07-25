@@ -1959,29 +1959,25 @@ def event_title_tag(name, site_name):
 # Inline style for event pages (they have no _src/pages dir, so no style.css is
 # injected). Design tokens come from the sitewide styles.css every page loads.
 EVENT_PAGE_STYLE = """<style>
-    .cal-event { }
-    .cal-event__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
-    .cal-event__crumbs a { color: var(--accent-on-light); text-decoration: none; }
-    .cal-event__crumbs a:hover { text-decoration: underline; }
     .cal-past-banner { background: rgba(var(--ink-rgb),0.05); border-left: 3px solid var(--gray); padding: 0.9rem 1.2rem; margin: 0 0 2rem; font-size: 0.95rem; }
     .cal-past-banner a { color: var(--accent-on-light); }
-    .cal-event__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.4rem 0 1.4rem; }
+    /* Event-page overrides of the shared .detail__* vocabulary (styles.css,
+       CAL-31): roomier H1 + a facts grid that breathes wider than the entity
+       aside default. The base gap override would also win over the shared
+       stylesheet's mobile stack (same specificity, later in cascade), so the
+       media requery restates the tight mobile gap. */
+    .detail__h1 { margin: 0.4rem 0 1.4rem; }
+    .detail__facts { gap: 0.6rem 1.6rem; margin: 2rem 0; max-width: 40rem; }
+    @media (max-width: 640px) { .detail__facts { gap: 0.2rem; } }
     .cal-event__desc { font-size: 1.15rem; line-height: 1.6; max-width: 42rem; color: rgba(var(--ink-rgb),0.78); margin: 0 0 1rem; }
     .cal-event__note { font: 500 1.2rem var(--font-display); color: var(--ink); max-width: 40rem; line-height: 1.4; margin: 0 0 1.6rem; }
     .cal-event__figure { margin: 2rem 0; max-width: 640px; }
     .cal-event__figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: rgba(var(--ink-rgb),0.06); }
     .cal-event__figure figcaption { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin-top: 0.6rem; }
-    .cal-event__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.6rem; margin: 2rem 0; max-width: 40rem; }
-    .cal-event__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); align-self: baseline; }
-    .cal-event__facts dd { margin: 0; color: var(--ink); }
     .cal-event__cta { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; margin: 2rem 0; }
     .cal-event__link { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
     .cal-event__link:hover { text-decoration: underline; }
     .cal-event__firsttime { margin: 1.4rem 0 0; font-size: 0.88rem; color: rgba(var(--ink-rgb),0.65); }
-    .cal-event__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
-    .cal-event__back a { color: var(--accent-on-light); text-decoration: none; }
-    .cal-event__back a:hover { text-decoration: underline; }
-    @media (max-width: 640px) { .cal-event__facts { grid-template-columns: 1fr; gap: 0.2rem; } .cal-event__facts dd { margin-bottom: 0.8rem; } }
   </style>"""
 
 
@@ -1996,7 +1992,7 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     # [port] The calendar IS the home page here, so the trail is Calendar >
     # {City} > Event, the city level linking its city page — present only when
     # the row's city is canonical, so schema and crumbs agree (CAL-SEO-9).
-    out.append('    <nav class="cal-event__crumbs" aria-label="Breadcrumb">')
+    out.append('    <nav class="detail__crumbs" aria-label="Breadcrumb">')
     crumb = (f'      <a href="{nav_prefix}">Calendar</a> '
              '<span aria-hidden="true">/</span> ')
     if row['city'] in CITIES:
@@ -2019,7 +2015,7 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     out.append('    <div class="detail-shell">')
     out.append('      <div class="detail-main">')
     out.append('    <span class="eyebrow">Front Range calendar</span>')
-    out.append(f'    <h1 class="cal-event__h1">{esc(row["name"])}</h1>')
+    out.append(f'    <h1 class="detail__h1">{esc(row["name"])}</h1>')
 
     out.append(f'    <p class="cal-event__desc">{esc(factual_description(row))}</p>')
     note = editorial_note(row)
@@ -2046,7 +2042,7 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     out.append('        <div class="detail-card">')
 
     # Facts block
-    out.append('    <dl class="cal-event__facts">')
+    out.append('    <dl class="detail__facts">')
     out.append(
         f'      <dt>When</dt><dd>{esc(datetime_fmt.fmt_date_long(row["starts_at"]))} '
         f'· {esc(fmt_time(row["starts_at"]))} (Denver time)</dd>')
@@ -2164,7 +2160,7 @@ def render_event_page(row, nav_prefix, site_url, now=None):
     out.append('    </div>')      # .detail-shell
 
     out.append(
-        f'    <p class="cal-event__back"><a href="{nav_prefix}">'
+        f'    <p class="detail__back"><a href="{nav_prefix}">'
         'Part of the Front Range calendar →</a></p>')
 
     out.append('  </div>')

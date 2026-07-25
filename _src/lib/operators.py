@@ -150,29 +150,6 @@ def _venue_names(session_rows):
 # Render
 # ---------------------------------------------------------------------------
 
-OPERATOR_PAGE_STYLE = """<style>
-    .operator__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
-    .operator__crumbs a { color: var(--accent-on-light); text-decoration: none; }
-    .operator__crumbs a:hover { text-decoration: underline; }
-    .operator__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.4rem; }
-    .operator__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 1.1rem 0 0; }
-    .operator__links a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
-    .operator__links a:hover { text-decoration: underline; }
-    .operator__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); max-width: var(--measure); margin: 0 0 1rem; }
-    /* CAL-13/CAL-21: decision facts in the sticky aside card. */
-    .operator__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.2rem; margin: 0; }
-    .operator__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); align-self: baseline; }
-    .operator__facts dd { margin: 0; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
-    .operator__facts a { color: var(--accent-on-light); text-decoration: none; font-weight: 600; }
-    .operator__facts a:hover { text-decoration: underline; }
-    @media (max-width: 640px) { .operator__facts { grid-template-columns: 1fr; gap: 0.2rem; } .operator__facts dd { margin-bottom: 0.8rem; } }
-    .operator__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
-    .operator__empty { color: rgba(var(--ink-rgb),0.62); }
-    .operator__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
-    .operator__back a { color: var(--accent-on-light); text-decoration: none; }
-  </style>"""
-
-
 def _paras(text):
     blocks = [b.strip() for b in (text or '').split('\n\n') if b.strip()]
     return '\n'.join(f'      <p>{_esc(b)}</p>' for b in blocks)
@@ -183,7 +160,7 @@ def render_operator_page(o, session_rows, nav_prefix, site_url, now=None):
     name = o['name']
     out = ['<section class="section section--light operator">', '  <div class="container">']
 
-    out.append('    <nav class="operator__crumbs" aria-label="Breadcrumb">')
+    out.append('    <nav class="detail__crumbs" aria-label="Breadcrumb">')
     out.append(
         f'      <a href="{nav_prefix}">Calendar</a> <span aria-hidden="true">/</span> '
         f'<a href="{nav_prefix}operators/">Organizers</a> '
@@ -196,12 +173,12 @@ def render_operator_page(o, session_rows, nav_prefix, site_url, now=None):
     out.append('    <div class="detail-shell">')
     out.append('      <div class="detail-main">')
     out.append('    <span class="eyebrow">Organizer</span>')
-    out.append(f'    <h1 class="operator__h1">{_esc(name)}</h1>')
+    out.append(f'    <h1 class="detail__h1">{_esc(name)}</h1>')
 
     # The reading column always carries a paragraph: the curated description
     # when written, else an honest factual line (most operators are
     # import-seeded and description-less).
-    out.append('    <div class="operator__desc">')
+    out.append('    <div class="detail__desc">')
     if (o.get('description') or '').strip():
         out.append(_paras(o['description']))
     else:
@@ -255,26 +232,26 @@ def render_operator_page(o, session_rows, nav_prefix, site_url, now=None):
         out.append('      <aside class="detail-aside">')
         out.append('        <div class="detail-card">')
         if facts:
-            out.append('    <dl class="operator__facts">')
+            out.append('    <dl class="detail__facts">')
             out.extend(facts)
             out.append('    </dl>')
         if web:
-            out.append('    <p class="operator__links">'
+            out.append('    <p class="detail__links">'
                        f'<a href="{_esc(web)}" target="_blank" rel="noopener">Website</a></p>')
         out.append('        </div>')  # .detail-card
         out.append('      </aside>')  # .detail-aside
     out.append('    </div>')      # .detail-shell
 
-    out.append('    <h2 class="operator__section-h">Upcoming sessions</h2>')
+    out.append('    <h2 class="detail__section-h">Upcoming sessions</h2>')
     if session_rows:
         out.append('    ' + X._render_rows(session_rows, True, nav_prefix, now=now))
     else:
         out.append(
-            f'    <p class="operator__empty">No upcoming sessions listed right now. '
+            f'    <p class="detail__empty">No upcoming sessions listed right now. '
             f'<a href="{nav_prefix}">See the full calendar →</a></p>')
 
     out.append(
-        f'    <p class="operator__back"><a href="{nav_prefix}operators/">All organizers →</a></p>')
+        f'    <p class="detail__back"><a href="{nav_prefix}operators/">All organizers →</a></p>')
 
     out.append('  </div>')
     out.append('</section>')
@@ -305,9 +282,6 @@ def organization_schema(o, canonical_url):
 
 # The directory design (.dir-*) is shared with /practitioners/ and /venues/
 # and lives in styles.css; no page-specific style block remains.
-INDEX_STYLE = ''
-
-
 def render_index(operators, count_by_slug, nav_prefix, art_by_slug=None):
     from _src.lib import directory
     art_by_slug = art_by_slug or {}

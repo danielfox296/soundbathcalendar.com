@@ -197,33 +197,15 @@ def _venue_tag_slugs(session_rows):
 # Render
 # ---------------------------------------------------------------------------
 
+# Only the photo figure + its Google Places attribution are page-local;
+# everything else rides the shared .detail__* vocabulary in styles.css (CAL-31).
 VENUE_PAGE_STYLE = """<style>
-    .venue__crumbs { font-size: 0.82rem; color: rgba(var(--ink-rgb),0.62); margin: 0 0 2rem; }
-    .venue__crumbs a { color: var(--accent-on-light); text-decoration: none; }
-    .venue__crumbs a:hover { text-decoration: underline; }
-    .venue__h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.2rem 0 0.4rem; }
-    .venue__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 0 0 1.6rem; }
-    .detail-card .venue__links { margin: 1.1rem 0 0; }
-    .venue__links a { color: var(--accent-on-light); font: 600 0.9rem var(--font-body); text-decoration: none; }
-    .venue__links a:hover { text-decoration: underline; }
     .venue__figure { margin: 0 0 1.6rem; max-width: 640px; }
     .venue__photo { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: rgba(var(--ink-rgb),0.06); display: block; }
     /* Google Places attribution (CAL-25): required beside every venue photo. */
     .venue__credit { margin: 0.4rem 0 0; font-size: 0.74rem; color: rgba(var(--ink-rgb),0.55); }
     .venue__credit a { color: rgba(var(--ink-rgb),0.62); text-decoration: none; }
     .venue__credit a:hover { text-decoration: underline; }
-    .venue__desc p { font-size: 1.08rem; line-height: 1.7; color: rgba(var(--ink-rgb),0.82); max-width: var(--measure); margin: 0 0 1rem; }
-    /* CAL-13/CAL-21: the decision facts live in the sticky aside card. */
-    .venue__facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.6rem 1.2rem; margin: 0; }
-    .venue__facts dt { font: 600 0.72rem var(--font-body); letter-spacing: 0.13em; text-transform: uppercase; color: rgba(var(--ink-rgb),0.65); align-self: baseline; }
-    .venue__facts dd { margin: 0; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
-    .venue__facts a { color: var(--accent-on-light); text-decoration: none; font-weight: 600; }
-    .venue__facts a:hover { text-decoration: underline; }
-    .venue__section-h { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 2.4rem 0 1rem; }
-    .venue__empty { color: rgba(var(--ink-rgb),0.62); }
-    .venue__back { margin: 2.4rem 0 0; padding-top: 2rem; border-top: 1px solid rgba(var(--ink-rgb),0.14); }
-    .venue__back a { color: var(--accent-on-light); text-decoration: none; }
-    @media (max-width: 640px) { .venue__facts { grid-template-columns: 1fr; gap: 0.2rem; } .venue__facts dd { margin-bottom: 0.8rem; } }
   </style>"""
 
 
@@ -258,7 +240,7 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None, credit=No
     name = v['name']
     out = ['<section class="section section--light venue">', '  <div class="container">']
 
-    out.append('    <nav class="venue__crumbs" aria-label="Breadcrumb">')
+    out.append('    <nav class="detail__crumbs" aria-label="Breadcrumb">')
     out.append(
         f'      <a href="{nav_prefix}">Calendar</a> <span aria-hidden="true">/</span> '
         f'<a href="{nav_prefix}venues/">Venues</a> '
@@ -271,7 +253,7 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None, credit=No
     out.append('    <div class="detail-shell">')
     out.append('      <div class="detail-main">')
     out.append('    <span class="eyebrow">Venue</span>')
-    out.append(f'    <h1 class="venue__h1">{_esc(name)}</h1>')
+    out.append(f'    <h1 class="detail__h1">{_esc(name)}</h1>')
 
     place = v['neighborhood'] if v.get('city') == 'Denver' and v.get('neighborhood') else None
     area = f'{place}, {v["city"]}' if place else v.get('city', '')
@@ -290,7 +272,7 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None, credit=No
     # when Daniel has written one, else an honest factual line — most of the
     # published set is import-seeded, and a bare H1 next to a full aside would
     # read as a broken column.
-    out.append('    <div class="venue__desc">')
+    out.append('    <div class="detail__desc">')
     if (v.get('description') or '').strip():
         out.append(_paras(v['description']))
     else:
@@ -310,7 +292,7 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None, credit=No
     out.append('      <aside class="detail-aside">')
     out.append('        <div class="detail-card">')
 
-    out.append('    <dl class="venue__facts">')
+    out.append('    <dl class="detail__facts">')
     if v.get('address'):
         out.append(f'      <dt>Address</dt><dd>{_esc(v["address"])}</dd>')
     if area:
@@ -353,22 +335,22 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None, credit=No
     if web:
         links.append(f'<a href="{_esc(web)}" target="_blank" rel="noopener">Website</a>')
     if links:
-        out.append('    <p class="venue__links">' + ' '.join(links) + '</p>')
+        out.append('    <p class="detail__links">' + ' '.join(links) + '</p>')
 
     out.append('        </div>')  # .detail-card
     out.append('      </aside>')  # .detail-aside
     out.append('    </div>')      # .detail-shell
 
-    out.append('    <h2 class="venue__section-h">Upcoming sessions here</h2>')
+    out.append('    <h2 class="detail__section-h">Upcoming sessions here</h2>')
     if session_rows:
         out.append('    ' + X._render_rows(session_rows, True, nav_prefix, now=now))
     else:
         out.append(
-            f'    <p class="venue__empty">No upcoming sessions listed here right now. '
+            f'    <p class="detail__empty">No upcoming sessions listed here right now. '
             f'<a href="{nav_prefix}">See the full calendar →</a></p>')
 
     out.append(
-        f'    <p class="venue__back"><a href="{nav_prefix}venues/">All venues →</a></p>')
+        f'    <p class="detail__back"><a href="{nav_prefix}venues/">All venues →</a></p>')
 
     out.append('  </div>')
     out.append('</section>')
@@ -420,9 +402,6 @@ def place_schema(v, canonical_url, session_rows, credit=None):
 
 # The directory design (.dir-*) is shared with /practitioners/ and /operators/
 # and lives in styles.css; no page-specific style block remains.
-INDEX_STYLE = ''
-
-
 def render_index(venues, count_by_slug, nav_prefix, art_by_slug=None):
     from _src.lib import directory
     art_by_slug = art_by_slug or {}

@@ -14,7 +14,10 @@
 
     .submit-way p {
       margin: 0;
-      color: var(--ink-muted, var(--ink));
+      /* CAL-31: was var(--ink-muted, var(--ink)) — a token that has never
+         existed, so the fallback silently rendered these solid ink. This is
+         the muted value the author reached for, on the ramp the site uses. */
+      color: rgba(var(--ink-rgb), 0.74);
     }
 
     .submit-form-section .contact-form {
