@@ -119,10 +119,14 @@
   <!-- CAL-30 item 1 (pulled into CAL-28): one row at desktop widths — the
        inline digest form is retired for an underlined text link (primary
        demoted sitewide; closes the DESIGN.md §9 masthead-primary ruling).
-       SEO ruling: the 4 city links + Map + Learn are a load-bearing
+       SEO ruling: the 4 city links + Map + Learn + Blog are a load-bearing
        internal-link class — always server-rendered <a> elements on every
        page. They may visually collapse (the strip scrolls; below 900px it
-       drops to a second line) but never leave the HTML. -->
+       drops to a second line) but never leave the HTML. Blog joined the set
+       in CAL-22: it is the section's only hub, and the footer link alone
+       left it several clicks deep from most pages. The strip is
+       `overflow-x: auto` with nowrap items, so a seventh link scrolls rather
+       than adding a row — `--mast-offset` is unchanged. -->
   <div class="container masthead-inner">
     <a href="../" class="wordmark">Sound Bath Calendar</a>
     <nav class="masthead-cities" aria-label="Primary navigation">
@@ -132,6 +136,7 @@
       <a href="../colorado-springs/">Colorado Springs</a>
       <a href="../map/">Map</a>
       <a href="../learn/">Learn</a>
+      <a href="../blog/">Blog</a>
     </nav>
     <a class="masthead-digest-link" href="../#digest">Get the Thursday digest</a>
   </div>

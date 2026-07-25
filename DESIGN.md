@@ -84,7 +84,7 @@ RULE: `font-variant-numeric: tabular-nums` on times, prices, and counts (`.cal-r
 
 Rows are a scan surface — their leading (1.02–1.35) is deliberately tighter than page prose (1.65); don't "fix" it up. The reading register (learn/explainers) keeps sentence-case heads until its own pass (CAL-34).
 
-Reading measure (D-13, ratified 2026-07-22): one physical family, two roles. `--measure: 44rem` (`styles.css:143`; was `68ch` — the same width at shipped font sizes) caps long-form prose in shells (`.detail-main > p`, entity bio/desc paragraphs, `/privacy/`); fixed rem caps (38–48rem, centered on 42–44rem) govern listing and answer surfaces whose font sizes intentionally differ (`.cal-summary` 44, `.cal-row__meta` 42, `.cal-intro` 42, `.cal-faq__item` 44, `.cal-emptystate` 40, `.rup-narrow` 48…). RULE: new prose columns pick from this family — `var(--measure)` for long-form, an existing rem cap otherwise; no new bespoke widths.
+Reading measure (D-13, ratified 2026-07-22): one physical family, two roles. `--measure: 44rem` (`styles.css:143`; was `68ch` — the same width at shipped font sizes) caps long-form prose in shells (`.detail-main > p`, entity bio/desc paragraphs, `/privacy/`); fixed rem caps (38–48rem, centered on 42–44rem) govern listing and answer surfaces whose font sizes intentionally differ (`.cal-summary` 44, `.cal-row__meta` 42, `.cal-intro` 42, `.cal-faq__item` 44, `.cal-emptystate` 40, `.post-narrow` 48…). RULE: new prose columns pick from this family — `var(--measure)` for long-form, an existing rem cap otherwise; no new bespoke widths.
 
 ### 1.4 Spacing & chrome offsets
 
