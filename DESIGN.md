@@ -152,7 +152,11 @@ First-viewport budget (mobile): summary + the live slab head above the fold.
 
 ### 2.4 List + map (`/map/`, CAL-10 phase C)
 
-`.map-split`: ≥900px → list `minmax(340px, 5fr)` beside sticky map `7fr`; the list column hides media tiles (the map is the visual). Below 900px the map band stacks on top. Map height is fixed px (680 / 440 mobile) so Leaflet initializes against real dimensions. Pins carry the decision datum — a venue's session count — as ink circles with paper borders (`.sbc-pin`; the `--hot` variant is a coral `--signal` fill with white text, CAL-26); clusters sum their contents; popups ride the tokens so they flip in dark. With JS blocked the list is fully usable and the map box simply never initializes.
+`.map-split`: ≥900px → list `minmax(340px, 5fr)` beside sticky map `7fr`. Below 900px the map band stacks on top. Map height is fixed px (680 / 440 mobile) so Leaflet initializes against real dimensions.
+
+**In the register (CAL-35):** the beside-list is the **compact card-list** variant — the CAL-29 strip anatomy at one column, faces dropped (the map is this page's visual), strip-scale names, 14px meta, hairline between entries, hovered row tinted. Pins are **coral discs** carrying the venue's session count in condensed numerals (`.sbc-pin`; white on `--signal` = 5.67:1); clusters sum their contents; hovered or selected, the disc takes a **white ring** (`--hot`, the row→pin sync's mark). The map is the one surface where coral runs as a field of marks — they are the data, and this page carries neither ticker nor live-day slab, so the ≤2-slab chrome budget is untouched. Popups speak the register: condensed-caps 20 venue name, 15px session list, coral links, radius 0; the max-8 + "+N more" rule stands. The dark basemap is the OSM raster inverted and **retuned for `#0E0C12`** (brightness .78 / contrast .88 / saturate .62 — the v4 values sat too bright and too blue against the night ground); only `.leaflet-tile` is filtered.
+
+RULE — with JS blocked the **server-rendered band list is the whole page** and the map box simply never initializes (no-JS invariant #48). Leaflet stays vendored; CAL-35 added no JS.
 
 ### 2.5 Entity directories (`/venues/`, `/practitioners/`, `/operators/`)
 

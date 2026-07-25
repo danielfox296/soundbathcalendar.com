@@ -104,20 +104,27 @@ MAP_HEAD = """<link rel="stylesheet" href="{{css_path}}vendor/leaflet/leaflet.cs
       .map-split { grid-template-columns: minmax(340px, 5fr) 7fr; gap: 2.4rem; align-items: start; }
       .map-split__map { position: sticky; top: var(--mast-offset); }
     }
-    /* In the narrow list column the map is the visual (CAL-28): drop the card
-       faces so the day-banded list reads as a clean scan column beside it —
-       one column, caption-register cards; type tiles flatten to captions
-       (their tile colors revert to the page tokens). CAL-35 restyles. */
+    /* The beside-list is the COMPACT CARD-LIST variant (CAL-35, the CAL-29
+       strip anatomy at one column): the map is this page's visual, so the
+       cards drop their faces and read as a scan column — strip-scale names,
+       14px meta, hairline between entries. Type tiles flatten to captions
+       (their tile colours revert to the page tokens) so the column has one
+       texture, not two. */
     .map-split__list .cal-card__im { display: none; }
-    .map-split__list .cal-rows { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+    .map-split__list .cal-rows { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .map-split__list .cal-row { padding: 13px 0; border-top: 1px solid var(--line); }
+    .map-split__list .cal-rows > .cal-row:first-child { border-top: 0; }
     .map-split__list .cal-card--tile { background: transparent; aspect-ratio: auto; }
     .map-split__list .cal-card__tin { padding: 0; }
-    .map-split__list .cal-row__name { font-size: 22px; }
+    .map-split__list .cal-row__name { font-size: clamp(16px, 0.9vw + 11px, 21px); }
+    .map-split__list .cal-card__meta { font-size: 14px; }
     .map-split__list .cal-card--tile .cal-row__name a { color: var(--ink); }
     .map-split__list .cal-card--tile .cal-card__meta { color: var(--muted); }
     .map-split__list .cal-card--tile .cal-card__meta b { color: var(--signal-text); }
     .map-split__list .cal-card--tile:hover { background: transparent; }
     .map-split__list .cal-card--tile:hover .cal-card__meta { color: var(--muted); }
+    /* The hovered row's own mark, paired with the pin's white ring. */
+    .map-split__list .cal-row:hover { background: rgba(var(--ink-rgb), 0.05); }
     @media (max-width: 899px) { .map-split__map { order: -1; } }
     /* Fixed px height (not vh): guarantees the container is sized before Leaflet
        inits, so fitBounds sees real dimensions in every context. */
@@ -132,30 +139,47 @@ MAP_HEAD = """<link rel="stylesheet" href="{{css_path}}vendor/leaflet/leaflet.cs
     .map-hint { position: absolute; inset: 0; z-index: 1200; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 1.4rem; background: rgba(var(--ink-rgb),0.45); opacity: 0; transition: opacity .25s; pointer-events: none; }
     .map-hint--on { opacity: 1; }
     .map-hint span { background: var(--paper); color: var(--ink); border: 1px solid var(--line); padding: 0.6rem 1rem; font: 600 0.9rem var(--font-body); }
-    /* Count-carrying pins (CAL-10): a venue pin shows its session count; a
-       cluster sums the sessions inside it. Token colors — they flip in dark. */
-    .sbc-pin { width: 100%; height: 100%; background: var(--ink); color: var(--paper);
+    /* Count-carrying pins (CAL-10 → CAL-35): CORAL DISCS carrying the venue's
+       session count in condensed numerals; a cluster sums the sessions inside
+       it. The map is the one surface where coral runs as a field of marks —
+       they are the data, not decoration (the ≤2-slabs budget governs page
+       chrome, and this page has no ticker and no live-day slab). White on
+       --signal is 5.67:1. Hovered or selected, the disc takes a white ring. */
+    .sbc-pin { width: 100%; height: 100%; background: var(--signal); color: #fff;
       border: 2px solid var(--paper); border-radius: 50%; display: flex;
       align-items: center; justify-content: center;
-      font: 600 12px/1 var(--font-body); box-shadow: 0 1px 4px rgba(var(--shadow-rgb),0.35); }
-    .sbc-pin--cluster { font-size: 13px; }
-    .sbc-pin--hot { background: var(--signal); color: #fff; border-color: var(--paper); }
+      font-family: var(--font-display); font-weight: 800; font-stretch: 62%;
+      font-size: 14px; line-height: 1; font-variant-numeric: tabular-nums;
+      box-shadow: 0 1px 4px rgba(var(--shadow-rgb),0.35); }
+    .sbc-pin--cluster { font-size: 16px; }
+    .sbc-pin--hot { border-color: #fff; box-shadow: 0 0 0 2px #fff, 0 1px 4px rgba(var(--shadow-rgb),0.35); }
     /* Popup surfaces ride the tokens so they follow dark mode — the leaflet.css
        default is hardcoded white, which went illegible once --ink flipped. */
     .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--paper); color: var(--ink); }
-    .sbc-pop__name { font: 600 0.98rem var(--font-body); margin: 0 0 0.3rem; }
-    .sbc-pop__name a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+    /* Popups speak the register (CAL-35): the venue name as a condensed-caps
+       20 monument, the sessions beneath it at 15 with coral links. */
+    .leaflet-popup-content-wrapper { border-radius: 0; }
+    .sbc-pop__name { font-family: var(--font-display); font-weight: 800; font-stretch: 72%;
+      font-size: 20px; line-height: 1.05; text-transform: uppercase; margin: 0 0 0.45rem; }
+    .sbc-pop__name a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+    .sbc-pop__name a:hover { color: var(--signal-text); }
     .sbc-pop__list { margin: 0; padding-left: 1.05rem; }
-    .sbc-pop__list li { font-size: 0.86rem; line-height: 1.5; }
-    .sbc-pop__list a { color: var(--ink); }
-    .sbc-pop__more { list-style: none; margin-left: -1.05rem; color: var(--muted); }
+    .sbc-pop__list li { font-size: 15px; line-height: 1.5; }
+    .sbc-pop__list a { color: var(--signal-text); text-underline-offset: 3px; }
+    .sbc-pop__more { list-style: none; margin-left: -1.05rem; color: var(--muted); font-size: 14px; }
     .leaflet-container { font: inherit; }
     .map-empty { color: var(--muted); }
-    /* Dark mode (CAL-14 polish): the light OSM raster tiles are inverted +
-       hue-rotated into a dark basemap. Only .leaflet-tile is filtered — markers,
-       popups, and controls live in other panes and stay untouched. */
+    /* Dark mode (CAL-14 → retuned for the v5 night ground, CAL-35): the light
+       OSM raster tiles are inverted + hue-rotated into a dark basemap. The
+       previous values were tuned against v4's near-black; against #0E0C12 the
+       plain inversion sits too bright and too blue, so it is pulled down and
+       desaturated until the basemap reads as a ground the coral pins sit ON
+       rather than a lit panel beside the page. Only .leaflet-tile is filtered —
+       markers, popups, and controls live in other panes and stay untouched. */
     @media (prefers-color-scheme: dark) {
-      .leaflet-tile { filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9); }
+      .leaflet-tile { filter: invert(1) hue-rotate(185deg) brightness(0.78) contrast(0.88) saturate(0.62); }
+      /* The frame + the tile gutter match the page's own night ground. */
+      #sbc-map { border-color: rgba(var(--ink-rgb), 0.24); }
     }
   </style>"""
 
