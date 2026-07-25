@@ -1,0 +1,5 @@
+{
+  "title": "The blog | Sound Bath Calendar",
+  "output": "roundups/index.html",
+  "redirect_to": "../blog/"
+}
