@@ -2,6 +2,7 @@
 title: Venues worth knowing right now
 dek: The six venues keeping the most sessions on the calendar this month — what's on at each, what it costs, and what's next.
 date: 2026-07-22
+kind: Roundup
 byline: Sound Bath Calendar
 description: The six Front Range venues with the most sound bath sessions on the calendar right now — what's on at each, what it costs, and what's coming next, from Colorado Springs to Fort Collins.
 ---
