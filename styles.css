@@ -415,11 +415,6 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
    .cal-band draws no display of its own. Change a display value there →
    re-verify THIS rule still wins. */
 .cal-filters[hidden], .cal-row[hidden], .cal-band[hidden], .cal-jump[hidden], .cal-filters__nearme[hidden] { display: none; }
-/* CAL-38 × CAL-28: filters.js (frozen) hides empty BANDS, but day sections
-   are furniture it never learned — a day whose cards all fall away would
-   leave its date monument floating over nothing. Pure CSS closes it; with
-   no JS nothing is ever [hidden] and this never matches. */
-.cal-day:not(:has(.cal-row:not([hidden]))) { display: none; }
 
 /* ---- near-me distance sort (CAL-05): the same press-chip + a per-row
         distance chip. The button carries `hidden` until filters.js reveals
