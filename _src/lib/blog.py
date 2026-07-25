@@ -49,8 +49,12 @@ import re
 BLOG_REL_DIR = os.path.join('_src', 'blog')
 
 # Doorway discipline: posts are always real content (indexed); the INDEX only
-# earns `index, follow` once it lists this many posts.
-INDEX_MIN = 3
+# earns `index, follow` once it lists this many posts. Set at 2 (CAL-22): the
+# concern behind the gate is thin auto-generated hubs (/tags/, the entity
+# indexes, which can materialize with a single row). Every post here is a
+# committed, hand-written file, so a two-post index is a real listing, and
+# holding the section's only hub back from search costs more than it saves.
+INDEX_MIN = 2
 
 
 # ---------------------------------------------------------------------------
