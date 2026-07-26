@@ -1,15 +1,15 @@
 ---
 title: The wordless hour
-dek: My ex-wife used to introduce me as someone who was great at making money. We have been divorced for years. I still say it to myself most afternoons.
+dek: Someone who knew me well used to introduce me as somebody who was great at making money. They have not said it in over a decade. I still say it to myself most afternoons.
 date: 2026-07-25
 byline: Daniel
 kind: Essay
 description: An essay on the kind words other people hand you, why you go on repeating them long after they leave the room, and what an hour of gongs does that a conversation cannot. On Terence McKenna, Joe Dispenza, inner speech, and limiting beliefs.
 ---
 
-My ex-wife used to introduce me at parties as someone who was great at making money.
+Someone who knew me well used to introduce me at parties as somebody who was great at making money.
 
-She meant it warmly. That is worth a second, because the lines people never manage to shake are usually the kind ones. It arrived at a dinner table, in front of others, in the tone you use for something obviously true and mildly impressive. I stood there and let it happen. There is no graceful way to object to a compliment, so nobody does, which is part of how this works.
+They meant it warmly. That is worth a second, because the lines people never manage to shake are usually the kind ones. It arrived at a dinner table, in front of others, in the tone you use for something obviously true and mildly impressive. I stood there and let it happen. There is no graceful way to object to a compliment, so nobody does, which is part of how this works.
 
 ## What a compliment asks of you
 
@@ -19,9 +19,9 @@ The second thing took me longer to see. Money is weather. Clients leave for reas
 
 What I lost was the slow season. A farmer gets a fallow year and nobody thinks the farmer has failed. A man who is great at making money does not get one. He fails for twelve months, in front of an audience, and files it under personal defect.
 
-## She left. I kept saying it.
+## They stopped saying it. I did not.
 
-We have been divorced a long time. She has not said that line about me in years. She is not in the room, not in my phone, not in my life in any ordinary sense.
+That was a long time ago, and nobody has said that line about me since. The person who did is not in the room, not in my phone, not in my life in any ordinary sense.
 
 I still say it. Most afternoons, in my own voice, usually while looking at a bank balance.
 
@@ -71,6 +71,6 @@ What you get is a contrast. You do not hear the refrigerator until it cuts out. 
 
 That is the whole of it. I say the sentence again, and I catch myself in the act of saying it instead of receiving it as a report on the world. It gets filed under things I say a lot. It is still there. I am just not standing on it.
 
-At the last session I went to, I said it in the parking lot. In her voice, at a dinner table, sometime around 2016. I heard myself do it, which was new.
+At the last session I went to, I said it in the parking lot. In their voice, at a dinner table, sometime around 2016. I heard myself do it, which was new.
 
 Then I got in the car and checked my balance before I had closed the door.
