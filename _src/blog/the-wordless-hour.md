@@ -2,6 +2,7 @@
 title: The wordless hour
 dek: Someone who knew me well used to introduce me as somebody who was great at making money. They have not said it in over a decade. I still say it to myself most afternoons.
 date: 2026-07-25
+draft: true
 byline: Daniel
 kind: Essay
 description: An essay on the kind words other people hand you, why you go on repeating them long after they leave the room, and what an hour of gongs does that a conversation cannot. On Terence McKenna, Joe Dispenza, inner speech, and limiting beliefs.
