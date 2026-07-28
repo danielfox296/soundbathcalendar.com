@@ -218,6 +218,12 @@ def _og_asset(*rels):
 # cache-buster stamped in. _assemble injects it per page — see below.
 _FILTERS_TAG = '<script defer src="{{css_path}}filters.js"></script>'
 
+# The <script> tag for admin.js (CAL-40) — the in-page editor for a signed-in
+# admin. Unlike filters.js this rides EVERY page: an event permalink is exactly
+# where you land to check a listing, and those carry no filter bar. It costs a
+# visitor one cached request and exits in three lines (the opt-in latch).
+_ADMIN_TAG = '<script defer src="{{css_path}}admin.js"></script>'
+
 _STYLE_BLOCK_RE = re.compile(r'(<style[^>]*>)(.*?)(</style>)', re.DOTALL)
 _CSS_COMMENT_RE = re.compile(r'/\*.*?\*/', re.DOTALL)
 
@@ -252,6 +258,7 @@ def _assemble(base, mapping):
     html = html.replace(
         '{{filters_script}}',
         _FILTERS_TAG if 'data-cal-filters' in mapping.get('content', '') else '')
+    html = html.replace('{{admin_script}}', _ADMIN_TAG)
     html = html.replace('{{css_path}}', mapping.get('css_path', ''))
     # RSS discovery link — defaults to the root feed for any page that does not
     # set its own (city pages point at their own feed via mapping).
@@ -292,6 +299,14 @@ def build():
         _filters_ver = hashlib.md5(_f.read()).hexdigest()[:8]
     _FILTERS_TAG = ('<script defer src="{{css_path}}'
                     f'filters.js?v={_filters_ver}"></script>')
+
+    # Same fingerprint treatment for admin.js — an editor behaviour change must
+    # not sit behind a stale cached copy (the CAL-05 lesson).
+    global _ADMIN_TAG
+    with open(os.path.join(REPO, 'admin.js'), 'rb') as _f:
+        _admin_ver = hashlib.md5(_f.read()).hexdigest()[:8]
+    _ADMIN_TAG = ('<script defer src="{{css_path}}'
+                  f'admin.js?v={_admin_ver}"></script>')
 
     pages_built = []
 

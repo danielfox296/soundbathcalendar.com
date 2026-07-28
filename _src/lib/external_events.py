@@ -368,6 +368,10 @@ def _external_row(e):
         'source_url': e.get('source_url', ''),
         'tags': e.get('tags', []) or [],
         'dedup_key': e.get('dedup_key', ''),
+        # CAL-40: the service's row id, the address the signed-in admin's
+        # in-page editor mutates. Public but inert — every write behind it
+        # still demands the admin session cookie.
+        'event_id': e.get('id', '') or '',
         # v2 fields — the three URLs are scheme-scrubbed exactly like ticket_url
         # (attacker-influenced third-party listing data on a public page).
         # The image additionally upgrades http->https (it embeds; see
@@ -1034,6 +1038,10 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None,
     data = (f' data-city="{_esc(city_slug(row["city"]))}"'
             f' data-free="{"1" if _is_free_or_donation(row) else "0"}"'
             f' data-tags="{_esc(" ".join(_slugs))}"')
+    # CAL-40: the hook admin.js hangs an Edit control on, for a signed-in admin
+    # only. Inert markup for everyone else — an id with no script to read it.
+    if row.get('event_id'):
+        data += f' data-event-id="{_esc(row["event_id"])}"'
     # CAL-05 near-me sort: venue coordinates from the committed geocode cache
     # (same source as the map). A row whose venue isn't located carries no
     # coords — filters.js sorts it last and gives it no distance chip.
@@ -2333,7 +2341,10 @@ def render_event_page(row, nav_prefix, site_url, now=None, cal_rows=None):
     now = _now_utc(now)
     is_past = parse_iso(row['starts_at']) <= now
     esc = _esc
-    out = ['<section class="section section--light cal-event">', '  <div class="container">']
+    # CAL-40: same data-event-id hook the cards carry, so the in-page editor
+    # works on a permalink page too (where you land to check a listing).
+    _eid = f' data-event-id="{_esc(row.get("event_id") or "")}"' if row.get('event_id') else ''
+    out = [f'<section class="section section--light cal-event"{_eid}>', '  <div class="container">']
 
     # Breadcrumb (visible) — mirrors the BreadcrumbList schema build.py emits.
     # [port] The calendar IS the home page here, so the trail is Calendar >
