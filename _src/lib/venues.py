@@ -343,6 +343,9 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None, credit=No
     web = X._safe_ext_url(v.get('website_url') or '')
     if web:
         links.append(f'<a href="{_esc(web)}" target="_blank" rel="noopener">Website</a>')
+    ig = X._safe_ext_url(v.get('instagram_url') or '')
+    if ig:
+        links.append(f'<a href="{_esc(ig)}" target="_blank" rel="noopener">Instagram</a>')
     if links:
         out.append('    <p class="detail__links">' + ' '.join(links) + '</p>')
 
@@ -384,6 +387,16 @@ def place_schema(v, canonical_url, session_rows, credit=None):
     mp = _map_link(v)
     if mp:
         place['hasMap'] = mp
+    # The room's own presences elsewhere, mirroring Person.sameAs on practitioner
+    # pages: it is what tells a search engine that this page, the venue's site,
+    # and its Instagram are one organisation rather than three. sameAs sits on
+    # Thing, so it is as valid on Place as on Organization — the @type stays Place
+    # because we still aren't asserting we own the business.
+    same_as = [X._safe_ext_url(v.get('website_url') or ''),
+               X._safe_ext_url(v.get('instagram_url') or '')]
+    same_as = [u for u in same_as if u]
+    if same_as:
+        place['sameAs'] = same_as
     # Mirror the visible page: an ImageObject carrying the Google contributor
     # credit when we hold one, else the bare photo URL (still shown).
     photo = X._safe_image_url(v.get('photo_url') or '')
