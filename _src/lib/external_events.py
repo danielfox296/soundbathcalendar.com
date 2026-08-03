@@ -108,6 +108,7 @@ _SUBURB_TO_CITY = {
     'westminster': 'Denver', 'commerce city': 'Denver', 'broomfield': 'Denver',
     'highlands ranch': 'Denver', 'parker': 'Denver', 'castle rock': 'Denver',
     'lone tree': 'Denver', 'brighton': 'Denver', 'northglenn': 'Denver',
+    'greenwood village': 'Denver', 'evergreen': 'Denver', 'sedalia': 'Denver',
     'longmont': 'Boulder', 'louisville': 'Boulder', 'lafayette': 'Boulder',
     'superior': 'Boulder', 'nederland': 'Boulder', 'erie': 'Boulder',
     'loveland': 'Fort Collins', 'windsor': 'Fort Collins',
