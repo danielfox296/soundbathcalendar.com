@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Soundscape of Light-Courage
+BEGIN:VEVENT
+UID:soundscape-of-lightcourage-2026-08-08-8120-sheridan-blvd-building-c-sui
+ te-208@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260809T010000Z
+DTEND:20260809T021500Z
+SUMMARY:Soundscape of Light-Courage
+LOCATION:8120 Sheridan Blvd building c suite 208\, 8120 Sheridan Boulevard\
+ , #building c suite 208\, Westminster\, CO 80031
+DESCRIPTION:A monthly sound and light journey using crystal singing bowls\,
+  organized by Rising Harmonics-The Collective in Westminster.\n\nTickets: 
+ https://www.eventbrite.com/e/soundscape-of-light-courage-tickets-198077586
+ 6939
+URL:https://soundbathcalendar.com/event/soundscape-of-lightcourage-2026-08-
+ 08-8120-sheridan-blvd-building-c-suite-208/
+END:VEVENT
+END:VCALENDAR

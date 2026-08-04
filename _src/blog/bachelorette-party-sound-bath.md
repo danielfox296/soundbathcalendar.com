@@ -13,7 +13,7 @@ The people paying have noticed. In Trustpilot's survey, 65% of Americans said th
 
 So the format is changing. The Knot's 2026 data shows parties getting shorter again, with fewer activities, chosen more carefully. Planners are calling the trend "soft luxury": a good rental, a private chef, a small guest list. The phrase that keeps showing up in trend reports is "connection over chaos."
 
-## What actually changed about drinking
+## What changed about drinking
 
 The easy version of this story says young people stopped drinking. The data says something more specific.
 

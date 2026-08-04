@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Summer Drift Sundays: Guided Meditation & Sound
+BEGIN:VEVENT
+UID:summer-drift-sundays-guided-meditation-sound-2026-08-16-ascended-minds@
+ soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260816T220000Z
+DTEND:20260816T231500Z
+SUMMARY:Summer Drift Sundays: Guided Meditation & Sound
+LOCATION:Ascended Minds
+DESCRIPTION:A guided meditation with sound accompaniment hosted by Ascended
+  Minds in Denver\, Sunday afternoon.\n\nTickets: https://www.meetup.com/fi
+ nd/?keywords=sound%20bath&location=us--co--Denver
+URL:https://soundbathcalendar.com/event/summer-drift-sundays-guided-meditat
+ ion-sound-2026-08-16-ascended-minds/
+END:VEVENT
+END:VCALENDAR

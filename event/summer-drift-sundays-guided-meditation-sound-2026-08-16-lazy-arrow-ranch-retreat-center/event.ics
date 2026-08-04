@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Summer Drift Sundays: Guided Meditation & Sound
+BEGIN:VEVENT
+UID:summer-drift-sundays-guided-meditation-sound-2026-08-16-lazy-arrow-ranc
+ h-retreat-center@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260816T220000Z
+DTEND:20260816T231500Z
+SUMMARY:Summer Drift Sundays: Guided Meditation & Sound
+LOCATION:Lazy Arrow Ranch Retreat Center\, Sedalia\, CO
+DESCRIPTION:A 75-minute guided meditation and sound journey at Lazy Arrow R
+ anch Retreat Center in Sedalia\, with tiered comfort-level ticketing.\n\nT
+ ickets: https://www.meetup.com/ascended-minds/events/314927239/
+URL:https://soundbathcalendar.com/event/summer-drift-sundays-guided-meditat
+ ion-sound-2026-08-16-lazy-arrow-ranch-retreat-center/
+END:VEVENT
+END:VCALENDAR

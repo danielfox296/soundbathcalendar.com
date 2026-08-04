@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Donation - Outdoor Sound Bath
+BEGIN:VEVENT
+UID:donation-outdoor-sound-bath-2026-08-19-babi-yar-park@soundbathcalendar.
+ com
+DTSTAMP:20260804T042200Z
+DTSTART:20260820T003000Z
+DTEND:20260820T014500Z
+SUMMARY:Donation - Outdoor Sound Bath
+LOCATION:Babi Yar Park\, Havana St & E Yale Ave
+DESCRIPTION:An outdoor sound bath led by Angela Castoro at Babi Yar Park in
+  Denver\, Wednesday evening\; suggested donation $10–30.\n\nTickets: htt
+ ps://www.meetup.com/wildly-regulated-denver-events/events/315388473/
+URL:https://soundbathcalendar.com/event/donation-outdoor-sound-bath-2026-08
+ -19-babi-yar-park/
+END:VEVENT
+END:VCALENDAR

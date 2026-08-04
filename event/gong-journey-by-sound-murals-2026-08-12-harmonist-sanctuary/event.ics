@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Gong Journey by Sound Murals
+BEGIN:VEVENT
+UID:gong-journey-by-sound-murals-2026-08-12-harmonist-sanctuary@soundbathca
+ lendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260813T010000Z
+DTEND:20260813T021500Z
+SUMMARY:Gong Journey by Sound Murals
+LOCATION:Harmonist Sanctuary\, 4633 East Colfax Avenue
+DESCRIPTION:A 60-minute gong journey built around a 36-inch gong at Harmoni
+ st Sanctuary on East Colfax\, Denver\, Wednesday evening.\n\nTickets: http
+ s://www.eventbrite.com/e/gong-journey-by-sound-murals-tickets-199624450404
+ 9
+URL:https://soundbathcalendar.com/event/gong-journey-by-sound-murals-2026-0
+ 8-12-harmonist-sanctuary/
+END:VEVENT
+END:VCALENDAR

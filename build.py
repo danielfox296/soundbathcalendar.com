@@ -1632,7 +1632,7 @@ def build_blog_pages(base, header, footer, now):
     _emit('blog/index.html', '../',
           f'Blog | {SITE_NAME}',
           ('Writing from the Front Range sound bath calendar: essays on '
-           'what an hour of sound actually does, plus occasional cuts of the '
+           'what an hour of sound does, plus occasional cuts of the '
            'listings showing which venues are busy and what costs nothing.'),
           'index, follow' if indexable else 'noindex, follow',
           blog_lib.render_index(posts, '../'),

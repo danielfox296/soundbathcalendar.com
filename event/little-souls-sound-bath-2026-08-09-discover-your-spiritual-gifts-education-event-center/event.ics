@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Little Souls Sound Bath
+BEGIN:VEVENT
+UID:little-souls-sound-bath-2026-08-09-discover-your-spiritual-gifts-educat
+ ion-event-center@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260809T160000Z
+DTEND:20260809T171500Z
+SUMMARY:Little Souls Sound Bath
+LOCATION:Discover Your Spiritual Gifts Education & Event Center\, 7500 East
+  Arapahoe Road\, Suites 208 & 240\, Centennial\, CO
+DESCRIPTION:A 45-minute seated sound experience for children ages 5-12 with
+  an accompanying adult\, using gentle instruments for relaxation.\n\nTicke
+ ts: https://www.meetup.com/discover-your-spiritual-gifts/events/315608302/
+URL:https://soundbathcalendar.com/event/little-souls-sound-bath-2026-08-09-
+ discover-your-spiritual-gifts-education-event-center/
+END:VEVENT
+END:VCALENDAR

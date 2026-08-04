@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:FREE Sound Healing in the Park | Lakewood\, CO
+BEGIN:VEVENT
+UID:free-sound-healing-in-the-park-lakewood-co-2026-08-12-green-gables-park
+ @soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260813T003000Z
+DTEND:20260813T014500Z
+SUMMARY:FREE Sound Healing in the Park | Lakewood\, CO
+LOCATION:Green Gables Park\, 1450 S. Garrison St.
+DESCRIPTION:An outdoor sound healing session with crystal singing bowls and
+  chimes at Green Gables Park in Lakewood\, Wednesday evening\; free.\n\nTi
+ ckets: https://www.eventbrite.com/e/free-sound-healing-in-the-park-lakewoo
+ d-co-tickets-1991018649377
+URL:https://soundbathcalendar.com/event/free-sound-healing-in-the-park-lake
+ wood-co-2026-08-12-green-gables-park/
+END:VEVENT
+END:VCALENDAR

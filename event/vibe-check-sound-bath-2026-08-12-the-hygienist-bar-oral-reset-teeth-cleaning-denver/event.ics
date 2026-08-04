@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Vibe\, check √ Sound Bath
+BEGIN:VEVENT
+UID:vibe-check-sound-bath-2026-08-12-the-hygienist-bar-oral-reset-teeth-cle
+ aning-denver@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260813T003000Z
+DTEND:20260813T014500Z
+SUMMARY:Vibe\, check √ Sound Bath
+LOCATION:The Hygienist Bar | Oral Reset Teeth Cleaning Denver\, 255 Detroit
+  Street\, Unit 200
+DESCRIPTION:A sound meditation with Himalayan singing bowls\, Koshi chimes 
+ and frame drums at The Hygienist Bar in Cherry Creek\, Denver\, Wednesday 
+ evening\; about an hour of sound plus 30 minutes for integration.\n\nTicke
+ ts: https://www.eventbrite.com/e/vibe-check-sound-bath-tickets-19963164843
+ 44
+URL:https://soundbathcalendar.com/event/vibe-check-sound-bath-2026-08-12-th
+ e-hygienist-bar-oral-reset-teeth-cleaning-denver/
+END:VEVENT
+END:VCALENDAR

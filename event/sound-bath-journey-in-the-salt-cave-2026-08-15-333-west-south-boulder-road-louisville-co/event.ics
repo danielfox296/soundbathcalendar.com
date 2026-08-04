@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath Journey in the Salt Cave
+BEGIN:VEVENT
+UID:sound-bath-journey-in-the-salt-cave-2026-08-15-333-west-south-boulder-r
+ oad-louisville-co@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260815T203000Z
+DTEND:20260815T214500Z
+SUMMARY:Sound Bath Journey in the Salt Cave
+LOCATION:333 West South Boulder Road\, Louisville\, CO\, 333 West South Bou
+ lder Road\, Louisville\, CO 80027
+DESCRIPTION:A sound journey inside a Himalayan salt cave using singing bowl
+ s\, Koshi chimes\, harmonium\, acoustic guitar\, and mantras\, led by kirt
+ an artist Mira Devi at Diamond Vitality Center in Louisville.\n\nTickets: 
+ https://www.eventbrite.com/e/sound-bath-journey-in-the-salt-cave-tickets-1
+ 993632495461
+URL:https://soundbathcalendar.com/event/sound-bath-journey-in-the-salt-cave
+ -2026-08-15-333-west-south-boulder-road-louisville-co/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Pilates: Condition & Calm
+BEGIN:VEVENT
+UID:pilates-condition-calm-2026-08-08-sacred-society@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260808T163000Z
+DTEND:20260808T174500Z
+SUMMARY:Pilates: Condition & Calm
+LOCATION:Sacred Society\, 3410 W 38th Ave
+DESCRIPTION:A Pilates-based reset with a sound bath and breathwork componen
+ t led by Brookelin Barnhill at Sacred Society in Denver's Highlands\, Satu
+ rday morning.\n\nTickets: https://momence.com/s/137967766
+URL:https://soundbathcalendar.com/event/pilates-condition-calm-2026-08-08-s
+ acred-society/
+END:VEVENT
+END:VCALENDAR

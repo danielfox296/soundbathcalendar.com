@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sacred Resonance Sound Healing
+BEGIN:VEVENT
+UID:sacred-resonance-sound-healing-2026-08-21-unity-of-boulder-spiritual-ce
+ nter@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260822T010000Z
+DTEND:20260822T021500Z
+SUMMARY:Sacred Resonance Sound Healing
+LOCATION:Unity of Boulder Spiritual Center\, 2855 Folsom Street
+DESCRIPTION:A sound healing session led by Caressa Ayres at Unity of Boulde
+ r Spiritual Center\, third Friday of the month\; Tibetan bowls\, crystal v
+ essels and tuning forks at 432hz. Doors 6:45pm\, $40 advance or $45 at the
+  door.\n\nTickets: https://www.eventbrite.com/e/sacred-resonance-sound-hea
+ ling-tickets-1988893764790
+URL:https://soundbathcalendar.com/event/sacred-resonance-sound-healing-2026
+ -08-21-unity-of-boulder-spiritual-center/
+END:VEVENT
+END:VCALENDAR

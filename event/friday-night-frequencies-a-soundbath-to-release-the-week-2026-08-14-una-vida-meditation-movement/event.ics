@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Friday Night Frequencies - A Soundbath to Release the Week
+BEGIN:VEVENT
+UID:friday-night-frequencies-a-soundbath-to-release-the-week-2026-08-14-una
+ -vida-meditation-movement@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260815T010000Z
+DTEND:20260815T021500Z
+SUMMARY:Friday Night Frequencies - A Soundbath to Release the Week
+LOCATION:Una Vida Meditation & Movement\, 7960 Niwot Road\, #SuiteB12\, Lon
+ gmont\, CO 80503
+DESCRIPTION:A Friday-evening gong bath and sound journey at Una Vida Medita
+ tion & Movement in Longmont\, led by Betsy Workman.\n\nTickets: https://ww
+ w.eventbrite.com/e/friday-night-frequencies-a-soundbath-to-release-the-wee
+ k-tickets-1994908461911
+URL:https://soundbathcalendar.com/event/friday-night-frequencies-a-soundbat
+ h-to-release-the-week-2026-08-14-una-vida-meditation-movement/
+END:VEVENT
+END:VCALENDAR

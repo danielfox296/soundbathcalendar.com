@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Community Wellness Experience-Sound Bath + Salt Room August 15
+ th
+BEGIN:VEVENT
+UID:community-wellness-experiencesound-bath-salt-room-august-15th-2026-08-1
+ 5-edenology-holistic-wellness@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260815T190000Z
+DTEND:20260815T201500Z
+SUMMARY:Community Wellness Experience-Sound Bath + Salt Room August 15th
+LOCATION:EDENOLOGY Holistic Wellness\, 2611 West Colorado Avenue\, Studio B
+DESCRIPTION:An hour-long sound bath inside the salt room at EDENOLOGY Holis
+ tic Wellness on West Colorado Avenue\, Colorado Springs\, Saturday afterno
+ on\; capped at 10 people\, $44.\n\nTickets: https://www.eventbrite.com/e/c
+ ommunity-wellness-experience-sound-bath-salt-room-august-15th-tickets-1996
+ 124560294
+URL:https://soundbathcalendar.com/event/community-wellness-experiencesound-
+ bath-salt-room-august-15th-2026-08-15-edenology-holistic-wellness/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Into the Shadow: Solar Eclipse Sound Bath
+BEGIN:VEVENT
+UID:into-the-shadow-solar-eclipse-sound-bath-2026-08-12-singing-bowls-of-th
+ e-rockies@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260813T010000Z
+DTEND:20260813T021500Z
+SUMMARY:Into the Shadow: Solar Eclipse Sound Bath
+LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
+ rado Springs\, CO 80903
+DESCRIPTION:A sound bath timed to the August 12\, 2026 total solar eclipse\
+ , using over 70 crystal and Tibetan singing bowls\, gongs\, chimes\, and f
+ lutes.\n\nTickets: https://www.eventbrite.com/e/into-the-shadow-solar-ecli
+ pse-sound-bath-tickets-1994144996365
+URL:https://soundbathcalendar.com/event/into-the-shadow-solar-eclipse-sound
+ -bath-2026-08-12-singing-bowls-of-the-rockies/
+END:VEVENT
+END:VCALENDAR

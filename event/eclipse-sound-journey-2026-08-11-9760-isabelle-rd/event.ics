@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Eclipse Sound Journey
+BEGIN:VEVENT
+UID:eclipse-sound-journey-2026-08-11-9760-isabelle-rd@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260812T003000Z
+DTEND:20260812T014500Z
+SUMMARY:Eclipse Sound Journey
+LOCATION:9760 Isabelle Rd\, 9760 Isabelle Road
+DESCRIPTION:A two-hour eclipse gathering in Lafayette combining an astrolog
+ y reading\, guided meditation\, vocal energy healing and chanting\, with M
+ att\, Krystal and Rebecca Abraxas\, Tuesday evening.\n\nTickets: https://w
+ ww.eventbrite.com/e/eclipse-sound-journey-tickets-1994633632890
+URL:https://soundbathcalendar.com/event/eclipse-sound-journey-2026-08-11-97
+ 60-isabelle-rd/
+END:VEVENT
+END:VCALENDAR

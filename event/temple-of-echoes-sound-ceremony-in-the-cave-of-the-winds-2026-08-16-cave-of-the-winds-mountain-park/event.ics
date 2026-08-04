@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Temple of Echoes: Sound Ceremony in the Cave of the Winds
+BEGIN:VEVENT
+UID:temple-of-echoes-sound-ceremony-in-the-cave-of-the-winds-2026-08-16-cav
+ e-of-the-winds-mountain-park@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260817T013000Z
+DTEND:20260817T024500Z
+SUMMARY:Temple of Echoes: Sound Ceremony in the Cave of the Winds
+LOCATION:Cave of the Winds Mountain Park\, 100 Cave of the Winds Rd\, Manit
+ ou Springs\, CO 80829
+DESCRIPTION:A two-hour sound ceremony with bells\, crystal and Tibetan bowl
+ s\, gongs\, drums and flute inside Cave of the Winds Mountain Park in Mani
+ tou Springs\, Sunday evening\; from $66.\n\nTickets: https://www.eventbrit
+ e.com/e/temple-of-echoes-sound-ceremony-in-the-cave-of-the-winds-tickets-1
+ 988286045084
+URL:https://soundbathcalendar.com/event/temple-of-echoes-sound-ceremony-in-
+ the-cave-of-the-winds-2026-08-16-cave-of-the-winds-mountain-park/
+END:VEVENT
+END:VCALENDAR

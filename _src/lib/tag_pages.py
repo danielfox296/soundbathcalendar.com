@@ -187,7 +187,7 @@ def linked_tag_map(rows):
 # ---------------------------------------------------------------------------
 TAG_INTRO = {
     'gong-bath': (
-        'A gong bath is a sound bath built around the gong — you lie down while '
+        'A gong bath is a sound bath built around the gong: you lie down while '
         'a facilitator plays one or more gongs, letting the sustained, washing '
         'tone carry the session. It tends to run louder and more physical than a '
         'bowls-only sound bath, and you stay clothed and still throughout.'),
@@ -195,7 +195,7 @@ TAG_INTRO = {
         'These sessions pair an active breathing practice with live sound: you '
         'move through a guided breath pattern while gongs, bowls, or drums play, '
         'then rest into the tones. Expect to be more physically engaged than in a '
-        'lie-still sound bath — the breathwork does real work before the sound '
+        'lie-still sound bath; the breathwork does real work before the sound '
         'settles you.'),
     'crystal-bowls': (
         'Crystal (quartz) singing bowls make the clear, ringing tone most people '
@@ -206,12 +206,12 @@ TAG_INTRO = {
         'tone than crystal bowls. These sessions build the sound bath around them '
         'while you lie down and rest, clothed, for the length of the session.'),
     'deep-rest': (
-        'These sessions are aimed squarely at rest and sleep — slower, quieter, '
+        'These sessions are aimed squarely at rest and sleep: slower, quieter, '
         'and often held in the evening. You lie down, stay still, and let the '
         'sound do the settling; some people drift off, which is fine.'),
     'grief-loss': (
         'Sound baths held with grief and loss in mind give you a quiet, low-'
-        'pressure place to be with heavy feelings — no talking required, no fixing '
+        'pressure place to be with heavy feelings: no talking required, no fixing '
         'expected. You lie down and rest while the sound plays; tears are welcome '
         'and common, and you can leave whenever you need to.'),
     'anxiety-relief': (
@@ -220,40 +220,40 @@ TAG_INTRO = {
         'the tones can calm the nervous system, though a sound bath is a rest '
         'practice, not medical treatment.'),
     'new-moon': (
-        'New-moon sound baths are timed to the dark of the moon — often framed '
+        'New-moon sound baths are timed to the dark of the moon, often framed '
         'around setting intentions or starting fresh. The session itself is a '
         'normal sound bath: you lie down, stay still, and rest while the '
         'instruments play.'),
     'full-moon': (
         'Full-moon sound baths are timed to the full moon and often framed around '
-        'release or completion. The format is a normal sound bath — you lie down '
-        'and rest while gongs and bowls play — with the moon as the occasion.'),
+        'release or completion. The format is a normal sound bath (you lie down '
+        'and rest while gongs and bowls play), with the moon as the occasion.'),
     'candlelit': (
         'Candlelit sessions trade overhead light for low candlelight, which makes '
         'it easier to close your eyes and settle. Everything else is a normal '
         'sound bath: you lie down, stay still, and rest while the sound plays.'),
     'outdoor': (
-        'These sound baths are held outside — a park, a garden, a reservoir — so '
+        'These sound baths are held outside (a park, a garden, a reservoir), so '
         'the sound sits inside real ambient noise rather than a quiet room. Bring '
         'a mat or blanket and layers; weather can move or cancel a session.'),
     'yoga-nidra': (
         'Yoga nidra is a guided, lying-down "sleep-based" meditation; paired with '
         'sound, a facilitator talks you through a body scan while instruments play '
-        'underneath. You stay still on your back the whole time — no poses, no '
+        'underneath. You stay still on your back the whole time: no poses, no '
         'flow.'),
     'womens': (
-        "These are women's-circle sound baths — held for women, often with time "
+        "These are women's-circle sound baths, held for women, often with time "
         'to gather before or after the sound itself. The sound bath runs as usual: '
         'you lie down, stay still, and rest while the instruments play.'),
     'beginner-friendly': (
         'These sessions are a good first sound bath: nothing is expected of you '
         'beyond lying down and resting, and most facilitators explain what will '
-        'happen before they start — you can always ask. You stay clothed and '
-        'still throughout — there is no way to do it wrong.'),
+        'happen before they start, and you can always ask. You stay clothed and '
+        'still throughout; there is no way to do it wrong.'),
     'free-donation': (
         'These sessions are free or offered by donation, so cost is not a barrier '
-        'to trying one. The experience is the same as a paid sound bath — you lie '
-        'down and rest while the instruments play — so it is a low-stakes way to '
+        'to trying one. The experience is the same as a paid sound bath (you lie '
+        'down and rest while the instruments play), so it is a low-stakes way to '
         'find out whether sound baths are for you.'),
 }
 
@@ -261,20 +261,20 @@ TAG_INTRO = {
 # it has a hand-written intro still gets honest, on-voice copy.
 _GENERIC_INTRO = {
     'modality': (
-        'These sound baths are built around {label_l} — that is the sound at the '
+        'These sound baths are built around {label_l}: that is the sound at the '
         'center of the session. You lie down, stay clothed and still, and rest '
         'while the instruments play, usually for 45 to 75 minutes.'),
     'intent': (
-        'These sessions are held with {label_l} in mind — the reason people come '
+        'These sessions are held with {label_l} in mind: the reason people come '
         'rather than a different kind of sound. The format is a normal sound bath: '
         'you lie down, stay still, and rest while the instruments play.'),
     'setting': (
-        'What sets these sessions apart is the setting — {label_l}. The sound bath '
+        'What sets these sessions apart is the setting: {label_l}. The sound bath '
         'itself runs as usual: you lie down, stay clothed and still, and rest for '
         'the length of the session.'),
     'access': (
         'These listings are flagged {label_l} from the organizer\'s own listing, '
-        'so you know before you book. The session is a normal sound bath — you '
+        'so you know before you book. The session is a normal sound bath: you '
         'lie down and rest while the instruments play. Confirm the detail with '
         'the organizer when it matters.'),
 }
@@ -341,7 +341,7 @@ _TAG_FAQ = {
             'q': 'What happens at a breathwork and sound session?',
             'a': ('You are guided through an active breathing pattern while gongs, '
                   'bowls, or drums play, then rest into the sound afterward. It is '
-                  'more physically engaging than a lie-still sound bath — the '
+                  'more physically engaging than a lie-still sound bath; the '
                   'breathwork does real work before the tones settle you.'),
         },
         {
@@ -349,8 +349,8 @@ _TAG_FAQ = {
             'a': ('Strong breathwork can bring on lightheadedness, tingling, or '
                   'strong emotion, and some patterns are not advised during '
                   'pregnancy or with certain heart, blood-pressure, or seizure '
-                  'conditions. Check with the organizer — and your doctor if unsure '
-                  '— before booking. This is not medical advice.'),
+                  'conditions. Check with the organizer, and your doctor if unsure, '
+                  'before booking. This is not medical advice.'),
         },
     ),
 }
@@ -372,9 +372,9 @@ def tag_faq(rows, slug):
             },
             {
                 'q': 'Do I need any experience?',
-                'a': ('No. There is nothing to learn or perform — you lie down and '
+                'a': ('No. There is nothing to learn or perform; you lie down and '
                       'rest. Most facilitators explain what will happen before '
-                      'they start — and you can always ask — so a first sound '
+                      'they start, and you can always ask, so a first sound '
                       'bath is as easy as any other.'),
             },
         ]
@@ -583,7 +583,7 @@ def render_browse(entries, nav_prefix):
     out.append('    <h1 class="browse__h1">Browse sound baths</h1>')
     out.append('    <!-- HUMAN REVIEW -->')
     out.append('    <p class="browse__lede">Every kind of session the calendar '
-               'tracks — by what makes the sound, why people come, the setting, '
+               'tracks: what makes the sound, why people come, the setting, '
                'and who it’s for. Counts are live; a linked category has its '
                'own page of upcoming sessions.</p>')
 
@@ -611,8 +611,8 @@ def render_browse(entries, nav_prefix):
             out.append('      </div>')
         if tracked:
             names = ' · '.join(_esc(e['label']) for e in tracked)
-            out.append('      <p class="browse__tracked">Also tracked — '
-                       f'nothing on the calendar right now: {names}.</p>')
+            out.append('      <p class="browse__tracked">Also tracked '
+                       f'(nothing on the calendar right now): {names}.</p>')
         out.append('    </div>')
 
     out.append('    <!-- HUMAN REVIEW -->')

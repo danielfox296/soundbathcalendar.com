@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Community Sound Bath Session
+BEGIN:VEVENT
+UID:community-sound-bath-session-2026-08-10-ivywild-school@soundbathcalenda
+ r.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260811T000000Z
+DTEND:20260811T011500Z
+SUMMARY:Community Sound Bath Session
+LOCATION:Ivywild School
+DESCRIPTION:A free recurring session blending nervous-system education with
+  guided sound therapy\, held at Ivywild School in Colorado Springs\, part 
+ of Think Positive Club's Nervous System Reset Program. Time is an estimate
+  from a recurring '2nd & 4th Monday' pattern\; exact clock time unverified
+ .\n\nTickets: https://www.eventbrite.com/e/community-sound-bath-session-ti
+ ckets-1979199754745
+URL:https://soundbathcalendar.com/event/community-sound-bath-session-2026-0
+ 8-10-ivywild-school/
+END:VEVENT
+END:VCALENDAR

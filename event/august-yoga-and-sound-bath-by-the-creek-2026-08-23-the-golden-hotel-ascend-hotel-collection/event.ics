@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:August Yoga and Sound Bath by the Creek
+BEGIN:VEVENT
+UID:august-yoga-and-sound-bath-by-the-creek-2026-08-23-the-golden-hotel-asc
+ end-hotel-collection@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260823T153000Z
+DTEND:20260823T164500Z
+SUMMARY:August Yoga and Sound Bath by the Creek
+LOCATION:The Golden Hotel\, Ascend Hotel Collection\, 800 11th Street
+DESCRIPTION:A 75-minute creekside class of intermediate yoga followed by a 
+ 20-minute sound healing session at The Golden Hotel in Golden\, Sunday mor
+ ning.\n\nTickets: https://www.eventbrite.com/e/august-yoga-and-sound-bath-
+ by-the-creek-tickets-1988211256389
+URL:https://soundbathcalendar.com/event/august-yoga-and-sound-bath-by-the-c
+ reek-2026-08-23-the-golden-hotel-ascend-hotel-collection/
+END:VEVENT
+END:VCALENDAR

@@ -4,7 +4,7 @@
 
 ## Pages
 
-- [The calendar](https://soundbathcalendar.com/): Every sound bath on the Front Range, grouped by time — today, this weekend, this week, and the weeks ahead — with each listing tagged by city (Denver, Boulder, Fort Collins, Colorado Springs). Updated through the week.
+- [The calendar](https://soundbathcalendar.com/): Every sound bath on the Front Range, grouped by time (today, this weekend, this week, and the weeks ahead), with each listing tagged by city (Denver, Boulder, Fort Collins, Colorado Springs). Updated through the week.
 - Every listed event has its own page at https://soundbathcalendar.com/event/<slug>/ with the date, time, venue, price, and the operator's ticket link. The full list of current event pages is in the sitemap: https://soundbathcalendar.com/sitemap.xml
 
 ## City pages
@@ -18,15 +18,15 @@ Each city page is the same time-grouped calendar filtered to one area, with its 
 
 ## Directories & discovery
 
-- [Browse](https://soundbathcalendar.com/browse/): Every kind of session the calendar tracks — by modality, intention, setting, and access — with live counts. Categories with enough upcoming sessions have their own landing page (e.g. https://soundbathcalendar.com/gong-bath/).
+- [Browse](https://soundbathcalendar.com/browse/): Every kind of session the calendar tracks, by modality, intention, setting, and access, with live counts. Categories with enough upcoming sessions have their own landing page (e.g. https://soundbathcalendar.com/gong-bath/).
 - [Map](https://soundbathcalendar.com/map/): Every upcoming session pinned by venue on one map of the Front Range.
 - [Practitioners](https://soundbathcalendar.com/practitioners/): Profiles of the facilitators who lead sessions on the calendar, each with a bio and upcoming dates.
-- [Venues](https://soundbathcalendar.com/venues/): The places that host sound baths — address, what the space is like, and each venue's upcoming sessions.
+- [Venues](https://soundbathcalendar.com/venues/): The places that host sound baths: address, what the space is like, and each venue's upcoming sessions.
 - [Organizers](https://soundbathcalendar.com/operators/): The studios and collectives running the listed sessions, each with its upcoming dates.
-- [Roundups](https://soundbathcalendar.com/roundups/): Editorial shortlists from the calendar's own data — e.g. venues worth knowing — refreshed as the scene changes.
+- [Roundups](https://soundbathcalendar.com/roundups/): Editorial shortlists from the calendar's own data (e.g. venues worth knowing), refreshed as the scene changes.
 - [Learn](https://soundbathcalendar.com/learn/): The glossary and explainer index; the individual pages are listed under Learn below.
 - [Add to the calendar](https://soundbathcalendar.com/submit/): How practitioners and organizers get a session listed, how anyone listed can correct or remove their own profile, and how a venue offers a space to host a session. Free; there is no paid placement on this calendar.
-- [About](https://soundbathcalendar.com/about/): Who keeps the calendar and on what terms. It is maintained by one person, Daniel, in Denver. Listing is free, there is no paid placement, and the calendar takes no cut of ticket sales — every listing links out to the organizer's own ticket page.
+- [About](https://soundbathcalendar.com/about/): Who keeps the calendar and on what terms. It is maintained by one person, Daniel, in Denver. Listing is free, there is no paid placement, and the calendar takes no cut of ticket sales; every listing links out to the organizer's own ticket page.
 
 ## Original data (free to cite)
 
@@ -34,16 +34,16 @@ Each city page is the same time-grouped calendar filtered to one area, with its 
 
 ## Learn (glossary & explainers, free to cite)
 
-Plain-language reference pages — definitional answers first, no unsupported healing claims. Index: https://soundbathcalendar.com/learn/
+Plain-language reference pages: definitional answers first, no unsupported healing claims. Index: https://soundbathcalendar.com/learn/
 
-- [What to expect at a sound bath](https://soundbathcalendar.com/what-to-expect/): The honest first-timer's guide — what happens, what to wear, cost, whether it is religious, and a careful non-medical health note.
+- [What to expect at a sound bath](https://soundbathcalendar.com/what-to-expect/): The first-timer's guide: what happens, what to wear, cost, whether it is religious, and a careful non-medical health note.
 - [What is a gong bath?](https://soundbathcalendar.com/what-is-a-gong-bath/): A sound bath where large gongs are the main instrument; loudness, format, and how it differs from bowl-led sessions.
 - [Singing bowls vs. gongs](https://soundbathcalendar.com/singing-bowls-vs-gongs/): Steady focused tones vs. dense evolving waves; which is gentler for a first-timer.
-- [What is a crystal bowl sound bath?](https://soundbathcalendar.com/what-is-a-crystal-bowl-sound-bath/): Quartz-glass singing bowls — "crystal" means the material, not gemstone healing.
+- [What is a crystal bowl sound bath?](https://soundbathcalendar.com/what-is-a-crystal-bowl-sound-bath/): Quartz-glass singing bowls: "crystal" means the material, not gemstone healing.
 - [432 Hz, explained](https://soundbathcalendar.com/432hz-explained/): An alternative tuning standard (A = 432 instead of 440). A real aesthetic preference; no solid evidence of unique healing effects.
-- [What does the science actually say?](https://soundbathcalendar.com/sound-bath-science/): Small studies support short-term self-reported relaxation; claims of healing disease or cellular effects are unsupported.
-- [Is a sound bath religious?](https://soundbathcalendar.com/is-a-sound-bath-religious/): Mostly no — most sessions ask nothing of your beliefs; some add ceremony, and the honest answer has more texture than a yes or a no. Written for people of faith and for skeptics.
-- [Where sound baths come from](https://soundbathcalendar.com/where-sound-baths-come-from/): The real lineage — Asian gong traditions, India's nada yoga, and the largely modern "ancient Tibetan singing bowl" story.
+- [What does the science say?](https://soundbathcalendar.com/sound-bath-science/): Small studies support short-term self-reported relaxation; claims of healing disease or cellular effects are unsupported.
+- [Is a sound bath religious?](https://soundbathcalendar.com/is-a-sound-bath-religious/): Mostly no: most sessions ask nothing of your beliefs; some add ceremony, and the full answer has more texture than a yes or a no. Written for people of faith and for skeptics.
+- [Where sound baths come from](https://soundbathcalendar.com/where-sound-baths-come-from/): The real lineage: Asian gong traditions, India's nada yoga, and the largely modern "ancient Tibetan singing bowl" story.
 - [Sound bath vs. meditation](https://soundbathcalendar.com/sound-bath-vs-meditation/): Receptive vs. active practice; why sound baths suit people who say they cannot meditate.
 
 ## Machine-readable endpoints

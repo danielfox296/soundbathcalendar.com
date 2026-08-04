@@ -327,12 +327,12 @@ def render_index(practs, count_by_slug, nav_prefix):
     out = ['<section class="section section--light practs">', '  <div class="container">']
     out.append(directory.render_head(
         nav_prefix, 'Practitioners', 'Practitioners',
-        'The facilitators leading sound baths across the Front Range — '
+        'The facilitators leading sound baths across the Front Range: '
         'who they are, and where to find them next.'))
     if not practs:
         out.append(X.render_empty_state(
             nav_prefix,
-            'The first facilitator profiles are being written — who they are, the '
+            'The first facilitator profiles are being written: who they are, the '
             'instruments they play, and when they are next leading a session. Until then, '
             'find them by session on the calendar.'))
     else:

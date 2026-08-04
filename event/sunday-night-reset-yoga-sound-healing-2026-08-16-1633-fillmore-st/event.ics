@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sunday Night Reset: Yoga + Sound Healing
+BEGIN:VEVENT
+UID:sunday-night-reset-yoga-sound-healing-2026-08-16-1633-fillmore-st@sound
+ bathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260816T230000Z
+DTEND:20260817T001500Z
+SUMMARY:Sunday Night Reset: Yoga + Sound Healing
+LOCATION:1633 Fillmore St\, 1633 Fillmore Street\, Denver\, CO 80206
+DESCRIPTION:A 90-minute vinyasa and yin yoga class ending in an extended so
+ und healing savasana with koshi chimes\, rain disk\, wave drum\, and cryst
+ al bowls\, led by Sarah Terranova in Denver.\n\nTickets: https://www.event
+ brite.com/e/sunday-night-reset-yoga-sound-healing-tickets-1994902904288
+URL:https://soundbathcalendar.com/event/sunday-night-reset-yoga-sound-heali
+ ng-2026-08-16-1633-fillmore-st/
+END:VEVENT
+END:VCALENDAR

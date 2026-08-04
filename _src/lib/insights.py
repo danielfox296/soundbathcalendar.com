@@ -108,7 +108,7 @@ def render_report(agg, nav_prefix, other_editions):
         ('1<span class="u">in</span>3',
          'known-price sessions are free or by donation'),
         (f'{tim["evening_pct"]:.0f}<span class="u">%</span>',
-         'start after 5 p.m. — a weeknight ritual'),
+         'start after 5 p.m.: a weeknight ritual'),
         (f'{vol["venues"]}',
          f'venues · {vol["operators"]} operators · {vol["cities"]} metros'),
         (f'~{geo["corridor_miles"]}<span class="u">mi</span>',
@@ -150,14 +150,14 @@ def render_report(agg, nav_prefix, other_editions):
     if other_editions:
         links = '\n'.join(
             f'          <li><a href="{cp}state-of-sound-healing/{_esc(o["edition"]["slug"])}/">'
-            f'{_esc(o["edition"]["label"])}</a> — {_esc(_fmt_window(o["edition"]))}</li>'
+            f'{_esc(o["edition"]["label"])}</a> · {_esc(_fmt_window(o["edition"]))}</li>'
             for o in other_editions)
         archive = (f'      <section class="soh-archive">\n'
                    f'        <p class="soh-kicker">Editions</p>\n'
                    f'        <ul>\n{links}\n        </ul>\n      </section>')
     else:
         archive = ('      <p class="soh-firstnote">This is the first edition. As new '
-                   'quarters are published, past editions will be archived here — '
+                   'quarters are published, past editions will be archived here, '
                    'and once two or more exist, so will genuine trend data.</p>')
 
     free_pct = pr['free_or_flex_pct']
@@ -167,7 +167,7 @@ def render_report(agg, nav_prefix, other_editions):
   <section class="soh-band soh-band--paper soh-band--mast">
     <div class="soh-wrap">
       <h1 class="soh-h1">The Front Range Sound Bath Scene: <span class="soh-h1__accent">A {_esc(ed['label'])} Snapshot</span></h1>
-      <p class="soh-dek">The first count of a quietly widespread ritual — every public sound bath across Denver, Boulder, Fort Collins, and Colorado Springs. A <em>point-in-time snapshot</em>, not a trend: simply what is verifiably true of the calendar right now.</p>
+      <p class="soh-dek">The first count of a widespread ritual: every public sound bath across Denver, Boulder, Fort Collins, and Colorado Springs. A <em>point-in-time snapshot</em>, not a trend: simply what is verifiably true of the calendar right now.</p>
       <div class="soh-meta">
         <span>Source · <b>Sound Bath Calendar</b></span>
         <span>Window · <b>{_esc(window)}</b></span>
@@ -178,7 +178,7 @@ def render_report(agg, nav_prefix, other_editions):
   </section>
 
   <figure class="soh-hero">
-    <img src="{cp}img/cards/hero-state-of-sound-i.jpg" width="1600" height="900" alt="The Flatirons rising over open grassland in Boulder County, Colorado — the Front Range foothills." fetchpriority="high">
+    <img src="{cp}img/cards/hero-state-of-sound-i.jpg" width="1600" height="900" alt="The Flatirons rising over open grassland in Boulder County, Colorado, the Front Range foothills." fetchpriority="high">
     <figcaption class="soh-hero__credit">The Front Range foothills, Boulder County · CC0, Mike Pascoe / <a href="https://commons.wikimedia.org/w/index.php?curid=176702599" rel="nofollow">Wikimedia Commons</a></figcaption>
   </figure>
 
@@ -186,7 +186,7 @@ def render_report(agg, nav_prefix, other_editions):
     <div class="soh-wrap">
       <p class="soh-kicker">By the numbers</p>
       <h2 class="soh-h2">The citable stats</h2>
-      <p class="soh-intro">Each figure maps directly to a session on the calendar — nothing modeled, nothing projected.</p>
+      <p class="soh-intro">Each figure maps directly to a session on the calendar: nothing modeled, nothing projected.</p>
       <div class="soh-stats">
 {tiles_html}
       </div>
@@ -196,9 +196,9 @@ def render_report(agg, nav_prefix, other_editions):
   <section class="soh-band soh-band--paper">
     <div class="soh-wrap">
       <p class="soh-kicker">Volume</p>
-      <h2 class="soh-h2">About {round(vol['per_week'])} sessions a week — more than most residents would guess</h2>
-      <p class="soh-lead">In the window measured, the calendar carried <b>{vol['sessions']} approved sessions over {ed['span_days']} days</b> — an average of {vol['per_week']:g} per week. Sound baths aren't a rare, seek-it-out event here; on a typical week you have your pick of roughly three a day, in four cities.</p>
-      <p>The volume is spread across many small hosts: <b>{vol['venues']} venues and {vol['operators']} operators</b>. The scene isn't dominated by one or two big studios — the most active single host accounts for {vol['busiest_venues'][0]['count'] if vol['busiest_venues'] else 0} sessions in the window, and the rest is a long tail of one- and two-session operators. A cottage ecosystem of independent facilitators, not a chain.</p>
+      <h2 class="soh-h2">About {round(vol['per_week'])} sessions a week: more than most residents would guess</h2>
+      <p class="soh-lead">In the window measured, the calendar carried <b>{vol['sessions']} approved sessions over {ed['span_days']} days</b>, an average of {vol['per_week']:g} per week. Sound baths aren't a rare, seek-it-out event here; on a typical week you have your pick of roughly three a day, in four cities.</p>
+      <p>The volume is spread across many small hosts: <b>{vol['venues']} venues and {vol['operators']} operators</b>. The scene isn't dominated by one or two big studios: the most active single host accounts for {vol['busiest_venues'][0]['count'] if vol['busiest_venues'] else 0} sessions in the window, and the rest is a long tail of one- and two-session operators. A cottage ecosystem of independent facilitators, not a chain.</p>
       <div class="soh-tbl-scroll">
         <table class="soh-tbl">
           <thead><tr><th>Busiest venues in the window</th><th class="soh-num">Sessions</th></tr></thead>
@@ -213,20 +213,20 @@ def render_report(agg, nav_prefix, other_editions):
   <section class="soh-band soh-band--white">
     <div class="soh-wrap">
       <p class="soh-kicker">Price</p>
-      <h2 class="soh-h2">A ${pr['median']:g} median — and about a third are free or by donation</h2>
+      <h2 class="soh-h2">A ${pr['median']:g} median, and about a third free or by donation</h2>
       <div class="soh-split">
         <figure class="soh-split__fig">
           <img src="{cp}img/cards/fig-singing-bowls-i.jpg" width="1200" height="800" alt="Overhead view of a set of Tibetan singing bowls and mallets on a plain surface." loading="lazy">
           <figcaption class="soh-credit">CC0 via rawpixel</figcaption>
         </figure>
         <div class="soh-split__body">
-          <p>Of the {pr['known_model']} sessions with a <b>known access model</b>, the middle 50% of paid tickets land in a tight band — <b>${pr['q1']:g} to ${pr['q3']:g}</b> — with a full parseable range of ${pr['low']:g} to ${pr['high']:g}.</p>
+          <p>Of the {pr['known_model']} sessions with a <b>known access model</b>, the middle 50% of paid tickets land in a tight band, <b>${pr['q1']:g} to ${pr['q3']:g}</b>, with a full parseable range of ${pr['low']:g} to ${pr['high']:g}.</p>
           <p>Underneath the median sits the more human finding: <b>roughly one in three ({free_pct:.0f}%) is free, or offered by donation or sliding scale.</b> A meaningful share is priced to be open to anyone.</p>
         </div>
       </div>
       <div class="soh-note">
-        <h3>The honest caveat on price</h3>
-        <p>{pr['unpriced']} of {vol['sessions']} listings ({pr['unpriced_pct']:.0f}%) carry no stated price in the source — often free community or church-hosted gatherings. The figures above describe the priced-and-stated portion of the calendar. We report the median, not the average, so a few higher-priced sessions don't misrepresent the typical experience.</p>
+        <h3>The caveat on price</h3>
+        <p>{pr['unpriced']} of {vol['sessions']} listings ({pr['unpriced_pct']:.0f}%) carry no stated price in the source, often free community or church-hosted gatherings. The figures above describe the priced-and-stated portion of the calendar. We report the median, not the average, so a few higher-priced sessions don't misrepresent the typical experience.</p>
       </div>
     </div>
   </section>
@@ -234,10 +234,10 @@ def render_report(agg, nav_prefix, other_editions):
   <section class="soh-band soh-band--paper">
     <div class="soh-wrap">
       <p class="soh-kicker">Geography</p>
-      <h2 class="soh-h2">Four metros, evenly shared — a regional scene, not a Denver one</h2>
+      <h2 class="soh-h2">Four metros, evenly shared: a regional scene, not a Denver one</h2>
       <div class="soh-cols">
         <div>
-          <p>Denver anchors the calendar, but the notable finding is how evenly the rest distributes. Colorado Springs and Fort Collins each carry a fifth or more — well above what their relative size would predict.</p>
+          <p>Denver anchors the calendar, but the notable finding is how evenly the rest distributes. Colorado Springs and Fort Collins each carry a fifth or more, well above what their relative size would predict.</p>
           <p>Mapping the venues confirms the reach: located sessions span a <b>~{geo['corridor_miles']}-mile north–south corridor</b>, from Fort Collins down to Colorado Springs, tracking the I-25 population spine of the state. <a href="{cp}map/">See them on the map →</a></p>
         </div>
         <div class="soh-chart" role="img" aria-label="Session share by metro: Denver 40 percent, Colorado Springs 24 percent, Fort Collins 20 percent, Boulder 16 percent.">
@@ -254,7 +254,7 @@ def render_report(agg, nav_prefix, other_editions):
       <div class="soh-cols">
         <div>
           <p>Sound baths are overwhelmingly an after-work wind-down: <b>{tim['evening_pct']:.0f}% start at 5&nbsp;p.m. or later</b>, and just {tim['morning_pct']:.0f}% are morning sessions. The single most common start time is <b>{_esc(top_time)}</b> ({top_time_ct} sessions){', then ' + _esc(times_str) if times_str else ''}.</p>
-          <p>Weekends carry about {tim['weekend_pct']:.0f}% of the week's sessions — most sound baths happen on <b>weeknights</b>, a midweek reset rather than a weekend outing. For a curious first-timer: a weeknight around 7&nbsp;p.m. gives you the most to choose from.</p>
+          <p>Weekends carry about {tim['weekend_pct']:.0f}% of the week's sessions: most sound baths happen on <b>weeknights</b>, a midweek reset rather than a weekend outing. For a curious first-timer: a weeknight around 7&nbsp;p.m. gives you the most to choose from.</p>
         </div>
         <div class="soh-chart" role="img" aria-label="Sessions by day of week: Friday 15, Sunday 14, Wednesday 13, Saturday 9, Monday 8, Tuesday 8, Thursday 8.">
 {dow_bars}
@@ -266,18 +266,18 @@ def render_report(agg, nav_prefix, other_editions):
   <section class="soh-band soh-band--paper">
     <div class="soh-wrap">
       <p class="soh-kicker">Modality mix</p>
-      <h2 class="soh-h2">Not yet a reliable number — and we won't pretend otherwise</h2>
-      <p>It's tempting to report which <em>kinds</em> of sound healing dominate — gong baths versus crystal bowls versus breathwork-with-sound. We're choosing not to, yet.</p>
+      <h2 class="soh-h2">Not yet a reliable number, and we won't pretend otherwise</h2>
+      <p>It's tempting to report which <em>kinds</em> of sound healing dominate: gong baths versus crystal bowls versus breathwork-with-sound. We're choosing not to, yet.</p>
       <div class="soh-note">
         <h3>Why this figure is deferred</h3>
-        <p>Nearly half of sessions ({mod['only_base_pct']:.0f}%) are currently tagged only with the general "sound bath" label. Any modality breakdown would reflect how thoroughly listings have been tagged, not what's happening in the sessions themselves. As the calendar's tagging matures, this becomes a genuinely interesting figure — and a natural addition to the next edition.</p>
+        <p>Nearly half of sessions ({mod['only_base_pct']:.0f}%) are currently tagged only with the general "sound bath" label. Any modality breakdown would reflect how thoroughly listings have been tagged, not what's happening in the sessions themselves. As the calendar's tagging matures, this becomes a genuinely interesting figure, and a natural addition to the next edition.</p>
       </div>
     </div>
   </section>
 
   <section class="soh-band soh-band--ink soh-band--pull">
     <div class="soh-wrap">
-      <p class="soh-pull">A cottage scene of <b>independent facilitators</b> — {vol['venues']} venues, {vol['operators']} operators, a {geo['corridor_miles']}-mile corridor — where the median session costs <b>${pr['median']:g}</b> and about one in three is free.</p>
+      <p class="soh-pull">A cottage scene of <b>independent facilitators</b>: {vol['venues']} venues, {vol['operators']} operators, a {geo['corridor_miles']}-mile corridor, where the median session costs <b>${pr['median']:g}</b> and about one in three is free.</p>
     </div>
   </section>
 
@@ -286,8 +286,8 @@ def render_report(agg, nav_prefix, other_editions):
       <p class="soh-kicker">Methodology &amp; caveats</p>
       <h2 class="soh-h2">How these numbers were made</h2>
       <ul class="soh-list">
-        <li><b>Source.</b> Every figure derives from the public sessions on Sound Bath Calendar, from a data snapshot taken {_esc(ed['generated_at'][:10])}. The stdlib-Python analysis script is public — anyone can reproduce every number.</li>
-        <li><b>Data window.</b> Sessions starting between {_esc(window)} — a forward-looking window of {ed['span_days']} days. This is every session approved and listed as of the snapshot date, not a full census of every sound bath that occurred.</li>
+        <li><b>Source.</b> Every figure derives from the public sessions on Sound Bath Calendar, from a data snapshot taken {_esc(ed['generated_at'][:10])}. The stdlib-Python analysis script is public: anyone can reproduce every number.</li>
+        <li><b>Data window.</b> Sessions starting between {_esc(window)}, a forward-looking window of {ed['span_days']} days. This is every session approved and listed as of the snapshot date, not a full census of every sound bath that occurred.</li>
         <li><b>A snapshot, not a trend.</b> The calendar is young. There is no year-over-year or growth data here, and none is implied. This edition is the baseline; its value compounds as future editions become comparable.</li>
         <li><b>Price parsing.</b> Prices are free-text from operator listings ("$39", "Donation", "$15–40", "From $44.52"). Ranges use the midpoint. {pr['unpriced_pct']:.0f}% of listings carry no stated price, so price statistics describe only the priced-and-stated subset. Medians resist high outliers.</li>
         <li><b>Venue &amp; operator counts</b> are distinct name strings; a few are near-duplicate variants, so the true count of physical spaces is slightly lower. We flag it rather than silently merge.</li>
@@ -297,7 +297,7 @@ def render_report(agg, nav_prefix, other_editions):
         <b>How to cite:</b> Sound Bath Calendar, <i>The Front Range Sound Bath Scene: A {_esc(ed['label'])} Snapshot</i> ({_esc(ed['label'])}), soundbathcalendar.com/state-of-sound-healing/.<br>Figures reflect sessions listed as of {_esc(ed['generated_at'][:10])}. Photography public domain (CC0) via Wikimedia Commons and rawpixel.
       </div>
 {archive}
-      <p class="soh-press">Writing about wellness on the Front Range? These figures are free to cite. Questions or a correction — <a href="{cp}">see the calendar</a>.</p>
+      <p class="soh-press">Writing about wellness on the Front Range? These figures are free to cite. Questions or a correction? <a href="{cp}">See the calendar</a>.</p>
     </div>
   </section>
 </div>

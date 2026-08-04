@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Restorative Yoga Sound Bath
+BEGIN:VEVENT
+UID:restorative-yoga-sound-bath-2026-08-15-crystal-communitea-shop@soundbat
+ hcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260816T010000Z
+DTEND:20260816T021500Z
+SUMMARY:Restorative Yoga Sound Bath
+LOCATION:Crystal Communitea Shop\, 7200 East Dry Creek Road\, #Building G S
+ uite 201\, Centennial\, CO 80112
+DESCRIPTION:An outdoor restorative yoga class combined with a sound bath\, 
+ held at Crystal Communitea Shop in Centennial\, organized by Lotus Rising 
+ Wellness.\n\nTickets: https://www.eventbrite.com/e/restorative-yoga-sound-
+ bath-tickets-1994909372635
+URL:https://soundbathcalendar.com/event/restorative-yoga-sound-bath-2026-08
+ -15-crystal-communitea-shop/
+END:VEVENT
+END:VCALENDAR

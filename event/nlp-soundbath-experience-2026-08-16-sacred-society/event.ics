@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:NLP Soundbath Experience
+BEGIN:VEVENT
+UID:nlp-soundbath-experience-2026-08-16-sacred-society@soundbathcalendar.co
+ m
+DTSTAMP:20260804T042200Z
+DTSTART:20260816T213000Z
+DTEND:20260816T224500Z
+SUMMARY:NLP Soundbath Experience
+LOCATION:Sacred Society\, 3410 W 38th Ave
+DESCRIPTION:An NLP-informed sound bath with breathwork led by Ray Ringsel a
+ t Sacred Society in Denver's Highlands\, Sunday afternoon.\n\nTickets: htt
+ ps://momence.com/s/138113274
+URL:https://soundbathcalendar.com/event/nlp-soundbath-experience-2026-08-16
+ -sacred-society/
+END:VEVENT
+END:VCALENDAR

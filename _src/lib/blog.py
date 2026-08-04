@@ -247,7 +247,7 @@ def render_index(posts, nav_prefix):
   <div class="container">
     <p class="cal-crumbs"><a href="{nav_prefix}">Calendar</a> &rsaquo; Blog</p>
     <h1 class="cal-h1">Blog</h1>
-    <p class="cal-summary">Writing from the calendar: essays on what an hour of sound actually does, and occasional cuts of the listings showing which venues are busy, what costs nothing, and what only happens once.</p>
+    <p class="cal-summary">Writing from the calendar: essays on what an hour of sound does, and occasional cuts of the listings showing which venues are busy, what costs nothing, and what only happens once.</p>
     <div class="cal-rows cal-rows--2 post-list">
 {listing}
     </div>

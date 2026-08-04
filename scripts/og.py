@@ -159,7 +159,7 @@ CARDS = [
      'The collectives and studios running sound baths'),
     ('img/og/what-to-expect.jpg', 'pexels-6914822.jpg', (0.5, 0.55),
      ['What to expect', 'at a sound bath'],
-     "An honest first-timer's guide"),
+     "The first-timer's guide"),
 ]
 
 if __name__ == '__main__':

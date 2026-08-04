@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Release & Let Go Sound Bath
+BEGIN:VEVENT
+UID:release-let-go-sound-bath-2026-08-05-green-light-reiki@soundbathcalenda
+ r.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260806T000000Z
+DTEND:20260806T011500Z
+SUMMARY:Release & Let Go Sound Bath
+LOCATION:Green Light Reiki\, 1545 S Pearl St\, Denver\, CO
+DESCRIPTION:A release-themed sound bath led by Kathy S. and Katie W. at Gre
+ en Light Reiki in Denver\, Wednesday evening.\n\nTickets: https://www.meet
+ up.com/denver-gong-immersion-chakra-balancing-vibration-medicine/events/31
+ 5893220/
+URL:https://soundbathcalendar.com/event/release-let-go-sound-bath-2026-08-0
+ 5-green-light-reiki/
+END:VEVENT
+END:VCALENDAR

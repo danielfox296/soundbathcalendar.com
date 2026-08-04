@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sweet Sound Bath - Rooted Heart
+BEGIN:VEVENT
+UID:sweet-sound-bath-rooted-heart-2026-08-20-rooted-heart@soundbathcalendar
+ .com
+DTSTAMP:20260804T042200Z
+DTSTART:20260821T010000Z
+DTEND:20260821T021500Z
+SUMMARY:Sweet Sound Bath - Rooted Heart
+LOCATION:Rooted Heart
+DESCRIPTION:A donation-based Sweet Sound Bath led by IzaBelle Sweet of Denv
+ er Sound Bath Collective at Rooted Heart\, Thursday evening.\n\nTickets: h
+ ttps://www.meetup.com/find/?keywords=sound%20bath&location=us--co--Denver
+URL:https://soundbathcalendar.com/event/sweet-sound-bath-rooted-heart-2026-
+ 08-20-rooted-heart/
+END:VEVENT
+END:VCALENDAR

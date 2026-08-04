@@ -198,9 +198,9 @@ def render_operator_page(o, session_rows, nav_prefix, site_url, now=None):
         fallback = (
             f'{name} runs sound baths on the Front Range calendar'
             + (f' across {rooms_n} venues' if rooms_n > 1 else '')
-            + ('. ' + f'{n} upcoming session{"s" if n != 1 else ""} listed — '
+            + ('. ' + f'{n} upcoming session{"s" if n != 1 else ""} listed: '
                f'dates, prices, and ticket links below.' if n else
-               '. Nothing is listed right now — the full calendar has every '
+               '. Nothing is listed right now; the full calendar has every '
                'upcoming session in the area.'))
         out.append(f'      <p>{_esc(fallback)}</p>')
     out.append('    </div>')
@@ -298,11 +298,11 @@ def render_index(operators, count_by_slug, nav_prefix):
     out.append(directory.render_head(
         nav_prefix, 'Organizers', 'Organizers',
         'The collectives and studios running sound baths across Denver and the '
-        'Front Range — who they are, and where you can catch them next.'))
+        'Front Range: who they are, and where you can catch them next.'))
     if not operators:
         out.append(X.render_empty_state(
             nav_prefix,
-            'The first organizer profiles are being written — the collectives and '
+            'The first organizer profiles are being written: the collectives and '
             'studios running these sessions, with every session they host in one place. '
             'For now, browse them by session on the calendar.'))
     else:

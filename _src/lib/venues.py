@@ -288,10 +288,10 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None, credit=No
         n = len(session_rows)
         fallback = (
             f'{name} is one of the venues on the Front Range sound bath '
-            f'calendar{" — in " + area if area else ""}. '
-            + (f'It has {n} upcoming session{"s" if n != 1 else ""} listed — '
+            f'calendar{", in " + area if area else ""}. '
+            + (f'It has {n} upcoming session{"s" if n != 1 else ""} listed: '
                f'dates, prices, and ticket links below.' if n else
-               'Nothing is listed here right now — the calendar below has '
+               'Nothing is listed here right now; the calendar below has '
                'every upcoming session in the area.'))
         out.append(f'      <p>{_esc(fallback)}</p>')
     out.append('    </div>')
@@ -428,12 +428,12 @@ def render_index(venues, count_by_slug, nav_prefix):
     out = ['<section class="section section--light venues">', '  <div class="container">']
     out.append(directory.render_head(
         nav_prefix, 'Venues', 'Venues',
-        'The venues hosting sound baths across Denver and the Front Range — '
+        'The venues hosting sound baths across Denver and the Front Range: '
         'where they are, what to expect, and what is on there next.'))
     if not venues:
         out.append(X.render_empty_state(
             nav_prefix,
-            'The first venue profiles are being written — where each one is, how to '
+            'The first venue profiles are being written: where each one is, how to '
             'get there, and what it is like inside. Every venue is already on the '
             'calendar and the map.'))
     else:

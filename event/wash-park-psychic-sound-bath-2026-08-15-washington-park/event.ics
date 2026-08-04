@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Wash Park Psychic Sound Bath
+BEGIN:VEVENT
+UID:wash-park-psychic-sound-bath-2026-08-15-washington-park@soundbathcalend
+ ar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260815T210000Z
+DTEND:20260815T221500Z
+SUMMARY:Wash Park Psychic Sound Bath
+LOCATION:Washington Park
+DESCRIPTION:An outdoor sound bath paired with psychic readings hosted by Co
+ mmunity Connection and Wellness Energy at Washington Park\, Saturday after
+ noon.\n\nTickets: https://www.meetup.com/find/?keywords=sound%20bath&locat
+ ion=us--co--Denver
+URL:https://soundbathcalendar.com/event/wash-park-psychic-sound-bath-2026-0
+ 8-15-washington-park/
+END:VEVENT
+END:VCALENDAR

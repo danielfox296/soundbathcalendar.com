@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Embodiment: Tibetan Bowl & Gong Sound Bath
+BEGIN:VEVENT
+UID:sound-embodiment-tibetan-bowl-gong-sound-bath-2026-08-14-om-ananda@soun
+ dbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260815T010000Z
+DTEND:20260815T021500Z
+SUMMARY:Sound Embodiment: Tibetan Bowl & Gong Sound Bath
+LOCATION:Om Ananda\, 115 N College Ave\, Suite 200\, Fort Collins\, CO 8052
+ 4
+DESCRIPTION:A Tibetan bowl and gong sound bath at Om Ananda yoga studio in 
+ downtown Fort Collins\, newly discovered operator Sound Embodiment.\n\nTic
+ kets: https://api.hellowalla.com/previews/135463?b=11699&type=enrollment
+URL:https://soundbathcalendar.com/event/sound-embodiment-tibetan-bowl-gong-
+ sound-bath-2026-08-14-om-ananda/
+END:VEVENT
+END:VCALENDAR

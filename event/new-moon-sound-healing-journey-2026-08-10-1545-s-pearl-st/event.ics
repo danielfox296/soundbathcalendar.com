@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:New Moon: Sound Healing Journey
+BEGIN:VEVENT
+UID:new-moon-sound-healing-journey-2026-08-10-1545-s-pearl-st@soundbathcale
+ ndar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260811T010000Z
+DTEND:20260811T021500Z
+SUMMARY:New Moon: Sound Healing Journey
+LOCATION:1545 S Pearl St\, 1545 South Pearl Street
+DESCRIPTION:A one-hour new-moon sound healing session with crystal singing 
+ bowls and gongs at 1545 S Pearl St\, Denver\, Monday evening.\n\nTickets: 
+ https://www.eventbrite.com/e/new-moon-sound-healing-journey-tickets-199570
+ 3125772
+URL:https://soundbathcalendar.com/event/new-moon-sound-healing-journey-2026
+ -08-10-1545-s-pearl-st/
+END:VEVENT
+END:VCALENDAR

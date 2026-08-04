@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Meditative Sound Bath
+BEGIN:VEVENT
+UID:meditative-sound-bath-2026-08-09-reynolds-library@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260809T150000Z
+DTEND:20260809T161500Z
+SUMMARY:Meditative Sound Bath
+LOCATION:Reynolds Library\, 1001 Arapahoe Avenue\, Boulder\, CO 80302
+DESCRIPTION:A meditative sound bath using crystal bowls\, rainsticks\, and 
+ chimes led by Ashley Young at Reynolds Library\; registration required\, a
+ ges 16+.\n\nTickets: https://calendar.boulderlibrary.org/event/15673517
+URL:https://soundbathcalendar.com/event/meditative-sound-bath-2026-08-09-re
+ ynolds-library/
+END:VEVENT
+END:VCALENDAR

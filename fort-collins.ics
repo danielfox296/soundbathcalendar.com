@@ -5,132 +5,9 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:Sound baths in Fort Collins
 BEGIN:VEVENT
-UID:good-morning-outdoor-sound-journey-2026-07-27-old-canal-park@soundbathc
- alendar.com
-DTSTAMP:20260725T212756Z
-DTSTART:20260727T140000Z
-DTEND:20260727T151500Z
-SUMMARY:Good Morning Outdoor Sound Journey
-LOCATION:Old Canal Park\, Old Canal Park\, Loveland\, CO
-DESCRIPTION:Morning outdoor sound journey held at Old Canal Park\; donation
- -based.\n\nTickets: https://resoundingwell.com/events
-URL:https://soundbathcalendar.com/event/good-morning-outdoor-sound-journey-
- 2026-07-27-old-canal-park/
-END:VEVENT
-BEGIN:VEVENT
-UID:outdoor-full-moon-gong-journey-2026-07-29-rocky-mountain-restore-stretc
- h@soundbathcalendar.com
-DTSTAMP:20260725T212756Z
-DTSTART:20260730T003000Z
-DTEND:20260730T014500Z
-SUMMARY:Outdoor Full Moon Gong Journey
-LOCATION:Rocky Mountain Restore & Stretch\, 3616 Soderburg Dr\, Fort Collin
- s\, CO 80526
-DESCRIPTION:An outdoor full-moon gong journey by Rocky Mountain Restore & S
- tretch in Fort Collins\, Wednesday evening\; $42–47.\n\nTickets: https:/
- /www.rockymountainrestoreandstretch.com/event-details-registration/outdoor
- -full-moon-gong-journey
-URL:https://soundbathcalendar.com/event/outdoor-full-moon-gong-journey-2026
- -07-29-rocky-mountain-restore-stretch/
-END:VEVENT
-BEGIN:VEVENT
-UID:thursday-mind-body-reset-gong-journey-2026-07-30-rocky-mountain-restore
- -stretch-llc@soundbathcalendar.com
-DTSTAMP:20260725T212756Z
-DTSTART:20260731T001500Z
-DTEND:20260731T013000Z
-SUMMARY:Thursday Mind Body Reset — Gong Journey
-LOCATION:Rocky Mountain Restore & Stretch LLC\, 3616 Soderburg Drive\, Fort
-  Collins\, CO 80526
-DESCRIPTION:Weekly Thursday evening gong bath using multiple large gongs\, 
- followed by tea and community time\; held at the studio near Horsetooth Re
- servoir.\n\nTickets: https://www.eventbrite.com/e/thursday-mind-body-reset
- -gong-journey-tickets-1994098983740
-URL:https://soundbathcalendar.com/event/thursday-mind-body-reset-gong-journ
- ey-2026-07-30-rocky-mountain-restore-stretch-llc/
-END:VEVENT
-BEGIN:VEVENT
-UID:relaxing-soundbath-at-the-seedlings-dome-2026-07-30-the-seedlings-dome-
- at-hartman-street@soundbathcalendar.com
-DTSTAMP:20260725T212756Z
-DTSTART:20260731T003000Z
-DTEND:20260731T014500Z
-SUMMARY:Relaxing Soundbath at the Seedlings Dome
-LOCATION:The Seedlings Dome at Hartman Street\, 105 Hartman Street\, Fort C
- ollins\, CO 80521
-DESCRIPTION:A sound bath led by Zach Miller at the Seedlings Dome on Hartma
- n Street in Fort Collins\, Thursday evening.\n\nTickets: https://www.event
- brite.com/e/relaxing-soundbath-at-the-seedlings-dome-tickets-1993353836986
-URL:https://soundbathcalendar.com/event/relaxing-soundbath-at-the-seedlings
- -dome-2026-07-30-the-seedlings-dome-at-hartman-street/
-END:VEVENT
-BEGIN:VEVENT
-UID:sacred-roots-gathering-sound-bath-2026-08-01-verdant-nature-creations@s
- oundbathcalendar.com
-DTSTAMP:20260725T212756Z
-DTSTART:20260801T213000Z
-DTEND:20260801T224500Z
-SUMMARY:Sacred Roots Gathering Sound Bath
-LOCATION:Verdant Nature Creations\, 4113 West Eisenhower Boulevard\, Lovela
- nd\, CO 80537
-DESCRIPTION:A sound bath led by Norabell Dechant at Verdant Nature Creation
- s in Fort Collins\, Saturday afternoon.\n\nTickets: https://www.eventbrite
- .com/e/sacred-roots-gathering-sound-bath-tickets-1992732656017
-URL:https://soundbathcalendar.com/event/sacred-roots-gathering-sound-bath-2
- 026-08-01-verdant-nature-creations/
-END:VEVENT
-BEGIN:VEVENT
-UID:sundays-of-sound-mind-body-reset-gong-journey-2026-08-02-rocky-mountain
- -restore-stretch-llc@soundbathcalendar.com
-DTSTAMP:20260725T212756Z
-DTSTART:20260802T160000Z
-DTEND:20260802T171500Z
-SUMMARY:Sundays of Sound - Mind Body Reset Gong Journey
-LOCATION:Rocky Mountain Restore & Stretch LLC\, 3616 Soderburg Drive\, Fort
-  Collins\, CO 80526
-DESCRIPTION:Sunday morning gong journey using multiple large gongs for deep
-  relaxation\, held at the Fort Collins studio.\n\nTickets: https://www.eve
- ntbrite.com/e/sundays-of-sound-mind-body-reset-gong-journey-tickets-199458
- 1267263
-URL:https://soundbathcalendar.com/event/sundays-of-sound-mind-body-reset-go
- ng-journey-2026-08-02-rocky-mountain-restore-stretch-llc/
-END:VEVENT
-BEGIN:VEVENT
-UID:sunday-morning-of-sound-gong-journey-horsetooth-reservoir-2026-08-02-ro
- cky-mountain-restore-stretch@soundbathcalendar.com
-DTSTAMP:20260725T212756Z
-DTSTART:20260802T160000Z
-DTEND:20260802T171500Z
-SUMMARY:Sunday Morning of Sound Gong Journey - Horsetooth Reservoir
-LOCATION:Rocky Mountain Restore & Stretch\, 3616 Soderburg Dr\, Fort Collin
- s\, CO 80526
-DESCRIPTION:A morning gong journey at Horsetooth Reservoir near Fort Collin
- s\, hosted by Rocky Mountain Restore & Stretch\, Sunday morning\; $41–46
- .\n\nTickets: https://www.rockymountainrestoreandstretch.com/event-details
- -registration/sunday-morning-of-sound-gong-journey-horsetooth-reservoir-1
-URL:https://soundbathcalendar.com/event/sunday-morning-of-sound-gong-journe
- y-horsetooth-reservoir-2026-08-02-rocky-mountain-restore-stretch/
-END:VEVENT
-BEGIN:VEVENT
-UID:harvesting-intentions-a-sound-journey-into-gratitude-2026-08-02-live-be
- yond-limit@soundbathcalendar.com
-DTSTAMP:20260725T212756Z
-DTSTART:20260802T230000Z
-DTEND:20260803T001500Z
-SUMMARY:Harvesting Intentions: A Sound Journey into Gratitude
-LOCATION:Live Beyond Limit\, 353 W. Drake Road\, Suites 130-140\, Fort Coll
- ins\, CO 80526
-DESCRIPTION:A sound journey with Annmarie of ResoundingWell at Live Beyond 
- Limit in Fort Collins\, Sunday evening.\n\nTickets: https://www.eventbrite
- .com/e/harvesting-intentions-a-sound-journey-into-gratitude-tickets-199395
- 2865697
-URL:https://soundbathcalendar.com/event/harvesting-intentions-a-sound-journ
- ey-into-gratitude-2026-08-02-live-beyond-limit/
-END:VEVENT
-BEGIN:VEVENT
 UID:thursday-mind-body-reset-gong-journey-2026-08-06-rocky-mountain-restore
  -stretch-llc@soundbathcalendar.com
-DTSTAMP:20260725T212756Z
+DTSTAMP:20260804T042200Z
 DTSTART:20260807T001500Z
 DTEND:20260807T013000Z
 SUMMARY:Thursday Mind Body Reset — Gong Journey
@@ -146,7 +23,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:sound-bath-a-sacred-start-to-the-school-year-2026-08-08-timnath-communi
  ty-room@soundbathcalendar.com
-DTSTAMP:20260725T212756Z
+DTSTAMP:20260804T042200Z
 DTSTART:20260808T163000Z
 DTEND:20260808T174500Z
 SUMMARY:Sound Bath: A Sacred Start to the School Year
@@ -162,7 +39,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:second-saturday-sound-bath-meditation-community-circle-2026-08-08-brook
  stone-recreation-center@soundbathcalendar.com
-DTSTAMP:20260725T212756Z
+DTSTAMP:20260804T042200Z
 DTSTART:20260808T190000Z
 DTEND:20260808T201500Z
 SUMMARY:Second Saturday Sound Bath\, Meditation & Community Circle
@@ -174,5 +51,97 @@ DESCRIPTION:A Second Saturday sound bath\, meditation\, and community circl
  day-sound-bath-meditation-community-circle-tickets-1983554117762
 URL:https://soundbathcalendar.com/event/second-saturday-sound-bath-meditati
  on-community-circle-2026-08-08-brookstone-recreation-center/
+END:VEVENT
+BEGIN:VEVENT
+UID:solar-eclipse-soundbath-at-the-seedlings-dome-2026-08-12-the-seedlings-
+ dome@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260813T010000Z
+DTEND:20260813T021500Z
+SUMMARY:Solar Eclipse Soundbath at the Seedlings Dome
+LOCATION:The Seedlings Dome\, 105 Hartman Street
+DESCRIPTION:A 90-minute solar-eclipse sound bath led by Zach Miller at The 
+ Seedlings Dome on Hartman Street\, Fort Collins\, Wednesday evening\; crys
+ tal singing bowls\, gongs and chimes.\n\nTickets: https://www.eventbrite.c
+ om/e/solar-eclipse-soundbath-at-the-seedlings-dome-tickets-1996125791978
+URL:https://soundbathcalendar.com/event/solar-eclipse-soundbath-at-the-seed
+ lings-dome-2026-08-12-the-seedlings-dome/
+END:VEVENT
+BEGIN:VEVENT
+UID:thursday-mind-body-reset-gong-journey-2026-08-13-rocky-mountain-restore
+ -stretch-llc@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260814T001500Z
+DTEND:20260814T013000Z
+SUMMARY:Thursday Mind Body Reset — Gong Journey
+LOCATION:Rocky Mountain Restore & Stretch LLC\, 3616 Soderburg Drive
+DESCRIPTION:A weekly Thursday-evening gong immersion at Rocky Mountain Rest
+ ore & Stretch on Soderburg Drive\, Fort Collins\, followed by tea.\n\nTick
+ ets: https://www.eventbrite.com/e/thursday-mind-body-reset-gong-journey-ti
+ ckets-1994098983740
+URL:https://soundbathcalendar.com/event/thursday-mind-body-reset-gong-journ
+ ey-2026-08-13-rocky-mountain-restore-stretch-llc/
+END:VEVENT
+BEGIN:VEVENT
+UID:thursdays-weekly-gong-journey-2026-08-13-rocky-mountain-restore-stretch
+ @soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260814T001500Z
+DTEND:20260814T013000Z
+SUMMARY:Thursday's Weekly Gong Journey
+LOCATION:Rocky Mountain Restore & Stretch\, 3616 Soderburg Dr\, Fort Collin
+ s\, CO 80526
+DESCRIPTION:A weekly gong journey using a 5-foot gong\, hosted by Rocky Mou
+ ntain Restore & Stretch in Fort Collins\; date inferred from confirmed wee
+ kly recurrence\, not independently confirmed on a live event page.\n\nTick
+ ets: https://www.rockymountainrestoreandstretch.com/event-details-registra
+ tion/thursdays-weekly-gong-journey-2026-08-13-18-15
+URL:https://soundbathcalendar.com/event/thursdays-weekly-gong-journey-2026-
+ 08-13-rocky-mountain-restore-stretch/
+END:VEVENT
+BEGIN:VEVENT
+UID:sound-embodiment-tibetan-bowl-gong-sound-bath-2026-08-14-om-ananda@soun
+ dbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260815T010000Z
+DTEND:20260815T021500Z
+SUMMARY:Sound Embodiment: Tibetan Bowl & Gong Sound Bath
+LOCATION:Om Ananda\, 115 N College Ave\, Suite 200\, Fort Collins\, CO 8052
+ 4
+DESCRIPTION:A Tibetan bowl and gong sound bath at Om Ananda yoga studio in 
+ downtown Fort Collins\, newly discovered operator Sound Embodiment.\n\nTic
+ kets: https://api.hellowalla.com/previews/135463?b=11699&type=enrollment
+URL:https://soundbathcalendar.com/event/sound-embodiment-tibetan-bowl-gong-
+ sound-bath-2026-08-14-om-ananda/
+END:VEVENT
+BEGIN:VEVENT
+UID:thursday-mind-body-reset-gong-journey-2026-08-20-rocky-mountain-restore
+ -stretch-llc@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260821T001500Z
+DTEND:20260821T013000Z
+SUMMARY:Thursday Mind Body Reset — Gong Journey
+LOCATION:Rocky Mountain Restore & Stretch LLC\, 3616 Soderburg Drive
+DESCRIPTION:A weekly Thursday-evening gong immersion at Rocky Mountain Rest
+ ore & Stretch on Soderburg Drive\, Fort Collins\, followed by tea.\n\nTick
+ ets: https://www.eventbrite.com/e/thursday-mind-body-reset-gong-journey-ti
+ ckets-1994098983740
+URL:https://soundbathcalendar.com/event/thursday-mind-body-reset-gong-journ
+ ey-2026-08-20-rocky-mountain-restore-stretch-llc/
+END:VEVENT
+BEGIN:VEVENT
+UID:sundays-of-sound-mind-body-reset-gong-journey-2026-08-23-rocky-mountain
+ -restore-stretch-llc@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260824T000000Z
+DTEND:20260824T011500Z
+SUMMARY:Sundays of Sound -Mind Body Reset Gong Journey
+LOCATION:Rocky Mountain Restore & Stretch LLC\, 3616 Soderburg Drive
+DESCRIPTION:A gong journey at Rocky Mountain Restore & Stretch on Soderburg
+  Drive\, Fort Collins\, Sunday evening. Session times vary by date\, so ch
+ eck the listing before booking.\n\nTickets: https://www.eventbrite.com/e/s
+ undays-of-sound-mind-body-reset-gong-journey-tickets-1994581267263
+URL:https://soundbathcalendar.com/event/sundays-of-sound-mind-body-reset-go
+ ng-journey-2026-08-23-rocky-mountain-restore-stretch-llc/
 END:VEVENT
 END:VCALENDAR

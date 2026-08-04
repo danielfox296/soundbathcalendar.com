@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Heart's Release: Sound Bath for Letting Go
+BEGIN:VEVENT
+UID:hearts-release-sound-bath-for-letting-go-2026-08-15-singing-bowls-of-th
+ e-rockies@soundbathcalendar.com
+DTSTAMP:20260804T042200Z
+DTSTART:20260815T163000Z
+DTEND:20260815T174500Z
+SUMMARY:Heart's Release: Sound Bath for Letting Go
+LOCATION:Singing Bowls of the Rockies\, 76 South Sierra Madre Street\, Suit
+ e C\, Colorado Springs\, CO 80903
+DESCRIPTION:A 90-minute sound bath at the Singing Bowls of the Rockies stud
+ io using crystal singing bowls and other instruments.\n\nTickets: https://
+ www.eventbrite.com/e/hearts-release-sound-bath-for-letting-go-tickets-1994
+ 151464712
+URL:https://soundbathcalendar.com/event/hearts-release-sound-bath-for-letti
+ ng-go-2026-08-15-singing-bowls-of-the-rockies/
+END:VEVENT
+END:VCALENDAR
