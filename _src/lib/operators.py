@@ -156,7 +156,8 @@ def _paras(text):
     return '\n'.join(f'      <p>{_esc(b)}</p>' for b in blocks)
 
 
-def render_operator_page(o, session_rows, nav_prefix, site_url, now=None):
+def render_operator_page(o, session_rows, nav_prefix, site_url, now=None,
+                         recent_rows=None):
     now = X._now_utc(now)
     name = o['name']
     out = ['<section class="section section--light operator">', '  <div class="container">']
@@ -260,6 +261,12 @@ def render_operator_page(o, session_rows, nav_prefix, site_url, now=None):
         out.append(
             f'    <p class="detail__empty">No upcoming sessions listed right now. '
             f'<a href="{nav_prefix}">See the full calendar →</a></p>')
+
+    # What they actually ran lately — the page's substance when the upcoming
+    # list is empty, and the activity the index gate reads (CAL-SEO-1).
+    _recent = X.render_recent_sessions(recent_rows or [], nav_prefix)
+    if _recent:
+        out.append(_recent)
 
     out.append(
         f'    <p class="detail__back"><a href="{nav_prefix}operators/">All organizers →</a></p>')

@@ -608,6 +608,56 @@ def entity_next_up(session_rows, nav_prefix):
     return f'<a href="{href}">{_esc(date)} · {_esc(r["name"])}</a>'
 
 
+RECENT_SESSIONS_MAX = 8
+
+
+def entity_recent_rows(session_rows, now=None, limit=RECENT_SESSIONS_MAX):
+    """An entity's most recent PAST sessions, newest first, capped at `limit`.
+
+    Fed from approved_event_rows (the whole feed window, past included), not
+    build_rows (future only). What a room or organizer ran over the last few
+    weeks is the evidence that it is a real, recurring venue rather than a
+    one-off listing — the fact the doorway gate reads, and the reason a page
+    with nothing upcoming still has something true to say.
+    """
+    now = _now_utc(now)
+    past = [r for r in session_rows if parse_iso(r['starts_at']) <= now]
+    past.sort(key=lambda r: parse_iso(r['starts_at']), reverse=True)
+    return past[:limit]
+
+
+def render_recent_sessions(rows, nav_prefix, heading='Recent sessions',
+                           show_venue=True):
+    """A plain dated list of sessions that have already happened.
+
+    Deliberately NOT the Program Grid card (_render_rows): those cards carry
+    ticket and website icons, and pointing someone at 'buy tickets' for a
+    session that finished last Tuesday is a lie the card layout tells for us.
+    Name links to the permalink, which already renders its own 'this session
+    has passed' banner. Returns '' when there is nothing past to show.
+
+    show_venue=False on a venue's own page, where naming the room on every
+    row just repeats the H1 six times.
+    """
+    if not rows:
+        return ''
+    out = [f'    <h2 class="detail__section-h">{_esc(heading)}</h2>',
+           '    <ul class="detail__past">']
+    for r in rows:
+        date = _esc(datetime_fmt.fmt_date_short(r['starts_at']))
+        slug = event_slug(r)
+        name = _esc(r['name'])
+        if slug:
+            href = _esc(f'{nav_prefix}{event_permalink_path(r)}')
+            name = f'<a href="{href}">{name}</a>'
+        venue = (r.get('venue') or '').strip() if show_venue else ''
+        venue_html = f' <span class="detail__past-at">{_esc(venue)}</span>' if venue else ''
+        out.append(f'      <li><span class="detail__past-d">{date}</span> '
+                   f'{name}{venue_html}</li>')
+    out.append('    </ul>')
+    return '\n'.join(out)
+
+
 def _price_span(rows):
     """(low_label, high_num) across rows' readable prices, or ('', None).
     Free counts as 0; unreadable/donation prices are skipped."""

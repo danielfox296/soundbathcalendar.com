@@ -392,6 +392,11 @@ def build():
     # Future, de-duplicated, chronological rows — shared by the root injection,
     # the ItemList schema, and the city pages (Track B B.2).
     cal_rows = external_events.build_rows(cal_feed, now=cal_now)
+    # The same rows the calendar shows PLUS the ones already past — the whole
+    # approved feed window (roughly a fortnight back). Venue and operator pages
+    # read this for their "Recent sessions" list and for the CAL-SEO-1 gate;
+    # nothing else should, since every other surface is about what's upcoming.
+    window_rows = external_events.approved_event_rows(cal_feed, now=cal_now)
     # CAL-09: which tags have earned a landing page (>= BUILD_MIN upcoming). Set
     # BEFORE any chip renders (root injection below, then city/event pages) so
     # every tag chip links to /<slug>/ when that page exists.
@@ -641,12 +646,12 @@ def build():
 
     # --- Venue pages (/venue/<slug>/) + index — CAL-03 ---
     _venue_outputs, _venue_sitemap = build_venue_pages(
-        base, header, footer, venue_list, cal_rows, cal_now)
+        base, header, footer, venue_list, cal_rows, cal_now, window_rows)
     pages_built.extend(_venue_outputs)
 
     # --- Operator pages (/operator/<slug>/) + index — CAL-08 ---
     _operator_outputs, _operator_sitemap = build_operator_pages(
-        base, header, footer, operator_list, cal_rows, cal_now)
+        base, header, footer, operator_list, cal_rows, cal_now, window_rows)
     pages_built.extend(_operator_outputs)
 
     # --- Tag landing pages (/<tag-slug>/) — CAL-09 — + /browse/ hub — CAL-16 ---
@@ -1125,7 +1130,8 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
     return built, sitemap_entries
 
 
-def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
+def build_venue_pages(base, header, footer, venue_list, cal_rows, now,
+                      window_rows=()):
     """Emit /venue/<slug>/ pages for every PUBLISHED venue + the /venues/ index
     (CAL-03). Individual pages are curated (Daniel publishes the rooms worth a
     page), so they're indexed; the index is noindexed until it has a few
@@ -1197,15 +1203,29 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(breadcrumb_schema)}\n  </script>')
 
-        content = venues_lib.render_venue_page(v, sessions, nav_prefix, SITE_URL, now=now, credit=credit)
+        window_sessions = venues_lib.sessions_for(slug, window_rows)
+        recent = external_events.entity_recent_rows(window_sessions, now=now)
+        content = venues_lib.render_venue_page(v, sessions, nav_prefix, SITE_URL, now=now,
+                                               credit=credit, recent_rows=recent)
         page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
         page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
 
         # CAL-SEO-1 doorway gate: a venue page earns index + a sitemap slot
-        # with a curated description OR real upcoming activity; thin stubs
-        # stay live and linked but noindex,follow until enrichment or
-        # activity flips them (self-healing on rebuild).
-        page_indexable = bool(desc_body) or len(sessions) >= ENTITY_MIN_UPCOMING
+        # with a curated description OR real activity; thin stubs stay live
+        # and linked but noindex,follow until enrichment or activity flips
+        # them (self-healing on rebuild).
+        #
+        # Activity is counted across the whole feed window, not just what's
+        # upcoming. Counting only upcoming made indexability flap: a room's
+        # count crosses the threshold downward every time a session happens
+        # and back up when the next one is listed, so the page left the
+        # sitemap and came back within days — which is what Search Console
+        # reported as "Excluded by 'noindex' tag" against sitemap URLs. Past
+        # sessions are real evidence the room is worth indexing, and they now
+        # render on the page, so the page is no longer thin when nothing is
+        # scheduled.
+        page_indexable = (bool(desc_body)
+                          or len(window_sessions) >= ENTITY_MIN_UPCOMING)
 
         html = _assemble(base, {
             'title': title,
@@ -1294,7 +1314,8 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
     return built, sitemap_entries
 
 
-def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
+def build_operator_pages(base, header, footer, operator_list, cal_rows, now,
+                         window_rows=()):
     """Emit /operator/<slug>/ pages for every PUBLISHED operator + the
     /operators/ index (CAL-08). Individual pages are curated (Daniel publishes
     only the multi-venue organizers worth a distinct page — the owner-operated
@@ -1360,14 +1381,21 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(breadcrumb_schema)}\n  </script>')
 
-        content = operators_lib.render_operator_page(o, sessions, nav_prefix, SITE_URL, now=now)
+        window_sessions = operators_lib.sessions_for(slug, window_rows)
+        recent = external_events.entity_recent_rows(window_sessions, now=now)
+        content = operators_lib.render_operator_page(o, sessions, nav_prefix, SITE_URL,
+                                                     now=now, recent_rows=recent)
         page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
         page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
 
-        # CAL-SEO-1 doorway gate (same rule as venues): curated description
-        # OR real upcoming activity earns index + sitemap; thin stubs stay
-        # live and linked but noindex,follow.
-        page_indexable = bool(desc_body) or len(sessions) >= ENTITY_MIN_UPCOMING
+        # CAL-SEO-1 doorway gate (same rule as venues): curated description OR
+        # real activity across the feed window — past included — earns index +
+        # sitemap; thin stubs stay live and linked but noindex,follow. See the
+        # venue builder for why this counts the window rather than only what's
+        # upcoming: operators flapped hardest, 16 index/noindex flips in 16
+        # simulated daily builds.
+        page_indexable = (bool(desc_body)
+                          or len(window_sessions) >= ENTITY_MIN_UPCOMING)
 
         html = _assemble(base, {
             'title': title,
