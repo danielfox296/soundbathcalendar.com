@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:BEing - A Breathwork Journey
+BEGIN:VEVENT
+UID:being-a-breathwork-journey-2026-08-09-nurture-the-wellcare-marketplace@
+ soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260809T190000Z
+DTEND:20260809T201500Z
+SUMMARY:BEing - A Breathwork Journey
+LOCATION:Nurture • The Wellcare Marketplace\, 2949 Federal Blvd\, Denver\
+ , CO 80211
+DESCRIPTION:A 90-minute guided breathwork journey with sound healing and Re
+ iki support at Nurture\, The Wellcare Marketplace on Federal Boulevard in 
+ Denver\, Sunday afternoon\; $75 to $105.\n\nTickets: https://www.eventbrit
+ e.com/e/being-a-breathwork-journey-tickets-1994109918446
+URL:https://soundbathcalendar.com/event/being-a-breathwork-journey-2026-08-
+ 09-nurture-the-wellcare-marketplace/
+END:VEVENT
+END:VCALENDAR

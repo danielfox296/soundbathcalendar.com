@@ -5,39 +5,26 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:Sound baths in Colorado Springs
 BEGIN:VEVENT
-UID:somatic-breathwork-sound-bath-2026-08-04-singing-bowls-of-the-rockies@s
- oundbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260805T000000Z
-DTEND:20260805T011500Z
-SUMMARY:Somatic BreathWork & Sound Bath
-LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
- rado Springs\, CO 80903
-DESCRIPTION:A somatic breathwork and sound bath at Singing Bowls of the Roc
- kies in Colorado Springs\, Tuesday evening\; $45.\n\nTickets: https://www.
- eventbrite.com/e/somatic-breathwork-sound-bath-tickets-1994143672405
-URL:https://soundbathcalendar.com/event/somatic-breathwork-sound-bath-2026-
- 08-04-singing-bowls-of-the-rockies/
-END:VEVENT
-BEGIN:VEVENT
-UID:chakra-cleansing-sound-bath-2026-08-07-singing-bowls-of-the-rockies@sou
- ndbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260808T010000Z
-DTEND:20260808T021500Z
-SUMMARY:Chakra Cleansing Sound Bath
-LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
- rado Springs\, CO 80903
-DESCRIPTION:A chakra-themed sound bath at Singing Bowls of the Rockies in C
- olorado Springs\, Friday evening\; $39.\n\nTickets: https://www.eventbrite
- .com/e/chakra-cleansing-sound-bath-tickets-1994144139803
-URL:https://soundbathcalendar.com/event/chakra-cleansing-sound-bath-2026-08
- -07-singing-bowls-of-the-rockies/
+UID:moving-the-energy-of-grief-workshop-2026-08-08-3-cubed-coworking@soundb
+ athcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260808T153000Z
+DTEND:20260808T164500Z
+SUMMARY:Moving the Energy of Grief Workshop
+LOCATION:3 Cubed Coworking\, 2301 E Pikes Peak Ave\, Colorado Springs\, CO 
+ 80910
+DESCRIPTION:A day-long grief workshop led by Rachael Ortega at 3 Cubed Cowo
+ rking in Colorado Springs\, Saturday\, including a sound bath led by Laura
+  Dunki and a heart-centered meditation\; sliding scale $88 to $111.\n\nTic
+ kets: https://www.eventbrite.com/e/moving-the-energy-of-grief-workshop-tic
+ kets-1995006163138
+URL:https://soundbathcalendar.com/event/moving-the-energy-of-grief-workshop
+ -2026-08-08-3-cubed-coworking/
 END:VEVENT
 BEGIN:VEVENT
 UID:lions-gate-portal-sound-bath-2026-08-08-singing-bowls-of-the-rockies@so
  undbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260808T223000Z
 DTEND:20260808T234500Z
 SUMMARY:Lion's Gate Portal Sound Bath
@@ -52,7 +39,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:community-sound-bath-session-2026-08-10-ivywild-school@soundbathcalenda
  r.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260811T000000Z
 DTEND:20260811T011500Z
 SUMMARY:Community Sound Bath Session
@@ -69,7 +56,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:floating-sound-bath-elise-nicole-2026-08-11-camino-massage-therapy@soun
  dbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260812T003000Z
 DTEND:20260812T014500Z
 SUMMARY:Floating Sound Bath – Elise Nicole
@@ -85,7 +72,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:into-the-shadow-solar-eclipse-sound-bath-2026-08-12-singing-bowls-of-th
  e-rockies@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260813T010000Z
 DTEND:20260813T021500Z
 SUMMARY:Into the Shadow: Solar Eclipse Sound Bath
@@ -101,7 +88,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:heart-coherence-a-new-moon-sound-bath-for-breath-connection-renewal-202
  6-08-13-singing-bowls-of-the-rockies@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260814T010000Z
 DTEND:20260814T021500Z
 SUMMARY:Heart Coherence: A New Moon Sound Bath for Breath\, Connection & Re
@@ -118,7 +105,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:hearts-release-sound-bath-for-letting-go-2026-08-15-singing-bowls-of-th
  e-rockies@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260815T163000Z
 DTEND:20260815T174500Z
 SUMMARY:Heart's Release: Sound Bath for Letting Go
@@ -134,7 +121,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:community-wellness-experiencesound-bath-salt-room-august-15th-2026-08-1
  5-edenology-holistic-wellness@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260815T190000Z
 DTEND:20260815T201500Z
 SUMMARY:Community Wellness Experience-Sound Bath + Salt Room August 15th
@@ -150,7 +137,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:selfcare-sunday-sound-bath-a-path-to-wellness-and-peace-2026-08-16-sing
  ing-bowls-of-the-rockies@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260816T223000Z
 DTEND:20260816T234500Z
 SUMMARY:Self-Care Sunday Sound Bath: A Path to Wellness and Peace
@@ -166,7 +153,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:temple-of-echoes-sound-ceremony-in-the-cave-of-the-winds-2026-08-16-cav
  e-of-the-winds-mountain-park@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260817T013000Z
 DTEND:20260817T024500Z
 SUMMARY:Temple of Echoes: Sound Ceremony in the Cave of the Winds
@@ -183,7 +170,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:communal-quartz-sound-bath-2026-08-17-colorado-psychedelic-church@sound
  bathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260818T000000Z
 DTEND:20260818T011500Z
 SUMMARY:Communal Quartz Sound Bath
@@ -198,7 +185,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:cave-of-the-winds-sound-bath-2026-08-21-cave-of-the-winds-mountain-park
  @soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260822T013000Z
 DTEND:20260822T024500Z
 SUMMARY:Cave of the Winds Sound Bath

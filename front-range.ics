@@ -5,238 +5,44 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:Sound baths on the Front Range
 BEGIN:VEVENT
-UID:somatic-breathwork-sound-bath-2026-08-04-singing-bowls-of-the-rockies@s
- oundbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260805T000000Z
-DTEND:20260805T011500Z
-SUMMARY:Somatic BreathWork & Sound Bath
-LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
- rado Springs\, CO 80903
-DESCRIPTION:A somatic breathwork and sound bath at Singing Bowls of the Roc
- kies in Colorado Springs\, Tuesday evening\; $45.\n\nTickets: https://www.
- eventbrite.com/e/somatic-breathwork-sound-bath-tickets-1994143672405
-URL:https://soundbathcalendar.com/event/somatic-breathwork-sound-bath-2026-
- 08-04-singing-bowls-of-the-rockies/
+UID:the-fifth-season-day-1-arrive-262-sol-ignite-yin-yoga-sound-bath-2026-0
+ 8-08-elevate-yoga-collective-eyc@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260808T150000Z
+DTEND:20260808T161500Z
+SUMMARY:The Fifth Season • Day 1: Arrive | 26&2\, Sol Ignite\, Yin Yoga &
+  Sound Bath
+LOCATION:ELEVATE YOGA COLLECTIVE - EYC\, 5112 S College Ave #C\, Fort Colli
+ ns\, CO 80525
+DESCRIPTION:Opening day of a week-long yoga immersion led by Alyssa Quintan
+ ar and Terrel Harris at Elevate Yoga Collective in Fort Collins\, Saturday
+ \, closing with a yin yoga and sound bath session played on live bowls and
+  chimes.\n\nTickets: https://www.eventbrite.com/e/the-fifth-season-day-1-a
+ rrive-262-sol-ignite-yin-yoga-sound-bath-tickets-1995689665512
+URL:https://soundbathcalendar.com/event/the-fifth-season-day-1-arrive-262-s
+ ol-ignite-yin-yoga-sound-bath-2026-08-08-elevate-yoga-collective-eyc/
 END:VEVENT
 BEGIN:VEVENT
-UID:deep-restorative-sound-bath-guided-meditation-2026-08-04-denver-public-
- library-woodbury-branch-library@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260805T010000Z
-DTEND:20260805T021500Z
-SUMMARY:Deep Restorative Sound Bath & Guided Meditation
-LOCATION:Denver Public Library: Woodbury Branch Library\, 3265 Federal Boul
- evard\, Denver\, CO 80211
-DESCRIPTION:A restorative sound bath and guided meditation led by IzaBelle 
- Sweet at the Denver Public Library's Woodbury Branch\, Tuesday evening\; $
- 15–40.\n\nTickets: https://www.eventbrite.com/e/deep-restorative-sound-b
- ath-guided-meditation-tickets-1993053455537
-URL:https://soundbathcalendar.com/event/deep-restorative-sound-bath-guided-
- meditation-2026-08-04-denver-public-library-woodbury-branch-library/
-END:VEVENT
-BEGIN:VEVENT
-UID:yoga-sound-journey-2026-08-04-green-light-reiki@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260805T010000Z
-DTEND:20260805T021500Z
-SUMMARY:Yoga + Sound Journey
-LOCATION:Green Light Reiki\, 1545 S Pearl Street\, Denver\, CO
-DESCRIPTION:A sound-forward yoga and gong journey led by Yelena at Green Li
- ght Reiki in Denver\, Tuesday evening.\n\nTickets: https://www.meetup.com/
- denver-gong-immersion-chakra-balancing-vibration-medicine/events/315899273
- /
-URL:https://soundbathcalendar.com/event/yoga-sound-journey-2026-08-04-green
- -light-reiki/
-END:VEVENT
-BEGIN:VEVENT
-UID:release-let-go-sound-bath-2026-08-05-1545-s-pearl-st@soundbathcalendar.
- com
-DTSTAMP:20260804T042200Z
-DTSTART:20260806T000000Z
-DTEND:20260806T011500Z
-SUMMARY:Release & Let Go Sound Bath
-LOCATION:1545 S Pearl St\, 1545 S Pearl St
-DESCRIPTION:A gong-led sound release session at 1545 S Pearl St in Denver\,
-  Wednesday evening\; $30.\n\nTickets: https://www.meetup.com/denver-gong-i
- mmersion-chakra-balancing-vibration-medicine/
-URL:https://soundbathcalendar.com/event/release-let-go-sound-bath-2026-08-0
- 5-1545-s-pearl-st/
-END:VEVENT
-BEGIN:VEVENT
-UID:release-let-go-sound-bath-2026-08-05-green-light-reiki@soundbathcalenda
- r.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260806T000000Z
-DTEND:20260806T011500Z
-SUMMARY:Release & Let Go Sound Bath
-LOCATION:Green Light Reiki\, 1545 S Pearl St\, Denver\, CO
-DESCRIPTION:A release-themed sound bath led by Kathy S. and Katie W. at Gre
- en Light Reiki in Denver\, Wednesday evening.\n\nTickets: https://www.meet
- up.com/denver-gong-immersion-chakra-balancing-vibration-medicine/events/31
- 5893220/
-URL:https://soundbathcalendar.com/event/release-let-go-sound-bath-2026-08-0
- 5-green-light-reiki/
-END:VEVENT
-BEGIN:VEVENT
-UID:wednesday-meditation-2026-08-05-unity-of-boulder-spiritual-center@sound
- bathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260806T010000Z
-DTEND:20260806T021500Z
-SUMMARY:Wednesday Meditation
-LOCATION:Unity of Boulder Spiritual Center\, 2855 Folsom St\, Boulder\, CO 
- 80304
-DESCRIPTION:A weekly guided meditation with a sound bath component (crystal
-  and Tibetan singing bowls\, native flute or chanting) led by Norma at Uni
- ty of Boulder\, Wednesday August 5 at 7:00 PM. Free.\n\nTickets: https://u
- nityofboulder.com/events/wednesday-meditation/
-URL:https://soundbathcalendar.com/event/wednesday-meditation-2026-08-05-uni
- ty-of-boulder-spiritual-center/
-END:VEVENT
-BEGIN:VEVENT
-UID:denver-sound-bath-collectivesmiley-2026-08-05-denver-public-library-smi
- ley-branch-library@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260806T010000Z
-DTEND:20260806T021500Z
-SUMMARY:Denver Sound Bath Collective-Smiley
-LOCATION:Denver Public Library: Smiley Branch Library\, 4501 West 46th Aven
- ue\, Denver\, CO 80212
-DESCRIPTION:A sound bath from the Denver Sound Bath Collective\, led by Iza
- Belle Sweet\, at the Denver Public Library's Smiley Branch\, Wednesday eve
- ning\; $15–40.\n\nTickets: https://www.eventbrite.com/e/denver-sound-bat
- h-collective-smiley-tickets-1993054503672
-URL:https://soundbathcalendar.com/event/denver-sound-bath-collectivesmiley-
- 2026-08-05-denver-public-library-smiley-branch-library/
-END:VEVENT
-BEGIN:VEVENT
-UID:group-energy-healing-circle-2026-08-05-green-light-reiki@soundbathcalen
- dar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260806T013000Z
-DTEND:20260806T024500Z
-SUMMARY:Group Energy Healing Circle
-LOCATION:Green Light Reiki\, 1545 S Pearl St\, Denver\, CO
-DESCRIPTION:A group energy session at Green Light Reiki incorporating Reiki
- \, singing bowls\, and shamanic techniques led by facilitator Shea.\n\nTic
- kets: https://www.meetup.com/denver-gong-immersion-chakra-balancing-vibrat
- ion-medicine/events/315717836/
-URL:https://soundbathcalendar.com/event/group-energy-healing-circle-2026-08
- -05-green-light-reiki/
-END:VEVENT
-BEGIN:VEVENT
-UID:thursday-mind-body-reset-gong-journey-2026-08-06-rocky-mountain-restore
- -stretch-llc@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260807T001500Z
-DTEND:20260807T013000Z
-SUMMARY:Thursday Mind Body Reset — Gong Journey
-LOCATION:Rocky Mountain Restore & Stretch LLC\, 3616 Soderburg Drive\, Fort
-  Collins\, CO 80526
-DESCRIPTION:Weekly Thursday evening gong bath using multiple large gongs\, 
- followed by tea and community time\; held at the studio near Horsetooth Re
- servoir.\n\nTickets: https://www.eventbrite.com/e/thursday-mind-body-reset
- -gong-journey-tickets-1994098983740
-URL:https://soundbathcalendar.com/event/thursday-mind-body-reset-gong-journ
- ey-2026-08-06-rocky-mountain-restore-stretch-llc/
-END:VEVENT
-BEGIN:VEVENT
-UID:sound-bath-ceremony-2026-08-06-una-vida-meditation-movement@soundbathca
- lendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260807T003000Z
-DTEND:20260807T014500Z
-SUMMARY:Sound Bath Ceremony
-LOCATION:Una Vida Meditation & Movement\, 7960 Niwot Road\, Suite B-12\, Lo
- ngmont\, CO 80503
-DESCRIPTION:A sound bath ceremony led by Laura Riehman at Una Vida Meditati
- on & Movement in Boulder\, Thursday evening\; $25–40.\n\nTickets: https:
- //www.eventbrite.com/e/sound-bath-ceremony-tickets-1993974556575
-URL:https://soundbathcalendar.com/event/sound-bath-ceremony-2026-08-06-una-
- vida-meditation-movement/
-END:VEVENT
-BEGIN:VEVENT
-UID:sacred-sound-bath-dawn-stratton-vialet-rayne-2026-08-07-discover-your-s
- piritual-gifts@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260807T223000Z
-DTEND:20260807T234500Z
-SUMMARY:Sacred Sound Bath ❤ Dawn Stratton & Vialet Rayne
-LOCATION:Discover Your Spiritual Gifts\, 7500 E. Arapahoe Road\, Suite 208\
- , Centennial\, CO 80112
-DESCRIPTION:A sound bath led by Dawn Stratton and Vialet Rayne at Discover 
- Your Spiritual Gifts in Denver\, Friday afternoon\; $40.\n\nTickets: https
- ://www.eventbrite.com/e/sacred-sound-bath-dawn-stratton-vialet-rayne-ticke
- ts-1993143495850
-URL:https://soundbathcalendar.com/event/sacred-sound-bath-dawn-stratton-via
- let-rayne-2026-08-07-discover-your-spiritual-gifts/
-END:VEVENT
-BEGIN:VEVENT
-UID:first-friday-flow-state-sound-bath-2026-08-07-harmonist-sanctuary@sound
- bathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260808T000000Z
-DTEND:20260808T011500Z
-SUMMARY:First Friday: Flow State Sound Bath
-LOCATION:Harmonist Sanctuary\, 4633 East Colfax Avenue\, Denver\, CO 80220
-DESCRIPTION:A First Friday sound bath presented by Liminal Lemonade at Harm
- onist Sanctuary in Denver\, Friday evening.\n\nTickets: https://www.eventb
- rite.com/e/first-friday-flow-state-sound-bath-tickets-1982939514467
-URL:https://soundbathcalendar.com/event/first-friday-flow-state-sound-bath-
- 2026-08-07-harmonist-sanctuary/
-END:VEVENT
-BEGIN:VEVENT
-UID:coregulation-sound-bath-2026-08-07-the-denver-village@soundbathcalendar
- .com
-DTSTAMP:20260804T042200Z
-DTSTART:20260808T000000Z
-DTEND:20260808T011500Z
-SUMMARY:Co-Regulation Sound Bath
-LOCATION:The Denver Village\, 2503 & 2513 Elmira St\, Aurora\, CO 80010
-DESCRIPTION:A partner co-regulation sound bath using crystal singing bowls 
- at The Denver Village in Aurora\, Friday August 7 from 6:00-7:00 PM.\n\nTi
- ckets: https://www.thedenvervillage.com/events-workshop/midweek-harmony-re
- set-sound-bath-effrw-hg9jg-xd2gg-bdrap-xecmp-hbzp6-4ltln-j9y36-jww6r-js8b5
- -8pswt-rtfnb-ft2ph-t36z9
-URL:https://soundbathcalendar.com/event/coregulation-sound-bath-2026-08-07-
- the-denver-village/
-END:VEVENT
-BEGIN:VEVENT
-UID:sacred-healing-sound-bath-vialet-b-rayne-dawn-stratton-2026-08-07-disco
- ver-your-spiritual-gifts@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260808T003000Z
-DTEND:20260808T014500Z
-SUMMARY:Sacred Healing Sound Bath ❤ Vialet B Rayne & Dawn Stratton
-LOCATION:Discover Your Spiritual Gifts\, 7500 E. Arapahoe Road\, Suite 208\
- , Centennial\, CO 80112
-DESCRIPTION:A sound bath led by Vialet B Rayne and Dawn Stratton at Discove
- r Your Spiritual Gifts in Denver\, Friday evening\; $40.\n\nTickets: https
- ://www.eventbrite.com/e/sacred-healing-sound-bath-vialet-b-rayne-dawn-stra
- tton-tickets-1636336469429
-URL:https://soundbathcalendar.com/event/sacred-healing-sound-bath-vialet-b-
- rayne-dawn-stratton-2026-08-07-discover-your-spiritual-gifts/
-END:VEVENT
-BEGIN:VEVENT
-UID:chakra-cleansing-sound-bath-2026-08-07-singing-bowls-of-the-rockies@sou
- ndbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260808T010000Z
-DTEND:20260808T021500Z
-SUMMARY:Chakra Cleansing Sound Bath
-LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
- rado Springs\, CO 80903
-DESCRIPTION:A chakra-themed sound bath at Singing Bowls of the Rockies in C
- olorado Springs\, Friday evening\; $39.\n\nTickets: https://www.eventbrite
- .com/e/chakra-cleansing-sound-bath-tickets-1994144139803
-URL:https://soundbathcalendar.com/event/chakra-cleansing-sound-bath-2026-08
- -07-singing-bowls-of-the-rockies/
+UID:moving-the-energy-of-grief-workshop-2026-08-08-3-cubed-coworking@soundb
+ athcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260808T153000Z
+DTEND:20260808T164500Z
+SUMMARY:Moving the Energy of Grief Workshop
+LOCATION:3 Cubed Coworking\, 2301 E Pikes Peak Ave\, Colorado Springs\, CO 
+ 80910
+DESCRIPTION:A day-long grief workshop led by Rachael Ortega at 3 Cubed Cowo
+ rking in Colorado Springs\, Saturday\, including a sound bath led by Laura
+  Dunki and a heart-centered meditation\; sliding scale $88 to $111.\n\nTic
+ kets: https://www.eventbrite.com/e/moving-the-energy-of-grief-workshop-tic
+ kets-1995006163138
+URL:https://soundbathcalendar.com/event/moving-the-energy-of-grief-workshop
+ -2026-08-08-3-cubed-coworking/
 END:VEVENT
 BEGIN:VEVENT
 UID:saturday-morning-sound-bath-2026-08-08-1545-s-pearl-st@soundbathcalenda
  r.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260808T160000Z
 DTEND:20260808T171500Z
 SUMMARY:Saturday Morning Sound Bath
@@ -248,22 +54,24 @@ URL:https://soundbathcalendar.com/event/saturday-morning-sound-bath-2026-08
  -08-1545-s-pearl-st/
 END:VEVENT
 BEGIN:VEVENT
-UID:pilates-condition-calm-2026-08-08-sacred-society@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260808T163000Z
-DTEND:20260808T174500Z
-SUMMARY:Pilates: Condition & Calm
-LOCATION:Sacred Society\, 3410 W 38th Ave
-DESCRIPTION:A Pilates-based reset with a sound bath and breathwork componen
- t led by Brookelin Barnhill at Sacred Society in Denver's Highlands\, Satu
- rday morning.\n\nTickets: https://momence.com/s/137967766
-URL:https://soundbathcalendar.com/event/pilates-condition-calm-2026-08-08-s
- acred-society/
+UID:growgather-greenhouse-yoga-soundflow-2026-08-08-grow-gather@soundbathca
+ lendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260808T160000Z
+DTEND:20260808T171500Z
+SUMMARY:Grow+Gather Greenhouse Yoga Sound+Flow
+LOCATION:Grow + Gather\, 900 E Hampden Ave\, Englewood\, CO 80113
+DESCRIPTION:A 75-minute yoga flow inside the Grow + Gather greenhouse in En
+ glewood\, Saturday morning\, closing with a 15 to 30 minute sound bath sav
+ asana played on bowls and\, at times\, guitar.\n\nTickets: https://www.eve
+ ntbrite.com/e/growgather-greenhouse-yoga-soundflow-tickets-1000281397587
+URL:https://soundbathcalendar.com/event/growgather-greenhouse-yoga-soundflo
+ w-2026-08-08-grow-gather/
 END:VEVENT
 BEGIN:VEVENT
 UID:sound-bath-a-sacred-start-to-the-school-year-2026-08-08-timnath-communi
  ty-room@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260808T163000Z
 DTEND:20260808T174500Z
 SUMMARY:Sound Bath: A Sacred Start to the School Year
@@ -277,9 +85,22 @@ URL:https://soundbathcalendar.com/event/sound-bath-a-sacred-start-to-the-sc
  hool-year-2026-08-08-timnath-community-room/
 END:VEVENT
 BEGIN:VEVENT
+UID:pilates-condition-calm-2026-08-08-sacred-society@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260808T163000Z
+DTEND:20260808T174500Z
+SUMMARY:Pilates: Condition & Calm
+LOCATION:Sacred Society\, 3410 W 38th Ave
+DESCRIPTION:A Pilates-based reset with a sound bath and breathwork componen
+ t led by Brookelin Barnhill at Sacred Society in Denver's Highlands\, Satu
+ rday morning.\n\nTickets: https://momence.com/s/137967766
+URL:https://soundbathcalendar.com/event/pilates-condition-calm-2026-08-08-s
+ acred-society/
+END:VEVENT
+BEGIN:VEVENT
 UID:second-saturday-sound-bath-meditation-community-circle-2026-08-08-brook
  stone-recreation-center@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260808T190000Z
 DTEND:20260808T201500Z
 SUMMARY:Second Saturday Sound Bath\, Meditation & Community Circle
@@ -295,7 +116,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:experience-hu-sacred-sound-ancient-mantra-2026-08-08-north-boulder-bran
  ch-library@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260808T193000Z
 DTEND:20260808T204500Z
 SUMMARY:Experience HU-- Sacred Sound\, Ancient Mantra
@@ -310,7 +131,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:awaken-abundance-an-88-lions-gate-experience-2026-08-08-healing-solutio
  ns-inc@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260808T200000Z
 DTEND:20260808T211500Z
 SUMMARY:Awaken Abundance: An 8.8 Lion's Gate Experience
@@ -326,7 +147,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:wellness-in-a-time-of-war-2026-08-08-abc-hub-at-paris-elementary@soundb
  athcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260808T200000Z
 DTEND:20260808T211500Z
 SUMMARY:Wellness in a Time of War
@@ -342,7 +163,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:restorative-summer-sound-bath-2026-08-08-harmonist-sanctuary@soundbathc
  alendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260808T210000Z
 DTEND:20260808T221500Z
 SUMMARY:Restorative Summer Sound Bath
@@ -355,9 +176,26 @@ URL:https://soundbathcalendar.com/event/restorative-summer-sound-bath-2026-
  08-08-harmonist-sanctuary/
 END:VEVENT
 BEGIN:VEVENT
+UID:seven-arrows-breathwork-breathe-release-reconnect-aug-8th-fort-collins-
+ 2026-08-08-manic-training@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260808T210000Z
+DTEND:20260808T221500Z
+SUMMARY:Seven Arrows Breathwork: Breathe\, Release\, Reconnect Aug. 8th For
+ t Collins
+LOCATION:Manic Training\, 3713 S Mason St\, Fort Collins\, CO 80525
+DESCRIPTION:A 75-minute guided breathwork journey with live music\, led by 
+ Ken Conte at Manic Training in Fort Collins\, Saturday afternoon\; tiered 
+ pricing $45 to $65.\n\nTickets: https://www.eventbrite.com/e/seven-arrows-
+ breathwork-breathe-release-reconnect-aug-8th-fort-collins-tickets-19930769
+ 65857
+URL:https://soundbathcalendar.com/event/seven-arrows-breathwork-breathe-rel
+ ease-reconnect-aug-8th-fort-collins-2026-08-08-manic-training/
+END:VEVENT
+BEGIN:VEVENT
 UID:lions-gate-portal-sound-bath-2026-08-08-singing-bowls-of-the-rockies@so
  undbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260808T223000Z
 DTEND:20260808T234500Z
 SUMMARY:Lion's Gate Portal Sound Bath
@@ -370,9 +208,40 @@ URL:https://soundbathcalendar.com/event/lions-gate-portal-sound-bath-2026-0
  8-08-singing-bowls-of-the-rockies/
 END:VEVENT
 BEGIN:VEVENT
+UID:lionsgate-portal-ceremony-2026-08-08-thats-kava@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260809T000000Z
+DTEND:20260809T011500Z
+SUMMARY:Lionsgate Portal Ceremony
+LOCATION:That's Kava\, 3394 S Broadway\, Englewood\, CO 80113
+DESCRIPTION:A two-hour ceremony at That's Kava in Englewood\, Saturday even
+ ing\, combining a sound bath and meditation with ceremonial cacao\, ground
+ ing and intention setting\; free.\n\nTickets: https://www.eventbrite.com/e
+ /lionsgate-portal-ceremony-tickets-1995062718296
+URL:https://soundbathcalendar.com/event/lionsgate-portal-ceremony-2026-08-0
+ 8-thats-kava/
+END:VEVENT
+BEGIN:VEVENT
+UID:lions-gate-portal-kundalini-activation-sound-healing-spinal-energetics-
+ 2026-08-08-sakala-community@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260809T010000Z
+DTEND:20260809T021500Z
+SUMMARY:LIONS GATE PORTAL Kundalini Activation - Sound Healing - Spinal Ene
+ rgetics
+LOCATION:Sakala Community\, 1660 Gilpin St\, Denver\, CO 80218
+DESCRIPTION:A 90-minute somatic activation session at Sakala Community in D
+ enver\, Saturday evening\, using sound bowls\, guided meditation\, breathi
+ ng techniques and mudras\; free.\n\nTickets: https://www.eventbrite.com/e/
+ lions-gate-portal-kundalini-activation-sound-healing-spinal-energetics-tic
+ kets-1994489895969
+URL:https://soundbathcalendar.com/event/lions-gate-portal-kundalini-activat
+ ion-sound-healing-spinal-energetics-2026-08-08-sakala-community/
+END:VEVENT
+BEGIN:VEVENT
 UID:soundscape-of-lightcourage-2026-08-08-8120-sheridan-blvd-building-c-sui
  te-208@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260809T010000Z
 DTEND:20260809T021500Z
 SUMMARY:Soundscape of Light-Courage
@@ -386,8 +255,26 @@ URL:https://soundbathcalendar.com/event/soundscape-of-lightcourage-2026-08-
  08-8120-sheridan-blvd-building-c-suite-208/
 END:VEVENT
 BEGIN:VEVENT
+UID:the-fifth-season-day-2-build-intermediate-yoga-buti-yin-yoga-sound-2026
+ -08-09-elevate-yoga-collective-eyc@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260809T150000Z
+DTEND:20260809T161500Z
+SUMMARY:The Fifth Season • Day 2: Build | Intermediate Yoga\, Buti\, Yin 
+ Yoga & Sound
+LOCATION:ELEVATE YOGA COLLECTIVE - EYC\, 5112 S College Ave #C\, Fort Colli
+ ns\, CO 80525
+DESCRIPTION:Day two of a week-long yoga immersion led by Alyssa Quintanar a
+ nd Terrel Harris at Elevate Yoga Collective in Fort Collins\, Sunday\, clo
+ sing with a yin yoga and sound bath played on live bowls and chimes.\n\nTi
+ ckets: https://www.eventbrite.com/e/the-fifth-season-day-2-build-intermedi
+ ate-yoga-buti-yin-yoga-sound-tickets-1995691095790
+URL:https://soundbathcalendar.com/event/the-fifth-season-day-2-build-interm
+ ediate-yoga-buti-yin-yoga-sound-2026-08-09-elevate-yoga-collective-eyc/
+END:VEVENT
+BEGIN:VEVENT
 UID:meditative-sound-bath-2026-08-09-reynolds-library@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260809T150000Z
 DTEND:20260809T161500Z
 SUMMARY:Meditative Sound Bath
@@ -401,7 +288,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:little-souls-sound-bath-2026-08-09-discover-your-spiritual-gifts-educat
  ion-event-center@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260809T160000Z
 DTEND:20260809T171500Z
 SUMMARY:Little Souls Sound Bath
@@ -414,9 +301,58 @@ URL:https://soundbathcalendar.com/event/little-souls-sound-bath-2026-08-09-
  discover-your-spiritual-gifts-education-event-center/
 END:VEVENT
 BEGIN:VEVENT
+UID:being-a-breathwork-journey-2026-08-09-nurture-the-wellcare-marketplace@
+ soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260809T190000Z
+DTEND:20260809T201500Z
+SUMMARY:BEing - A Breathwork Journey
+LOCATION:Nurture • The Wellcare Marketplace\, 2949 Federal Blvd\, Denver\
+ , CO 80211
+DESCRIPTION:A 90-minute guided breathwork journey with sound healing and Re
+ iki support at Nurture\, The Wellcare Marketplace on Federal Boulevard in 
+ Denver\, Sunday afternoon\; $75 to $105.\n\nTickets: https://www.eventbrit
+ e.com/e/being-a-breathwork-journey-tickets-1994109918446
+URL:https://soundbathcalendar.com/event/being-a-breathwork-journey-2026-08-
+ 09-nurture-the-wellcare-marketplace/
+END:VEVENT
+BEGIN:VEVENT
+UID:second-sunday-snip-sound-2026-08-09-harmonist-sanctuary-creative-studio
+ @soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260809T200000Z
+DTEND:20260809T211500Z
+SUMMARY:Second Sunday Snip & Sound
+LOCATION:Harmonist Sanctuary Creative Studio\, 4633 E Colfax Ave\, Denver\,
+  CO 80220
+DESCRIPTION:A monthly second-Sunday session from Tori Price at Harmonist Sa
+ nctuary on East Colfax\, Denver\, pairing a crystal singing bowl sound bat
+ h and guided meditation with intuitive collage making\; free.\n\nTickets: 
+ https://www.eventbrite.com/e/second-sunday-snip-sound-tickets-199242851933
+ 6
+URL:https://soundbathcalendar.com/event/second-sunday-snip-sound-2026-08-09
+ -harmonist-sanctuary-creative-studio/
+END:VEVENT
+BEGIN:VEVENT
+UID:vibrations-of-peace-gong-bath-sound-immersion-2026-08-09-5350-dtc-pkwy@
+ soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260809T213000Z
+DTEND:20260809T224500Z
+SUMMARY:Vibrations of Peace: Gong Bath & Sound Immersion
+LOCATION:5350 DTC Pkwy\, 5350 DTC Parkway
+DESCRIPTION:A gong bath and sound immersion with gentle movement and medita
+ tion led by Meg Munster in Denver (Greenwood Village)\, Sunday afternoon\;
+  $35\, followed by a community tea social.\n\nTickets: https://www.eventbr
+ ite.com/e/vibrations-of-peace-gong-bath-sound-immersion-tickets-1986134781
+ 597
+URL:https://soundbathcalendar.com/event/vibrations-of-peace-gong-bath-sound
+ -immersion-2026-08-09-5350-dtc-pkwy/
+END:VEVENT
+BEGIN:VEVENT
 UID:vibrations-of-peace-gong-bath-sound-immersion-2026-08-09-mile-high-mind
  fulness@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260809T213000Z
 DTEND:20260809T224500Z
 SUMMARY:Vibrations of Peace: Gong Bath & Sound Immersion
@@ -430,9 +366,38 @@ URL:https://soundbathcalendar.com/event/vibrations-of-peace-gong-bath-sound
  -immersion-2026-08-09-mile-high-mindfulness/
 END:VEVENT
 BEGIN:VEVENT
+UID:energy-healing-sound-bath-immersion-2026-08-09-green-light-reiki@soundb
+ athcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260809T220000Z
+DTEND:20260809T231500Z
+SUMMARY:Energy Healing + Sound Bath Immersion
+LOCATION:Green Light Reiki\, 1545 S Pearl St
+DESCRIPTION:An energy healing and sound bath immersion led by Kathy Sietos 
+ at Green Light Reiki in Denver's Platt Park\, Sunday afternoon\; $45.\n\nT
+ ickets: https://www.eventbrite.com/e/energy-healing-sound-bath-immersion-t
+ ickets-1996244146981
+URL:https://soundbathcalendar.com/event/energy-healing-sound-bath-immersion
+ -2026-08-09-green-light-reiki/
+END:VEVENT
+BEGIN:VEVENT
+UID:mindbody-moon-circle-2026-08-09-739-sherman-st@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260810T000000Z
+DTEND:20260810T011500Z
+SUMMARY:Mind-Body Moon Circle
+LOCATION:739 Sherman St\, 739 Sherman St\, Denver\, CO 80203
+DESCRIPTION:A 75-minute moon circle led by therapist Bethany Barta on Sherm
+ an Street in Denver\, Sunday evening\, combining mindful movement\, medita
+ tion\, sound healing and reflective practice.\n\nTickets: https://www.even
+ tbrite.com/e/mind-body-moon-circle-tickets-1994100810203
+URL:https://soundbathcalendar.com/event/mindbody-moon-circle-2026-08-09-739
+ -sherman-st/
+END:VEVENT
+BEGIN:VEVENT
 UID:community-sound-bath-session-2026-08-10-ivywild-school@soundbathcalenda
  r.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260811T000000Z
 DTEND:20260811T011500Z
 SUMMARY:Community Sound Bath Session
@@ -449,7 +414,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:new-moon-sound-healing-journey-2026-08-10-1545-s-pearl-st@soundbathcale
  ndar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260811T010000Z
 DTEND:20260811T021500Z
 SUMMARY:New Moon: Sound Healing Journey
@@ -464,7 +429,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:gong-bath-with-beth-2026-08-10-una-vida-meditation-movement@soundbathca
  lendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260811T011500Z
 DTEND:20260811T023000Z
 SUMMARY:Gong Bath with Beth
@@ -477,9 +442,41 @@ URL:https://soundbathcalendar.com/event/gong-bath-with-beth-2026-08-10-una-
  vida-meditation-movement/
 END:VEVENT
 BEGIN:VEVENT
+UID:the-fifth-season-day-4-expand-advanced-84-yin-yoga-sound-bath-2026-08-1
+ 1-elevate-yoga-collective-eyc@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260811T150000Z
+DTEND:20260811T161500Z
+SUMMARY:The Fifth Season • Day 4: Expand | Advanced 84 & Yin Yoga + Sound
+  Bath
+LOCATION:ELEVATE YOGA COLLECTIVE - EYC\, 5112 S College Ave #C\, Fort Colli
+ ns\, CO 80525
+DESCRIPTION:Day four of a week-long yoga immersion led by Alyssa Quintanar 
+ and Terrel Harris at Elevate Yoga Collective in Fort Collins\, Tuesday\, c
+ losing with long-held yin postures paired with live bowls and chimes.\n\nT
+ ickets: https://www.eventbrite.com/e/the-fifth-season-day-4-expand-advance
+ d-84-yin-yoga-sound-bath-tickets-1995697708569
+URL:https://soundbathcalendar.com/event/the-fifth-season-day-4-expand-advan
+ ced-84-yin-yoga-sound-bath-2026-08-11-elevate-yoga-collective-eyc/
+END:VEVENT
+BEGIN:VEVENT
+UID:eclipse-sound-journey-2026-08-11-9760-isabelle-rd@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260812T003000Z
+DTEND:20260812T014500Z
+SUMMARY:Eclipse Sound Journey
+LOCATION:9760 Isabelle Rd\, 9760 Isabelle Road
+DESCRIPTION:A two-hour eclipse gathering in Lafayette combining an astrolog
+ y reading\, guided meditation\, vocal energy healing and chanting\, with M
+ att\, Krystal and Rebecca Abraxas\, Tuesday evening.\n\nTickets: https://w
+ ww.eventbrite.com/e/eclipse-sound-journey-tickets-1994633632890
+URL:https://soundbathcalendar.com/event/eclipse-sound-journey-2026-08-11-97
+ 60-isabelle-rd/
+END:VEVENT
+BEGIN:VEVENT
 UID:floating-sound-bath-elise-nicole-2026-08-11-camino-massage-therapy@soun
  dbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260812T003000Z
 DTEND:20260812T014500Z
 SUMMARY:Floating Sound Bath – Elise Nicole
@@ -493,23 +490,9 @@ URL:https://soundbathcalendar.com/event/floating-sound-bath-elise-nicole-20
  26-08-11-camino-massage-therapy/
 END:VEVENT
 BEGIN:VEVENT
-UID:eclipse-sound-journey-2026-08-11-9760-isabelle-rd@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260812T003000Z
-DTEND:20260812T014500Z
-SUMMARY:Eclipse Sound Journey
-LOCATION:9760 Isabelle Rd\, 9760 Isabelle Road
-DESCRIPTION:A two-hour eclipse gathering in Lafayette combining an astrolog
- y reading\, guided meditation\, vocal energy healing and chanting\, with M
- att\, Krystal and Rebecca Abraxas\, Tuesday evening.\n\nTickets: https://w
- ww.eventbrite.com/e/eclipse-sound-journey-tickets-1994633632890
-URL:https://soundbathcalendar.com/event/eclipse-sound-journey-2026-08-11-97
- 60-isabelle-rd/
-END:VEVENT
-BEGIN:VEVENT
 UID:solar-eclipse-sunset-gong-bath-2026-08-11-north-boulder-park@soundbathc
  alendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260812T010000Z
 DTEND:20260812T021500Z
 SUMMARY:Solar Eclipse Sunset Gong Bath
@@ -521,24 +504,93 @@ URL:https://soundbathcalendar.com/event/solar-eclipse-sunset-gong-bath-2026
  -08-11-north-boulder-park/
 END:VEVENT
 BEGIN:VEVENT
-UID:free-sound-healing-in-the-park-lakewood-co-2026-08-12-green-gables-park
- @soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+UID:yoga-and-sound-bath-2026-08-11-green-light-reiki-healing-and-chakra-bal
+ ancing@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260812T010000Z
+DTEND:20260812T021500Z
+SUMMARY:Yoga and Sound Bath
+LOCATION:Green Light Reiki Healing and Chakra Balancing\, 1545 S Pearl St\,
+  Denver\, CO 80210
+DESCRIPTION:A weekly Tuesday session led by Yelena Sergeyevna at Green Ligh
+ t Reiki on South Pearl Street in Denver\, pairing breathwork\, gentle move
+ ment and meditation with a gong sound immersion\; $30.\n\nTickets: https:/
+ /www.eventbrite.com/e/yoga-and-sound-bath-tickets-1653225595259
+URL:https://soundbathcalendar.com/event/yoga-and-sound-bath-2026-08-11-gree
+ n-light-reiki-healing-and-chakra-balancing/
+END:VEVENT
+BEGIN:VEVENT
+UID:the-fifth-season-day-5-integrate-advanced-84-sol-ignite-sound-bath-2026
+ -08-12-elevate-yoga-collective-eyc@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260812T150000Z
+DTEND:20260812T161500Z
+SUMMARY:The Fifth Season • Day 5: Integrate | Advanced 84\, Sol Ignite & 
+ Sound Bath
+LOCATION:ELEVATE YOGA COLLECTIVE - EYC\, 5112 S College Ave #C\, Fort Colli
+ ns\, CO 80525
+DESCRIPTION:Closing day of a week-long yoga immersion led by Alyssa Quintan
+ ar and Terrel Harris at Elevate Yoga Collective in Fort Collins\, Wednesda
+ y\, ending with a bowls-and-chimes sound bath.\n\nTickets: https://www.eve
+ ntbrite.com/e/the-fifth-season-day-5-integrate-advanced-84-sol-ignite-soun
+ d-bath-tickets-1995698694518
+URL:https://soundbathcalendar.com/event/the-fifth-season-day-5-integrate-ad
+ vanced-84-sol-ignite-sound-bath-2026-08-12-elevate-yoga-collective-eyc/
+END:VEVENT
+BEGIN:VEVENT
+UID:himalayan-kriya-breathwork-and-sound-journey-2026-08-12-green-light-rei
+ ki@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260813T000000Z
+DTEND:20260813T011500Z
+SUMMARY:Himalayan Kriya\, Breathwork and Sound Journey
+LOCATION:Green Light Reiki\, 1545 S Pearl St\, Denver\, CO 80210
+DESCRIPTION:A kriya class at Green Light Reiki on South Pearl Street in Den
+ ver\, Wednesday evening\, combining breathwork\, movement\, mudras and man
+ tra and closing with a sound bath\; $30. No prior experience required.\n\n
+ Tickets: https://www.meetup.com/denver-gong-immersion-chakra-balancing-vib
+ ration-medicine/events/315891422/
+URL:https://soundbathcalendar.com/event/himalayan-kriya-breathwork-and-soun
+ d-journey-2026-08-12-green-light-reiki/
+END:VEVENT
+BEGIN:VEVENT
+UID:sacred-intention-gathering-2026-08-12-release-bodywork-healing@soundbat
+ hcalendar.com
+DTSTAMP:20260808T143931Z
 DTSTART:20260813T003000Z
 DTEND:20260813T014500Z
-SUMMARY:FREE Sound Healing in the Park | Lakewood\, CO
-LOCATION:Green Gables Park\, 1450 S. Garrison St.
-DESCRIPTION:An outdoor sound healing session with crystal singing bowls and
-  chimes at Green Gables Park in Lakewood\, Wednesday evening\; free.\n\nTi
- ckets: https://www.eventbrite.com/e/free-sound-healing-in-the-park-lakewoo
- d-co-tickets-1991018649377
-URL:https://soundbathcalendar.com/event/free-sound-healing-in-the-park-lake
- wood-co-2026-08-12-green-gables-park/
+SUMMARY:Sacred Intention Gathering
+LOCATION:Release Bodywork + Healing\, 5808 S Rapp St\, #265\, Littleton\, C
+ O 80120
+DESCRIPTION:A 90-minute gathering led by Tina Fleming and Dr. Kira Murphy a
+ t Release Bodywork + Healing in Littleton\, Wednesday evening\, combining 
+ meditation\, sound and intuitive guidance\; free.\n\nTickets: https://www.
+ eventbrite.com/e/sacred-intention-gathering-tickets-1994631617863
+URL:https://soundbathcalendar.com/event/sacred-intention-gathering-2026-08-
+ 12-release-bodywork-healing/
+END:VEVENT
+BEGIN:VEVENT
+UID:sunset-yoga-at-cheesman-park-pavilion-with-live-music-w-yoga-social-202
+ 6-08-12-the-pavilion-at-cheesman-park@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260813T003000Z
+DTEND:20260813T014500Z
+SUMMARY:Sunset Yoga at Cheesman Park Pavilion with Live Music w/ Yoga Socia
+ l
+LOCATION:The Pavilion at Cheesman Park\, 1900 E 11th Ave\, Denver\, CO 8020
+ 6
+DESCRIPTION:A 75-minute outdoor yoga class at the Cheesman Park Pavilion in
+  Denver\, Wednesday evening\, practised to live music from local musicians
+ \; donation-based\, $15 to $30 suggested.\n\nTickets: https://www.eventbri
+ te.com/e/sunset-yoga-at-cheesman-park-pavilion-with-live-music-w-yoga-soci
+ al-tickets-1986088265466
+URL:https://soundbathcalendar.com/event/sunset-yoga-at-cheesman-park-pavili
+ on-with-live-music-w-yoga-social-2026-08-12-the-pavilion-at-cheesman-park/
 END:VEVENT
 BEGIN:VEVENT
 UID:vibe-check-sound-bath-2026-08-12-the-hygienist-bar-oral-reset-teeth-cle
  aning-denver@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260813T003000Z
 DTEND:20260813T014500Z
 SUMMARY:Vibe\, check √ Sound Bath
@@ -553,9 +605,39 @@ URL:https://soundbathcalendar.com/event/vibe-check-sound-bath-2026-08-12-th
  e-hygienist-bar-oral-reset-teeth-cleaning-denver/
 END:VEVENT
 BEGIN:VEVENT
+UID:solar-eclipse-new-moon-outdoor-foothills-sound-bath-2026-08-12-rocky-mo
+ untain-restore-stretch@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260813T003000Z
+DTEND:20260813T014500Z
+SUMMARY:Solar Eclipse New Moon - Outdoor Foothills Sound Bath
+LOCATION:Rocky Mountain Restore & Stretch\, 3616 Soderburg Drive
+DESCRIPTION:An outdoor new-moon/solar-eclipse sound bath under the foothill
+ s rimrock at Rocky Mountain Restore & Stretch in Fort Collins\, Wednesday 
+ evening\; $47.\n\nTickets: https://www.eventbrite.com/e/solar-eclipse-new-
+ moon-outdoor-foothills-sound-bath-tickets-1996505573916
+URL:https://soundbathcalendar.com/event/solar-eclipse-new-moon-outdoor-foot
+ hills-sound-bath-2026-08-12-rocky-mountain-restore-stretch/
+END:VEVENT
+BEGIN:VEVENT
+UID:vibe-check-sound-bath-2026-08-12-the-hygienist-bar@soundbathcalendar.co
+ m
+DTSTAMP:20260808T143931Z
+DTSTART:20260813T003000Z
+DTEND:20260813T014500Z
+SUMMARY:Vibe\, check √ Sound Bath
+LOCATION:The Hygienist Bar\, 255 Detroit Street\, #Unit 200
+DESCRIPTION:A sound bath with Himalayan singing bowls\, Koshi chimes\, and 
+ frame drums hosted by Aspiring Phoenix Energies at The Hygienist Bar in De
+ nver's Cherry Creek\, Wednesday evening\; $45.\n\nTickets: https://www.eve
+ ntbrite.com/e/vibe-check-sound-bath-tickets-1996316671905
+URL:https://soundbathcalendar.com/event/vibe-check-sound-bath-2026-08-12-th
+ e-hygienist-bar/
+END:VEVENT
+BEGIN:VEVENT
 UID:donation-outdoor-sound-bath-2026-08-12-babi-yar-park@soundbathcalendar.
  com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260813T003000Z
 DTEND:20260813T014500Z
 SUMMARY:Donation - Outdoor Sound Bath
@@ -567,24 +649,24 @@ URL:https://soundbathcalendar.com/event/donation-outdoor-sound-bath-2026-08
  -12-babi-yar-park/
 END:VEVENT
 BEGIN:VEVENT
-UID:gong-journey-by-sound-murals-2026-08-12-harmonist-sanctuary@soundbathca
- lendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260813T010000Z
-DTEND:20260813T021500Z
-SUMMARY:Gong Journey by Sound Murals
-LOCATION:Harmonist Sanctuary\, 4633 East Colfax Avenue
-DESCRIPTION:A 60-minute gong journey built around a 36-inch gong at Harmoni
- st Sanctuary on East Colfax\, Denver\, Wednesday evening.\n\nTickets: http
- s://www.eventbrite.com/e/gong-journey-by-sound-murals-tickets-199624450404
- 9
-URL:https://soundbathcalendar.com/event/gong-journey-by-sound-murals-2026-0
- 8-12-harmonist-sanctuary/
+UID:free-sound-healing-in-the-park-lakewood-co-2026-08-12-green-gables-park
+ @soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260813T003000Z
+DTEND:20260813T014500Z
+SUMMARY:FREE Sound Healing in the Park | Lakewood\, CO
+LOCATION:Green Gables Park\, 1450 S. Garrison St.
+DESCRIPTION:An outdoor sound healing session with crystal singing bowls and
+  chimes at Green Gables Park in Lakewood\, Wednesday evening\; free.\n\nTi
+ ckets: https://www.eventbrite.com/e/free-sound-healing-in-the-park-lakewoo
+ d-co-tickets-1991018649377
+URL:https://soundbathcalendar.com/event/free-sound-healing-in-the-park-lake
+ wood-co-2026-08-12-green-gables-park/
 END:VEVENT
 BEGIN:VEVENT
 UID:into-the-shadow-solar-eclipse-sound-bath-2026-08-12-singing-bowls-of-th
  e-rockies@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260813T010000Z
 DTEND:20260813T021500Z
 SUMMARY:Into the Shadow: Solar Eclipse Sound Bath
@@ -600,7 +682,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:solar-eclipse-soundbath-at-the-seedlings-dome-2026-08-12-the-seedlings-
  dome@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260813T010000Z
 DTEND:20260813T021500Z
 SUMMARY:Solar Eclipse Soundbath at the Seedlings Dome
@@ -613,8 +695,36 @@ URL:https://soundbathcalendar.com/event/solar-eclipse-soundbath-at-the-seed
  lings-dome-2026-08-12-the-seedlings-dome/
 END:VEVENT
 BEGIN:VEVENT
+UID:thompson-park-sound-bath-2026-08-12-thompson-park@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260813T010000Z
+DTEND:20260813T021500Z
+SUMMARY:Thompson Park Sound Bath
+LOCATION:Thompson Park\, 420 Bross Street
+DESCRIPTION:A free outdoor sound bath at Thompson Park in Longmont (Boulder
+  area)\, Wednesday evening.\n\nTickets: https://www.eventbrite.com/e/thomp
+ son-park-sound-bath-tickets-1996487314301
+URL:https://soundbathcalendar.com/event/thompson-park-sound-bath-2026-08-12
+ -thompson-park/
+END:VEVENT
+BEGIN:VEVENT
+UID:toning-and-crystal-bowl-sound-bath-2026-08-12-first-spiritual-science-c
+ hurch@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260813T010000Z
+DTEND:20260813T021500Z
+SUMMARY:Toning and Crystal Bowl Sound Bath
+LOCATION:First Spiritual Science Church\, 3375 S Dahlia St
+DESCRIPTION:Quantum Wellness's recurring second-Wednesday toning and crysta
+ l singing bowl sound bath at First Spiritual Science Church in Denver\, We
+ dnesday evening\; donation-based.\n\nTickets: https://qwellness.abmp.com/e
+ vents
+URL:https://soundbathcalendar.com/event/toning-and-crystal-bowl-sound-bath-
+ 2026-08-12-first-spiritual-science-church/
+END:VEVENT
+BEGIN:VEVENT
 UID:reiki-sound-bath-2026-08-12-the-healing-hive@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260813T010000Z
 DTEND:20260813T021500Z
 SUMMARY:Reiki Sound Bath
@@ -626,8 +736,40 @@ URL:https://soundbathcalendar.com/event/reiki-sound-bath-2026-08-12-the-hea
  ling-hive/
 END:VEVENT
 BEGIN:VEVENT
+UID:gong-journey-by-sound-murals-2026-08-12-harmonist-sanctuary@soundbathca
+ lendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260813T010000Z
+DTEND:20260813T021500Z
+SUMMARY:Gong Journey by Sound Murals
+LOCATION:Harmonist Sanctuary\, 4633 East Colfax Avenue
+DESCRIPTION:A 60-minute gong journey built around a 36-inch gong at Harmoni
+ st Sanctuary on East Colfax\, Denver\, Wednesday evening.\n\nTickets: http
+ s://www.eventbrite.com/e/gong-journey-by-sound-murals-tickets-199624450404
+ 9
+URL:https://soundbathcalendar.com/event/gong-journey-by-sound-murals-2026-0
+ 8-12-harmonist-sanctuary/
+END:VEVENT
+BEGIN:VEVENT
+UID:transform-a-full-moon-eclipse-gathering-for-women-restorative-yoga-soun
+ d-bath-2026-08-12-the-living-room@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260813T013000Z
+DTEND:20260813T024500Z
+SUMMARY:TRANSFORM: A Full Moon & Eclipse Gathering for Women (Restorative Y
+ oga & Sound Bath)
+LOCATION:The Living Room\, 155 North College Avenue\, #Suite 201
+DESCRIPTION:A restorative yoga and crystal-singing-bowl sound bath segment 
+ within a women's full-moon/eclipse evening gathering at The Living Room in
+  Fort Collins\; $37 for the full event.\n\nTickets: https://www.eventbrite
+ .com/e/transform-a-full-moon-eclipse-gathering-for-women-tickets-199640470
+ 8224
+URL:https://soundbathcalendar.com/event/transform-a-full-moon-eclipse-gathe
+ ring-for-women-restorative-yoga-sound-bath-2026-08-12-the-living-room/
+END:VEVENT
+BEGIN:VEVENT
 UID:new-moon-sound-bath-2026-08-13-sacred-society@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260814T000000Z
 DTEND:20260814T011500Z
 SUMMARY:New Moon Sound Bath
@@ -639,24 +781,9 @@ URL:https://soundbathcalendar.com/event/new-moon-sound-bath-2026-08-13-sacr
  ed-society/
 END:VEVENT
 BEGIN:VEVENT
-UID:thursday-mind-body-reset-gong-journey-2026-08-13-rocky-mountain-restore
- -stretch-llc@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260814T001500Z
-DTEND:20260814T013000Z
-SUMMARY:Thursday Mind Body Reset — Gong Journey
-LOCATION:Rocky Mountain Restore & Stretch LLC\, 3616 Soderburg Drive
-DESCRIPTION:A weekly Thursday-evening gong immersion at Rocky Mountain Rest
- ore & Stretch on Soderburg Drive\, Fort Collins\, followed by tea.\n\nTick
- ets: https://www.eventbrite.com/e/thursday-mind-body-reset-gong-journey-ti
- ckets-1994098983740
-URL:https://soundbathcalendar.com/event/thursday-mind-body-reset-gong-journ
- ey-2026-08-13-rocky-mountain-restore-stretch-llc/
-END:VEVENT
-BEGIN:VEVENT
 UID:thursdays-weekly-gong-journey-2026-08-13-rocky-mountain-restore-stretch
  @soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260814T001500Z
 DTEND:20260814T013000Z
 SUMMARY:Thursday's Weekly Gong Journey
@@ -671,9 +798,24 @@ URL:https://soundbathcalendar.com/event/thursdays-weekly-gong-journey-2026-
  08-13-rocky-mountain-restore-stretch/
 END:VEVENT
 BEGIN:VEVENT
+UID:thursday-mind-body-reset-gong-journey-2026-08-13-rocky-mountain-restore
+ -stretch-llc@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260814T001500Z
+DTEND:20260814T013000Z
+SUMMARY:Thursday Mind Body Reset — Gong Journey
+LOCATION:Rocky Mountain Restore & Stretch LLC\, 3616 Soderburg Drive
+DESCRIPTION:A weekly Thursday-evening gong immersion at Rocky Mountain Rest
+ ore & Stretch on Soderburg Drive\, Fort Collins\, followed by tea.\n\nTick
+ ets: https://www.eventbrite.com/e/thursday-mind-body-reset-gong-journey-ti
+ ckets-1994098983740
+URL:https://soundbathcalendar.com/event/thursday-mind-body-reset-gong-journ
+ ey-2026-08-13-rocky-mountain-restore-stretch-llc/
+END:VEVENT
+BEGIN:VEVENT
 UID:heart-coherence-a-new-moon-sound-bath-for-breath-connection-renewal-202
  6-08-13-singing-bowls-of-the-rockies@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260814T010000Z
 DTEND:20260814T021500Z
 SUMMARY:Heart Coherence: A New Moon Sound Bath for Breath\, Connection & Re
@@ -689,7 +831,7 @@ URL:https://soundbathcalendar.com/event/heart-coherence-a-new-moon-sound-ba
 END:VEVENT
 BEGIN:VEVENT
 UID:bliss-sacred-sound-fest-2026-08-14-wild-cider@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260814T200000Z
 DTEND:20260814T211500Z
 SUMMARY:BLISS\, Sacred Sound Fest
@@ -704,7 +846,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:sound-bath-restorative-experience-2026-08-14-sacred-society@soundbathca
  lendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260814T230000Z
 DTEND:20260815T001500Z
 SUMMARY:Sound Bath: Restorative Experience
@@ -716,9 +858,38 @@ URL:https://soundbathcalendar.com/event/sound-bath-restorative-experience-2
  026-08-14-sacred-society/
 END:VEVENT
 BEGIN:VEVENT
+UID:chakra-balancing-sound-healing-immersion-2026-08-14-1545-s-pearl-st@sou
+ ndbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260815T010000Z
+DTEND:20260815T021500Z
+SUMMARY:Chakra Balancing: Sound Healing Immersion
+LOCATION:1545 S Pearl St\, 1545 South Pearl Street
+DESCRIPTION:A one-hour chakra-focused sound healing immersion at 1545 S Pea
+ rl St\, Denver\, Friday evening.\n\nTickets: https://www.eventbrite.com/e/
+ chakra-balancing-sound-healing-immersion-tickets-1995703211027
+URL:https://soundbathcalendar.com/event/chakra-balancing-sound-healing-imme
+ rsion-2026-08-14-1545-s-pearl-st/
+END:VEVENT
+BEGIN:VEVENT
+UID:sound-embodiment-tibetan-bowl-gong-sound-bath-2026-08-14-om-ananda@soun
+ dbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260815T010000Z
+DTEND:20260815T021500Z
+SUMMARY:Sound Embodiment: Tibetan Bowl & Gong Sound Bath
+LOCATION:Om Ananda\, 115 N College Ave\, Suite 200\, Fort Collins\, CO 8052
+ 4
+DESCRIPTION:A Tibetan bowl and gong sound bath at Om Ananda yoga studio in 
+ downtown Fort Collins\, newly discovered operator Sound Embodiment.\n\nTic
+ kets: https://api.hellowalla.com/previews/135463?b=11699&type=enrollment
+URL:https://soundbathcalendar.com/event/sound-embodiment-tibetan-bowl-gong-
+ sound-bath-2026-08-14-om-ananda/
+END:VEVENT
+BEGIN:VEVENT
 UID:friday-night-frequencies-a-soundbath-to-release-the-week-2026-08-14-una
  -vida-meditation-movement@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260815T010000Z
 DTEND:20260815T021500Z
 SUMMARY:Friday Night Frequencies - A Soundbath to Release the Week
@@ -732,38 +903,9 @@ URL:https://soundbathcalendar.com/event/friday-night-frequencies-a-soundbat
  h-to-release-the-week-2026-08-14-una-vida-meditation-movement/
 END:VEVENT
 BEGIN:VEVENT
-UID:sound-embodiment-tibetan-bowl-gong-sound-bath-2026-08-14-om-ananda@soun
- dbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260815T010000Z
-DTEND:20260815T021500Z
-SUMMARY:Sound Embodiment: Tibetan Bowl & Gong Sound Bath
-LOCATION:Om Ananda\, 115 N College Ave\, Suite 200\, Fort Collins\, CO 8052
- 4
-DESCRIPTION:A Tibetan bowl and gong sound bath at Om Ananda yoga studio in 
- downtown Fort Collins\, newly discovered operator Sound Embodiment.\n\nTic
- kets: https://api.hellowalla.com/previews/135463?b=11699&type=enrollment
-URL:https://soundbathcalendar.com/event/sound-embodiment-tibetan-bowl-gong-
- sound-bath-2026-08-14-om-ananda/
-END:VEVENT
-BEGIN:VEVENT
-UID:chakra-balancing-sound-healing-immersion-2026-08-14-1545-s-pearl-st@sou
- ndbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260815T010000Z
-DTEND:20260815T021500Z
-SUMMARY:Chakra Balancing: Sound Healing Immersion
-LOCATION:1545 S Pearl St\, 1545 South Pearl Street
-DESCRIPTION:A one-hour chakra-focused sound healing immersion at 1545 S Pea
- rl St\, Denver\, Friday evening.\n\nTickets: https://www.eventbrite.com/e/
- chakra-balancing-sound-healing-immersion-tickets-1995703211027
-URL:https://soundbathcalendar.com/event/chakra-balancing-sound-healing-imme
- rsion-2026-08-14-1545-s-pearl-st/
-END:VEVENT
-BEGIN:VEVENT
 UID:saturday-morning-sound-bath-2026-08-15-1545-s-pearl-st@soundbathcalenda
  r.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260815T160000Z
 DTEND:20260815T171500Z
 SUMMARY:Saturday Morning Sound Bath
@@ -777,7 +919,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:hearts-release-sound-bath-for-letting-go-2026-08-15-singing-bowls-of-th
  e-rockies@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260815T163000Z
 DTEND:20260815T174500Z
 SUMMARY:Heart's Release: Sound Bath for Letting Go
@@ -793,7 +935,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:community-wellness-experiencesound-bath-salt-room-august-15th-2026-08-1
  5-edenology-holistic-wellness@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260815T190000Z
 DTEND:20260815T201500Z
 SUMMARY:Community Wellness Experience-Sound Bath + Salt Room August 15th
@@ -809,7 +951,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:sound-bath-journey-in-the-salt-cave-2026-08-15-333-west-south-boulder-r
  oad-louisville-co@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260815T203000Z
 DTEND:20260815T214500Z
 SUMMARY:Sound Bath Journey in the Salt Cave
@@ -826,7 +968,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:wash-park-psychic-sound-bath-2026-08-15-washington-park-united-methodis
  t-church@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260815T210000Z
 DTEND:20260815T221500Z
 SUMMARY:Wash Park Psychic Sound Bath
@@ -842,7 +984,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:wash-park-psychic-sound-bath-2026-08-15-washington-park@soundbathcalend
  ar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260815T210000Z
 DTEND:20260815T221500Z
 SUMMARY:Wash Park Psychic Sound Bath
@@ -857,7 +999,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:restorative-yoga-sound-bath-2026-08-15-crystal-communitea-shop@soundbat
  hcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260816T010000Z
 DTEND:20260816T021500Z
 SUMMARY:Restorative Yoga Sound Bath
@@ -873,7 +1015,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:nlp-soundbath-experience-2026-08-16-sacred-society@soundbathcalendar.co
  m
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260816T213000Z
 DTEND:20260816T224500Z
 SUMMARY:NLP Soundbath Experience
@@ -887,7 +1029,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:summer-drift-sundays-guided-meditation-sound-2026-08-16-lazy-arrow-ranc
  h-retreat-center@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260816T220000Z
 DTEND:20260816T231500Z
 SUMMARY:Summer Drift Sundays: Guided Meditation & Sound
@@ -901,7 +1043,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:summer-drift-sundays-guided-meditation-sound-2026-08-16-ascended-minds@
  soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260816T220000Z
 DTEND:20260816T231500Z
 SUMMARY:Summer Drift Sundays: Guided Meditation & Sound
@@ -915,7 +1057,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:selfcare-sunday-sound-bath-a-path-to-wellness-and-peace-2026-08-16-sing
  ing-bowls-of-the-rockies@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260816T223000Z
 DTEND:20260816T234500Z
 SUMMARY:Self-Care Sunday Sound Bath: A Path to Wellness and Peace
@@ -931,7 +1073,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:sunday-night-reset-yoga-sound-healing-2026-08-16-1633-fillmore-st@sound
  bathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260816T230000Z
 DTEND:20260817T001500Z
 SUMMARY:Sunday Night Reset: Yoga + Sound Healing
@@ -946,7 +1088,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:temple-of-echoes-sound-ceremony-in-the-cave-of-the-winds-2026-08-16-cav
  e-of-the-winds-mountain-park@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260817T013000Z
 DTEND:20260817T024500Z
 SUMMARY:Temple of Echoes: Sound Ceremony in the Cave of the Winds
@@ -963,7 +1105,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:communal-quartz-sound-bath-2026-08-17-colorado-psychedelic-church@sound
  bathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260818T000000Z
 DTEND:20260818T011500Z
 SUMMARY:Communal Quartz Sound Bath
@@ -978,7 +1120,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:breathing-into-peace-pranayama-and-sound-healing-journey-2026-08-17-154
  5-s-pearl-st@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260818T010000Z
 DTEND:20260818T021500Z
 SUMMARY:Breathing into Peace: Pranayama and Sound Healing Journey
@@ -993,7 +1135,7 @@ URL:https://soundbathcalendar.com/event/breathing-into-peace-pranayama-and-
 END:VEVENT
 BEGIN:VEVENT
 UID:breathwork-sound-bath-journey-2026-08-19-sakala@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260820T000000Z
 DTEND:20260820T011500Z
 SUMMARY:Breathwork & Sound Bath Journey
@@ -1007,7 +1149,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:sounds-for-the-soul-a-soul-alignment-sound-bath-2026-08-19-the-way-home
  -to-you@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260820T003000Z
 DTEND:20260820T014500Z
 SUMMARY:Sounds for the Soul: a Soul Alignment Sound Bath
@@ -1020,7 +1162,7 @@ URL:https://soundbathcalendar.com/event/sounds-for-the-soul-a-soul-alignmen
 END:VEVENT
 BEGIN:VEVENT
 UID:inner-alignment-2026-08-19-1545-s-pearl-st@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260820T003000Z
 DTEND:20260820T014500Z
 SUMMARY:Inner Alignment
@@ -1034,7 +1176,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:donation-outdoor-sound-bath-2026-08-19-babi-yar-park@soundbathcalendar.
  com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260820T003000Z
 DTEND:20260820T014500Z
 SUMMARY:Donation - Outdoor Sound Bath
@@ -1048,7 +1190,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:sweet-sound-bath-smiley-2026-08-19-smiley-branch-library@soundbathcalen
  dar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260820T010000Z
 DTEND:20260820T021500Z
 SUMMARY:Sweet Sound Bath - Smiley
@@ -1061,24 +1203,9 @@ URL:https://soundbathcalendar.com/event/sweet-sound-bath-smiley-2026-08-19-
  smiley-branch-library/
 END:VEVENT
 BEGIN:VEVENT
-UID:candlelight-sound-bath-2026-08-19-harmonist-sanctuary@soundbathcalendar
- .com
-DTSTAMP:20260804T042200Z
-DTSTART:20260820T011500Z
-DTEND:20260820T023000Z
-SUMMARY:Candlelight Sound Bath
-LOCATION:Harmonist Sanctuary\, 4633 East Colfax Avenue
-DESCRIPTION:A candlelit hour of crystal singing bowls\, elemental chimes an
- d atmospheric instruments at Harmonist Sanctuary on East Colfax\, Denver\;
-  third Wednesday of the month\, doors at 7pm.\n\nTickets: https://www.even
- tbrite.com/e/candlelight-sound-bath-tickets-1982925649998
-URL:https://soundbathcalendar.com/event/candlelight-sound-bath-2026-08-19-h
- armonist-sanctuary/
-END:VEVENT
-BEGIN:VEVENT
 UID:candlelight-sound-bath-a-monthly-midweek-reset-2026-08-19-harmonist-san
  ctuary@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260820T011500Z
 DTEND:20260820T023000Z
 SUMMARY:Candlelight Sound Bath: A Monthly\, Mid-Week Reset
@@ -1091,9 +1218,24 @@ URL:https://soundbathcalendar.com/event/candlelight-sound-bath-a-monthly-mi
  dweek-reset-2026-08-19-harmonist-sanctuary/
 END:VEVENT
 BEGIN:VEVENT
+UID:candlelight-sound-bath-2026-08-19-harmonist-sanctuary@soundbathcalendar
+ .com
+DTSTAMP:20260808T143931Z
+DTSTART:20260820T011500Z
+DTEND:20260820T023000Z
+SUMMARY:Candlelight Sound Bath
+LOCATION:Harmonist Sanctuary\, 4633 East Colfax Avenue
+DESCRIPTION:A candlelit hour of crystal singing bowls\, elemental chimes an
+ d atmospheric instruments at Harmonist Sanctuary on East Colfax\, Denver\;
+  third Wednesday of the month\, doors at 7pm.\n\nTickets: https://www.even
+ tbrite.com/e/candlelight-sound-bath-tickets-1982925649998
+URL:https://soundbathcalendar.com/event/candlelight-sound-bath-2026-08-19-h
+ armonist-sanctuary/
+END:VEVENT
+BEGIN:VEVENT
 UID:thursday-mind-body-reset-gong-journey-2026-08-20-rocky-mountain-restore
  -stretch-llc@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260821T001500Z
 DTEND:20260821T013000Z
 SUMMARY:Thursday Mind Body Reset — Gong Journey
@@ -1108,7 +1250,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:sweet-sound-bath-rooted-heart-2026-08-20-rooted-heart-yoga-and-wellness
  @soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260821T010000Z
 DTEND:20260821T021500Z
 SUMMARY:Sweet Sound Bath- Rooted Heart
@@ -1123,7 +1265,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:sweet-sound-bath-rooted-heart-2026-08-20-rooted-heart@soundbathcalendar
  .com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260821T010000Z
 DTEND:20260821T021500Z
 SUMMARY:Sweet Sound Bath - Rooted Heart
@@ -1137,7 +1279,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:sacred-resonance-sound-healing-2026-08-21-unity-of-boulder-spiritual-ce
  nter@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260822T010000Z
 DTEND:20260822T021500Z
 SUMMARY:Sacred Resonance Sound Healing
@@ -1153,7 +1295,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:cave-of-the-winds-sound-bath-2026-08-21-cave-of-the-winds-mountain-park
  @soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260822T013000Z
 DTEND:20260822T024500Z
 SUMMARY:Cave of the Winds Sound Bath
@@ -1168,7 +1310,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:healing-gong-bath-2026-08-22-gather-yoga-and-wellness@soundbathcalendar
  .com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260822T123000Z
 DTEND:20260822T134500Z
 SUMMARY:Healing Gong Bath
@@ -1182,7 +1324,7 @@ URL:https://soundbathcalendar.com/event/healing-gong-bath-2026-08-22-gather
 END:VEVENT
 BEGIN:VEVENT
 UID:workshop-somatic-sound-2026-08-22-sacred-society@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260822T163000Z
 DTEND:20260822T174500Z
 SUMMARY:Workshop: Somatic Sound
@@ -1196,7 +1338,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:august-yoga-and-sound-bath-by-the-creek-2026-08-23-the-golden-hotel-asc
  end-hotel-collection@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260823T153000Z
 DTEND:20260823T164500Z
 SUMMARY:August Yoga and Sound Bath by the Creek
@@ -1211,7 +1353,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:sundays-of-sound-mind-body-reset-gong-journey-2026-08-23-rocky-mountain
  -restore-stretch-llc@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260824T000000Z
 DTEND:20260824T011500Z
 SUMMARY:Sundays of Sound -Mind Body Reset Gong Journey
@@ -1226,7 +1368,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:reiki-healing-meditation-and-sound-healing-immersion-2026-08-24-1545-s-
  pearl-st@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260825T010000Z
 DTEND:20260825T021500Z
 SUMMARY:Reiki Healing Meditation and Sound Healing Immersion

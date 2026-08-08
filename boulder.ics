@@ -5,40 +5,9 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:Sound baths in Boulder
 BEGIN:VEVENT
-UID:wednesday-meditation-2026-08-05-unity-of-boulder-spiritual-center@sound
- bathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260806T010000Z
-DTEND:20260806T021500Z
-SUMMARY:Wednesday Meditation
-LOCATION:Unity of Boulder Spiritual Center\, 2855 Folsom St\, Boulder\, CO 
- 80304
-DESCRIPTION:A weekly guided meditation with a sound bath component (crystal
-  and Tibetan singing bowls\, native flute or chanting) led by Norma at Uni
- ty of Boulder\, Wednesday August 5 at 7:00 PM. Free.\n\nTickets: https://u
- nityofboulder.com/events/wednesday-meditation/
-URL:https://soundbathcalendar.com/event/wednesday-meditation-2026-08-05-uni
- ty-of-boulder-spiritual-center/
-END:VEVENT
-BEGIN:VEVENT
-UID:sound-bath-ceremony-2026-08-06-una-vida-meditation-movement@soundbathca
- lendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260807T003000Z
-DTEND:20260807T014500Z
-SUMMARY:Sound Bath Ceremony
-LOCATION:Una Vida Meditation & Movement\, 7960 Niwot Road\, Suite B-12\, Lo
- ngmont\, CO 80503
-DESCRIPTION:A sound bath ceremony led by Laura Riehman at Una Vida Meditati
- on & Movement in Boulder\, Thursday evening\; $25–40.\n\nTickets: https:
- //www.eventbrite.com/e/sound-bath-ceremony-tickets-1993974556575
-URL:https://soundbathcalendar.com/event/sound-bath-ceremony-2026-08-06-una-
- vida-meditation-movement/
-END:VEVENT
-BEGIN:VEVENT
 UID:experience-hu-sacred-sound-ancient-mantra-2026-08-08-north-boulder-bran
  ch-library@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260808T193000Z
 DTEND:20260808T204500Z
 SUMMARY:Experience HU-- Sacred Sound\, Ancient Mantra
@@ -52,7 +21,7 @@ URL:https://soundbathcalendar.com/event/experience-hu-sacred-sound-ancient-
 END:VEVENT
 BEGIN:VEVENT
 UID:meditative-sound-bath-2026-08-09-reynolds-library@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260809T150000Z
 DTEND:20260809T161500Z
 SUMMARY:Meditative Sound Bath
@@ -66,7 +35,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:gong-bath-with-beth-2026-08-10-una-vida-meditation-movement@soundbathca
  lendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260811T011500Z
 DTEND:20260811T023000Z
 SUMMARY:Gong Bath with Beth
@@ -80,7 +49,7 @@ URL:https://soundbathcalendar.com/event/gong-bath-with-beth-2026-08-10-una-
 END:VEVENT
 BEGIN:VEVENT
 UID:eclipse-sound-journey-2026-08-11-9760-isabelle-rd@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260812T003000Z
 DTEND:20260812T014500Z
 SUMMARY:Eclipse Sound Journey
@@ -95,7 +64,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:solar-eclipse-sunset-gong-bath-2026-08-11-north-boulder-park@soundbathc
  alendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260812T010000Z
 DTEND:20260812T021500Z
 SUMMARY:Solar Eclipse Sunset Gong Bath
@@ -107,8 +76,21 @@ URL:https://soundbathcalendar.com/event/solar-eclipse-sunset-gong-bath-2026
  -08-11-north-boulder-park/
 END:VEVENT
 BEGIN:VEVENT
+UID:thompson-park-sound-bath-2026-08-12-thompson-park@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260813T010000Z
+DTEND:20260813T021500Z
+SUMMARY:Thompson Park Sound Bath
+LOCATION:Thompson Park\, 420 Bross Street
+DESCRIPTION:A free outdoor sound bath at Thompson Park in Longmont (Boulder
+  area)\, Wednesday evening.\n\nTickets: https://www.eventbrite.com/e/thomp
+ son-park-sound-bath-tickets-1996487314301
+URL:https://soundbathcalendar.com/event/thompson-park-sound-bath-2026-08-12
+ -thompson-park/
+END:VEVENT
+BEGIN:VEVENT
 UID:bliss-sacred-sound-fest-2026-08-14-wild-cider@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260814T200000Z
 DTEND:20260814T211500Z
 SUMMARY:BLISS\, Sacred Sound Fest
@@ -123,7 +105,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:friday-night-frequencies-a-soundbath-to-release-the-week-2026-08-14-una
  -vida-meditation-movement@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260815T010000Z
 DTEND:20260815T021500Z
 SUMMARY:Friday Night Frequencies - A Soundbath to Release the Week
@@ -139,7 +121,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:sound-bath-journey-in-the-salt-cave-2026-08-15-333-west-south-boulder-r
  oad-louisville-co@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260815T203000Z
 DTEND:20260815T214500Z
 SUMMARY:Sound Bath Journey in the Salt Cave
@@ -156,7 +138,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:sacred-resonance-sound-healing-2026-08-21-unity-of-boulder-spiritual-ce
  nter@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260808T143931Z
 DTSTART:20260822T010000Z
 DTEND:20260822T021500Z
 SUMMARY:Sacred Resonance Sound Healing

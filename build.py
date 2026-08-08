@@ -279,6 +279,79 @@ def _write_page(output, html, pages_built):
     return True
 
 
+def _redirect_stub(output, target, title=None):
+    """The site's one redirect representation: meta-refresh + JS replace for
+    the visitor, rel=canonical at the target + noindex for Google.
+
+    GitHub Pages serves static files only — it cannot emit a 301 — so this
+    stub is the strongest signal available for a URL that has moved. `target`
+    is relative to `output`'s directory (or absolute http(s)).
+    """
+    safe_target = html_mod.escape(target, quote=True)
+    safe_title = html_mod.escape(title or f'Redirecting… | {SITE_NAME}',
+                                 quote=True)
+    if target.startswith(('http://', 'https://')):
+        canonical_href = target
+    else:
+        _resolved = posixpath.normpath(posixpath.join(
+            posixpath.dirname(output), target))
+        canonical_href = f'{SITE_URL}/{"" if _resolved == "." else _resolved}'
+        if target.endswith('/') and not canonical_href.endswith('/'):
+            canonical_href += '/'
+    safe_canonical = html_mod.escape(canonical_href, quote=True)
+    return (
+        '<!DOCTYPE html>\n'
+        '<html lang="en">\n'
+        '<head>\n'
+        '<meta charset="utf-8">\n'
+        f'<title>{safe_title}</title>\n'
+        f'<link rel="canonical" href="{safe_canonical}">\n'
+        f'<meta http-equiv="refresh" content="0; url={safe_target}">\n'
+        '<meta name="robots" content="noindex">\n'
+        '</head>\n'
+        '<body>\n'
+        f'<p>This page has moved. Redirecting to <a href="{safe_target}">{safe_target}</a>.</p>\n'
+        f'<script>window.location.replace("{safe_target}");</script>\n'
+        '</body>\n'
+        '</html>\n'
+    )
+
+
+def build_retired_redirects(pages_built):
+    """Keep retired URLs answering 200-with-canonical instead of 404.
+
+    A page Google has indexed must never simply vanish. The generated entity
+    dirs (event/, venue/, operator/, practitioner/) are rmtree'd and rebuilt
+    from the live feeds on every build, so a room that gets renamed or a post
+    that gets unpublished takes its URL down with it — and Search Console
+    reports the hole as 'Not found (404)' weeks later, long after the cause is
+    forgotten. `_src/redirects.json` is the durable record of those URLs:
+    {"<retired output path>": "<target>"} , target relative to the retired
+    path's own directory, exactly like a page config's `redirect_to`.
+
+    Runs LAST in build(), after every builder that clears a directory —
+    otherwise a stub written into venue/ or event/ would be rmtree'd out from
+    under itself. A path that a real page already claimed this build is
+    skipped: a live page always outranks a tombstone.
+    """
+    path = os.path.join(SRC, 'redirects.json')
+    if not os.path.exists(path):
+        return
+    print('\nGenerating retired-URL redirects...')
+    retired = json.loads(read(path))
+    live = set(pages_built)
+    for output in sorted(retired):
+        if output.startswith('_'):   # `_comment` and friends, not a path
+            continue
+        target = retired[output]
+        if output in live:
+            print(f'  – {output} skipped — a live page owns this path now')
+            continue
+        stub = _redirect_stub(output, target)
+        if _write_page(output, stub, pages_built):
+            print(f'  ↪ {output} → {target}')
+
+
 def build():
     base   = read(os.path.join(LAYOUTS,  'base.html'))
     header = read(os.path.join(PARTIALS, 'header.html'))
@@ -381,35 +454,9 @@ def build():
         if config.get('redirect_to'):
             redirect_target = config['redirect_to']
             redirect_output = config.get('output', f'{page_name}.html')
-            safe_target = html_mod.escape(redirect_target, quote=True)
-            redirect_title = html_mod.escape(
-                config.get('title', f'Redirecting… | {SITE_NAME}'), quote=True
-            )
-            if redirect_target.startswith(('http://', 'https://')):
-                canonical_href = redirect_target
-            else:
-                _resolved = posixpath.normpath(posixpath.join(
-                    posixpath.dirname(redirect_output), redirect_target))
-                canonical_href = f'{SITE_URL}/{"" if _resolved == "." else _resolved}'
-                if redirect_target.endswith('/') and not canonical_href.endswith('/'):
-                    canonical_href += '/'
-            safe_canonical = html_mod.escape(canonical_href, quote=True)
-            stub = (
-                '<!DOCTYPE html>\n'
-                '<html lang="en">\n'
-                '<head>\n'
-                '<meta charset="utf-8">\n'
-                f'<title>{redirect_title}</title>\n'
-                f'<link rel="canonical" href="{safe_canonical}">\n'
-                f'<meta http-equiv="refresh" content="0; url={safe_target}">\n'
-                '<meta name="robots" content="noindex">\n'
-                '</head>\n'
-                '<body>\n'
-                f'<p>This page has moved. Redirecting to <a href="{safe_target}">{safe_target}</a>.</p>\n'
-                f'<script>window.location.replace("{safe_target}");</script>\n'
-                '</body>\n'
-                '</html>\n'
-            )
+            stub = _redirect_stub(
+                redirect_output, redirect_target,
+                config.get('title', f'Redirecting… | {SITE_NAME}'))
             if _write_page(redirect_output, stub, pages_built):
                 print(f'  ↪ {redirect_output} → {redirect_target}')
             continue
@@ -621,6 +668,11 @@ def build():
     _blog_outputs, _blog_sitemap = build_blog_pages(
         base, header, footer, cal_now)
     pages_built.extend(_blog_outputs)
+
+    # --- Retired URLs (_src/redirects.json) ---
+    # LAST of the page builders on purpose: every builder above may rmtree its
+    # own output dir, which would take a stub written into it with it.
+    build_retired_redirects(pages_built)
 
     # --- ICS feeds (/front-range.ics, /<city>.ics) — Track B B.4 ---
     build_ics_feeds(cal_rows, cal_now)

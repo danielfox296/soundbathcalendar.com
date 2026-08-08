@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Solar Eclipse New Moon - Outdoor Foothills Sound Bath
+BEGIN:VEVENT
+UID:solar-eclipse-new-moon-outdoor-foothills-sound-bath-2026-08-12-rocky-mo
+ untain-restore-stretch@soundbathcalendar.com
+DTSTAMP:20260808T143931Z
+DTSTART:20260813T003000Z
+DTEND:20260813T014500Z
+SUMMARY:Solar Eclipse New Moon - Outdoor Foothills Sound Bath
+LOCATION:Rocky Mountain Restore & Stretch\, 3616 Soderburg Drive
+DESCRIPTION:An outdoor new-moon/solar-eclipse sound bath under the foothill
+ s rimrock at Rocky Mountain Restore & Stretch in Fort Collins\, Wednesday 
+ evening\; $47.\n\nTickets: https://www.eventbrite.com/e/solar-eclipse-new-
+ moon-outdoor-foothills-sound-bath-tickets-1996505573916
+URL:https://soundbathcalendar.com/event/solar-eclipse-new-moon-outdoor-foot
+ hills-sound-bath-2026-08-12-rocky-mountain-restore-stretch/
+END:VEVENT
+END:VCALENDAR
