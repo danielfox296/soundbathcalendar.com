@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Himalayan Kriya\, Breathwork and Sound Journey
+BEGIN:VEVENT
+UID:himalayan-kriya-breathwork-and-sound-journey-2026-08-12-green-light-rei
+ ki@soundbathcalendar.com
+DTSTAMP:20260808T144755Z
+DTSTART:20260813T000000Z
+DTEND:20260813T011500Z
+SUMMARY:Himalayan Kriya\, Breathwork and Sound Journey
+LOCATION:Green Light Reiki\, 1545 S Pearl St\, Denver\, CO 80210
+DESCRIPTION:A kriya class at Green Light Reiki on South Pearl Street in Den
+ ver\, Wednesday evening\, combining breathwork\, movement\, mudras and man
+ tra and closing with a sound bath\; $30. No prior experience required.\n\n
+ Tickets: https://www.meetup.com/denver-gong-immersion-chakra-balancing-vib
+ ration-medicine/events/315891422/
+URL:https://soundbathcalendar.com/event/himalayan-kriya-breathwork-and-soun
+ d-journey-2026-08-12-green-light-reiki/
+END:VEVENT
+END:VCALENDAR

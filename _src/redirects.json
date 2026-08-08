@@ -1,0 +1,7 @@
+{
+  "_comment": "Retired URLs that Google has already indexed. Key = the output path that must keep answering; value = redirect target, relative to that path's own directory (same convention as a page config's redirect_to). build_retired_redirects() writes a canonical+noindex stub for each, after every builder that clears a directory. Add a line here whenever a slug is renamed or a page is unpublished — never let an indexed URL 404.",
+
+  "the-wordless-hour/index.html": "../blog/",
+  "blog/the-wordless-hour/index.html": "../",
+  "venue/rocky-mountain-restore-stretch-llc/index.html": "../rocky-mountain-restore-stretch/"
+}

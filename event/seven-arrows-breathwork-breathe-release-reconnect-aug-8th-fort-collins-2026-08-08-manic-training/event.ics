@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Seven Arrows Breathwork: Breathe\, Release\, Reconnect Aug. 8t
+ h Fort Collins
+BEGIN:VEVENT
+UID:seven-arrows-breathwork-breathe-release-reconnect-aug-8th-fort-collins-
+ 2026-08-08-manic-training@soundbathcalendar.com
+DTSTAMP:20260808T144755Z
+DTSTART:20260808T210000Z
+DTEND:20260808T221500Z
+SUMMARY:Seven Arrows Breathwork: Breathe\, Release\, Reconnect Aug. 8th For
+ t Collins
+LOCATION:Manic Training\, 3713 S Mason St\, Fort Collins\, CO 80525
+DESCRIPTION:A 75-minute guided breathwork journey with live music\, led by 
+ Ken Conte at Manic Training in Fort Collins\, Saturday afternoon\; tiered 
+ pricing $45 to $65.\n\nTickets: https://www.eventbrite.com/e/seven-arrows-
+ breathwork-breathe-release-reconnect-aug-8th-fort-collins-tickets-19930769
+ 65857
+URL:https://soundbathcalendar.com/event/seven-arrows-breathwork-breathe-rel
+ ease-reconnect-aug-8th-fort-collins-2026-08-08-manic-training/
+END:VEVENT
+END:VCALENDAR

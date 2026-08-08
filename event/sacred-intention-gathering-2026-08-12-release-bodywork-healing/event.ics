@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sacred Intention Gathering
+BEGIN:VEVENT
+UID:sacred-intention-gathering-2026-08-12-release-bodywork-healing@soundbat
+ hcalendar.com
+DTSTAMP:20260808T144755Z
+DTSTART:20260813T003000Z
+DTEND:20260813T014500Z
+SUMMARY:Sacred Intention Gathering
+LOCATION:Release Bodywork + Healing\, 5808 S Rapp St\, #265\, Littleton\, C
+ O 80120
+DESCRIPTION:A 90-minute gathering led by Tina Fleming and Dr. Kira Murphy a
+ t Release Bodywork + Healing in Littleton\, Wednesday evening\, combining 
+ meditation\, sound and intuitive guidance\; free.\n\nTickets: https://www.
+ eventbrite.com/e/sacred-intention-gathering-tickets-1994631617863
+URL:https://soundbathcalendar.com/event/sacred-intention-gathering-2026-08-
+ 12-release-bodywork-healing/
+END:VEVENT
+END:VCALENDAR

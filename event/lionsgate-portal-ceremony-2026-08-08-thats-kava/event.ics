@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Lionsgate Portal Ceremony
+BEGIN:VEVENT
+UID:lionsgate-portal-ceremony-2026-08-08-thats-kava@soundbathcalendar.com
+DTSTAMP:20260808T144755Z
+DTSTART:20260809T000000Z
+DTEND:20260809T011500Z
+SUMMARY:Lionsgate Portal Ceremony
+LOCATION:That's Kava\, 3394 S Broadway\, Englewood\, CO 80113
+DESCRIPTION:A two-hour ceremony at That's Kava in Englewood\, Saturday even
+ ing\, combining a sound bath and meditation with ceremonial cacao\, ground
+ ing and intention setting\; free.\n\nTickets: https://www.eventbrite.com/e
+ /lionsgate-portal-ceremony-tickets-1995062718296
+URL:https://soundbathcalendar.com/event/lionsgate-portal-ceremony-2026-08-0
+ 8-thats-kava/
+END:VEVENT
+END:VCALENDAR

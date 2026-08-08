@@ -279,6 +279,79 @@ def _write_page(output, html, pages_built):
     return True
 
 
+def _redirect_stub(output, target, title=None):
+    """The site's one redirect representation: meta-refresh + JS replace for
+    the visitor, rel=canonical at the target + noindex for Google.
+
+    GitHub Pages serves static files only — it cannot emit a 301 — so this
+    stub is the strongest signal available for a URL that has moved. `target`
+    is relative to `output`'s directory (or absolute http(s)).
+    """
+    safe_target = html_mod.escape(target, quote=True)
+    safe_title = html_mod.escape(title or f'Redirecting… | {SITE_NAME}',
+                                 quote=True)
+    if target.startswith(('http://', 'https://')):
+        canonical_href = target
+    else:
+        _resolved = posixpath.normpath(posixpath.join(
+            posixpath.dirname(output), target))
+        canonical_href = f'{SITE_URL}/{"" if _resolved == "." else _resolved}'
+        if target.endswith('/') and not canonical_href.endswith('/'):
+            canonical_href += '/'
+    safe_canonical = html_mod.escape(canonical_href, quote=True)
+    return (
+        '<!DOCTYPE html>\n'
+        '<html lang="en">\n'
+        '<head>\n'
+        '<meta charset="utf-8">\n'
+        f'<title>{safe_title}</title>\n'
+        f'<link rel="canonical" href="{safe_canonical}">\n'
+        f'<meta http-equiv="refresh" content="0; url={safe_target}">\n'
+        '<meta name="robots" content="noindex">\n'
+        '</head>\n'
+        '<body>\n'
+        f'<p>This page has moved. Redirecting to <a href="{safe_target}">{safe_target}</a>.</p>\n'
+        f'<script>window.location.replace("{safe_target}");</script>\n'
+        '</body>\n'
+        '</html>\n'
+    )
+
+
+def build_retired_redirects(pages_built):
+    """Keep retired URLs answering 200-with-canonical instead of 404.
+
+    A page Google has indexed must never simply vanish. The generated entity
+    dirs (event/, venue/, operator/, practitioner/) are rmtree'd and rebuilt
+    from the live feeds on every build, so a room that gets renamed or a post
+    that gets unpublished takes its URL down with it — and Search Console
+    reports the hole as 'Not found (404)' weeks later, long after the cause is
+    forgotten. `_src/redirects.json` is the durable record of those URLs:
+    {"<retired output path>": "<target>"} , target relative to the retired
+    path's own directory, exactly like a page config's `redirect_to`.
+
+    Runs LAST in build(), after every builder that clears a directory —
+    otherwise a stub written into venue/ or event/ would be rmtree'd out from
+    under itself. A path that a real page already claimed this build is
+    skipped: a live page always outranks a tombstone.
+    """
+    path = os.path.join(SRC, 'redirects.json')
+    if not os.path.exists(path):
+        return
+    print('\nGenerating retired-URL redirects...')
+    retired = json.loads(read(path))
+    live = set(pages_built)
+    for output in sorted(retired):
+        if output.startswith('_'):   # `_comment` and friends, not a path
+            continue
+        target = retired[output]
+        if output in live:
+            print(f'  – {output} skipped — a live page owns this path now')
+            continue
+        stub = _redirect_stub(output, target)
+        if _write_page(output, stub, pages_built):
+            print(f'  ↪ {output} → {target}')
+
+
 def build():
     base   = read(os.path.join(LAYOUTS,  'base.html'))
     header = read(os.path.join(PARTIALS, 'header.html'))
@@ -319,6 +392,11 @@ def build():
     # Future, de-duplicated, chronological rows — shared by the root injection,
     # the ItemList schema, and the city pages (Track B B.2).
     cal_rows = external_events.build_rows(cal_feed, now=cal_now)
+    # The same rows the calendar shows PLUS the ones already past — the whole
+    # approved feed window (roughly a fortnight back). Venue and operator pages
+    # read this for their "Recent sessions" list and for the CAL-SEO-1 gate;
+    # nothing else should, since every other surface is about what's upcoming.
+    window_rows = external_events.approved_event_rows(cal_feed, now=cal_now)
     # CAL-09: which tags have earned a landing page (>= BUILD_MIN upcoming). Set
     # BEFORE any chip renders (root injection below, then city/event pages) so
     # every tag chip links to /<slug>/ when that page exists.
@@ -381,35 +459,9 @@ def build():
         if config.get('redirect_to'):
             redirect_target = config['redirect_to']
             redirect_output = config.get('output', f'{page_name}.html')
-            safe_target = html_mod.escape(redirect_target, quote=True)
-            redirect_title = html_mod.escape(
-                config.get('title', f'Redirecting… | {SITE_NAME}'), quote=True
-            )
-            if redirect_target.startswith(('http://', 'https://')):
-                canonical_href = redirect_target
-            else:
-                _resolved = posixpath.normpath(posixpath.join(
-                    posixpath.dirname(redirect_output), redirect_target))
-                canonical_href = f'{SITE_URL}/{"" if _resolved == "." else _resolved}'
-                if redirect_target.endswith('/') and not canonical_href.endswith('/'):
-                    canonical_href += '/'
-            safe_canonical = html_mod.escape(canonical_href, quote=True)
-            stub = (
-                '<!DOCTYPE html>\n'
-                '<html lang="en">\n'
-                '<head>\n'
-                '<meta charset="utf-8">\n'
-                f'<title>{redirect_title}</title>\n'
-                f'<link rel="canonical" href="{safe_canonical}">\n'
-                f'<meta http-equiv="refresh" content="0; url={safe_target}">\n'
-                '<meta name="robots" content="noindex">\n'
-                '</head>\n'
-                '<body>\n'
-                f'<p>This page has moved. Redirecting to <a href="{safe_target}">{safe_target}</a>.</p>\n'
-                f'<script>window.location.replace("{safe_target}");</script>\n'
-                '</body>\n'
-                '</html>\n'
-            )
+            stub = _redirect_stub(
+                redirect_output, redirect_target,
+                config.get('title', f'Redirecting… | {SITE_NAME}'))
             if _write_page(redirect_output, stub, pages_built):
                 print(f'  ↪ {redirect_output} → {redirect_target}')
             continue
@@ -594,12 +646,12 @@ def build():
 
     # --- Venue pages (/venue/<slug>/) + index — CAL-03 ---
     _venue_outputs, _venue_sitemap = build_venue_pages(
-        base, header, footer, venue_list, cal_rows, cal_now)
+        base, header, footer, venue_list, cal_rows, cal_now, window_rows)
     pages_built.extend(_venue_outputs)
 
     # --- Operator pages (/operator/<slug>/) + index — CAL-08 ---
     _operator_outputs, _operator_sitemap = build_operator_pages(
-        base, header, footer, operator_list, cal_rows, cal_now)
+        base, header, footer, operator_list, cal_rows, cal_now, window_rows)
     pages_built.extend(_operator_outputs)
 
     # --- Tag landing pages (/<tag-slug>/) — CAL-09 — + /browse/ hub — CAL-16 ---
@@ -621,6 +673,11 @@ def build():
     _blog_outputs, _blog_sitemap = build_blog_pages(
         base, header, footer, cal_now)
     pages_built.extend(_blog_outputs)
+
+    # --- Retired URLs (_src/redirects.json) ---
+    # LAST of the page builders on purpose: every builder above may rmtree its
+    # own output dir, which would take a stub written into it with it.
+    build_retired_redirects(pages_built)
 
     # --- ICS feeds (/front-range.ics, /<city>.ics) — Track B B.4 ---
     build_ics_feeds(cal_rows, cal_now)
@@ -1073,7 +1130,8 @@ def build_practitioner_pages(base, header, footer, practs, cal_rows, now):
     return built, sitemap_entries
 
 
-def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
+def build_venue_pages(base, header, footer, venue_list, cal_rows, now,
+                      window_rows=()):
     """Emit /venue/<slug>/ pages for every PUBLISHED venue + the /venues/ index
     (CAL-03). Individual pages are curated (Daniel publishes the rooms worth a
     page), so they're indexed; the index is noindexed until it has a few
@@ -1145,15 +1203,29 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(breadcrumb_schema)}\n  </script>')
 
-        content = venues_lib.render_venue_page(v, sessions, nav_prefix, SITE_URL, now=now, credit=credit)
+        window_sessions = venues_lib.sessions_for(slug, window_rows)
+        recent = external_events.entity_recent_rows(window_sessions, now=now)
+        content = venues_lib.render_venue_page(v, sessions, nav_prefix, SITE_URL, now=now,
+                                               credit=credit, recent_rows=recent)
         page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
         page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
 
         # CAL-SEO-1 doorway gate: a venue page earns index + a sitemap slot
-        # with a curated description OR real upcoming activity; thin stubs
-        # stay live and linked but noindex,follow until enrichment or
-        # activity flips them (self-healing on rebuild).
-        page_indexable = bool(desc_body) or len(sessions) >= ENTITY_MIN_UPCOMING
+        # with a curated description OR real activity; thin stubs stay live
+        # and linked but noindex,follow until enrichment or activity flips
+        # them (self-healing on rebuild).
+        #
+        # Activity is counted across the whole feed window, not just what's
+        # upcoming. Counting only upcoming made indexability flap: a room's
+        # count crosses the threshold downward every time a session happens
+        # and back up when the next one is listed, so the page left the
+        # sitemap and came back within days — which is what Search Console
+        # reported as "Excluded by 'noindex' tag" against sitemap URLs. Past
+        # sessions are real evidence the room is worth indexing, and they now
+        # render on the page, so the page is no longer thin when nothing is
+        # scheduled.
+        page_indexable = (bool(desc_body)
+                          or len(window_sessions) >= ENTITY_MIN_UPCOMING)
 
         html = _assemble(base, {
             'title': title,
@@ -1242,7 +1314,8 @@ def build_venue_pages(base, header, footer, venue_list, cal_rows, now):
     return built, sitemap_entries
 
 
-def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
+def build_operator_pages(base, header, footer, operator_list, cal_rows, now,
+                         window_rows=()):
     """Emit /operator/<slug>/ pages for every PUBLISHED operator + the
     /operators/ index (CAL-08). Individual pages are curated (Daniel publishes
     only the multi-venue organizers worth a distinct page — the owner-operated
@@ -1308,14 +1381,21 @@ def build_operator_pages(base, header, footer, operator_list, cal_rows, now):
         schema_json += (f'\n  <script type="application/ld+json">\n'
                         f'{_ldjson(breadcrumb_schema)}\n  </script>')
 
-        content = operators_lib.render_operator_page(o, sessions, nav_prefix, SITE_URL, now=now)
+        window_sessions = operators_lib.sessions_for(slug, window_rows)
+        recent = external_events.entity_recent_rows(window_sessions, now=now)
+        content = operators_lib.render_operator_page(o, sessions, nav_prefix, SITE_URL,
+                                                     now=now, recent_rows=recent)
         page_header = header.strip().replace('{{nav_prefix}}', nav_prefix)
         page_footer = footer.strip().replace('{{nav_prefix}}', nav_prefix)
 
-        # CAL-SEO-1 doorway gate (same rule as venues): curated description
-        # OR real upcoming activity earns index + sitemap; thin stubs stay
-        # live and linked but noindex,follow.
-        page_indexable = bool(desc_body) or len(sessions) >= ENTITY_MIN_UPCOMING
+        # CAL-SEO-1 doorway gate (same rule as venues): curated description OR
+        # real activity across the feed window — past included — earns index +
+        # sitemap; thin stubs stay live and linked but noindex,follow. See the
+        # venue builder for why this counts the window rather than only what's
+        # upcoming: operators flapped hardest, 16 index/noindex flips in 16
+        # simulated daily builds.
+        page_indexable = (bool(desc_body)
+                          or len(window_sessions) >= ENTITY_MIN_UPCOMING)
 
         html = _assemble(base, {
             'title': title,

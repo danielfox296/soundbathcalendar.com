@@ -236,7 +236,8 @@ def _credit_caption(credit):
     return f'Photo: {who} · Google Maps'
 
 
-def render_venue_page(v, session_rows, nav_prefix, site_url, now=None, credit=None):
+def render_venue_page(v, session_rows, nav_prefix, site_url, now=None, credit=None,
+                      recent_rows=None):
     now = X._now_utc(now)
     name = v['name']
     out = ['<section class="section section--light venue">', '  <div class="container">']
@@ -360,6 +361,14 @@ def render_venue_page(v, session_rows, nav_prefix, site_url, now=None, credit=No
         out.append(
             f'    <p class="detail__empty">No upcoming sessions listed here right now. '
             f'<a href="{nav_prefix}">See the full calendar →</a></p>')
+
+    # What the room actually hosted lately — the page's substance when the
+    # upcoming list is empty, and the activity the index gate reads (CAL-SEO-1).
+    _recent = X.render_recent_sessions(recent_rows or [], nav_prefix,
+                                       heading='Recent sessions here',
+                                       show_venue=False)
+    if _recent:
+        out.append(_recent)
 
     out.append(
         f'    <p class="detail__back"><a href="{nav_prefix}venues/">All venues →</a></p>')

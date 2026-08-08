@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Grow+Gather Greenhouse Yoga Sound+Flow
+BEGIN:VEVENT
+UID:growgather-greenhouse-yoga-soundflow-2026-08-08-grow-gather@soundbathca
+ lendar.com
+DTSTAMP:20260808T144755Z
+DTSTART:20260808T160000Z
+DTEND:20260808T171500Z
+SUMMARY:Grow+Gather Greenhouse Yoga Sound+Flow
+LOCATION:Grow + Gather\, 900 E Hampden Ave\, Englewood\, CO 80113
+DESCRIPTION:A 75-minute yoga flow inside the Grow + Gather greenhouse in En
+ glewood\, Saturday morning\, closing with a 15 to 30 minute sound bath sav
+ asana played on bowls and\, at times\, guitar.\n\nTickets: https://www.eve
+ ntbrite.com/e/growgather-greenhouse-yoga-soundflow-tickets-1000281397587
+URL:https://soundbathcalendar.com/event/growgather-greenhouse-yoga-soundflo
+ w-2026-08-08-grow-gather/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,26 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:The Fifth Season • Day 1: Arrive | 26&2\, Sol Ignite\, Yin Y
+ oga & Sound Bath
+BEGIN:VEVENT
+UID:the-fifth-season-day-1-arrive-262-sol-ignite-yin-yoga-sound-bath-2026-0
+ 8-08-elevate-yoga-collective-eyc@soundbathcalendar.com
+DTSTAMP:20260808T144755Z
+DTSTART:20260808T150000Z
+DTEND:20260808T161500Z
+SUMMARY:The Fifth Season • Day 1: Arrive | 26&2\, Sol Ignite\, Yin Yoga &
+  Sound Bath
+LOCATION:ELEVATE YOGA COLLECTIVE - EYC\, 5112 S College Ave #C\, Fort Colli
+ ns\, CO 80525
+DESCRIPTION:Opening day of a week-long yoga immersion led by Alyssa Quintan
+ ar and Terrel Harris at Elevate Yoga Collective in Fort Collins\, Saturday
+ \, closing with a yin yoga and sound bath session played on live bowls and
+  chimes.\n\nTickets: https://www.eventbrite.com/e/the-fifth-season-day-1-a
+ rrive-262-sol-ignite-yin-yoga-sound-bath-tickets-1995689665512
+URL:https://soundbathcalendar.com/event/the-fifth-season-day-1-arrive-262-s
+ ol-ignite-yin-yoga-sound-bath-2026-08-08-elevate-yoga-collective-eyc/
+END:VEVENT
+END:VCALENDAR

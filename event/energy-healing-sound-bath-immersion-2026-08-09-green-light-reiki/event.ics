@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Energy Healing + Sound Bath Immersion
+BEGIN:VEVENT
+UID:energy-healing-sound-bath-immersion-2026-08-09-green-light-reiki@soundb
+ athcalendar.com
+DTSTAMP:20260808T144755Z
+DTSTART:20260809T220000Z
+DTEND:20260809T231500Z
+SUMMARY:Energy Healing + Sound Bath Immersion
+LOCATION:Green Light Reiki\, 1545 S Pearl St
+DESCRIPTION:An energy healing and sound bath immersion led by Kathy Sietos 
+ at Green Light Reiki in Denver's Platt Park\, Sunday afternoon\; $45.\n\nT
+ ickets: https://www.eventbrite.com/e/energy-healing-sound-bath-immersion-t
+ ickets-1996244146981
+URL:https://soundbathcalendar.com/event/energy-healing-sound-bath-immersion
+ -2026-08-09-green-light-reiki/
+END:VEVENT
+END:VCALENDAR

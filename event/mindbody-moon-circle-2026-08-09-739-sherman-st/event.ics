@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Mind-Body Moon Circle
+BEGIN:VEVENT
+UID:mindbody-moon-circle-2026-08-09-739-sherman-st@soundbathcalendar.com
+DTSTAMP:20260808T144755Z
+DTSTART:20260810T000000Z
+DTEND:20260810T011500Z
+SUMMARY:Mind-Body Moon Circle
+LOCATION:739 Sherman St\, 739 Sherman St\, Denver\, CO 80203
+DESCRIPTION:A 75-minute moon circle led by therapist Bethany Barta on Sherm
+ an Street in Denver\, Sunday evening\, combining mindful movement\, medita
+ tion\, sound healing and reflective practice.\n\nTickets: https://www.even
+ tbrite.com/e/mind-body-moon-circle-tickets-1994100810203
+URL:https://soundbathcalendar.com/event/mindbody-moon-circle-2026-08-09-739
+ -sherman-st/
+END:VEVENT
+END:VCALENDAR
