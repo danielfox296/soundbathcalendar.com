@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Breathwork w/Sound Healing at Colorado Salt Cave
+BEGIN:VEVENT
+UID:breathwork-wsound-healing-at-colorado-salt-cave-2026-08-30-colorado-sal
+ t-cave@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260830T200000Z
+DTEND:20260830T211500Z
+SUMMARY:Breathwork w/Sound Healing at Colorado Salt Cave
+LOCATION:Colorado Salt Cave
+DESCRIPTION:A 90-minute guided breathwork and sound healing session in the 
+ Colorado Salt Cave\, Colorado Springs\, Sunday afternoon\; $65.\n\nTickets
+ : https://www.meetup.com/colorado-springs-microdosing-wellness-meetup-grou
+ p/events/315982421/
+URL:https://soundbathcalendar.com/event/breathwork-wsound-healing-at-colora
+ do-salt-cave-2026-08-30-colorado-salt-cave/
+END:VEVENT
+END:VCALENDAR

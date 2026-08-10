@@ -1,0 +1,26 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:The Fifth Season • Day 5: Integrate | Advanced 84\, Sol Igni
+ te & Sound Bath
+BEGIN:VEVENT
+UID:the-fifth-season-day-5-integrate-advanced-84-sol-ignite-sound-bath-2026
+ -08-12-elevate-yoga-collective-eyc@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260812T150000Z
+DTEND:20260812T161500Z
+SUMMARY:The Fifth Season • Day 5: Integrate | Advanced 84\, Sol Ignite & 
+ Sound Bath
+LOCATION:ELEVATE YOGA COLLECTIVE - EYC\, 5112 S College Ave #C\, Fort Colli
+ ns\, CO 80525
+DESCRIPTION:Closing day of a week-long yoga immersion led by Alyssa Quintan
+ ar and Terrel Harris at Elevate Yoga Collective in Fort Collins\, Wednesda
+ y\, ending with a bowls-and-chimes sound bath.\n\nTickets: https://www.eve
+ ntbrite.com/e/the-fifth-season-day-5-integrate-advanced-84-sol-ignite-soun
+ d-bath-tickets-1995698694518
+URL:https://soundbathcalendar.com/event/the-fifth-season-day-5-integrate-ad
+ vanced-84-sol-ignite-sound-bath-2026-08-12-elevate-yoga-collective-eyc/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Candlelight Yoga Nidra & Sound Bath
+BEGIN:VEVENT
+UID:candlelight-yoga-nidra-sound-bath-2026-08-20-sacred-society@soundbathca
+ lendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260821T000000Z
+DTEND:20260821T011500Z
+SUMMARY:Candlelight Yoga Nidra & Sound Bath
+LOCATION:Sacred Society
+DESCRIPTION:A candlelit yoga nidra and sound bath at Sacred Society in Denv
+ er\, Thursday evening\, led by Janae Bell\; from $30.\n\nTickets: https://
+ momence.com/s/138559605
+URL:https://soundbathcalendar.com/event/candlelight-yoga-nidra-sound-bath-2
+ 026-08-20-sacred-society/
+END:VEVENT
+END:VCALENDAR

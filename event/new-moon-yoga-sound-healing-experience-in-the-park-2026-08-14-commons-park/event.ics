@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:New Moon Yoga & Sound Healing Experience in the Park
+BEGIN:VEVENT
+UID:new-moon-yoga-sound-healing-experience-in-the-park-2026-08-14-commons-p
+ ark@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260815T003000Z
+DTEND:20260815T014500Z
+SUMMARY:New Moon Yoga & Sound Healing Experience in the Park
+LOCATION:Commons Park\, 2101 15th Street\, Denver\, CO 80202
+DESCRIPTION:A 75-minute outdoor new-moon session at Commons Park in Denver\
+ , Friday evening\, pairing yoga and guided meditation with crystal bowls\;
+  led by Meghan Hennessy.\n\nTickets: https://www.eventbrite.com/e/new-moon
+ -yoga-sound-healing-experience-in-the-park-tickets-1997174590964
+URL:https://soundbathcalendar.com/event/new-moon-yoga-sound-healing-experie
+ nce-in-the-park-2026-08-14-commons-park/
+END:VEVENT
+END:VCALENDAR

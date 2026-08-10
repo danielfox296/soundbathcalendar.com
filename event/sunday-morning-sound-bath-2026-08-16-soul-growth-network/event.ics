@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sunday Morning Sound Bath
+BEGIN:VEVENT
+UID:sunday-morning-sound-bath-2026-08-16-soul-growth-network@soundbathcalen
+ dar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260816T160000Z
+DTEND:20260816T171500Z
+SUMMARY:Sunday Morning Sound Bath
+LOCATION:Soul Growth Network\, 1545 S Pearl St\, Denver\, CO 80210
+DESCRIPTION:A Sunday-morning sound bath from Soul Growth Network at 1545 S 
+ Pearl St\, Denver\, at 10am.\n\nTickets: https://www.eventbrite.com/e/sund
+ ay-morning-sound-bath-tickets-1117045726839
+URL:https://soundbathcalendar.com/event/sunday-morning-sound-bath-2026-08-1
+ 6-soul-growth-network/
+END:VEVENT
+END:VCALENDAR

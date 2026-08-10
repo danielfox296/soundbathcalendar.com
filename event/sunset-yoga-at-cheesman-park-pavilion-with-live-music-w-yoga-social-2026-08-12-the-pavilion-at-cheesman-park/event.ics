@@ -1,0 +1,26 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sunset Yoga at Cheesman Park Pavilion with Live Music w/ Yoga 
+ Social
+BEGIN:VEVENT
+UID:sunset-yoga-at-cheesman-park-pavilion-with-live-music-w-yoga-social-202
+ 6-08-12-the-pavilion-at-cheesman-park@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260813T003000Z
+DTEND:20260813T014500Z
+SUMMARY:Sunset Yoga at Cheesman Park Pavilion with Live Music w/ Yoga Socia
+ l
+LOCATION:The Pavilion at Cheesman Park\, 1900 E 11th Ave\, Denver\, CO 8020
+ 6
+DESCRIPTION:A 75-minute outdoor yoga class at the Cheesman Park Pavilion in
+  Denver\, Wednesday evening\, practised to live music from local musicians
+ \; donation-based\, $15 to $30 suggested.\n\nTickets: https://www.eventbri
+ te.com/e/sunset-yoga-at-cheesman-park-pavilion-with-live-music-w-yoga-soci
+ al-tickets-1986088265466
+URL:https://soundbathcalendar.com/event/sunset-yoga-at-cheesman-park-pavili
+ on-with-live-music-w-yoga-social-2026-08-12-the-pavilion-at-cheesman-park/
+END:VEVENT
+END:VCALENDAR

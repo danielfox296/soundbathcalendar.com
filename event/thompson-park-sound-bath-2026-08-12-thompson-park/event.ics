@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Thompson Park Sound Bath
+BEGIN:VEVENT
+UID:thompson-park-sound-bath-2026-08-12-thompson-park@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260813T010000Z
+DTEND:20260813T021500Z
+SUMMARY:Thompson Park Sound Bath
+LOCATION:Thompson Park\, 420 Bross Street
+DESCRIPTION:A free outdoor sound bath at Thompson Park in Longmont (Boulder
+  area)\, Wednesday evening.\n\nTickets: https://www.eventbrite.com/e/thomp
+ son-park-sound-bath-tickets-1996487314301
+URL:https://soundbathcalendar.com/event/thompson-park-sound-bath-2026-08-12
+ -thompson-park/
+END:VEVENT
+END:VCALENDAR

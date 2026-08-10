@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sunset Reset: Floating Full Moon Sound Bath
+BEGIN:VEVENT
+UID:sunset-reset-floating-full-moon-sound-bath-2026-08-27-ascend-spa-wellne
+ ss-at-hotel-polaris@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260828T010000Z
+DTEND:20260828T021500Z
+SUMMARY:Sunset Reset: Floating Full Moon Sound Bath
+LOCATION:Ascend Spa & Wellness at Hotel Polaris\, 8989 North Gate Boulevard
+ \, Colorado Springs\, CO 80921
+DESCRIPTION:A 90-minute poolside full-moon sound bath at Ascend Spa & Welln
+ ess\, Hotel Polaris\, Colorado Springs\, Thursday evening\; $55 on a loung
+ er or $85 floating. Crystal bowls\, gongs\, flutes and chimes.\n\nTickets:
+  https://www.eventbrite.com/e/sunset-reset-floating-full-moon-sound-bath-t
+ ickets-1994152553970
+URL:https://soundbathcalendar.com/event/sunset-reset-floating-full-moon-sou
+ nd-bath-2026-08-27-ascend-spa-wellness-at-hotel-polaris/
+END:VEVENT
+END:VCALENDAR

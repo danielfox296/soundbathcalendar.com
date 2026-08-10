@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Full Moon Cave of the Winds Sound Bath
+BEGIN:VEVENT
+UID:full-moon-cave-of-the-winds-sound-bath-2026-08-28-cave-of-the-winds-mou
+ ntain-park@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260829T020000Z
+DTEND:20260829T031500Z
+SUMMARY:Full Moon Cave of the Winds Sound Bath
+LOCATION:Cave of the Winds Mountain Park\, 100 Cave of the Winds Rd\, Manit
+ ou Springs\, CO 80829
+DESCRIPTION:90-minute full-moon sound bath inside Cave of the Winds Mountai
+ n Park in Manitou Springs led by Dr. Gigi Turner with Tibetan and crystal 
+ singing bowls\, gongs\, flute\, guitar\, and hand pan.\n\nTickets: https:/
+ /www.singingbowlsoftherockies.com/event-details/full-moon-cave-of-the-wind
+ s-sound-bath-3
+URL:https://soundbathcalendar.com/event/full-moon-cave-of-the-winds-sound-b
+ ath-2026-08-28-cave-of-the-winds-mountain-park/
+END:VEVENT
+END:VCALENDAR

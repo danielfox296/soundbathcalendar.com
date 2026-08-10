@@ -5,68 +5,9 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:Sound baths in Boulder
 BEGIN:VEVENT
-UID:wednesday-meditation-2026-08-05-unity-of-boulder-spiritual-center@sound
- bathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260806T010000Z
-DTEND:20260806T021500Z
-SUMMARY:Wednesday Meditation
-LOCATION:Unity of Boulder Spiritual Center\, 2855 Folsom St\, Boulder\, CO 
- 80304
-DESCRIPTION:A weekly guided meditation with a sound bath component (crystal
-  and Tibetan singing bowls\, native flute or chanting) led by Norma at Uni
- ty of Boulder\, Wednesday August 5 at 7:00 PM. Free.\n\nTickets: https://u
- nityofboulder.com/events/wednesday-meditation/
-URL:https://soundbathcalendar.com/event/wednesday-meditation-2026-08-05-uni
- ty-of-boulder-spiritual-center/
-END:VEVENT
-BEGIN:VEVENT
-UID:sound-bath-ceremony-2026-08-06-una-vida-meditation-movement@soundbathca
- lendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260807T003000Z
-DTEND:20260807T014500Z
-SUMMARY:Sound Bath Ceremony
-LOCATION:Una Vida Meditation & Movement\, 7960 Niwot Road\, Suite B-12\, Lo
- ngmont\, CO 80503
-DESCRIPTION:A sound bath ceremony led by Laura Riehman at Una Vida Meditati
- on & Movement in Boulder\, Thursday evening\; $25–40.\n\nTickets: https:
- //www.eventbrite.com/e/sound-bath-ceremony-tickets-1993974556575
-URL:https://soundbathcalendar.com/event/sound-bath-ceremony-2026-08-06-una-
- vida-meditation-movement/
-END:VEVENT
-BEGIN:VEVENT
-UID:experience-hu-sacred-sound-ancient-mantra-2026-08-08-north-boulder-bran
- ch-library@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260808T193000Z
-DTEND:20260808T204500Z
-SUMMARY:Experience HU-- Sacred Sound\, Ancient Mantra
-LOCATION:North Boulder Branch Library\, 4500 13th St\, Boulder\, CO
-DESCRIPTION:An hour-long gathering built around 15–20 minutes of chanting
-  HU\, plus contemplation and conversation\, at the North Boulder Branch Li
- brary\, Saturday afternoon\; free.\n\nTickets: https://www.meetup.com/sego
- fbv/events/315364998/
-URL:https://soundbathcalendar.com/event/experience-hu-sacred-sound-ancient-
- mantra-2026-08-08-north-boulder-branch-library/
-END:VEVENT
-BEGIN:VEVENT
-UID:meditative-sound-bath-2026-08-09-reynolds-library@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
-DTSTART:20260809T150000Z
-DTEND:20260809T161500Z
-SUMMARY:Meditative Sound Bath
-LOCATION:Reynolds Library\, 1001 Arapahoe Avenue\, Boulder\, CO 80302
-DESCRIPTION:A meditative sound bath using crystal bowls\, rainsticks\, and 
- chimes led by Ashley Young at Reynolds Library\; registration required\, a
- ges 16+.\n\nTickets: https://calendar.boulderlibrary.org/event/15673517
-URL:https://soundbathcalendar.com/event/meditative-sound-bath-2026-08-09-re
- ynolds-library/
-END:VEVENT
-BEGIN:VEVENT
 UID:gong-bath-with-beth-2026-08-10-una-vida-meditation-movement@soundbathca
  lendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260810T170739Z
 DTSTART:20260811T011500Z
 DTEND:20260811T023000Z
 SUMMARY:Gong Bath with Beth
@@ -80,7 +21,7 @@ URL:https://soundbathcalendar.com/event/gong-bath-with-beth-2026-08-10-una-
 END:VEVENT
 BEGIN:VEVENT
 UID:eclipse-sound-journey-2026-08-11-9760-isabelle-rd@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260810T170739Z
 DTSTART:20260812T003000Z
 DTEND:20260812T014500Z
 SUMMARY:Eclipse Sound Journey
@@ -95,7 +36,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:solar-eclipse-sunset-gong-bath-2026-08-11-north-boulder-park@soundbathc
  alendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260810T170739Z
 DTSTART:20260812T010000Z
 DTEND:20260812T021500Z
 SUMMARY:Solar Eclipse Sunset Gong Bath
@@ -107,8 +48,21 @@ URL:https://soundbathcalendar.com/event/solar-eclipse-sunset-gong-bath-2026
  -08-11-north-boulder-park/
 END:VEVENT
 BEGIN:VEVENT
+UID:thompson-park-sound-bath-2026-08-12-thompson-park@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260813T010000Z
+DTEND:20260813T021500Z
+SUMMARY:Thompson Park Sound Bath
+LOCATION:Thompson Park\, 420 Bross Street
+DESCRIPTION:A free outdoor sound bath at Thompson Park in Longmont (Boulder
+  area)\, Wednesday evening.\n\nTickets: https://www.eventbrite.com/e/thomp
+ son-park-sound-bath-tickets-1996487314301
+URL:https://soundbathcalendar.com/event/thompson-park-sound-bath-2026-08-12
+ -thompson-park/
+END:VEVENT
+BEGIN:VEVENT
 UID:bliss-sacred-sound-fest-2026-08-14-wild-cider@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260810T170739Z
 DTSTART:20260814T200000Z
 DTEND:20260814T211500Z
 SUMMARY:BLISS\, Sacred Sound Fest
@@ -123,7 +77,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:friday-night-frequencies-a-soundbath-to-release-the-week-2026-08-14-una
  -vida-meditation-movement@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260810T170739Z
 DTSTART:20260815T010000Z
 DTEND:20260815T021500Z
 SUMMARY:Friday Night Frequencies - A Soundbath to Release the Week
@@ -137,9 +91,41 @@ URL:https://soundbathcalendar.com/event/friday-night-frequencies-a-soundbat
  h-to-release-the-week-2026-08-14-una-vida-meditation-movement/
 END:VEVENT
 BEGIN:VEVENT
+UID:friday-night-frequencies-2026-08-14-una-vida-meditation-and-movement@so
+ undbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260815T010000Z
+DTEND:20260815T021500Z
+SUMMARY:Friday Night Frequencies
+LOCATION:Una Vida Meditation and Movement\, 7960 Niwot Road B-12\, Niwot\, 
+ CO 80503
+DESCRIPTION:A Friday evening sound bath using gong and alchemy crystal bowl
+ s\, led by Betsy Workman at Una Vida Meditation and Movement in Niwot on A
+ ugust 14\, 2026.\n\nTickets: https://www.unavidaniwot.com/workshops-retrea
+ ts-trainings/sunday-sound-healing-sxmeh-mgc5h-tw5y6-gkxmr-x2tfr-lanwg-mcsr
+ e-znacp-j2ja3
+URL:https://soundbathcalendar.com/event/friday-night-frequencies-2026-08-14
+ -una-vida-meditation-and-movement/
+END:VEVENT
+BEGIN:VEVENT
+UID:year-of-the-horse-reignite-your-flame-2026-08-15-13609-gold-hill-rd@sou
+ ndbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260815T150000Z
+DTEND:20260815T161500Z
+SUMMARY:Year of the Horse: Reignite Your Flame
+LOCATION:13609 Gold Hill Rd\, 13609 Gold Hill Road\, Boulder\, CO 80302
+DESCRIPTION:A full-day retreat on a Boulder-area horse ranch combining yoga
+ \, sound bath\, equine therapy and art\, led by Jenny McCarty and Jessica 
+ Mahan.\n\nTickets: https://www.eventbrite.com/e/year-of-the-horse-reignite
+ -your-flame-registration-1990581888012
+URL:https://soundbathcalendar.com/event/year-of-the-horse-reignite-your-fla
+ me-2026-08-15-13609-gold-hill-rd/
+END:VEVENT
+BEGIN:VEVENT
 UID:sound-bath-journey-in-the-salt-cave-2026-08-15-333-west-south-boulder-r
  oad-louisville-co@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260810T170739Z
 DTSTART:20260815T203000Z
 DTEND:20260815T214500Z
 SUMMARY:Sound Bath Journey in the Salt Cave
@@ -154,9 +140,25 @@ URL:https://soundbathcalendar.com/event/sound-bath-journey-in-the-salt-cave
  -2026-08-15-333-west-south-boulder-road-louisville-co/
 END:VEVENT
 BEGIN:VEVENT
+UID:sound-circle-energy-healing-sound-bath-with-bruce-white-2026-08-21-unit
+ y-of-boulder-spiritual-center-meditation-room@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260822T003000Z
+DTEND:20260822T014500Z
+SUMMARY:Sound Circle & Energy Healing Sound Bath with Bruce White
+LOCATION:Unity of Boulder Spiritual Center - Meditation Room\, 2855 Folsom 
+ St\, Boulder\, CO 80304
+DESCRIPTION:A sliding-scale ($15-$25) sound circle and crystal-bowl session
+  led by Bruce White at Unity of Boulder's Meditation Room on August 21\, 2
+ 026.\n\nTickets: https://unityofboulder.com/events/illuminated-6/
+URL:https://soundbathcalendar.com/event/sound-circle-energy-healing-sound-b
+ ath-with-bruce-white-2026-08-21-unity-of-boulder-spiritual-center-meditati
+ on-room/
+END:VEVENT
+BEGIN:VEVENT
 UID:sacred-resonance-sound-healing-2026-08-21-unity-of-boulder-spiritual-ce
  nter@soundbathcalendar.com
-DTSTAMP:20260804T042200Z
+DTSTAMP:20260810T170739Z
 DTSTART:20260822T010000Z
 DTEND:20260822T021500Z
 SUMMARY:Sacred Resonance Sound Healing
@@ -168,5 +170,73 @@ DESCRIPTION:A sound healing session led by Caressa Ayres at Unity of Boulde
  ling-tickets-1988893764790
 URL:https://soundbathcalendar.com/event/sacred-resonance-sound-healing-2026
  -08-21-unity-of-boulder-spiritual-center/
+END:VEVENT
+BEGIN:VEVENT
+UID:yoga-nidra-journey-in-the-salt-cave-2026-08-22-diamond-vitality-center@
+ soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260822T203000Z
+DTEND:20260822T214500Z
+SUMMARY:Yoga Nidra Journey in the Salt Cave
+LOCATION:Diamond Vitality Center\, 333 West South Boulder Road\, Louisville
+ \, CO 80027
+DESCRIPTION:A 90-minute yoga nidra in the Himalayan salt cave at Diamond Vi
+ tality Center\, Louisville\, Saturday afternoon\, with crystal bowls\, har
+ monium and guitar\; participants recline in chairs. Led by Mira Devi.\n\nT
+ ickets: https://www.eventbrite.com/e/yoga-nidra-journey-in-the-salt-cave-t
+ ickets-1993633933763
+URL:https://soundbathcalendar.com/event/yoga-nidra-journey-in-the-salt-cave
+ -2026-08-22-diamond-vitality-center/
+END:VEVENT
+BEGIN:VEVENT
+UID:full-moon-healing-cloud-of-sound-meditation-concert-with-sarina-shresth
+ a-2026-08-27-atma-buti-sound-vibrational-school@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260828T010000Z
+DTEND:20260828T021500Z
+SUMMARY:Full Moon Healing Cloud of Sound Meditation Concert with Sarina Shr
+ estha
+LOCATION:Atma Buti Sound & Vibrational School\, 6395 Gunpark Dr\, Suite T\,
+  Boulder\, CO 80301
+DESCRIPTION:A one-hour lie-down full-moon sound meditation at the Atma Buti
+  Sound & Vibrational School in Boulder\, Thursday evening\, on Himalayan b
+ owls\, gongs and bells\; led by Sarina Shrestha. Mats provided.\n\nTickets
+ : https://www.eventbrite.com/e/full-moon-healing-cloud-of-sound-meditation
+ -concert-with-sarina-shrestha-tickets-1977744804951
+URL:https://soundbathcalendar.com/event/full-moon-healing-cloud-of-sound-me
+ ditation-concert-with-sarina-shrestha-2026-08-27-atma-buti-sound-vibration
+ al-school/
+END:VEVENT
+BEGIN:VEVENT
+UID:lunar-eclipse-meditation-six-gong-sound-bath-2026-08-28-the-starhouse@s
+ oundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260829T003000Z
+DTEND:20260829T014500Z
+SUMMARY:Lunar Eclipse Meditation & Six Gong Sound Bath
+LOCATION:The StarHouse\, 3476 Sunshine Canyon Drive\, Boulder\, CO 80302
+DESCRIPTION:A two-hour lunar-eclipse session at The StarHouse in North Boul
+ der\, Friday evening: Kundalini movement and meditation closing with a six
+ -gong sound bath. Ages 13+.\n\nTickets: https://www.eventbrite.com/e/lunar
+ -eclipse-meditation-six-gong-sound-bath-tickets-1989327029697
+URL:https://soundbathcalendar.com/event/lunar-eclipse-meditation-six-gong-s
+ ound-bath-2026-08-28-the-starhouse/
+END:VEVENT
+BEGIN:VEVENT
+UID:sound-bath-journey-in-the-salt-cave-2026-08-29-diamond-vitality-center@
+ soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260829T203000Z
+DTEND:20260829T214500Z
+SUMMARY:Sound Bath Journey in the Salt Cave
+LOCATION:Diamond Vitality Center\, 333 West South Boulder Road\, Louisville
+ \, CO 80027
+DESCRIPTION:A 90-minute sound session in the Himalayan salt cave at Diamond
+  Vitality Center\, Louisville\, Saturday afternoon\, with singing bowls\, 
+ chimes\, guitar\, harmonium and mantra\; led by Mira Devi.\n\nTickets: htt
+ ps://www.eventbrite.com/e/sound-bath-journey-in-the-salt-cave-tickets-1993
+ 632495461
+URL:https://soundbathcalendar.com/event/sound-bath-journey-in-the-salt-cave
+ -2026-08-29-diamond-vitality-center/
 END:VEVENT
 END:VCALENDAR

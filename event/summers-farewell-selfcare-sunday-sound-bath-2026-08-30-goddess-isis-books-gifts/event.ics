@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Summer's Farewell: Self-Care Sunday Sound Bath
+BEGIN:VEVENT
+UID:summers-farewell-selfcare-sunday-sound-bath-2026-08-30-goddess-isis-boo
+ ks-gifts@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260830T210000Z
+DTEND:20260830T221500Z
+SUMMARY:Summer's Farewell: Self-Care Sunday Sound Bath
+LOCATION:Goddess Isis Books & Gifts\, 2775 South Broadway\, Englewood\, CO 
+ 80113
+DESCRIPTION:A two-hour women's circle at Goddess Isis Books & Gifts in Engl
+ ewood\, Sunday afternoon: a tea and sharing circle followed by an hour of 
+ singing bowls and chimes\; sliding scale $20–40\, led by IzaBelle Sweet.
+ \n\nTickets: https://www.eventbrite.com/e/summers-farewell-self-care-sunda
+ y-sound-bath-tickets-1996371514942
+URL:https://soundbathcalendar.com/event/summers-farewell-selfcare-sunday-so
+ und-bath-2026-08-30-goddess-isis-books-gifts/
+END:VEVENT
+END:VCALENDAR

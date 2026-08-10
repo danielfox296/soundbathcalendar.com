@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Nourish: Women's Circle & Sound Bath
+BEGIN:VEVENT
+UID:nourish-womens-circle-sound-bath-2026-08-26-the-living-room@soundbathca
+ lendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260827T003000Z
+DTEND:20260827T014500Z
+SUMMARY:Nourish: Women's Circle & Sound Bath
+LOCATION:The Living Room\, 155 North College Avenue\, Suite 201\, Fort Coll
+ ins\, CO 80524
+DESCRIPTION:A 90-minute women's circle at The Living Room in downtown Fort 
+ Collins\, Wednesday evening: guided meditation and facilitated sharing clo
+ sing with a sound bath and hands-on massage.\n\nTickets: https://www.event
+ brite.com/e/nourish-womens-circle-sound-bath-tickets-1996400298033
+URL:https://soundbathcalendar.com/event/nourish-womens-circle-sound-bath-20
+ 26-08-26-the-living-room/
+END:VEVENT
+END:VCALENDAR

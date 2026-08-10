@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Energy Medicine + Sound Immersion
+BEGIN:VEVENT
+UID:energy-medicine-sound-immersion-2026-08-23-green-light-reiki@soundbathc
+ alendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260823T220000Z
+DTEND:20260823T231500Z
+SUMMARY:Energy Medicine + Sound Immersion
+LOCATION:Green Light Reiki\, 1545 S Pearl St\, Denver\, CO 80210
+DESCRIPTION:A guided energy-clearing session with a full gong\, bowl\, and 
+ drum sound immersion at Green Light Reiki in Denver's Platt Park\, $40.\n\
+ nTickets: https://www.meetup.com/denver-gong-immersion-chakra-balancing-vi
+ bration-medicine/events/315967631/
+URL:https://soundbathcalendar.com/event/energy-medicine-sound-immersion-202
+ 6-08-23-green-light-reiki/
+END:VEVENT
+END:VCALENDAR

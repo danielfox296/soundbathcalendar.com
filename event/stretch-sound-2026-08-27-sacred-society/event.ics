@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Stretch & Sound
+BEGIN:VEVENT
+UID:stretch-sound-2026-08-27-sacred-society@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260828T000000Z
+DTEND:20260828T011500Z
+SUMMARY:Stretch & Sound
+LOCATION:Sacred Society
+DESCRIPTION:A stretch-and-sound session at Sacred Society in Denver\, Thurs
+ day evening\, led by Christina Epps\; from $45.\n\nTickets: https://momenc
+ e.com/s/140107271
+URL:https://soundbathcalendar.com/event/stretch-sound-2026-08-27-sacred-soc
+ iety/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:August Monthly Women's Group & Sound Bath
+BEGIN:VEVENT
+UID:august-monthly-womens-group-sound-bath-2026-08-28-venue-tba-see-listing
+ @soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260829T000000Z
+DTEND:20260829T011500Z
+SUMMARY:August Monthly Women's Group & Sound Bath
+LOCATION:Venue TBA (see listing)
+DESCRIPTION:A monthly women's circle with a sound bath component hosted by 
+ the Colorado Springs Red Tent Gathering group\; venue and price not publis
+ hed.\n\nTickets: https://www.meetup.com/colorado-springs-women-personal-de
+ velopment-meetup-group/events/315403737/
+URL:https://soundbathcalendar.com/event/august-monthly-womens-group-sound-b
+ ath-2026-08-28-venue-tba-see-listing/
+END:VEVENT
+END:VCALENDAR

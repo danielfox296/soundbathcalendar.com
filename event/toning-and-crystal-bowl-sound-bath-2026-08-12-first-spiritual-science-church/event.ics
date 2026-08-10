@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Toning and Crystal Bowl Sound Bath
+BEGIN:VEVENT
+UID:toning-and-crystal-bowl-sound-bath-2026-08-12-first-spiritual-science-c
+ hurch@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260813T010000Z
+DTEND:20260813T021500Z
+SUMMARY:Toning and Crystal Bowl Sound Bath
+LOCATION:First Spiritual Science Church\, 3375 S Dahlia St
+DESCRIPTION:Quantum Wellness's recurring second-Wednesday toning and crysta
+ l singing bowl sound bath at First Spiritual Science Church in Denver\, We
+ dnesday evening\; donation-based.\n\nTickets: https://qwellness.abmp.com/e
+ vents
+URL:https://soundbathcalendar.com/event/toning-and-crystal-bowl-sound-bath-
+ 2026-08-12-first-spiritual-science-church/
+END:VEVENT
+END:VCALENDAR

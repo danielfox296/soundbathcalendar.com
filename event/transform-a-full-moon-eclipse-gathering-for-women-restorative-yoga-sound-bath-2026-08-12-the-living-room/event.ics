@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:TRANSFORM: A Full Moon & Eclipse Gathering for Women (Restorat
+ ive Yoga & Sound Bath)
+BEGIN:VEVENT
+UID:transform-a-full-moon-eclipse-gathering-for-women-restorative-yoga-soun
+ d-bath-2026-08-12-the-living-room@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260813T013000Z
+DTEND:20260813T024500Z
+SUMMARY:TRANSFORM: A Full Moon & Eclipse Gathering for Women (Restorative Y
+ oga & Sound Bath)
+LOCATION:The Living Room\, 155 North College Avenue\, #Suite 201
+DESCRIPTION:A restorative yoga and crystal-singing-bowl sound bath segment 
+ within a women's full-moon/eclipse evening gathering at The Living Room in
+  Fort Collins\; $37 for the full event.\n\nTickets: https://www.eventbrite
+ .com/e/transform-a-full-moon-eclipse-gathering-for-women-tickets-199640470
+ 8224
+URL:https://soundbathcalendar.com/event/transform-a-full-moon-eclipse-gathe
+ ring-for-women-restorative-yoga-sound-bath-2026-08-12-the-living-room/
+END:VEVENT
+END:VCALENDAR

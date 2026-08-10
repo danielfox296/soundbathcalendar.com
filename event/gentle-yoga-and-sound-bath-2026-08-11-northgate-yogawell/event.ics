@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Gentle Yoga and Sound Bath
+BEGIN:VEVENT
+UID:gentle-yoga-and-sound-bath-2026-08-11-northgate-yogawell@soundbathcalen
+ dar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260812T000000Z
+DTEND:20260812T011500Z
+SUMMARY:Gentle Yoga and Sound Bath
+LOCATION:Northgate YogaWell\, 13828 Gleneagle Drive\, Colorado Springs\, CO
+  80921
+DESCRIPTION:A 75-minute class at Northgate YogaWell in Colorado Springs\, T
+ uesday evening: 45 minutes of gentle movement followed by an extended rela
+ xation with crystal bowls\; $25.\n\nTickets: https://www.meetup.com/essent
+ ial-wellness-society-colorado/events/315978792/
+URL:https://soundbathcalendar.com/event/gentle-yoga-and-sound-bath-2026-08-
+ 11-northgate-yogawell/
+END:VEVENT
+END:VCALENDAR

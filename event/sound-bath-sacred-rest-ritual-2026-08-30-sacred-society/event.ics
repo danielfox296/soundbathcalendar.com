@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath: Sacred Rest Ritual
+BEGIN:VEVENT
+UID:sound-bath-sacred-rest-ritual-2026-08-30-sacred-society@soundbathcalend
+ ar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260830T160000Z
+DTEND:20260830T171500Z
+SUMMARY:Sound Bath: Sacred Rest Ritual
+LOCATION:Sacred Society\, 3410 W 38th Ave\, Denver\, CO 80211
+DESCRIPTION:A 60-minute sound bath called 'Sacred Rest Ritual\,' led by Deb
+ orah Green at Sacred Society.\n\nTickets: https://momence.com/s/126456766
+URL:https://soundbathcalendar.com/event/sound-bath-sacred-rest-ritual-2026-
+ 08-30-sacred-society/
+END:VEVENT
+END:VCALENDAR

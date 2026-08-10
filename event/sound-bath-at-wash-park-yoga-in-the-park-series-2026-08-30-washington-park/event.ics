@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath at Wash Park - Yoga in the Park Series
+BEGIN:VEVENT
+UID:sound-bath-at-wash-park-yoga-in-the-park-series-2026-08-30-washington-p
+ ark@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260831T000000Z
+DTEND:20260831T011500Z
+SUMMARY:Sound Bath at Wash Park - Yoga in the Park Series
+LOCATION:Washington Park\, East Mississippi Avenue & South Franklin Street\
+ , Denver\, CO 80210
+DESCRIPTION:A one-hour outdoor sound bath in Washington Park\, Denver\, Sun
+ day evening\, led by Amanda Rose of Revive Wellness on crystal and Tibetan
+  bowls\, drum and rattles\; sliding-scale donation.\n\nTickets: https://ww
+ w.eventbrite.com/e/sound-bath-at-wash-park-yoga-in-the-park-series-tickets
+ -1990193926609
+URL:https://soundbathcalendar.com/event/sound-bath-at-wash-park-yoga-in-the
+ -park-series-2026-08-30-washington-park/
+END:VEVENT
+END:VCALENDAR

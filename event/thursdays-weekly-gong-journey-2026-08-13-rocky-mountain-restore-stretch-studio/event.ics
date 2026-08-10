@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Thursday's Weekly Gong Journey
+BEGIN:VEVENT
+UID:thursdays-weekly-gong-journey-2026-08-13-rocky-mountain-restore-stretch
+ -studio@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260814T001500Z
+DTEND:20260814T013000Z
+SUMMARY:Thursday's Weekly Gong Journey
+LOCATION:Rocky Mountain Restore & Stretch Studio
+DESCRIPTION:A weekly evening multi-gong sound journey hosted by Rocky Mount
+ ain Restore & Stretch on August 13\, 2026.\n\nTickets: https://www.rockymo
+ untainrestoreandstretch.com/soundhealingevents
+URL:https://soundbathcalendar.com/event/thursdays-weekly-gong-journey-2026-
+ 08-13-rocky-mountain-restore-stretch-studio/
+END:VEVENT
+END:VCALENDAR

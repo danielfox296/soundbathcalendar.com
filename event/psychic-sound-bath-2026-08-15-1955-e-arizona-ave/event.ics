@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Psychic Sound Bath
+BEGIN:VEVENT
+UID:psychic-sound-bath-2026-08-15-1955-e-arizona-ave@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260815T210000Z
+DTEND:20260815T221500Z
+SUMMARY:Psychic Sound Bath
+LOCATION:1955 E Arizona Ave\, 1955 East Arizona Avenue\, Denver\, CO 80210
+DESCRIPTION:Intuitive Sounds runs a sound-and-movement session billed as a 
+ psychic sound bath at a University-area Denver address.\n\nTickets: https:
+ //www.eventbrite.co.uk/e/psychic-sound-bath-tickets-1996371538011
+URL:https://soundbathcalendar.com/event/psychic-sound-bath-2026-08-15-1955-
+ e-arizona-ave/
+END:VEVENT
+END:VCALENDAR

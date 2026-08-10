@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Full Moon Sound Bath
+BEGIN:VEVENT
+UID:full-moon-sound-bath-2026-08-28-sacred-society@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260828T230000Z
+DTEND:20260829T001500Z
+SUMMARY:Full Moon Sound Bath
+LOCATION:Sacred Society\, 3410 W 38th Ave\, Denver\, CO 80211
+DESCRIPTION:A 60-minute group sound bath timed to the full moon\, led by pr
+ actitioner Christina Epps at Sacred Society.\n\nTickets: https://momence.c
+ om/s/139570490
+URL:https://soundbathcalendar.com/event/full-moon-sound-bath-2026-08-28-sac
+ red-society/
+END:VEVENT
+END:VCALENDAR

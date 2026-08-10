@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:The Power of Pause- A Sound Bath Experience at Heyday
+BEGIN:VEVENT
+UID:the-power-of-pause-a-sound-bath-experience-at-heyday-2026-08-31-heyday-
+ skincare-university-hills@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260901T000000Z
+DTEND:20260901T011500Z
+SUMMARY:The Power of Pause- A Sound Bath Experience at Heyday
+LOCATION:Heyday Skincare University Hills\, 2770 South Colorado Boulevard\,
+  #Suite 120\, Denver\, CO 80222
+DESCRIPTION:A free evening sound bath hosted at Heyday Skincare's Universit
+ y Hills location in Denver.\n\nTickets: https://www.eventbrite.com/e/the-p
+ ower-of-pause-a-sound-bath-experience-at-heyday-tickets-1996242837063
+URL:https://soundbathcalendar.com/event/the-power-of-pause-a-sound-bath-exp
+ erience-at-heyday-2026-08-31-heyday-skincare-university-hills/
+END:VEVENT
+END:VCALENDAR

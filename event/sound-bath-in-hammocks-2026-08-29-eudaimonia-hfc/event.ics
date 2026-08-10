@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath in Hammocks
+BEGIN:VEVENT
+UID:sound-bath-in-hammocks-2026-08-29-eudaimonia-hfc@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260830T010000Z
+DTEND:20260830T021500Z
+SUMMARY:Sound Bath in Hammocks
+LOCATION:Eudaimonia HFC\, 4471 Parmalee Gulch Road\, Indian Hills\, CO 8045
+ 4
+DESCRIPTION:A 90-minute sound session at Eudaimonia HFC in Indian Hills\, S
+ aturday evening\, with participants lying in yoga hammocks\; led by Lauren
+  Gale and Nolen Shaber.\n\nTickets: https://www.eventbrite.com/e/sound-bat
+ h-in-hammocks-tickets-1993769103058
+URL:https://soundbathcalendar.com/event/sound-bath-in-hammocks-2026-08-29-e
+ udaimonia-hfc/
+END:VEVENT
+END:VCALENDAR

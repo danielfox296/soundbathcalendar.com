@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Conscious Breathwork with Sound Healing
+BEGIN:VEVENT
+UID:conscious-breathwork-with-sound-healing-2026-08-13-green-light-reiki@so
+ undbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260814T010000Z
+DTEND:20260814T021500Z
+SUMMARY:Conscious Breathwork with Sound Healing
+LOCATION:Green Light Reiki\, 1545 S Pearl St\, Denver\, CO 80210
+DESCRIPTION:An active breathwork session closed with crystal singing bowls 
+ at Green Light Reiki\, Denver\, Thursday evening\; $30\, led by Katie Wile
+ y.\n\nTickets: https://www.eventbrite.com/e/conscious-breathwork-with-soun
+ d-healing-tickets-1981894477734
+URL:https://soundbathcalendar.com/event/conscious-breathwork-with-sound-hea
+ ling-2026-08-13-green-light-reiki/
+END:VEVENT
+END:VCALENDAR

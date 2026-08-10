@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Healing & Cacao Ceremony
+BEGIN:VEVENT
+UID:sound-healing-cacao-ceremony-2026-08-15-plant-magic-cafe@soundbathcalen
+ dar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260815T210000Z
+DTEND:20260815T221500Z
+SUMMARY:Sound Healing & Cacao Ceremony
+LOCATION:Plant Magic Cafe\, 925 East 17th Avenue\, Denver\, CO 80218
+DESCRIPTION:A 3.5-hour ceremony at Plant Magic Cafe\, Denver\, Saturday aft
+ ernoon\, combining ceremonial cacao\, guided meditation and a sound bath\;
+  led by Akoni.\n\nTickets: https://www.eventbrite.com/e/sound-healing-caca
+ o-ceremony-tickets-1993025202030
+URL:https://soundbathcalendar.com/event/sound-healing-cacao-ceremony-2026-0
+ 8-15-plant-magic-cafe/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Circle & Energy Healing Sound Bath with Bruce White
+BEGIN:VEVENT
+UID:sound-circle-energy-healing-sound-bath-with-bruce-white-2026-08-21-unit
+ y-of-boulder-spiritual-center-meditation-room@soundbathcalendar.com
+DTSTAMP:20260810T170739Z
+DTSTART:20260822T003000Z
+DTEND:20260822T014500Z
+SUMMARY:Sound Circle & Energy Healing Sound Bath with Bruce White
+LOCATION:Unity of Boulder Spiritual Center - Meditation Room\, 2855 Folsom 
+ St\, Boulder\, CO 80304
+DESCRIPTION:A sliding-scale ($15-$25) sound circle and crystal-bowl session
+  led by Bruce White at Unity of Boulder's Meditation Room on August 21\, 2
+ 026.\n\nTickets: https://unityofboulder.com/events/illuminated-6/
+URL:https://soundbathcalendar.com/event/sound-circle-energy-healing-sound-b
+ ath-with-bruce-white-2026-08-21-unity-of-boulder-spiritual-center-meditati
+ on-room/
+END:VEVENT
+END:VCALENDAR

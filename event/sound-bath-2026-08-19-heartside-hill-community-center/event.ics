@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath
+BEGIN:VEVENT
+UID:sound-bath-2026-08-19-heartside-hill-community-center@soundbathcalendar
+ .com
+DTSTAMP:20260810T170739Z
+DTSTART:20260820T010000Z
+DTEND:20260820T021500Z
+SUMMARY:Sound Bath
+LOCATION:Heartside Hill Community Center\, 6514 Brittany Street\, Fort Coll
+ ins\, CO 80525
+DESCRIPTION:A sound bath at the Heartside Hill Community Center in Fort Col
+ lins\, Wednesday evening\, on crystal bowls\, gongs and harp\; $20\, led b
+ y Ruth of Soulful Sound Therapy.\n\nTickets: https://www.meetup.com/fort-c
+ ollins-sound-bath/events/315964095/
+URL:https://soundbathcalendar.com/event/sound-bath-2026-08-19-heartside-hil
+ l-community-center/
+END:VEVENT
+END:VCALENDAR
