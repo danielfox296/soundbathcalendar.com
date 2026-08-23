@@ -38,6 +38,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 APP_ID = os.environ.get('META_APP_ID', '').strip() or meta_token.DEFAULT_APP_ID
 PREFERRED_IG = 'soundbathcalendar'   # pick the Page linked to this IG account
+PAGE_ID = os.environ.get('META_PAGE_ID', '').strip() or '1225168530684602'
 
 # Keychain slot for the App Secret. One paste, then never again.
 KC_SERVICE = 'soundbathcalendar-meta-app-secret'
@@ -163,8 +164,22 @@ def mint_page_token(secret, short, secret_was_cached):
         sys.exit(1)
     pages = (accounts or {}).get('data', [])
     if not pages:
-        print('FAIL  the token can see no Pages. Re-approve with the Page selected.')
-        sys.exit(1)
+        # A Facebook security reset can drop the classic page-role listing
+        # (/me/accounts comes back empty) while the app's granular grant on
+        # the Page still stands — hit 2026-08-23. The page node still hands
+        # over its token in that state, so ask it directly.
+        print('  ..  /me/accounts empty — asking the page node directly')
+        node, err = meta_token.graph(PAGE_ID, {
+            'fields': 'id,name,access_token,'
+                      'instagram_business_account{id,username}',
+            'access_token': user_token,
+        })
+        if err or not (node or {}).get('access_token'):
+            print(f'FAIL  the token can see no Pages and the page node gave '
+                  f'no token — {err or "empty response"}')
+            print('      Re-approve in the Explorer with the Page selected.')
+            sys.exit(1)
+        pages = [node]
 
     usable = []
     for page in pages:
