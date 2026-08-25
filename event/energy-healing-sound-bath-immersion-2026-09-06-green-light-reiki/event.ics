@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Energy Healing + Sound Bath Immersion
+BEGIN:VEVENT
+UID:energy-healing-sound-bath-immersion-2026-09-06-green-light-reiki@soundb
+ athcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260906T220000Z
+DTEND:20260906T231500Z
+SUMMARY:Energy Healing + Sound Bath Immersion
+LOCATION:Green Light Reiki\, 1545 S Pearl St\, Denver\, CO 80210
+DESCRIPTION:A guided energy clearing followed by a sound bath at Green Ligh
+ t Reiki on South Pearl Street\, Denver\, Sunday afternoon\; $40.\n\nTicket
+ s: https://www.eventbrite.com/e/energy-healing-sound-bath-immersion-ticket
+ s-1996244150993
+URL:https://soundbathcalendar.com/event/energy-healing-sound-bath-immersion
+ -2026-09-06-green-light-reiki/
+END:VEVENT
+END:VCALENDAR

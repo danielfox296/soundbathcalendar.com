@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sunday Morning Outdoor Sound Journey
+BEGIN:VEVENT
+UID:sunday-morning-outdoor-sound-journey-2026-08-30-old-canal-park@soundbat
+ hcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260830T150000Z
+DTEND:20260830T161500Z
+SUMMARY:Sunday Morning Outdoor Sound Journey
+LOCATION:Old Canal Park\, 2725 Rocky Mountain Avenue\, Loveland\, CO 80538
+DESCRIPTION:Donation-based outdoor sound journey for beginners at Old Canal
+  Park in Loveland\, led by Annmarie of ResoundingWell\, Sunday morning.\n\
+ nTickets: https://www.eventbrite.com/e/sunday-morning-outdoor-sound-journe
+ y-tickets-1997394076451
+URL:https://soundbathcalendar.com/event/sunday-morning-outdoor-sound-journe
+ y-2026-08-30-old-canal-park/
+END:VEVENT
+END:VCALENDAR

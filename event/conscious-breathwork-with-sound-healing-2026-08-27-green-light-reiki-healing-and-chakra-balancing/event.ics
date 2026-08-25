@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Conscious Breathwork with Sound Healing
+BEGIN:VEVENT
+UID:conscious-breathwork-with-sound-healing-2026-08-27-green-light-reiki-he
+ aling-and-chakra-balancing@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260828T010000Z
+DTEND:20260828T021500Z
+SUMMARY:Conscious Breathwork with Sound Healing
+LOCATION:Green Light Reiki Healing and Chakra Balancing\, 1545 South Pearl 
+ Street\, Denver\, CO 80210
+DESCRIPTION:Led by Katie Wiley\, Breathwork and sound session at Green Ligh
+ t Reiki Healing and Chakra Balancing (Platt Park\, Denver) on Thursday at 
+ 7:00 PM\, tickets around $33.85.\n\nTickets: https://www.eventbrite.com/e/
+ conscious-breathwork-with-sound-healing-tickets-1981894477734
+URL:https://soundbathcalendar.com/event/conscious-breathwork-with-sound-hea
+ ling-2026-08-27-green-light-reiki-healing-and-chakra-balancing/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Resonance Sound Bath with Kimba Arem
+BEGIN:VEVENT
+UID:resonance-sound-bath-with-kimba-arem-2026-09-06-the-starhouse@soundbath
+ calendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260906T201500Z
+DTEND:20260906T213000Z
+SUMMARY:Resonance Sound Bath with Kimba Arem
+LOCATION:The StarHouse\, 3476 Sunshine Canyon Drive\, Boulder\, CO 80302
+DESCRIPTION:Kimba Arem leads a sound journey of flutes\, didgeridoo\, singi
+ ng bowls\, and gongs at The StarHouse\, paired with Kundalini Yoga\, in a 
+ 2-hour session billed as "Resonance Soundbath."\n\nTickets: https://www.ev
+ entbrite.com/e/resonance-soundbath-tickets-1988964853418
+URL:https://soundbathcalendar.com/event/resonance-sound-bath-with-kimba-are
+ m-2026-09-06-the-starhouse/
+END:VEVENT
+END:VCALENDAR

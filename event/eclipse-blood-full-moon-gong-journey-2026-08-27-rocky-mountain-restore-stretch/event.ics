@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Eclipse & Blood Full Moon Gong Journey
+BEGIN:VEVENT
+UID:eclipse-blood-full-moon-gong-journey-2026-08-27-rocky-mountain-restore-
+ stretch@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260828T001500Z
+DTEND:20260828T013000Z
+SUMMARY:Eclipse & Blood Full Moon Gong Journey
+LOCATION:Rocky Mountain Restore & Stretch\, 3616 Soderburg Dr\, Fort Collin
+ s\, CO 80526
+DESCRIPTION:A weekly gong sound journey featuring multiple large gongs\, he
+ ld to coincide with the August 2026 lunar eclipse and full moon.\n\nTicket
+ s: https://www.rockymountainrestoreandstretch.com/event-details-registrati
+ on/thursdays-weekly-gong-journey-2026-08-27-18-15
+URL:https://soundbathcalendar.com/event/eclipse-blood-full-moon-gong-journe
+ y-2026-08-27-rocky-mountain-restore-stretch/
+END:VEVENT
+END:VCALENDAR

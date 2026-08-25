@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath at Wash Park - Yoga in the Park Series
+BEGIN:VEVENT
+UID:sound-bath-at-wash-park-yoga-in-the-park-series-2026-08-30-701-s-frankl
+ in-st-parking@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260831T000000Z
+DTEND:20260831T011500Z
+SUMMARY:Sound Bath at Wash Park - Yoga in the Park Series
+LOCATION:701 S Franklin St Parking\, 701 South Franklin Street\, Denver\, C
+ O 80210
+DESCRIPTION:Outdoor yoga class with a sound bath component at Washington Pa
+ rk\, hosted by Denver - Yoga Social\, Sunday evening\, from $23.\n\nTicket
+ s: https://www.eventbrite.com/e/sound-bath-at-wash-park-yoga-in-the-park-s
+ eries-tickets-1990211089945
+URL:https://soundbathcalendar.com/event/sound-bath-at-wash-park-yoga-in-the
+ -park-series-2026-08-30-701-s-franklin-st-parking/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Surrender: Full Moon Sound & Reiki Ceremony by the Lake
+BEGIN:VEVENT
+UID:surrender-full-moon-sound-reiki-ceremony-by-the-lake-2026-08-26-wolcott
+ -lake@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260827T003000Z
+DTEND:20260827T014500Z
+SUMMARY:Surrender: Full Moon Sound & Reiki Ceremony by the Lake
+LOCATION:Wolcott Lake\, 4588 Lakeridge rd\, Denver\, CO 80219
+DESCRIPTION:Sound bath at Wolcott Lake (Harvey Park\, Denver) on Wednesday 
+ at 6:30 PM\, tickets around $44.52.\n\nTickets: https://www.eventbrite.com
+ /e/surrender-full-moon-sound-reiki-ceremony-by-the-lake-tickets-1995245533
+ 100
+URL:https://soundbathcalendar.com/event/surrender-full-moon-sound-reiki-cer
+ emony-by-the-lake-2026-08-26-wolcott-lake/
+END:VEVENT
+END:VCALENDAR

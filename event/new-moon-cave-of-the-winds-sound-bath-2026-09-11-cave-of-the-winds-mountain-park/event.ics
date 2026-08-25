@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:New Moon Cave of the Winds Sound Bath
+BEGIN:VEVENT
+UID:new-moon-cave-of-the-winds-sound-bath-2026-09-11-cave-of-the-winds-moun
+ tain-park@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260912T013000Z
+DTEND:20260912T024500Z
+SUMMARY:New Moon Cave of the Winds Sound Bath
+LOCATION:Cave of the Winds Mountain Park\, 100 Cave of the Winds Road
+DESCRIPTION:A new-moon sound bath inside Cave of the Winds Mountain Park in
+  Manitou Springs (Colorado Springs)\, led by Singing Bowls of the Rockies 
+ with Tibetan and crystal bowls\, gongs\, and flute\; Friday night\, $71.21
+ .\n\nTickets: https://www.eventbrite.com/e/new-moon-cave-of-the-winds-soun
+ d-bath-tickets-1998124588432
+URL:https://soundbathcalendar.com/event/new-moon-cave-of-the-winds-sound-ba
+ th-2026-09-11-cave-of-the-winds-mountain-park/
+END:VEVENT
+END:VCALENDAR

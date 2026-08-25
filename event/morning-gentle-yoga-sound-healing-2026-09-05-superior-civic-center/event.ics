@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Morning Gentle Yoga + Sound Healing
+BEGIN:VEVENT
+UID:morning-gentle-yoga-sound-healing-2026-09-05-superior-civic-center@soun
+ dbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260905T150000Z
+DTEND:20260905T161500Z
+SUMMARY:Morning Gentle Yoga + Sound Healing
+LOCATION:Superior Civic Center\, 2250 Main St. Unit 1001\, Superior\, CO
+DESCRIPTION:A gentle yoga and energy-work practice followed by over 40 minu
+ tes of crystal singing bowl sound healing\, led by Andrea Stamp at Superio
+ r Civic Center.\n\nTickets: https://www.meetup.com/peaceful-butterfly-heal
+ ings-yoga-sound-baths/events/316073812/
+URL:https://soundbathcalendar.com/event/morning-gentle-yoga-sound-healing-2
+ 026-09-05-superior-civic-center/
+END:VEVENT
+END:VCALENDAR

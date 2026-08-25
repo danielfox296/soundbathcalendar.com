@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Psychic Sound Bath
+BEGIN:VEVENT
+UID:psychic-sound-bath-2026-09-05-intuitive-sounds@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260905T210000Z
+DTEND:20260905T221500Z
+SUMMARY:Psychic Sound Bath
+LOCATION:Intuitive Sounds\, 1955 East Arizona Avenue\, Denver\, CO 80210
+DESCRIPTION:Sound bath paired with intuitive/psychic-themed elements by Int
+ uitive Sounds in Denver\, Saturday afternoon\, $23.\n\nTickets: https://ww
+ w.eventbrite.com/e/psychic-sound-bath-tickets-1996371553056
+URL:https://soundbathcalendar.com/event/psychic-sound-bath-2026-09-05-intui
+ tive-sounds/
+END:VEVENT
+END:VCALENDAR

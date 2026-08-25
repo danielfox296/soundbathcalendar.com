@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Communal Quartz Sound Bath
+BEGIN:VEVENT
+UID:communal-quartz-sound-bath-2026-09-07-colorado-psychedelic-church@sound
+ bathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260908T000000Z
+DTEND:20260908T011500Z
+SUMMARY:Communal Quartz Sound Bath
+LOCATION:Colorado Psychedelic Church\, 5026 N. Academy Blvd.\, Colorado Spr
+ ings\, CO
+DESCRIPTION:A quartz crystal sound bath led by clergy member Oracle Richard
+  at the Colorado Psychedelic Church's Colorado Springs location\, with opt
+ ional group sharing afterward.\n\nTickets: https://www.meetup.com/colorado
+ psychedelicchurch/events/315936118/
+URL:https://soundbathcalendar.com/event/communal-quartz-sound-bath-2026-09-
+ 07-colorado-psychedelic-church/
+END:VEVENT
+END:VCALENDAR

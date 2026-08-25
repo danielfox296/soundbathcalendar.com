@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Somatic Relaxation in the Salt Cave
+BEGIN:VEVENT
+UID:somatic-relaxation-in-the-salt-cave-2026-09-05-diamond-vitality-center@
+ soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260905T203000Z
+DTEND:20260905T214500Z
+SUMMARY:Somatic Relaxation in the Salt Cave
+LOCATION:Diamond Vitality Center\, 333 W South Boulder Rd\, Louisville\, CO
+  80027
+DESCRIPTION:A somatic relaxation and sound session held in Diamond Vitality
+  Center's salt cave in Louisville.\n\nTickets: https://www.diamondvitality
+ center.com/
+URL:https://soundbathcalendar.com/event/somatic-relaxation-in-the-salt-cave
+ -2026-09-05-diamond-vitality-center/
+END:VEVENT
+END:VCALENDAR

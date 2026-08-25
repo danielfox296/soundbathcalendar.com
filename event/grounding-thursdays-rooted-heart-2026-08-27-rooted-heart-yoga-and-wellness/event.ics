@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Grounding Thursdays @ Rooted Heart
+BEGIN:VEVENT
+UID:grounding-thursdays-rooted-heart-2026-08-27-rooted-heart-yoga-and-welln
+ ess@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260828T010000Z
+DTEND:20260828T021500Z
+SUMMARY:Grounding Thursdays @ Rooted Heart
+LOCATION:Rooted Heart Yoga and Wellness\, 1409 North Ogden Street\, Denver\
+ , CO 80218
+DESCRIPTION:A free weekly deep-restorative sound bath and reiki meditation 
+ led by IzaBelle Sweet at Rooted Heart Yoga and Wellness in Denver's Capito
+ l Hill\, Thursday evening.\n\nTickets: https://www.eventbrite.com/e/ground
+ ing-thursdays-rooted-heart-tickets-1995803243226
+URL:https://soundbathcalendar.com/event/grounding-thursdays-rooted-heart-20
+ 26-08-27-rooted-heart-yoga-and-wellness/
+END:VEVENT
+END:VCALENDAR

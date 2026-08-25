@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Somatic Relaxation in the Salt Cave
+BEGIN:VEVENT
+UID:somatic-relaxation-in-the-salt-cave-2026-09-05-333-west-south-boulder-r
+ oad-louisville-co-usa@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260905T203000Z
+DTEND:20260905T214500Z
+SUMMARY:Somatic Relaxation in the Salt Cave
+LOCATION:333 West South Boulder Road\, Louisville\, CO\, USA\, 333 West Sou
+ th Boulder Road\, Louisville\, CO 80027
+DESCRIPTION:Breathwork and sound session at 333 West South Boulder Road\, L
+ ouisville\, CO\, USA in Boulder on Saturday at 2:30 PM\, tickets around $5
+ 5.20.\n\nTickets: https://www.eventbrite.com/e/somatic-relaxation-in-the-s
+ alt-cave-tickets-1993634258735
+URL:https://soundbathcalendar.com/event/somatic-relaxation-in-the-salt-cave
+ -2026-09-05-333-west-south-boulder-road-louisville-co-usa/
+END:VEVENT
+END:VCALENDAR

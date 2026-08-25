@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Eclipse Reiki Sound Bath
+BEGIN:VEVENT
+UID:eclipse-reiki-sound-bath-2026-08-27-the-healing-hive@soundbathcalendar.
+ com
+DTSTAMP:20260825T030102Z
+DTSTART:20260828T010000Z
+DTEND:20260828T021500Z
+SUMMARY:Eclipse Reiki Sound Bath
+LOCATION:The Healing Hive\, 6545 West 44th Avenue\, Wheat Ridge\, CO 80033
+DESCRIPTION:Reiki-infused sound bath under the Full Moon lunar eclipse\, le
+ d by Bridget White at The Healing Hive in Wheat Ridge\, Thursday evening\,
+  $29.\n\nTickets: https://www.eventbrite.com/e/eclipse-reiki-sound-bath-ti
+ ckets-1998254240224
+URL:https://soundbathcalendar.com/event/eclipse-reiki-sound-bath-2026-08-27
+ -the-healing-hive/
+END:VEVENT
+END:VCALENDAR

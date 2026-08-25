@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Saturday Morning Sound Bath
+BEGIN:VEVENT
+UID:saturday-morning-sound-bath-2026-08-29-1545-s-pearl-st@soundbathcalenda
+ r.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260829T160000Z
+DTEND:20260829T171500Z
+SUMMARY:Saturday Morning Sound Bath
+LOCATION:1545 S Pearl St\, 1545 South Pearl Street\, Denver\, CO 80210
+DESCRIPTION:A Saturday morning sound bath by Soul Growth Network at 1545 S 
+ Pearl St in Denver's Platt Park\; $33.\n\nTickets: https://www.eventbrite.
+ com/e/saturday-morning-sound-bath-tickets-1990176287851
+URL:https://soundbathcalendar.com/event/saturday-morning-sound-bath-2026-08
+ -29-1545-s-pearl-st/
+END:VEVENT
+END:VCALENDAR

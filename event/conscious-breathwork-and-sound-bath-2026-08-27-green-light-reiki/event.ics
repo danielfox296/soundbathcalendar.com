@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Conscious Breathwork and Sound Bath
+BEGIN:VEVENT
+UID:conscious-breathwork-and-sound-bath-2026-08-27-green-light-reiki@soundb
+ athcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260828T010000Z
+DTEND:20260828T021500Z
+SUMMARY:Conscious Breathwork and Sound Bath
+LOCATION:Green Light Reiki\, 1545 S Pearl St\, Denver\, CO
+DESCRIPTION:Active breathwork to release emotion\, followed by a crystal si
+ nging bowl meditation with guided heart-opening at Green Light Reiki.\n\nT
+ ickets: https://www.meetup.com/denver-gong-immersion-chakra-balancing-vibr
+ ation-medicine/events/316027452/
+URL:https://soundbathcalendar.com/event/conscious-breathwork-and-sound-bath
+ -2026-08-27-green-light-reiki/
+END:VEVENT
+END:VCALENDAR

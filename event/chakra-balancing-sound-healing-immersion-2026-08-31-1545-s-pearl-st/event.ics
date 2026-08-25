@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Chakra Balancing: Sound Healing Immersion
+BEGIN:VEVENT
+UID:chakra-balancing-sound-healing-immersion-2026-08-31-1545-s-pearl-st@sou
+ ndbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260901T010000Z
+DTEND:20260901T021500Z
+SUMMARY:Chakra Balancing: Sound Healing Immersion
+LOCATION:1545 S Pearl St\, 1545 South Pearl Street\, Denver\, CO 80210
+DESCRIPTION:Chakra-focused sound healing session at Soul Growth Network in 
+ Denver.\n\nTickets: https://www.eventbrite.com/e/chakra-balancing-sound-he
+ aling-immersion-tickets-1995708281192
+URL:https://soundbathcalendar.com/event/chakra-balancing-sound-healing-imme
+ rsion-2026-08-31-1545-s-pearl-st/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Atman Breathwork for Healing and Transformation (STARHOUSE)
+BEGIN:VEVENT
+UID:atman-breathwork-for-healing-and-transformation-starhouse-2026-09-03-th
+ e-starhouse@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260904T003000Z
+DTEND:20260904T014500Z
+SUMMARY:Atman Breathwork for Healing and Transformation (STARHOUSE)
+LOCATION:The StarHouse\, 3476 Sunshine Canyon Drive\, Boulder\, CO 80302
+DESCRIPTION:Led by Gurpreet K. Gill\, Breathwork and sound session at The S
+ tarHouse in Boulder on Thursday at 6:30 PM\, tickets around $60.54–$76.5
+ 4.\n\nTickets: https://www.eventbrite.com/e/atman-breathwork-for-healing-a
+ nd-transformation-starhouse-tickets-1990810015347
+URL:https://soundbathcalendar.com/event/atman-breathwork-for-healing-and-tr
+ ansformation-starhouse-2026-09-03-the-starhouse/
+END:VEVENT
+END:VCALENDAR

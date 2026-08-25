@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Self-Care Sunday Sound Bath: A Path to Wellness and Peace
+BEGIN:VEVENT
+UID:selfcare-sunday-sound-bath-a-path-to-wellness-and-peace-2026-09-06-sing
+ ing-bowls-of-the-rockies@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260906T220000Z
+DTEND:20260906T231500Z
+SUMMARY:Self-Care Sunday Sound Bath: A Path to Wellness and Peace
+LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
+ rado Springs\, CO 80903
+DESCRIPTION:A Sunday sound bath at Singing Bowls of the Rockies' downtown s
+ tudio designed to activate the parasympathetic nervous system\, lower stre
+ ss hormones\, and slow the heart rate.\n\nTickets: https://www.singingbowl
+ softherockies.com/event-details/self-care-sunday-sound-bath-a-path-to-well
+ ness-and-peace-21
+URL:https://soundbathcalendar.com/event/selfcare-sunday-sound-bath-a-path-t
+ o-wellness-and-peace-2026-09-06-singing-bowls-of-the-rockies/
+END:VEVENT
+END:VCALENDAR

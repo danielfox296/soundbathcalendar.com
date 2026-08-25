@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Shamanic Drumming Journey and Sound Bath Fusion
+BEGIN:VEVENT
+UID:shamanic-drumming-journey-and-sound-bath-fusion-2026-09-06-resoundingwe
+ ll-sound-journeys@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260906T223000Z
+DTEND:20260906T234500Z
+SUMMARY:Shamanic Drumming Journey and Sound Bath Fusion
+LOCATION:ResoundingWell Sound Journeys\, 1949 Grays Peak Drive\, Loveland\,
+  CO 80538
+DESCRIPTION:A 90-minute session combining ~20-25 minutes of shamanic drummi
+ ng with monochord\, singing bowl\, and gong sound healing and guided visua
+ lization.\n\nTickets: https://www.eventbrite.com/e/shamanic-drumming-journ
+ ey-and-sound-bath-fusion-tickets-1995245312440/
+URL:https://soundbathcalendar.com/event/shamanic-drumming-journey-and-sound
+ -bath-fusion-2026-09-06-resoundingwell-sound-journeys/
+END:VEVENT
+END:VCALENDAR

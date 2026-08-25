@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Breath & Sound: Monthly Journey
+BEGIN:VEVENT
+UID:breath-sound-monthly-journey-2026-09-06-sacred-society@soundbathcalenda
+ r.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260906T150000Z
+DTEND:20260906T161500Z
+SUMMARY:Breath & Sound: Monthly Journey
+LOCATION:Sacred Society\, 3410 W 38th Ave\, Denver\, CO 80211
+DESCRIPTION:A monthly breathwork-and-sound journey led by Brookelin Barnhil
+ l at Sacred Society in the Highlands\, Denver\, Sunday morning\; from $60.
+ \n\nTickets: https://momence.com/s/141581735
+URL:https://soundbathcalendar.com/event/breath-sound-monthly-journey-2026-0
+ 9-06-sacred-society/
+END:VEVENT
+END:VCALENDAR

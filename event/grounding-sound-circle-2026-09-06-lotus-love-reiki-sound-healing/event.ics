@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Grounding Sound Circle
+BEGIN:VEVENT
+UID:grounding-sound-circle-2026-09-06-lotus-love-reiki-sound-healing@soundb
+ athcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260906T223000Z
+DTEND:20260906T234500Z
+SUMMARY:Grounding Sound Circle
+LOCATION:Lotus Love Reiki & Sound Healing\, 18 Garden Center\, Broomfield\,
+  CO 80020
+DESCRIPTION:A monthly first-Sunday community sound journey woven with guide
+ d meditation\, journaling\, and sound healing\, led by Kiley Edwards of Lo
+ tus Love Reiki.\n\nTickets: https://www.eventbrite.com/e/grounding-sound-c
+ ircle-tickets-1992421748083
+URL:https://soundbathcalendar.com/event/grounding-sound-circle-2026-09-06-l
+ otus-love-reiki-sound-healing/
+END:VEVENT
+END:VCALENDAR

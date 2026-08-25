@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Workshop: Somatic Sound
+BEGIN:VEVENT
+UID:workshop-somatic-sound-2026-08-29-sacred-society@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260829T163000Z
+DTEND:20260829T174500Z
+SUMMARY:Workshop: Somatic Sound
+LOCATION:Sacred Society\, 3410 W 38th Ave\, Denver\, CO 80211
+DESCRIPTION:A 75-minute Somatic Sound workshop led by Deborah Green at Sacr
+ ed Society\, combining somatic practice with a live sound component.\n\nTi
+ ckets: https://momence.com/s/139227240
+URL:https://soundbathcalendar.com/event/workshop-somatic-sound-2026-08-29-s
+ acred-society/
+END:VEVENT
+END:VCALENDAR

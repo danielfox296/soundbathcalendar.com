@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Lotus and Light
+BEGIN:VEVENT
+UID:lotus-and-light-2026-08-30-erie-community-library@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260830T210000Z
+DTEND:20260830T221500Z
+SUMMARY:Lotus and Light
+LOCATION:Erie Community Library\, 400 Powers Street\, Erie\, CO 80516
+DESCRIPTION:Sound bath at Erie Community Library in Boulder on Sunday at 3:
+ 00 PM\, free to attend.\n\nTickets: https://www.eventbrite.com/e/lotus-and
+ -light-tickets-1997268279188
+URL:https://soundbathcalendar.com/event/lotus-and-light-2026-08-30-erie-com
+ munity-library/
+END:VEVENT
+END:VCALENDAR

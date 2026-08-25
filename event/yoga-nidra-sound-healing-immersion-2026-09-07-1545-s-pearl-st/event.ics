@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Yoga Nidra + Sound Healing Immersion
+BEGIN:VEVENT
+UID:yoga-nidra-sound-healing-immersion-2026-09-07-1545-s-pearl-st@soundbath
+ calendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260908T010000Z
+DTEND:20260908T021500Z
+SUMMARY:Yoga Nidra + Sound Healing Immersion
+LOCATION:1545 S Pearl St\, 1545 South Pearl Street\, Denver\, CO 80210
+DESCRIPTION:Sound bath at 1545 S Pearl St (Platt Park\, Denver) on Monday a
+ t 7:00 PM\, tickets around $33.\n\nTickets: https://www.eventbrite.com/e/y
+ oga-nidra-sound-healing-immersion-tickets-1995714870902
+URL:https://soundbathcalendar.com/event/yoga-nidra-sound-healing-immersion-
+ 2026-09-07-1545-s-pearl-st/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Full Moon Yin & Sound Bath Experience at the park
+BEGIN:VEVENT
+UID:full-moon-yin-sound-bath-experience-at-the-park-2026-08-28-1750-little-
+ raven-st@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260829T003000Z
+DTEND:20260829T014500Z
+SUMMARY:Full Moon Yin & Sound Bath Experience at the park
+LOCATION:1750 Little Raven St\, 1750 Little Raven Street\, Denver\, CO 8020
+ 2
+DESCRIPTION:Led by Meghan Hennessy\, Breathwork and sound session at 1750 L
+ ittle Raven St (Union Station\, Denver) on Friday at 6:30 PM\, donation-ba
+ sed.\n\nTickets: https://www.eventbrite.com/e/full-moon-yin-sound-bath-exp
+ erience-at-the-park-tickets-1997185947933
+URL:https://soundbathcalendar.com/event/full-moon-yin-sound-bath-experience
+ -at-the-park-2026-08-28-1750-little-raven-st/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Fall Equinox Snip & Sound
+BEGIN:VEVENT
+UID:fall-equinox-snip-sound-2026-09-13-harmonist-sanctuary@soundbathcalenda
+ r.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260913T200000Z
+DTEND:20260913T211500Z
+SUMMARY:Fall Equinox Snip & Sound
+LOCATION:Harmonist Sanctuary\, 4633 East Colfax Avenue\, Denver\, CO 80220
+DESCRIPTION:A fall-equinox afternoon of sound healing and intuitive collage
+  led by Tori Price in the Lotus Lab at Harmonist Sanctuary\, Denver\; $44.
+ 50.\n\nTickets: https://www.eventbrite.com/e/fall-equinox-snip-sound-regis
+ tration-1998267478821
+URL:https://soundbathcalendar.com/event/fall-equinox-snip-sound-2026-09-13-
+ harmonist-sanctuary/
+END:VEVENT
+END:VCALENDAR

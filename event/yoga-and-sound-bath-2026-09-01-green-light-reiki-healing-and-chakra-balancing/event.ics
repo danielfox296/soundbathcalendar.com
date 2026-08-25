@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Yoga and Sound Bath
+BEGIN:VEVENT
+UID:yoga-and-sound-bath-2026-09-01-green-light-reiki-healing-and-chakra-bal
+ ancing@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260902T010000Z
+DTEND:20260902T021500Z
+SUMMARY:Yoga and Sound Bath
+LOCATION:Green Light Reiki Healing and Chakra Balancing\, 1545 South Pearl 
+ Street\, Denver\, CO 80210
+DESCRIPTION:A breathwork\, movement and gong sound bath class taught by Yel
+ ena Sergeyevna at Green Light Reiki in Denver's Platt Park\; $34.\n\nTicke
+ ts: https://www.eventbrite.com/e/yoga-and-sound-bath-tickets-1996244311473
+URL:https://soundbathcalendar.com/event/yoga-and-sound-bath-2026-09-01-gree
+ n-light-reiki-healing-and-chakra-balancing/
+END:VEVENT
+END:VCALENDAR

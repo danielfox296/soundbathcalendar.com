@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Soothing Sound Bath and Gentle Yoga with Melinda
+BEGIN:VEVENT
+UID:soothing-sound-bath-and-gentle-yoga-with-melinda-2026-09-11-shelter-7@s
+ oundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260912T020000Z
+DTEND:20260912T031500Z
+SUMMARY:Soothing Sound Bath and Gentle Yoga with Melinda
+LOCATION:Shelter 7\, 411 South Bryan Avenue
+DESCRIPTION:Melinda Boddicker leads a sound meditation into gentle yoga flo
+ w and closing sound bath at Shelter 7 in City Park\, part of Noco Moon Mar
+ ket's last-of-season Fort Collins evening market\, Friday night\; $25.\n\n
+ Tickets: https://www.eventbrite.com/e/soothing-sound-bath-and-gentle-yoga-
+ with-melinda-tickets-1989345778776
+URL:https://soundbathcalendar.com/event/soothing-sound-bath-and-gentle-yoga
+ -with-melinda-2026-09-11-shelter-7/
+END:VEVENT
+END:VCALENDAR

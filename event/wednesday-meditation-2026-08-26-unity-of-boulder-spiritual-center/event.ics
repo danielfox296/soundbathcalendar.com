@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Wednesday Meditation
+BEGIN:VEVENT
+UID:wednesday-meditation-2026-08-26-unity-of-boulder-spiritual-center@sound
+ bathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260827T010000Z
+DTEND:20260827T021500Z
+SUMMARY:Wednesday Meditation
+LOCATION:Unity of Boulder Spiritual Center\, 2855 Folsom St\, Boulder\, CO 
+ 80304
+DESCRIPTION:Unity of Boulder's weekly Wednesday evening gathering includes 
+ group meditation with a rotating sound bath of live crystal and Tibetan si
+ nging bowls\, native flute\, and chanting.\n\nTickets: https://unityofboul
+ der.com/events/wednesday-meditation/
+URL:https://soundbathcalendar.com/event/wednesday-meditation-2026-08-26-uni
+ ty-of-boulder-spiritual-center/
+END:VEVENT
+END:VCALENDAR

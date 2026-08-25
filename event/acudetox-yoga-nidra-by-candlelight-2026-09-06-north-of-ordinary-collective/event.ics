@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:AcuDetox & Yoga Nidra by candlelight
+BEGIN:VEVENT
+UID:acudetox-yoga-nidra-by-candlelight-2026-09-06-north-of-ordinary-collect
+ ive@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260906T230000Z
+DTEND:20260907T001500Z
+SUMMARY:AcuDetox & Yoga Nidra by candlelight
+LOCATION:North Of Ordinary Collective\, 4949 Broadway\, Suite 127\, Boulder
+ \, CO 80304
+DESCRIPTION:A candlelit evening at North Of Ordinary Collective in North Bo
+ ulder pairing the NADA ear-acupuncture protocol with yoga nidra and a soun
+ d bath\; $23.50–45.\n\nTickets: https://www.eventbrite.com/e/acudetox-yo
+ ga-nidra-by-candlelight-tickets-1996816454769
+URL:https://soundbathcalendar.com/event/acudetox-yoga-nidra-by-candlelight-
+ 2026-09-06-north-of-ordinary-collective/
+END:VEVENT
+END:VCALENDAR

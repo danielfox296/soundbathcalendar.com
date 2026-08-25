@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Chakra Cleansing Sound Bath
+BEGIN:VEVENT
+UID:chakra-cleansing-sound-bath-2026-09-04-singing-bowls-of-the-rockies@sou
+ ndbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260905T010000Z
+DTEND:20260905T021500Z
+SUMMARY:Chakra Cleansing Sound Bath
+LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
+ rado Springs\, CO 80903
+DESCRIPTION:A chakra-focused sound bath at Singing Bowls of the Rockies' do
+ wntown studio\, using sound healing and guided meditation to journey throu
+ gh the seven energy centers.\n\nTickets: https://www.singingbowlsoftherock
+ ies.com/event-details/chakra-cleansing-sound-bath-22
+URL:https://soundbathcalendar.com/event/chakra-cleansing-sound-bath-2026-09
+ -04-singing-bowls-of-the-rockies/
+END:VEVENT
+END:VCALENDAR

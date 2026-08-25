@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath in the Salt Cave
+BEGIN:VEVENT
+UID:sound-bath-in-the-salt-cave-2026-08-29-5-star-salt-caves@soundbathcalen
+ dar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260829T231500Z
+DTEND:20260830T003000Z
+SUMMARY:Sound Bath in the Salt Cave
+LOCATION:5 Star Salt Caves\, 722 S Pearl St\, Denver\, CO 80209
+DESCRIPTION:A singing bowl and gong sound concert held inside the salt cave
+ \, led by soundworker Ann Martin.\n\nTickets: https://5starsaltcaves.com/e
+ vents/
+URL:https://soundbathcalendar.com/event/sound-bath-in-the-salt-cave-2026-08
+ -29-5-star-salt-caves/
+END:VEVENT
+END:VCALENDAR

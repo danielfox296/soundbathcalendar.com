@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Full Moon Sound Bath
+BEGIN:VEVENT
+UID:full-moon-sound-bath-2026-08-29-sacred-society@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260829T230000Z
+DTEND:20260830T001500Z
+SUMMARY:Full Moon Sound Bath
+LOCATION:Sacred Society\, 3410 W 38th Ave\, Denver\, CO 80211
+DESCRIPTION:A full-moon-themed sound bath led by Christina Epps using cryst
+ al singing bowls at Sacred Society's Highlands studio.\n\nTickets: https:/
+ /sacredsociety.com/classes
+URL:https://soundbathcalendar.com/event/full-moon-sound-bath-2026-08-29-sac
+ red-society/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Full Moon Cave of the Winds Sound Bath
+BEGIN:VEVENT
+UID:full-moon-cave-of-the-winds-sound-bath-2026-08-29-cave-of-the-winds@sou
+ ndbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260830T020000Z
+DTEND:20260830T031500Z
+SUMMARY:Full Moon Cave of the Winds Sound Bath
+LOCATION:Cave of the Winds\, 100 Cave of the Winds Rd\, Manitou Springs\, C
+ O 80829
+DESCRIPTION:An underground sound bath in Cave of the Winds' natural cave ac
+ oustics using Tibetan and crystal bowls\, gongs\, Native American flute\, 
+ guitar\, and handpan.\n\nTickets: https://www.singingbowlsoftherockies.com
+ /event-details/full-moon-cave-of-the-winds-sound-bath-4
+URL:https://soundbathcalendar.com/event/full-moon-cave-of-the-winds-sound-b
+ ath-2026-08-29-cave-of-the-winds/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Deep Restorative Sound Bath & Guided Meditation
+BEGIN:VEVENT
+UID:deep-restorative-sound-bath-guided-meditation-2026-09-08-denver-public-
+ library-woodbury-branch-library@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260909T010000Z
+DTEND:20260909T021500Z
+SUMMARY:Deep Restorative Sound Bath & Guided Meditation
+LOCATION:Denver Public Library: Woodbury Branch Library\, 3265 Federal Boul
+ evard\, Denver\, CO 80211
+DESCRIPTION:A free deep-restorative sound bath and guided meditation led by
+  IzaBelle Sweet at Denver Public Library's Woodbury Branch in West Highlan
+ d\, Tuesday evening.\n\nTickets: https://www.eventbrite.com/e/deep-restora
+ tive-sound-bath-guided-meditation-tickets-1996871841432
+URL:https://soundbathcalendar.com/event/deep-restorative-sound-bath-guided-
+ meditation-2026-09-08-denver-public-library-woodbury-branch-library/
+END:VEVENT
+END:VCALENDAR

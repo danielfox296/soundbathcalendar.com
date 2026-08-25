@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Alchemy of Balance: New Moon Sound Journey
+BEGIN:VEVENT
+UID:alchemy-of-balance-new-moon-sound-journey-2026-09-11-live-beyond-limit@
+ soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260911T230000Z
+DTEND:20260912T001500Z
+SUMMARY:Alchemy of Balance: New Moon Sound Journey
+LOCATION:Live Beyond Limit\, 353 W. Drake Road\, Suites 130-140
+DESCRIPTION:Annmarie of ResoundingWell hosts a new-moon sound journey with 
+ Tibetan singing bowls\, planetary gong\, and crystal bowls at Live Beyond 
+ Limit in Fort Collins\, Friday evening\; $39.19-$44.52.\n\nTickets: https:
+ //www.eventbrite.com/e/alchemy-of-balance-new-moon-sound-journey-tickets-1
+ 996531008993
+URL:https://soundbathcalendar.com/event/alchemy-of-balance-new-moon-sound-j
+ ourney-2026-09-11-live-beyond-limit/
+END:VEVENT
+END:VCALENDAR

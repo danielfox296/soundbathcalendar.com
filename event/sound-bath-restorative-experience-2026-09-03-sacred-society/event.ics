@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath: Restorative Experience
+BEGIN:VEVENT
+UID:sound-bath-restorative-experience-2026-09-03-sacred-society@soundbathca
+ lendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260904T000000Z
+DTEND:20260904T011500Z
+SUMMARY:Sound Bath: Restorative Experience
+LOCATION:Sacred Society\, 3410 W 38th Ave\, Denver\, CO 80211
+DESCRIPTION:A 60-minute 'Restorative Experience' sound bath led by Christin
+ a Epps at Sacred Society.\n\nTickets: https://www.sacredsociety.com/classe
+ s
+URL:https://soundbathcalendar.com/event/sound-bath-restorative-experience-2
+ 026-09-03-sacred-society/
+END:VEVENT
+END:VCALENDAR

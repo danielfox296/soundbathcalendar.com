@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Monthly Sound Bath Workshop
+BEGIN:VEVENT
+UID:monthly-sound-bath-workshop-2026-09-05-absolute-body-balance@soundbathc
+ alendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260905T180000Z
+DTEND:20260905T191500Z
+SUMMARY:Monthly Sound Bath Workshop
+LOCATION:Absolute Body Balance\, 5770 E Woodmen Rd Suite 130\, Colorado Spr
+ ings\, CO 80920
+DESCRIPTION:A monthly sound bath workshop at Absolute Body Balance in Color
+ ado Springs\, held on the first Saturday of each month.\n\nTickets: https:
+ //absolutecos.com/schedule/
+URL:https://soundbathcalendar.com/event/monthly-sound-bath-workshop-2026-09
+ -05-absolute-body-balance/
+END:VEVENT
+END:VCALENDAR

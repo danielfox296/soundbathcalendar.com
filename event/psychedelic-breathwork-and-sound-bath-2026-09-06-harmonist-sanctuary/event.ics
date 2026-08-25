@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Psychedelic Breathwork and Sound Bath
+BEGIN:VEVENT
+UID:psychedelic-breathwork-and-sound-bath-2026-09-06-harmonist-sanctuary@so
+ undbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260906T160000Z
+DTEND:20260906T171500Z
+SUMMARY:Psychedelic Breathwork and Sound Bath
+LOCATION:Harmonist Sanctuary\, 4633 East Colfax Avenue\, Denver\, CO 80220
+DESCRIPTION:Led by Hunter Corey\, Breathwork and sound session at Harmonist
+  Sanctuary (Park Hill\, Denver) on Sunday at 10:00 AM\, tickets around $33
+ .85.\n\nTickets: https://www.eventbrite.com/e/psychedelic-breathwork-and-s
+ ound-bath-tickets-1995606274086
+URL:https://soundbathcalendar.com/event/psychedelic-breathwork-and-sound-ba
+ th-2026-09-06-harmonist-sanctuary/
+END:VEVENT
+END:VCALENDAR

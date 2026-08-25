@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:The Unwind
+BEGIN:VEVENT
+UID:the-unwind-2026-09-11-namasport-mental-health-studio@soundbathcalendar.
+ com
+DTSTAMP:20260825T030102Z
+DTSTART:20260911T230000Z
+DTEND:20260912T001500Z
+SUMMARY:The Unwind
+LOCATION:Namasport Mental Health Studio\, 2150 West 29th Avenue\, #220\, De
+ nver\, CO 80211
+DESCRIPTION:A mental-health-focused evening combining mindfulness\, breathw
+ ork and sound\, hosted by Namasport Mental Health Studio in Denver's Highl
+ and\; $34.\n\nTickets: https://www.eventbrite.com/e/the-unwind-tickets-199
+ 7987056069
+URL:https://soundbathcalendar.com/event/the-unwind-2026-09-11-namasport-men
+ tal-health-studio/
+END:VEVENT
+END:VCALENDAR

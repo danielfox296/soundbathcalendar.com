@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Rooted in Abundance Sound Bath
+BEGIN:VEVENT
+UID:rooted-in-abundance-sound-bath-2026-09-02-the-way-home-to-you@soundbath
+ calendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260903T003000Z
+DTEND:20260903T014500Z
+SUMMARY:Rooted in Abundance Sound Bath
+LOCATION:The Way Home To You\, 7850 Vance Dr.\, Suite 190\, Arvada\, CO
+DESCRIPTION:A harvest-themed gratitude sound bath using crystal singing bow
+ ls and chimes\, facilitated by Andrea C. at The Way Home To You in Arvada.
+ \n\nTickets: https://www.meetup.com/healer-within-westminster-area-meditat
+ ion-yoga-sound-bath/events/315407499/
+URL:https://soundbathcalendar.com/event/rooted-in-abundance-sound-bath-2026
+ -09-02-the-way-home-to-you/
+END:VEVENT
+END:VCALENDAR

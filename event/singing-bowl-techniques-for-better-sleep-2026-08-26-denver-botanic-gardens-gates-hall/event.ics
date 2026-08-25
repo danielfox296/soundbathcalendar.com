@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Singing Bowl Techniques for Better Sleep
+BEGIN:VEVENT
+UID:singing-bowl-techniques-for-better-sleep-2026-08-26-denver-botanic-gard
+ ens-gates-hall@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260826T233000Z
+DTEND:20260827T004500Z
+SUMMARY:Singing Bowl Techniques for Better Sleep
+LOCATION:Denver Botanic Gardens - Gates Hall\, 1007 York St\, Denver\, CO 8
+ 0206
+DESCRIPTION:A singing-bowl workshop teaching techniques for better sleep\, 
+ led by Ann Martin at Denver Botanic Gardens' Gates Hall.\n\nTickets: https
+ ://www.botanicgardens.org/programs/singing-bowl-workshop-self-care-and-wel
+ lness
+URL:https://soundbathcalendar.com/event/singing-bowl-techniques-for-better-
+ sleep-2026-08-26-denver-botanic-gardens-gates-hall/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sacred Healing Sound Bath - Vialet & Leslie
+BEGIN:VEVENT
+UID:sacred-healing-sound-bath-vialet-leslie-2026-09-04-discover-your-spirit
+ ual-gifts@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260904T223000Z
+DTEND:20260904T234500Z
+SUMMARY:Sacred Healing Sound Bath - Vialet & Leslie
+LOCATION:Discover Your Spiritual Gifts\, 7500 E Arapahoe Rd\, Suites 208 & 
+ 240\, Centennial\, CO 80112
+DESCRIPTION:A layered sound healing session with crystal singing bowls\, go
+ ngs\, chimes and Tibetan bowls\, co-led by Vialet B. Rayne and Leslie.\n\n
+ Tickets: https://www.meetup.com/Discover-Your-Spiritual-Gifts/
+URL:https://soundbathcalendar.com/event/sacred-healing-sound-bath-vialet-le
+ slie-2026-09-04-discover-your-spiritual-gifts/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Conscious Breathwork and Sound Bath
+BEGIN:VEVENT
+UID:conscious-breathwork-and-sound-bath-2026-08-27-green-light-reiki-healin
+ g-and-chakra-balancing@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260828T010000Z
+DTEND:20260828T021500Z
+SUMMARY:Conscious Breathwork and Sound Bath
+LOCATION:Green Light Reiki Healing and Chakra Balancing\, 1545 S Pearl St\,
+  Denver\, CO
+DESCRIPTION:An active breathwork session followed by a crystal-bowl heart-o
+ pening meditation\, led by certified facilitators at Green Light Reiki.\n\
+ nTickets: https://www.meetup.com/reiki-and-alternative-healing-events/
+URL:https://soundbathcalendar.com/event/conscious-breathwork-and-sound-bath
+ -2026-08-27-green-light-reiki-healing-and-chakra-balancing/
+END:VEVENT
+END:VCALENDAR

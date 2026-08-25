@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Unseen & Rooted
+BEGIN:VEVENT
+UID:unseen-rooted-2026-09-03-617-22nd-st@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260904T003000Z
+DTEND:20260904T014500Z
+SUMMARY:Unseen & Rooted
+LOCATION:617 22nd St\, 617 22nd Street\, Denver\, CO 80205
+DESCRIPTION:A four-part playshop for the BIPOC community combining yoga and
+  sound healing\, hosted by Kapwa Healing in Denver's Five Points\; free.\n
+ \nTickets: https://www.eventbrite.com/e/unseen-rooted-tickets-199652865394
+ 9
+URL:https://soundbathcalendar.com/event/unseen-rooted-2026-09-03-617-22nd-s
+ t/
+END:VEVENT
+END:VCALENDAR

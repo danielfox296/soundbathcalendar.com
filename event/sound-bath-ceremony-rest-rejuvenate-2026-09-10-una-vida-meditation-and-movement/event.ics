@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath Ceremony - Rest & Rejuvenate
+BEGIN:VEVENT
+UID:sound-bath-ceremony-rest-rejuvenate-2026-09-10-una-vida-meditation-and-
+ movement@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260911T003000Z
+DTEND:20260911T014500Z
+SUMMARY:Sound Bath Ceremony - Rest & Rejuvenate
+LOCATION:Una Vida Meditation and Movement\, 7960 Niwot Road\, Longmont\, CO
+  80503
+DESCRIPTION:Shamanic practitioner and sound healer Laura Riehman leads a So
+ und Bath Ceremony at Una Vida Meditation and Movement using quartz crystal
+  bowls\, Tibetan bowls and Native American flute.\n\nTickets: https://www.
+ unavidaniwot.com/workshops-retreats-trainings
+URL:https://soundbathcalendar.com/event/sound-bath-ceremony-rest-rejuvenate
+ -2026-09-10-una-vida-meditation-and-movement/
+END:VEVENT
+END:VCALENDAR

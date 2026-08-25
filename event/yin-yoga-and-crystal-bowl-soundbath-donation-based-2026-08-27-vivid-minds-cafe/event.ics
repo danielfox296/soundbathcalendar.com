@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Yin Yoga and Crystal Bowl Soundbath (Donation Based)
+BEGIN:VEVENT
+UID:yin-yoga-and-crystal-bowl-soundbath-donation-based-2026-08-27-vivid-min
+ ds-cafe@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260828T000000Z
+DTEND:20260828T011500Z
+SUMMARY:Yin Yoga and Crystal Bowl Soundbath (Donation Based)
+LOCATION:Vivid Minds Cafe\, 1545 South Broadway\, Denver\, CO 80210
+DESCRIPTION:A donation-based yin yoga and crystal bowl sound bath led by Br
+ ee at Vivid Minds Cafe in Denver's Overland\, Thursday evening.\n\nTickets
+ : https://www.eventbrite.com/e/yin-yoga-and-crystal-bowl-soundbath-donatio
+ n-based-tickets-1986466253037
+URL:https://soundbathcalendar.com/event/yin-yoga-and-crystal-bowl-soundbath
+ -donation-based-2026-08-27-vivid-minds-cafe/
+END:VEVENT
+END:VCALENDAR

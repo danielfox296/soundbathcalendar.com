@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Autumn Whispers | An Evening of Gentle Reflection\, Sound & Mi
+ ndful Letting Go
+BEGIN:VEVENT
+UID:autumn-whispers-an-evening-of-gentle-reflection-sound-mindful-letting-g
+ o-2026-09-10-the-way-home-to-you@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260911T003000Z
+DTEND:20260911T014500Z
+SUMMARY:Autumn Whispers | An Evening of Gentle Reflection\, Sound & Mindful
+  Letting Go
+LOCATION:The Way Home To You\, 7850 Vance Dr.\, Suite 190\, Arvada\, CO
+DESCRIPTION:An autumn letting-go evening at The Way Home To You in Arvada w
+ ith Andrea Clem and Pam Holland of Mindful Decluttering\, built around ref
+ lection and sound\; $37.\n\nTickets: https://www.meetup.com/healer-within-
+ westminster-area-meditation-yoga-sound-bath/events/315742590/
+URL:https://soundbathcalendar.com/event/autumn-whispers-an-evening-of-gentl
+ e-reflection-sound-mindful-letting-go-2026-09-10-the-way-home-to-you/
+END:VEVENT
+END:VCALENDAR

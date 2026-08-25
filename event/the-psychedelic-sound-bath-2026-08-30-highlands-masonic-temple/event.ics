@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:The Psychedelic Sound Bath
+BEGIN:VEVENT
+UID:the-psychedelic-sound-bath-2026-08-30-highlands-masonic-temple@soundbat
+ hcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260830T213000Z
+DTEND:20260830T224500Z
+SUMMARY:The Psychedelic Sound Bath
+LOCATION:Highlands Masonic Temple\, 3550 Federal Blvd\, Denver\, CO 80211
+DESCRIPTION:A monthly last-Sunday event combining a two-hour live sound jou
+ rney with crystal bowls\, gongs and chimes with a guided low-dose psilocyb
+ in experience and sharing circle.\n\nTickets: https://inyours.co/psychedel
+ icsoundbath
+URL:https://soundbathcalendar.com/event/the-psychedelic-sound-bath-2026-08-
+ 30-highlands-masonic-temple/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Soundscape of Light-Courage
+BEGIN:VEVENT
+UID:soundscape-of-lightcourage-2026-09-09-8120-sheridan-blvd@soundbathcalen
+ dar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260910T010000Z
+DTEND:20260910T021500Z
+SUMMARY:Soundscape of Light-Courage
+LOCATION:8120 Sheridan Blvd\, 8120 Sheridan Boulevard\, #building c suite 2
+ 08\, Westminster\, CO 80031
+DESCRIPTION:A monthly sound-and-light journey by Rising Harmonics-The Colle
+ ctive in Westminster\, Wednesday evening\; $34.\n\nTickets: https://www.ev
+ entbrite.com/e/soundscape-of-light-courage-tickets-1980778875939
+URL:https://soundbathcalendar.com/event/soundscape-of-lightcourage-2026-09-
+ 09-8120-sheridan-blvd/
+END:VEVENT
+END:VCALENDAR

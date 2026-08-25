@@ -1,0 +1,26 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Full Moon Healing Cloud of Sound Meditation Concert with Sarin
+ a Shrestha
+BEGIN:VEVENT
+UID:full-moon-healing-cloud-of-sound-meditation-concert-with-sarina-shresth
+ a-2026-08-27-atma-buti-sound-and-vibrational-school@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260828T010000Z
+DTEND:20260828T021500Z
+SUMMARY:Full Moon Healing Cloud of Sound Meditation Concert with Sarina Shr
+ estha
+LOCATION:Atma Buti Sound and Vibrational School\, 6395 Gunpark Drive\, Unit
+  G\, Boulder\, CO
+DESCRIPTION:A full moon sound meditation concert with Himalayan singing bow
+ ls and gongs led by Sarina Shrestha at Atma Buti in Boulder\, benefiting a
+  Nepal orphanage nonprofit.\n\nTickets: https://www.meetup.com/atmabuti-so
+ und-therapy-healing-school-in-boulder-meetup/events/315966144/
+URL:https://soundbathcalendar.com/event/full-moon-healing-cloud-of-sound-me
+ ditation-concert-with-sarina-shrestha-2026-08-27-atma-buti-sound-and-vibra
+ tional-school/
+END:VEVENT
+END:VCALENDAR

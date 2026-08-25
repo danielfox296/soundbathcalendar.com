@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Denver Women's Circle | For women 35+
+BEGIN:VEVENT
+UID:denver-womens-circle-for-women-35-2026-08-25-855-inca-st@soundbathcalen
+ dar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260826T003000Z
+DTEND:20260826T014500Z
+SUMMARY:Denver Women's Circle | For women 35+
+LOCATION:855 Inca St\, 855 Inca Street\, Denver\, CO 80204
+DESCRIPTION:A women's circle combining affirmations\, breathwork and sound 
+ healing\, hosted by Wildly Regulated in Denver\, Tuesday evening.\n\nTicke
+ ts: https://www.eventbrite.com/e/denver-womens-circle-for-women-35-tickets
+ -1996371509927
+URL:https://soundbathcalendar.com/event/denver-womens-circle-for-women-35-2
+ 026-08-25-855-inca-st/
+END:VEVENT
+END:VCALENDAR

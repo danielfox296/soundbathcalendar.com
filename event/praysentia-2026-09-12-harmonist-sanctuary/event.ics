@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Praysentia
+BEGIN:VEVENT
+UID:praysentia-2026-09-12-harmonist-sanctuary@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260912T160000Z
+DTEND:20260912T171500Z
+SUMMARY:Praysentia
+LOCATION:Harmonist Sanctuary\, 4633 East Colfax Avenue\, Denver\, CO 80220
+DESCRIPTION:A ritual-meditation gathering pairing guided breathwork with a 
+ live ambient sound bath\, led by Emma at Harmonist Sanctuary in Denver's P
+ ark Hill\; $34.\n\nTickets: https://www.eventbrite.com/e/praysentia-ticket
+ s-1987081543387
+URL:https://soundbathcalendar.com/event/praysentia-2026-09-12-harmonist-san
+ ctuary/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Denver Sound Bath Collective at Rooted Heart
+BEGIN:VEVENT
+UID:denver-sound-bath-collective-at-rooted-heart-2026-08-27-rooted-heart-yo
+ ga-and-wellness@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260828T010000Z
+DTEND:20260828T021500Z
+SUMMARY:Denver Sound Bath Collective at Rooted Heart
+LOCATION:Rooted Heart Yoga and Wellness\, 1409 N Ogden St\, Denver\, CO 802
+ 18
+DESCRIPTION:A weekly donation-based sound bath using crystal singing bowls\
+ , gong\, chimes and vocal toning\, hosted by Denver Sound Bath Collective 
+ at Rooted Heart Yoga and Wellness.\n\nTickets: https://www.rootedheartyw.c
+ om/events
+URL:https://soundbathcalendar.com/event/denver-sound-bath-collective-at-roo
+ ted-heart-2026-08-27-rooted-heart-yoga-and-wellness/
+END:VEVENT
+END:VCALENDAR

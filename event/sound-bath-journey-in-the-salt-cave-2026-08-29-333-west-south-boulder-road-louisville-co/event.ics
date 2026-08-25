@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath Journey in the Salt Cave
+BEGIN:VEVENT
+UID:sound-bath-journey-in-the-salt-cave-2026-08-29-333-west-south-boulder-r
+ oad-louisville-co@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260829T200000Z
+DTEND:20260829T211500Z
+SUMMARY:Sound Bath Journey in the Salt Cave
+LOCATION:333 West South Boulder Road\, Louisville\, CO\, 333 West South Bou
+ lder Road\, Louisville\, CO 80027
+DESCRIPTION:A sound bath in a Himalayan salt cave hosted by Diamond Vitalit
+ y Center in Louisville\, Saturday afternoon\; $55.\n\nTickets: https://www
+ .eventbrite.com/e/sound-bath-journey-in-the-salt-cave-tickets-199839335331
+ 5
+URL:https://soundbathcalendar.com/event/sound-bath-journey-in-the-salt-cave
+ -2026-08-29-333-west-south-boulder-road-louisville-co/
+END:VEVENT
+END:VCALENDAR

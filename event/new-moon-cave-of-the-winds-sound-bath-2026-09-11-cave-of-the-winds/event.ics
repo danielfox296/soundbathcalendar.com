@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:New Moon Cave of the Winds Sound Bath
+BEGIN:VEVENT
+UID:new-moon-cave-of-the-winds-sound-bath-2026-09-11-cave-of-the-winds@soun
+ dbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260912T013000Z
+DTEND:20260912T024500Z
+SUMMARY:New Moon Cave of the Winds Sound Bath
+LOCATION:Cave of the Winds\, 100 Cave of the Winds Rd\, Manitou Springs\, C
+ O 80829
+DESCRIPTION:An underground new-moon sound bath in Cave of the Winds' natura
+ l cave acoustics using Tibetan and crystal bowls\, gongs\, Native American
+  flute\, guitar\, and handpan.\n\nTickets: https://www.singingbowlsofthero
+ ckies.com/event-details/new-moon-cave-of-the-winds-sound-bath-4
+URL:https://soundbathcalendar.com/event/new-moon-cave-of-the-winds-sound-ba
+ th-2026-09-11-cave-of-the-winds/
+END:VEVENT
+END:VCALENDAR

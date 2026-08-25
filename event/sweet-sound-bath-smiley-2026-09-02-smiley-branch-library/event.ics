@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sweet Sound Bath- Smiley
+BEGIN:VEVENT
+UID:sweet-sound-bath-smiley-2026-09-02-smiley-branch-library@soundbathcalen
+ dar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260903T010000Z
+DTEND:20260903T021500Z
+SUMMARY:Sweet Sound Bath- Smiley
+LOCATION:Smiley Branch Library\, 4501 West 46th Avenue\, Denver\, CO
+DESCRIPTION:A crystal singing bowl\, gong\, chime and vocal-toning sound ba
+ th held behind Smiley Branch Library\, facilitated by IzaBelle.\n\nTickets
+ : https://www.meetup.com/denver-sound-bath-collective/events/315993729/
+URL:https://soundbathcalendar.com/event/sweet-sound-bath-smiley-2026-09-02-
+ smiley-branch-library/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Community Sound Bath: Relax\, Rest and Reset
+BEGIN:VEVENT
+UID:community-sound-bath-relax-rest-and-reset-2026-09-13-lone-tree-library-
+ event-hall@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260913T190000Z
+DTEND:20260913T201500Z
+SUMMARY:Community Sound Bath: Relax\, Rest and Reset
+LOCATION:Lone Tree Library Event Hall\, 10055 Library Way\, Lone Tree\, CO 
+ 80124
+DESCRIPTION:A community sound bath led by Laurie Kelly at Lone Tree Library
+ 's Event Hall\, Sunday afternoon\; $15.\n\nTickets: https://www.eventbrite
+ .com/e/community-sound-bath-relax-rest-and-reset-tickets-1996420746194
+URL:https://soundbathcalendar.com/event/community-sound-bath-relax-rest-and
+ -reset-2026-09-13-lone-tree-library-event-hall/
+END:VEVENT
+END:VCALENDAR

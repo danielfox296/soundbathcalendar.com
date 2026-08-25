@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Microd0se Soundbath w/ Mary
+BEGIN:VEVENT
+UID:microd0se-soundbath-w-mary-2026-09-13-vivid-minds-cafe@soundbathcalenda
+ r.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260913T230000Z
+DTEND:20260914T001500Z
+SUMMARY:Microd0se Soundbath w/ Mary
+LOCATION:Vivid Minds Cafe\, 1545 S Broadway\, Denver\, CO 80210
+DESCRIPTION:A 90-minute sound bath led by Mary at Vivid Minds Cafe on South
+  Broadway\, Denver\, Sunday evening\; $50.\n\nTickets: https://www.meetup.
+ com/vivid-minds-wellness/events/316099643/
+URL:https://soundbathcalendar.com/event/microd0se-soundbath-w-mary-2026-09-
+ 13-vivid-minds-cafe/
+END:VEVENT
+END:VCALENDAR

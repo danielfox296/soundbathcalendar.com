@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:OM Chanting & Mantra Meditation
+BEGIN:VEVENT
+UID:om-chanting-mantra-meditation-2026-08-27-2221-champa-st@soundbathcalend
+ ar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260827T233000Z
+DTEND:20260828T004500Z
+SUMMARY:OM Chanting & Mantra Meditation
+LOCATION:2221 Champa St\, 2221 Champa St\, Denver\, CO 80205
+DESCRIPTION:A group OM chanting and mantra meditation led by Hari Khanal on
+  Champa Street in Five Points\, Denver\, Thursday evening.\n\nTickets: htt
+ ps://www.meetup.com/denverconversationsincoachingcircle/events/316088852/
+URL:https://soundbathcalendar.com/event/om-chanting-mantra-meditation-2026-
+ 08-27-2221-champa-st/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Elevate & Meditate: A Ganja Night of Wellness
+BEGIN:VEVENT
+UID:elevate-meditate-a-ganja-night-of-wellness-2026-08-28-ochre-massage-yog
+ a-haus@soundbathcalendar.com
+DTSTAMP:20260825T030102Z
+DTSTART:20260829T000000Z
+DTEND:20260829T011500Z
+SUMMARY:Elevate & Meditate: A Ganja Night of Wellness
+LOCATION:Ochre Massage + Yoga Haus\, 1006 North 19th Street\, Colorado Spri
+ ngs\, CO 80904
+DESCRIPTION:A beginner-friendly yoga session followed by a live crystal-bow
+ l sound bath\, herbal tea and snacks at Ochre Massage + Yoga Haus in Old C
+ olorado City\; $10–20. Cannabis-friendly\, bring your own.\n\nTickets: h
+ ttps://www.eventbrite.com/e/elevate-meditate-a-ganja-night-of-wellness-tic
+ kets-1998394486705
+URL:https://soundbathcalendar.com/event/elevate-meditate-a-ganja-night-of-w
+ ellness-2026-08-28-ochre-massage-yoga-haus/
+END:VEVENT
+END:VCALENDAR

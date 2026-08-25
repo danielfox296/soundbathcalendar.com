@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Floating Sound Bath
+BEGIN:VEVENT
+UID:floating-sound-bath-2026-09-06-aquis-wellness-arts@soundbathcalendar.co
+ m
+DTSTAMP:20260825T030102Z
+DTSTART:20260906T160000Z
+DTEND:20260906T171500Z
+SUMMARY:Floating Sound Bath
+LOCATION:Aquis Wellness Arts\, 4562 Denrose Court\, Unit 4\, Fort Collins\,
+  CO 80524
+DESCRIPTION:Sound bath at Aquis Wellness Arts in Fort Collins on Sunday at 
+ 10:00 AM\, tickets around $65.87–$81.88.\n\nTickets: https://www.eventbr
+ ite.com/e/floating-sound-bath-tickets-862395366757
+URL:https://soundbathcalendar.com/event/floating-sound-bath-2026-09-06-aqui
+ s-wellness-arts/
+END:VEVENT
+END:VCALENDAR
