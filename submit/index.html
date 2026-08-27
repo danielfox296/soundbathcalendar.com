@@ -226,9 +226,20 @@
       </label>
 
       <!-- Honeypot: hidden from people, irresistible to form bots. A filled
-           value is answered exactly like a real submission and quietly dropped. -->
+           value is answered exactly like a real submission and quietly dropped
+           — the admin service logs the trip (submission_honeypot), so it is
+           not a traceless drop.
+           The visible label must never name a real autofill category:
+           profile autofill can classify hidden fields by label and fill them
+           (it ignores autocomplete="off"), and a non-empty honeypot silently
+           kills a real submission. A "Company" label cost signetartists.com
+           a live enquiry the week of 2026-08-24. The name="website"
+           attribute is the admin-service contract — bots key on it — and
+           stays. signetartists.com removed its honeypot outright (325220e
+           there); this one stays deliberately: trips are logged, and there
+           is no third-party spam filter behind the submit endpoint. -->
       <div class="submit-hp" aria-hidden="true">
-        <label>Website
+        <label>Leave this field empty
           <input type="text" name="website" tabindex="-1" autocomplete="off">
         </label>
       </div>
