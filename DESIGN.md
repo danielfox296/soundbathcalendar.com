@@ -8,7 +8,7 @@
 
 ## 0 · Doctrine (in force)
 
-- Copy sits on the estate base voice at ~/Desktop/site-ops/BASE-VOICE.md (in force 2026-08-03); where this doc speaks, this doc wins. Em dashes: SEO/title strings only (Daniel, 2026-08-03); body copy swept.
+- Copy sits on the estate base voice at ~/Desktop/site-ops/BASE-VOICE.md (in force 2026-08-03; rule 9 adopted 2026-08-27: the AI-tell catalog at ~/Desktop/site-ops/AI-TELLS-2026.md governs all drafted prose); where this doc speaks, this doc wins. Em dashes: SEO/title strings only (Daniel, 2026-08-03); body copy swept.
 - Weight extremes over timid contrast. Asymmetry over three-identical-cards.
 - **v5 "Broadcast" (ratified 2026-07-25):** committed grounds — warm white day, near-black violet-cast night — written entirely in ink, with ONE coral signal on a hard budget (§1.1). Night is the identity scheme. The ∿ wave mark is retired from all chrome (masthead, footer, empty states, favicon, OG, separators).
 - Radius 0 — sharp editorial edges (§1.5 for the two sanctioned exceptions).
