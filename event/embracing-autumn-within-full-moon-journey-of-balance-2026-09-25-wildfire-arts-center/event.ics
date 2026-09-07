@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Embracing Autumn Within: Full Moon Journey of Balance
+BEGIN:VEVENT
+UID:embracing-autumn-within-full-moon-journey-of-balance-2026-09-25-wildfir
+ e-arts-center@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260926T003000Z
+DTEND:20260926T014500Z
+SUMMARY:Embracing Autumn Within: Full Moon Journey of Balance
+LOCATION:Wildfire Arts Center\, 425 Massachusetts Avenue\, Berthoud\, CO 80
+ 513
+DESCRIPTION:A full-moon sound journey inviting quiet reflection and rest\, 
+ led by Annmarie Fore of ResoundingWell at Wildfire Arts Center in Berthoud
+ . Confirmed on ResoundingWell's own events page and Eventbrite with matchi
+ ng date\, time and venue.\n\nTickets: https://www.eventbrite.com/e/embraci
+ ng-autumn-within-full-moon-journey-of-balance-tickets-1999168832795
+URL:https://soundbathcalendar.com/event/embracing-autumn-within-full-moon-j
+ ourney-of-balance-2026-09-25-wildfire-arts-center/
+END:VEVENT
+END:VCALENDAR

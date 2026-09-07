@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sunset Yoga at Cheesman Park Pavilion with Live Music
+BEGIN:VEVENT
+UID:sunset-yoga-at-cheesman-park-pavilion-with-live-music-2026-09-09-cheesm
+ an-park-pavilion@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260910T003000Z
+DTEND:20260910T014500Z
+SUMMARY:Sunset Yoga at Cheesman Park Pavilion with Live Music
+LOCATION:Cheesman Park Pavilion
+DESCRIPTION:Yoga Social runs a donation-based outdoor all-levels yoga class
+  with live musicians at Cheesman Park Pavilion as part of its April-Octobe
+ r Wednesday sunset series.\n\nTickets: https://www.eventbrite.com/e/sunset
+ -yoga-at-cheesman-park-pavilion-with-live-music-w-yoga-social-tickets-1986
+ 088265466
+URL:https://soundbathcalendar.com/event/sunset-yoga-at-cheesman-park-pavili
+ on-with-live-music-2026-09-09-cheesman-park-pavilion/
+END:VEVENT
+END:VCALENDAR

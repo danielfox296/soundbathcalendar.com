@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath for Stress Relief + Energy Clearing (Baker | WashPa
+ rk Denver)
+BEGIN:VEVENT
+UID:sound-bath-for-stress-relief-energy-clearing-baker-washpark-denver-2026
+ -09-19-yoga-of-the-mind@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260919T160000Z
+DTEND:20260919T171500Z
+SUMMARY:Sound Bath for Stress Relief + Energy Clearing (Baker | WashPark De
+ nver)
+LOCATION:Yoga of the Mind\, 23 N. Lincoln Street #206\, Denver\, CO
+DESCRIPTION:A monthly third-Saturday crystal-bowl sound bath at a Baker-are
+ a studio near Washington Park\, framed around stress relief and energy cle
+ aring for beginners.\n\nTickets: https://www.meetup.com/energyhealing-and-
+ intuitive-meditation/events/316172068/
+URL:https://soundbathcalendar.com/event/sound-bath-for-stress-relief-energy
+ -clearing-baker-washpark-denver-2026-09-19-yoga-of-the-mind/
+END:VEVENT
+END:VCALENDAR

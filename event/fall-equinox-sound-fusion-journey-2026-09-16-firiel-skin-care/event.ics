@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Fall Equinox Sound Fusion Journey
+BEGIN:VEVENT
+UID:fall-equinox-sound-fusion-journey-2026-09-16-firiel-skin-care@soundbath
+ calendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260917T010000Z
+DTEND:20260917T021500Z
+SUMMARY:Fall Equinox Sound Fusion Journey
+LOCATION:Firiel Skin Care\, 193 W South Boulder Rd\, Lafayette\, CO 80026
+DESCRIPTION:The Oracle Collective hosts a Fall Equinox sound bath with crys
+ tal singing bowls and chimes at Firiel Skin Care in Lafayette on September
+  16\, 2026\, priced at $45.\n\nTickets: https://www.theoracle-collective.c
+ om/event-details-registration/9-16-fall-equinox-sound-fusion-journey-sound
+ -bath
+URL:https://soundbathcalendar.com/event/fall-equinox-sound-fusion-journey-2
+ 026-09-16-firiel-skin-care/
+END:VEVENT
+END:VCALENDAR

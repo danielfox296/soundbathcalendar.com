@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sunday Evening of Sound Gong Journey - Horsetooth Reservoir
+BEGIN:VEVENT
+UID:sunday-evening-of-sound-gong-journey-horsetooth-reservoir-2026-09-27-ho
+ rsetooth-reservoir@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260928T000000Z
+DTEND:20260928T011500Z
+SUMMARY:Sunday Evening of Sound Gong Journey - Horsetooth Reservoir
+LOCATION:Horsetooth Reservoir
+DESCRIPTION:An outdoor evening gong journey held at Horsetooth Reservoir ju
+ st west of Fort Collins\, featuring multiple large gongs including the 5-f
+ oot 'Iris'. Attendees receive mats\, blankets and tea afterward.\n\nTicket
+ s: https://www.rockymountainrestoreandstretch.com/event-details-registrati
+ on/sunday-evening-of-sound-gong-journey-horsetooth-reservoir-3
+URL:https://soundbathcalendar.com/event/sunday-evening-of-sound-gong-journe
+ y-horsetooth-reservoir-2026-09-27-horsetooth-reservoir/
+END:VEVENT
+END:VCALENDAR

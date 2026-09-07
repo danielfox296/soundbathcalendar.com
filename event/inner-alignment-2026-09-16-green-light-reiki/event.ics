@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Inner Alignment
+BEGIN:VEVENT
+UID:inner-alignment-2026-09-16-green-light-reiki@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260917T003000Z
+DTEND:20260917T014500Z
+SUMMARY:Inner Alignment
+LOCATION:Green Light Reiki\, 1545 S Pearl St
+DESCRIPTION:Cacao\, breathwork and sound-supported meditation evening co-le
+ d by Katie Wiley and a second facilitator (Shea) at Green Light Reiki\, 15
+ 45 S Pearl St\, Wednesday\, $65.87.\n\nTickets: https://www.eventbrite.com
+ /e/inner-alignment-tickets-1999055216967
+URL:https://soundbathcalendar.com/event/inner-alignment-2026-09-16-green-li
+ ght-reiki/
+END:VEVENT
+END:VCALENDAR

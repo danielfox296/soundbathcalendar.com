@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Yoga and Sound Bath by the Creek (September)
+BEGIN:VEVENT
+UID:yoga-and-sound-bath-by-the-creek-september-2026-09-28-the-golden-hotel-
+ ascend-hotel-collection@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260928T160000Z
+DTEND:20260928T171500Z
+SUMMARY:Yoga and Sound Bath by the Creek (September)
+LOCATION:The Golden Hotel\, Ascend Hotel Collection\, 800 11th St\, Golden\
+ , CO 80401
+DESCRIPTION:A 75-minute outdoor session combining a yoga flow with a closin
+ g sound bath along Clear Creek\, hosted by Intentionally Yours at The Gold
+ en Hotel in Golden.\n\nTickets: https://www.eventbrite.com/e/1988211095909
+ ?aff=oddtdtcreator
+URL:https://soundbathcalendar.com/event/yoga-and-sound-bath-by-the-creek-se
+ ptember-2026-09-28-the-golden-hotel-ascend-hotel-collection/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Massage & Sound Healing Integration Session
+BEGIN:VEVENT
+UID:massage-sound-healing-integration-session-2026-09-19-proud-community-ma
+ ssage-clinic@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260919T193000Z
+DTEND:20260919T204500Z
+SUMMARY:Massage & Sound Healing Integration Session
+LOCATION:proud. Community Massage Clinic\, 2130 Mountain View Ave Unit 205\
+ , Longmont\, CO
+DESCRIPTION:ResoundingWell offers a private one-on-one massage and sound he
+ aling integration session at proud. Community Massage Clinic in Longmont o
+ n September 19\, 2026.\n\nTickets: https://resoundingwell.com/events
+URL:https://soundbathcalendar.com/event/massage-sound-healing-integration-s
+ ession-2026-09-19-proud-community-massage-clinic/
+END:VEVENT
+END:VCALENDAR

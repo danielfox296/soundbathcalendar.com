@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:The Psychedelic Sound Bath
+BEGIN:VEVENT
+UID:the-psychedelic-sound-bath-2026-09-28-highlands-events-center@soundbath
+ calendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260928T213000Z
+DTEND:20260928T224500Z
+SUMMARY:The Psychedelic Sound Bath
+LOCATION:Highlands Events Center\, 3550 Federal Blvd\, Denver\, CO 80211
+DESCRIPTION:A ticketed multi-hour event combining intention-setting with a 
+ two-hour live sound journey (crystal bowls\, gongs\, chimes) at the histor
+ ic Highlands Events Center\, with an optional low-dose mushroom component.
+ \n\nTickets: https://inyours.co/psychedelicsoundbath
+URL:https://soundbathcalendar.com/event/the-psychedelic-sound-bath-2026-09-
+ 28-highlands-events-center/
+END:VEVENT
+END:VCALENDAR

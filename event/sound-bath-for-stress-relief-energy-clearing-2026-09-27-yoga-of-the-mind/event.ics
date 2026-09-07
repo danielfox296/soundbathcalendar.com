@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath for Stress Relief + Energy Clearing
+BEGIN:VEVENT
+UID:sound-bath-for-stress-relief-energy-clearing-2026-09-27-yoga-of-the-min
+ d@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260927T200000Z
+DTEND:20260927T211500Z
+SUMMARY:Sound Bath for Stress Relief + Energy Clearing
+LOCATION:Yoga of the Mind\, 23 N Lincoln St\, #206\, Denver\, CO 80203
+DESCRIPTION:Crystal bowl sound bath in Denver. Stress relief + energy clear
+ ing. Baker | WashPark | Denver | Golden Triangle\n\nTickets: https://www.e
+ ventbrite.com/e/sound-bath-for-stress-relief-energy-clearing-tickets-19984
+ 47965662
+URL:https://soundbathcalendar.com/event/sound-bath-for-stress-relief-energy
+ -clearing-2026-09-27-yoga-of-the-mind/
+END:VEVENT
+END:VCALENDAR

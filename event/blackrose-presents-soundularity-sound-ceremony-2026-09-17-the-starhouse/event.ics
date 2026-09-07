@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:BLACKROSE presents: Soundularity Sound Ceremony
+BEGIN:VEVENT
+UID:blackrose-presents-soundularity-sound-ceremony-2026-09-17-the-starhouse
+ @soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260918T003000Z
+DTEND:20260918T014500Z
+SUMMARY:BLACKROSE presents: Soundularity Sound Ceremony
+LOCATION:The StarHouse\, 3476 Sunshine Canyon Dr\, Boulder\, CO 80302
+DESCRIPTION:An organic and electronic sound healing ceremony composed by To
+ mmy Dill of Soundularity in a set designed by Brittany Zimmerman of Blackr
+ ose\, at The StarHouse in Boulder\, Thursday evening\; $50.\n\nTickets: ht
+ tps://www.eventbrite.com/e/blackrose-presents-soundularity-sound-ceremony-
+ tickets-1977412531111
+URL:https://soundbathcalendar.com/event/blackrose-presents-soundularity-sou
+ nd-ceremony-2026-09-17-the-starhouse/
+END:VEVENT
+END:VCALENDAR

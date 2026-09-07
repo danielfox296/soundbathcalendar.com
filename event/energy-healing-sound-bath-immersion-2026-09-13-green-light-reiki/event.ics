@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Energy Healing + Sound Bath Immersion
+BEGIN:VEVENT
+UID:energy-healing-sound-bath-immersion-2026-09-13-green-light-reiki@soundb
+ athcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260913T220000Z
+DTEND:20260913T231500Z
+SUMMARY:Energy Healing + Sound Bath Immersion
+LOCATION:Green Light Reiki\, 1545 S Pearl St
+DESCRIPTION:Energy-clearing session with a full gong\, bowl and drum sound 
+ immersion led by Kathy Sietos at Green Light Reiki\, 1545 S Pearl St\, Sun
+ day afternoon\, $44.52.\n\nTickets: https://www.eventbrite.com/e/energy-he
+ aling-sound-bath-immersion-tickets-1996244151996
+URL:https://soundbathcalendar.com/event/energy-healing-sound-bath-immersion
+ -2026-09-13-green-light-reiki/
+END:VEVENT
+END:VCALENDAR

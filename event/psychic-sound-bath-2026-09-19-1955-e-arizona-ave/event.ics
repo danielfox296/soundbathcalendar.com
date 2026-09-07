@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Psychic Sound Bath
+BEGIN:VEVENT
+UID:psychic-sound-bath-2026-09-19-1955-e-arizona-ave@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260919T210000Z
+DTEND:20260919T221500Z
+SUMMARY:Psychic Sound Bath
+LOCATION:1955 E Arizona Ave\, 1955 E Arizona Ave\, Denver\, CO 80210
+DESCRIPTION:An afternoon session of sound\, light and intuitive movement at
+  1955 E Arizona Ave near Washington Park\, Denver\, Saturday at 3pm\; $23.
+ \n\nTickets: https://www.eventbrite.co.uk/e/psychic-sound-bath-tickets-199
+ 6371538011
+URL:https://soundbathcalendar.com/event/psychic-sound-bath-2026-09-19-1955-
+ e-arizona-ave/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath
+BEGIN:VEVENT
+UID:sound-bath-2026-09-20-douglas-county-libraries-parker@soundbathcalendar
+ .com
+DTSTAMP:20260907T162543Z
+DTSTART:20260920T200000Z
+DTEND:20260920T211500Z
+SUMMARY:Sound Bath
+LOCATION:Douglas County Libraries - Parker\, 20105 Mainstreet\, Parker\, CO
+  80138
+DESCRIPTION:A 90-minute sound bath on crystal singing bowls and voice led b
+ y Ellie Ferguson in Event Hall A & B at the Parker branch of Douglas Count
+ y Libraries\, Sunday afternoon.\n\nTickets: https://go.dcl.org/event/16278
+ 785
+URL:https://soundbathcalendar.com/event/sound-bath-2026-09-20-douglas-count
+ y-libraries-parker/
+END:VEVENT
+END:VCALENDAR

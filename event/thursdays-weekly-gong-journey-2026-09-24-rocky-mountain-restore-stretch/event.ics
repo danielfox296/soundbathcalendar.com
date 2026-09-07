@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Thursday's Weekly Gong Journey
+BEGIN:VEVENT
+UID:thursdays-weekly-gong-journey-2026-09-24-rocky-mountain-restore-stretch
+ @soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260925T001500Z
+DTEND:20260925T013000Z
+SUMMARY:Thursday's Weekly Gong Journey
+LOCATION:Rocky Mountain Restore & Stretch\, 3616 Soderburg Dr\, Fort Collin
+ s\, CO 80526
+DESCRIPTION:A weekly Thursday-evening gong journey at Rocky Mountain Restor
+ e & Stretch's studio\, featuring a 5-foot diameter healing gong. This late
+ r instance of the weekly series was confirmed only on the operator's own b
+ ooking page (not independently cross-checked on Eventbrite).\n\nTickets: h
+ ttps://www.rockymountainrestoreandstretch.com/event-details-registration/t
+ hursdays-weekly-gong-journey-2026-09-24-18-15
+URL:https://soundbathcalendar.com/event/thursdays-weekly-gong-journey-2026-
+ 09-24-rocky-mountain-restore-stretch/
+END:VEVENT
+END:VCALENDAR

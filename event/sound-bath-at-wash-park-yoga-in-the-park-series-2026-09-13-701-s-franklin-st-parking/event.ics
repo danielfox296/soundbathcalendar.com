@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath at Wash Park - Yoga in the Park Series
+BEGIN:VEVENT
+UID:sound-bath-at-wash-park-yoga-in-the-park-series-2026-09-13-701-s-frankl
+ in-st-parking@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260914T000000Z
+DTEND:20260914T011500Z
+SUMMARY:Sound Bath at Wash Park - Yoga in the Park Series
+LOCATION:701 S Franklin St Parking\, 701 S Franklin St\, Denver\, CO 80210
+DESCRIPTION:A 60-minute outdoor sound bath led by Amanda Rose of Revive Wel
+ lness at Washington Park\, meeting just south of the E Mississippi Ave and
+  S Franklin St lot\, Sunday evening\; from $23.\n\nTickets: https://www.ev
+ entbrite.com/e/sound-bath-at-wash-park-yoga-in-the-park-series-tickets-199
+ 0193926609
+URL:https://soundbathcalendar.com/event/sound-bath-at-wash-park-yoga-in-the
+ -park-series-2026-09-13-701-s-franklin-st-parking/
+END:VEVENT
+END:VCALENDAR

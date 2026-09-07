@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Colorado Salt Cave w/Sound Healing
+BEGIN:VEVENT
+UID:colorado-salt-cave-wsound-healing-2026-09-13-colorado-salt-cave@soundba
+ thcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260913T200000Z
+DTEND:20260913T211500Z
+SUMMARY:Colorado Salt Cave w/Sound Healing
+LOCATION:Colorado Salt Cave\, 4647 Centennial Blvd\, Colorado Springs\, CO 
+ 80919
+DESCRIPTION:A 90-minute Sunday-afternoon session in the Colorado Salt Cave\
+ , Colorado Springs: 20-30 minutes of conscious-connected breathwork follow
+ ed by 30 minutes of sound healing tuned to 432 Hz\; $65.\n\nTickets: https
+ ://www.meetup.com/essential-wellness-society-colorado/events/316374151/
+URL:https://soundbathcalendar.com/event/colorado-salt-cave-wsound-healing-2
+ 026-09-13-colorado-salt-cave/
+END:VEVENT
+END:VCALENDAR

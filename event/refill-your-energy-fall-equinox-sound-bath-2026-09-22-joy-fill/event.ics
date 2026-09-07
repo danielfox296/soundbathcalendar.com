@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Refill Your Energy Fall Equinox Sound Bath
+BEGIN:VEVENT
+UID:refill-your-energy-fall-equinox-sound-bath-2026-09-22-joy-fill@soundbat
+ hcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260923T003000Z
+DTEND:20260923T014500Z
+SUMMARY:Refill Your Energy Fall Equinox Sound Bath
+LOCATION:JOY FILL\, 4340 West 35th Avenue\, Denver\, CO 80212
+DESCRIPTION:Join us in a community sound bath held at your favorite local r
+ efillery.  Ground into the season and welcome fall with deep relaxation.\n
+ \nTickets: https://www.eventbrite.com/e/refill-your-energy-fall-equinox-so
+ und-bath-tickets-1998925064678
+URL:https://soundbathcalendar.com/event/refill-your-energy-fall-equinox-sou
+ nd-bath-2026-09-22-joy-fill/
+END:VEVENT
+END:VCALENDAR

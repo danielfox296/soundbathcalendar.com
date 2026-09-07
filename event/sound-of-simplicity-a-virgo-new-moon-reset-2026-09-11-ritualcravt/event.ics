@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound of Simplicity: A Virgo New Moon Reset
+BEGIN:VEVENT
+UID:sound-of-simplicity-a-virgo-new-moon-reset-2026-09-11-ritualcravt@sound
+ bathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260912T003000Z
+DTEND:20260912T014500Z
+SUMMARY:Sound of Simplicity: A Virgo New Moon Reset
+LOCATION:RitualCravt\, 7700 W 44th Ave\, Wheat Ridge\, CO 80033
+DESCRIPTION:A 90-minute in-person sound bath led by Tori Price tied to the 
+ September new moon\, held at RitualCravt in Wheat Ridge\; tickets are non-
+ transferable.\n\nTickets: https://school.ritualcravt.com/class/in-person-s
+ ound-of-simplicity-a-virgo-new-moon-reset/#tribe-tickets__tickets-form
+URL:https://soundbathcalendar.com/event/sound-of-simplicity-a-virgo-new-moo
+ n-reset-2026-09-11-ritualcravt/
+END:VEVENT
+END:VCALENDAR

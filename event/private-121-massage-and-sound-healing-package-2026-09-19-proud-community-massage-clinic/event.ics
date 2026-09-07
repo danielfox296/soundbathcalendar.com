@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Private 1-2-1 Massage and Sound Healing Package
+BEGIN:VEVENT
+UID:private-121-massage-and-sound-healing-package-2026-09-19-proud-communit
+ y-massage-clinic@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260919T193000Z
+DTEND:20260919T204500Z
+SUMMARY:Private 1-2-1 Massage and Sound Healing Package
+LOCATION:proud. Community Massage Clinic\, 2130 Mountain View Ave\, Suite 2
+ 05\, Longmont\, CO 80501
+DESCRIPTION:A one-to-one package pairing a 30- or 60-minute massage with a 
+ 30- or 60-minute sound healing session\, run by ResoundingWell with proud.
+  Community Massage Clinic in Longmont\, Saturday afternoon\; $118-214.\n\n
+ Tickets: https://www.eventbrite.com/e/private-1-2-1-massage-and-sound-heal
+ ing-package-tickets-1998022927361
+URL:https://soundbathcalendar.com/event/private-121-massage-and-sound-heali
+ ng-package-2026-09-19-proud-community-massage-clinic/
+END:VEVENT
+END:VCALENDAR

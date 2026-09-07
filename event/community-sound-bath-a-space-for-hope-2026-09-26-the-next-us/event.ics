@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Community Sound Bath : A Space For Hope
+BEGIN:VEVENT
+UID:community-sound-bath-a-space-for-hope-2026-09-26-the-next-us@soundbathc
+ alendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260927T000000Z
+DTEND:20260927T011500Z
+SUMMARY:Community Sound Bath : A Space For Hope
+LOCATION:The Next Us\, 525 North Cascade Avenue\, Colorado Springs\, CO 809
+ 03
+DESCRIPTION:A free\, donation-based community sound bath held during Suicid
+ e Prevention Month\, using singing bowls and other instruments for nervous
+ -system regulation\; no meditation or sound-bath experience required.\n\nT
+ ickets: https://www.eventbrite.com/e/community-sound-bath-a-space-for-hope
+ -tickets-1998496833828
+URL:https://soundbathcalendar.com/event/community-sound-bath-a-space-for-ho
+ pe-2026-09-26-the-next-us/
+END:VEVENT
+END:VCALENDAR

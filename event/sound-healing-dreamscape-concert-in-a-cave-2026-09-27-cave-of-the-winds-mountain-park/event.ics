@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Healing Dreamscape Concert in a Cave
+BEGIN:VEVENT
+UID:sound-healing-dreamscape-concert-in-a-cave-2026-09-27-cave-of-the-winds
+ -mountain-park@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260928T010000Z
+DTEND:20260928T021500Z
+SUMMARY:Sound Healing Dreamscape Concert in a Cave
+LOCATION:Cave of the Winds Mountain Park\, 100 Cave of the Winds Road\, Man
+ itou Springs\, CO 80829
+DESCRIPTION:A live organic-and-electronic sound healing concert staged insi
+ de a primitive cave at Cave of the Winds\, combining quartz crystal instru
+ ments and world instruments. Facilitated by Denver-based musician Tommy Di
+ ll under his Soundularity project.\n\nTickets: https://www.eventbrite.com/
+ e/sound-healing-dreamscape-concert-in-a-cave-tickets-1981950375927
+URL:https://soundbathcalendar.com/event/sound-healing-dreamscape-concert-in
+ -a-cave-2026-09-27-cave-of-the-winds-mountain-park/
+END:VEVENT
+END:VCALENDAR

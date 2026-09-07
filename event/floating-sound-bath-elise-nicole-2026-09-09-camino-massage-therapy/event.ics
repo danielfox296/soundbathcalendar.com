@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Floating Sound Bath – Elise Nicole
+BEGIN:VEVENT
+UID:floating-sound-bath-elise-nicole-2026-09-09-camino-massage-therapy@soun
+ dbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260910T003000Z
+DTEND:20260910T014500Z
+SUMMARY:Floating Sound Bath – Elise Nicole
+LOCATION:Camino Massage Therapy\, 123 E Costilla St\, Colorado Springs\, CO
+  80903
+DESCRIPTION:A sound bath workshop where participants are cocooned in a silk
+  aerial hammock (mat option also available) while Elise Nicole Kirkpatrick
+  leads a healing meditative sound bath.\n\nTickets: https://caminomassage.
+ zenoti.com/webstoreNew/fitness/classes/81db856e-005a-4e6f-bbac-7b252f79123
+ c
+URL:https://soundbathcalendar.com/event/floating-sound-bath-elise-nicole-20
+ 26-09-09-camino-massage-therapy/
+END:VEVENT
+END:VCALENDAR

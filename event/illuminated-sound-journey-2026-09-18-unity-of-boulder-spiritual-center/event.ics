@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Illuminated Sound Journey
+BEGIN:VEVENT
+UID:illuminated-sound-journey-2026-09-18-unity-of-boulder-spiritual-center@
+ soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260919T003000Z
+DTEND:20260919T014500Z
+SUMMARY:Illuminated Sound Journey
+LOCATION:Unity of Boulder Spiritual Center\, 2855 Folsom St\, Boulder\, CO 
+ 80304
+DESCRIPTION:Rebecca Abraxas leads Illuminated Sound Journey\, a crystal bow
+ l and vocal-toning chakra-balancing sound bath at Unity of Boulder Spiritu
+ al Center on the third Friday\, September 18\, 6:30-8:15 PM\, $30 pre-regi
+ stration.\n\nTickets: https://unityofboulder.com/events/illuminated/
+URL:https://soundbathcalendar.com/event/illuminated-sound-journey-2026-09-1
+ 8-unity-of-boulder-spiritual-center/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Autumn Equinox Sound Journey Ceremony
+BEGIN:VEVENT
+UID:autumn-equinox-sound-journey-ceremony-2026-09-20-empire-grange@soundbat
+ hcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260920T220000Z
+DTEND:20260920T231500Z
+SUMMARY:Autumn Equinox Sound Journey Ceremony
+LOCATION:Empire Grange\, 2306 W Mulberry St\, Fort Collins\, CO 80521
+DESCRIPTION:An equinox sound journey with guided meditation on gongs\, sing
+ ing bowls and percussion at Empire Grange\, 2306 W Mulberry St in Fort Col
+ lins\, Sunday afternoon\; $39-68.\n\nTickets: https://www.eventbrite.com/e
+ /autumn-equinox-sound-journey-ceremony-tickets-1997393606044
+URL:https://soundbathcalendar.com/event/autumn-equinox-sound-journey-ceremo
+ ny-2026-09-20-empire-grange/
+END:VEVENT
+END:VCALENDAR

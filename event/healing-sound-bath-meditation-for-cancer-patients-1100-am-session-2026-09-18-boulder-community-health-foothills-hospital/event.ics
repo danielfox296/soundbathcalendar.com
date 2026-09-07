@@ -1,0 +1,27 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Healing Sound Bath Meditation for Cancer Patients (11:00 AM se
+ ssion)
+BEGIN:VEVENT
+UID:healing-sound-bath-meditation-for-cancer-patients-1100-am-session-2026-
+ 09-18-boulder-community-health-foothills-hospital@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260918T170000Z
+DTEND:20260918T181500Z
+SUMMARY:Healing Sound Bath Meditation for Cancer Patients (11:00 AM session
+ )
+LOCATION:Boulder Community Health - Foothills Hospital\, 4715 Arapahoe Aven
+ ue\, Boulder\, CO 80303
+DESCRIPTION:A free sound bath for cancer patients and survivors using gongs
+ \, singing bowls\, and handpan\, held in the Community Room of Boulder Com
+ munity Health's Tebo Family Medical Building\; facilitator not named on th
+ e listing.\n\nTickets: https://www.bch.org/community-events/event-details/
+ ?event=40880
+URL:https://soundbathcalendar.com/event/healing-sound-bath-meditation-for-c
+ ancer-patients-1100-am-session-2026-09-18-boulder-community-health-foothil
+ ls-hospital/
+END:VEVENT
+END:VCALENDAR

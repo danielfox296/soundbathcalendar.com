@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Autumn Equinox Sound Bath
+BEGIN:VEVENT
+UID:autumn-equinox-sound-bath-2026-09-22-singing-bowls-of-the-rockies@sound
+ bathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260923T010000Z
+DTEND:20260923T021500Z
+SUMMARY:Autumn Equinox Sound Bath
+LOCATION:Singing Bowls of the Rockies\, 76 South Sierra Madre Street\, #STE
+  C\, Colorado Springs\, CO 80903
+DESCRIPTION:An evening sound bath at the Singing Bowls of the Rockies studi
+ o marking the autumn equinox\, using singing bowls and other overtone inst
+ ruments for deep rest.\n\nTickets: https://www.eventbrite.com/e/autumn-equ
+ inox-sound-bath-tickets-1999693066793
+URL:https://soundbathcalendar.com/event/autumn-equinox-sound-bath-2026-09-2
+ 2-singing-bowls-of-the-rockies/
+END:VEVENT
+END:VCALENDAR

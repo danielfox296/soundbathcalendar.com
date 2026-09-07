@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Wash Park Psychic Sound Bath
+BEGIN:VEVENT
+UID:wash-park-psychic-sound-bath-2026-09-19-washington-park-united-methodis
+ t-church@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260919T210000Z
+DTEND:20260919T221500Z
+SUMMARY:Wash Park Psychic Sound Bath
+LOCATION:Washington Park United Methodist Church\, 1955 E Arizona Ave\, Den
+ ver\, CO
+DESCRIPTION:A biweekly Saturday gathering at a Washington Park church blend
+ ing 432 Hz and crystal bowls\, gongs\, and guided vocal toning with light 
+ breathwork\; drop-in for $20.\n\nTickets: https://www.meetup.com/wellness-
+ activity-events/events/315948546/
+URL:https://soundbathcalendar.com/event/wash-park-psychic-sound-bath-2026-0
+ 9-19-washington-park-united-methodist-church/
+END:VEVENT
+END:VCALENDAR

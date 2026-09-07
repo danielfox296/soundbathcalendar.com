@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Weekly Sound Bath & Meditation with Joe
+BEGIN:VEVENT
+UID:weekly-sound-bath-meditation-with-joe-2026-09-13-the-movement-apothecar
+ y@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260914T010000Z
+DTEND:20260914T021500Z
+SUMMARY:Weekly Sound Bath & Meditation with Joe
+LOCATION:The Movement Apothecary\, 2721 S. College Ave.\, Unit 3\, Fort Col
+ lins\, CO 80525
+DESCRIPTION:Joe Ritter\, a sound practitioner and meditation teacher whose 
+ practice is called Rhythmic Alchemy\, leads a weekly Sunday-evening sound 
+ bath and guided meditation with handmade bowls at The Movement Apothecary.
+  The Visit Fort Collins listing marks this as recurring weekly on Sunday.\
+ n\nTickets: https://www.visitftcollins.com/event/weekly-sound-bath-%26-med
+ itation-with-joe/31175/
+URL:https://soundbathcalendar.com/event/weekly-sound-bath-meditation-with-j
+ oe-2026-09-13-the-movement-apothecary/
+END:VEVENT
+END:VCALENDAR

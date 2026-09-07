@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Fall Equinox Yoga & Sound Bath in the Park
+BEGIN:VEVENT
+UID:fall-equinox-yoga-sound-bath-in-the-park-2026-09-22-city-park@soundbath
+ calendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260922T233000Z
+DTEND:20260923T004500Z
+SUMMARY:Fall Equinox Yoga & Sound Bath in the Park
+LOCATION:City Park\, 2030 York St\, Denver\, CO 80205
+DESCRIPTION:An outdoor all-levels yoga practice followed by a sound bath wi
+ th crystal singing bowls and chimes at City Park\, Denver\, on the evening
+  of the fall equinox\; donation-based.\n\nTickets: https://www.meetup.com/
+ yogaintheparkdenver/events/316348747/
+URL:https://soundbathcalendar.com/event/fall-equinox-yoga-sound-bath-in-the
+ -park-2026-09-22-city-park/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Autumnal Equinox Sound Bath
+BEGIN:VEVENT
+UID:autumnal-equinox-sound-bath-2026-09-24-sacred-society@soundbathcalendar
+ .com
+DTSTAMP:20260907T162543Z
+DTSTART:20260925T000000Z
+DTEND:20260925T011500Z
+SUMMARY:Autumnal Equinox Sound Bath
+LOCATION:Sacred Society\, 3410 W 38th Ave
+DESCRIPTION:Autumn-equinox sound bath with crystal singing bowls and chimes
+  led by Christina Epps at Sacred Society\, Highlands\, Thursday evening\, 
+ $60.\n\nTickets: https://momence.com/s/140303759
+URL:https://soundbathcalendar.com/event/autumnal-equinox-sound-bath-2026-09
+ -24-sacred-society/
+END:VEVENT
+END:VCALENDAR

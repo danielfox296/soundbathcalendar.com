@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath: Sacred Rest Ritual
+BEGIN:VEVENT
+UID:sound-bath-sacred-rest-ritual-2026-09-27-sacred-society@soundbathcalend
+ ar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260927T160000Z
+DTEND:20260927T171500Z
+SUMMARY:Sound Bath: Sacred Rest Ritual
+LOCATION:Sacred Society\, 3410 W 38th Ave
+DESCRIPTION:60-minute class combining breathwork\, yoga nidra and sound led
+  by Deborah Green at Sacred Society\, Highlands\, Sunday morning\, $45.\n\
+ nTickets: https://momence.com/s/126456762
+URL:https://soundbathcalendar.com/event/sound-bath-sacred-rest-ritual-2026-
+ 09-27-sacred-society/
+END:VEVENT
+END:VCALENDAR

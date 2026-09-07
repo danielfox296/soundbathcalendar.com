@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Candlelight Sound Bath
+BEGIN:VEVENT
+UID:candlelight-sound-bath-2026-09-16-harmonist-sanctuary@soundbathcalendar
+ .com
+DTSTAMP:20260907T162543Z
+DTSTART:20260917T011500Z
+DTEND:20260917T023000Z
+SUMMARY:Candlelight Sound Bath
+LOCATION:Harmonist Sanctuary\, 4633 E Colfax Ave\, Denver\, CO 80220
+DESCRIPTION:A monthly candlelit hour of crystal singing bowls and elemental
+  chimes\, with oracle card pulls and a guided visualisation\, at Harmonist
+  Sanctuary on E Colfax in Park Hill\, Denver\, Wednesday evening\; $25-44.
+ \n\nTickets: https://www.eventbrite.com/e/candlelight-sound-bath-tickets-1
+ 982925649998
+URL:https://soundbathcalendar.com/event/candlelight-sound-bath-2026-09-16-h
+ armonist-sanctuary/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Synchronicities & Sound: Calling in Your Helpful People
+BEGIN:VEVENT
+UID:synchronicities-sound-calling-in-your-helpful-people-2026-09-23-firiel-
+ skin-care@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260924T010000Z
+DTEND:20260924T021500Z
+SUMMARY:Synchronicities & Sound: Calling in Your Helpful People
+LOCATION:Firiel Skin Care\, 193 W South Boulder Rd\, Lafayette\, CO 80026
+DESCRIPTION:A 90-minute Wednesday-evening session at Firiel Skin Care in La
+ fayette pairing a feng shui intention ritual and a small craft with a clos
+ ing sound bath.\n\nTickets: https://www.theoracle-collective.com/event-det
+ ails-registration/9-23-synchronicities-sound-calling-in-your-helpful-peopl
+ e
+URL:https://soundbathcalendar.com/event/synchronicities-sound-calling-in-yo
+ ur-helpful-people-2026-09-23-firiel-skin-care/
+END:VEVENT
+END:VCALENDAR

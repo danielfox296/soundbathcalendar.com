@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath for Stress Relief + Energy Clearing
+BEGIN:VEVENT
+UID:sound-bath-for-stress-relief-energy-clearing-2026-09-19-yoga-of-the-min
+ d@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260919T160000Z
+DTEND:20260919T171500Z
+SUMMARY:Sound Bath for Stress Relief + Energy Clearing
+LOCATION:Yoga of the Mind\, 23 N Lincoln St\, #206\, Denver\, CO 80203
+DESCRIPTION:A 90-minute small-group crystal bowl sound bath with guided rel
+ axation at Yoga of the Mind\, 23 N Lincoln St in the South Broadway Christ
+ ian Church building\, Denver\, Saturday morning\; $19-37.\n\nTickets: http
+ s://www.eventbrite.com/e/sound-bath-for-stress-relief-energy-clearing-tick
+ ets-1998449698846
+URL:https://soundbathcalendar.com/event/sound-bath-for-stress-relief-energy
+ -clearing-2026-09-19-yoga-of-the-mind/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Monthly Moments of Peace Community Sound Bath
+BEGIN:VEVENT
+UID:monthly-moments-of-peace-community-sound-bath-2026-09-27-breath-of-life
+ -yoga-llc@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260927T200000Z
+DTEND:20260927T211500Z
+SUMMARY:Monthly Moments of Peace Community Sound Bath
+LOCATION:Breath of Life Yoga\, LLC\, 13635 East 104th Avenue\, Suite #600\,
+  Commerce City\, CO 80022
+DESCRIPTION:Chill out and vibe with soothing sounds at our Monthly Moments 
+ of Peace Community Sound Bath—feel the calm!\n\nTickets: https://www.eve
+ ntbrite.com/e/monthly-moments-of-peace-community-sound-bath-tickets-199902
+ 8754818
+URL:https://soundbathcalendar.com/event/monthly-moments-of-peace-community-
+ sound-bath-2026-09-27-breath-of-life-yoga-llc/
+END:VEVENT
+END:VCALENDAR

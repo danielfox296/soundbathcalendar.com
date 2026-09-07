@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Havest Full Moon in Aries Sound Bath
+BEGIN:VEVENT
+UID:havest-full-moon-in-aries-sound-bath-2026-09-27-singing-bowls-of-the-ro
+ ckies@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260927T220000Z
+DTEND:20260927T231500Z
+SUMMARY:Havest Full Moon in Aries Sound Bath
+LOCATION:Singing Bowls of the Rockies\, 76 South Sierra Madre Street\, #STE
+  C\, Colorado Springs\, CO 80903
+DESCRIPTION:A grounding full-moon sound bath at the Singing Bowls of the Ro
+ ckies studio inviting participants to release and reset using singing bowl
+ s and overtone instruments.\n\nTickets: https://www.eventbrite.com/e/haves
+ t-full-moon-in-aries-sound-bath-tickets-1999693339609
+URL:https://soundbathcalendar.com/event/havest-full-moon-in-aries-sound-bat
+ h-2026-09-27-singing-bowls-of-the-rockies/
+END:VEVENT
+END:VCALENDAR

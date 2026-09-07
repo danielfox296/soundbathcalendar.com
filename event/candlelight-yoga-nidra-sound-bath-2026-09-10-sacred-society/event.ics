@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Candlelight Yoga Nidra & Sound Bath
+BEGIN:VEVENT
+UID:candlelight-yoga-nidra-sound-bath-2026-09-10-sacred-society@soundbathca
+ lendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260911T000000Z
+DTEND:20260911T011500Z
+SUMMARY:Candlelight Yoga Nidra & Sound Bath
+LOCATION:Sacred Society\, 3410 W 38th Ave\, Denver\, CO 80211
+DESCRIPTION:Janae Bell pairs yoga nidra with a candlelit sound bath at Sacr
+ ed Society.\n\nTickets: https://momence.com/s/138559623
+URL:https://soundbathcalendar.com/event/candlelight-yoga-nidra-sound-bath-2
+ 026-09-10-sacred-society/
+END:VEVENT
+END:VCALENDAR

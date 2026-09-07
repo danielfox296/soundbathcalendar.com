@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:New Moon Soundbath
+BEGIN:VEVENT
+UID:new-moon-soundbath-2026-09-10-seedlings-outdoor-learning@soundbathcalen
+ dar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260911T010000Z
+DTEND:20260911T021500Z
+SUMMARY:New Moon Soundbath
+LOCATION:Seedlings Outdoor Learning\, 101 Hartman St\, Fort Collins\, CO 80
+ 521
+DESCRIPTION:A new-moon sound bath led by Zach Miller at Seedlings Outdoor L
+ earning\, 101 Hartman St in Fort Collins\, Thursday evening\; $29-34.\n\nT
+ ickets: https://www.eventbrite.com/e/new-moon-soundbath-tickets-1999043881
+ 061
+URL:https://soundbathcalendar.com/event/new-moon-soundbath-2026-09-10-seedl
+ ings-outdoor-learning/
+END:VEVENT
+END:VCALENDAR

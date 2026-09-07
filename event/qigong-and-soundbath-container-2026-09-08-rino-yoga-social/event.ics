@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Qigong and Soundbath Container
+BEGIN:VEVENT
+UID:qigong-and-soundbath-container-2026-09-08-rino-yoga-social@soundbathcal
+ endar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260908T220000Z
+DTEND:20260908T231500Z
+SUMMARY:Qigong and Soundbath Container
+LOCATION:RiNo Yoga Social\, 3101 Walnut Street\, Denver\, CO 80205
+DESCRIPTION:A qigong and sound bath session at RiNo Yoga Social in Denver's
+  RiNo neighborhood\, Tuesday afternoon\; $34.\n\nTickets: https://www.even
+ tbrite.com/e/qigong-and-soundbath-container-tickets-1978861724688
+URL:https://soundbathcalendar.com/event/qigong-and-soundbath-container-2026
+ -09-08-rino-yoga-social/
+END:VEVENT
+END:VCALENDAR

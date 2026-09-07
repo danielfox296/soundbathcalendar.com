@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:New Moon Sound Bath
+BEGIN:VEVENT
+UID:new-moon-sound-bath-2026-09-11-sacred-society@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260911T230000Z
+DTEND:20260912T001500Z
+SUMMARY:New Moon Sound Bath
+LOCATION:Sacred Society\, 3410 W 38th Ave\, Denver\, CO 80211
+DESCRIPTION:A new-moon sound bath led by Christina Epps in Sacred Society's
+  Zen Garden room\, 3410 W 38th Ave in the Highlands\, Friday at 5pm\; from
+  $60.\n\nTickets: https://momence.com/s/139558815
+URL:https://soundbathcalendar.com/event/new-moon-sound-bath-2026-09-11-sacr
+ ed-society/
+END:VEVENT
+END:VCALENDAR

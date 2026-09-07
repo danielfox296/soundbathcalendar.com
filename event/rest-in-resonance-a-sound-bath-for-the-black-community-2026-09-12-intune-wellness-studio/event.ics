@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Rest in Resonance: a sound bath for the Black community
+BEGIN:VEVENT
+UID:rest-in-resonance-a-sound-bath-for-the-black-community-2026-09-12-intun
+ e-wellness-studio@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260912T220000Z
+DTEND:20260912T231500Z
+SUMMARY:Rest in Resonance: a sound bath for the Black community
+LOCATION:Intune Wellness Studio\, 3300 Walnut St\, Suite 214\, Denver\, CO 
+ 80205
+DESCRIPTION:A 60-minute sound bath on crystal singing bowls and gong with a
+  guided meditation and community circle\, held for the Black community at 
+ Intune Wellness Studio in Five Points\, Denver\, Saturday afternoon\; $34\
+ , with limited sliding-scale tickets.\n\nTickets: https://www.eventbrite.c
+ om/e/rest-in-resonance-a-sound-bath-for-the-black-community-tickets-199899
+ 1491362
+URL:https://soundbathcalendar.com/event/rest-in-resonance-a-sound-bath-for-
+ the-black-community-2026-09-12-intune-wellness-studio/
+END:VEVENT
+END:VCALENDAR

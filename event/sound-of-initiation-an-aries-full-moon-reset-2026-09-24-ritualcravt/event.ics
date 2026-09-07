@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound of Initiation: An Aries Full Moon Reset
+BEGIN:VEVENT
+UID:sound-of-initiation-an-aries-full-moon-reset-2026-09-24-ritualcravt@sou
+ ndbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260925T003000Z
+DTEND:20260925T014500Z
+SUMMARY:Sound of Initiation: An Aries Full Moon Reset
+LOCATION:RitualCravt\, 7700 W 44th Ave\, Wheat Ridge\, CO 80033
+DESCRIPTION:A 90-minute in-person sound bath led by Tori Price tied to the 
+ September full moon\, held at RitualCravt in Wheat Ridge\; tickets are non
+ -transferable.\n\nTickets: https://school.ritualcravt.com/class/in-person-
+ sound-of-initiation-an-aries-full-moon-reset/#tribe-tickets__tickets-form
+URL:https://soundbathcalendar.com/event/sound-of-initiation-an-aries-full-m
+ oon-reset-2026-09-24-ritualcravt/
+END:VEVENT
+END:VCALENDAR

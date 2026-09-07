@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Soundscape of Light - Slow Down
+BEGIN:VEVENT
+UID:soundscape-of-light-slow-down-2026-09-09-rising-harmonics@soundbathcale
+ ndar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260910T010000Z
+DTEND:20260910T021500Z
+SUMMARY:Soundscape of Light - Slow Down
+LOCATION:Rising Harmonics\, 8120 Sheridan Blvd
+DESCRIPTION:A monthly themed crystal-bowl soundscape session created and le
+ d by Lea Renay of Rising Harmonics in Westminster.\n\nTickets: https://sou
+ ndbathcalendar.com/
+URL:https://soundbathcalendar.com/event/soundscape-of-light-slow-down-2026-
+ 09-09-rising-harmonics/
+END:VEVENT
+END:VCALENDAR

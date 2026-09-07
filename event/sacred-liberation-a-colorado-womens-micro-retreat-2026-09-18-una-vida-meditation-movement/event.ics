@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sacred Liberation: A Colorado Women's Micro Retreat
+BEGIN:VEVENT
+UID:sacred-liberation-a-colorado-womens-micro-retreat-2026-09-18-una-vida-m
+ editation-movement@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260919T000000Z
+DTEND:20260919T011500Z
+SUMMARY:Sacred Liberation: A Colorado Women's Micro Retreat
+LOCATION:Una Vida Meditation & Movement\, 7960 Niwot Rd\, Suite B12\, Longm
+ ont\, CO 80503
+DESCRIPTION:A women's evening of grounding breathwork and gentle movement l
+ ed by KJ\, conscious dance with DJ drippindrop\, and sound healing at Una 
+ Vida in Longmont\, Friday evening.\n\nTickets: https://www.eventbrite.com/
+ e/sacred-liberation-a-colorado-womens-micro-retreat-tickets-1997644845508
+URL:https://soundbathcalendar.com/event/sacred-liberation-a-colorado-womens
+ -micro-retreat-2026-09-18-una-vida-meditation-movement/
+END:VEVENT
+END:VCALENDAR

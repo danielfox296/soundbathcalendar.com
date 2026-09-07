@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Mind-Body Moon Circle
+BEGIN:VEVENT
+UID:mindbody-moon-circle-2026-09-13-739-sherman-st@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260914T000000Z
+DTEND:20260914T011500Z
+SUMMARY:Mind-Body Moon Circle
+LOCATION:739 Sherman St\, 739 Sherman St\, Denver\, CO 80203
+DESCRIPTION:A biweekly circle of mindful movement\, meditation\, sound heal
+ ing and journaling at 739 Sherman St in Capitol Hill\, Denver\, Sunday eve
+ ning\; $13.\n\nTickets: https://www.eventbrite.com/e/mind-body-moon-circle
+ -tickets-1996886559454
+URL:https://soundbathcalendar.com/event/mindbody-moon-circle-2026-09-13-739
+ -sherman-st/
+END:VEVENT
+END:VCALENDAR

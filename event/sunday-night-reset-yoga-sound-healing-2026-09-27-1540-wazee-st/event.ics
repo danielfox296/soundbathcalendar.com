@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sunday Night Reset: Yoga + Sound Healing
+BEGIN:VEVENT
+UID:sunday-night-reset-yoga-sound-healing-2026-09-27-1540-wazee-st@soundbat
+ hcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260927T230000Z
+DTEND:20260928T001500Z
+SUMMARY:Sunday Night Reset: Yoga + Sound Healing
+LOCATION:1540 Wazee St\, 1540 Wazee Street\, Denver\, CO 80202
+DESCRIPTION:A 90-min class blending vinyasa flow\, yin\, and a full sound h
+ ealing experience to reset\, release\, and restore body and mind.\n\nTicke
+ ts: https://www.eventbrite.com/e/sunday-night-reset-yoga-sound-healing-tic
+ kets-1999411560801
+URL:https://soundbathcalendar.com/event/sunday-night-reset-yoga-sound-heali
+ ng-2026-09-27-1540-wazee-st/
+END:VEVENT
+END:VCALENDAR

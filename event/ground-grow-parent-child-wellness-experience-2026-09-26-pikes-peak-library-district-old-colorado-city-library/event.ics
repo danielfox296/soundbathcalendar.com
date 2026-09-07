@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Ground & Grow Parent + Child Wellness Experience
+BEGIN:VEVENT
+UID:ground-grow-parent-child-wellness-experience-2026-09-26-pikes-peak-libr
+ ary-district-old-colorado-city-library@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260926T160000Z
+DTEND:20260926T171500Z
+SUMMARY:Ground & Grow Parent + Child Wellness Experience
+LOCATION:Pikes Peak Library District - Old Colorado City Library\, 2418 Wes
+ t Pikes Peak Avenue\, Colorado Springs\, CO 80904
+DESCRIPTION:A parent-and-child wellness workshop that includes a grounding 
+ circle\, movement and music play\, a soothing sound bath with guided medit
+ ation\, and an emotion-regulation activity.\n\nTickets: https://www.eventb
+ rite.com/e/ground-grow-parent-child-wellness-experience-tickets-1984414186
+ 250
+URL:https://soundbathcalendar.com/event/ground-grow-parent-child-wellness-e
+ xperience-2026-09-26-pikes-peak-library-district-old-colorado-city-library
+ /
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Yoga and Sound Bath
+BEGIN:VEVENT
+UID:yoga-and-sound-bath-2026-09-08-green-light-reiki@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260909T010000Z
+DTEND:20260909T021500Z
+SUMMARY:Yoga and Sound Bath
+LOCATION:Green Light Reiki\, 1545 South Pearl Street\, Denver\, CO 80210
+DESCRIPTION:A breathwork\, movement and sound immersion class led by Yelena
+  Sergeyevna at Green Light Reiki in Denver\, Tuesday evening\; $34.\n\nTic
+ kets: https://www.eventbrite.com/e/yoga-and-sound-bath-tickets-16532255952
+ 59
+URL:https://soundbathcalendar.com/event/yoga-and-sound-bath-2026-09-08-gree
+ n-light-reiki/
+END:VEVENT
+END:VCALENDAR

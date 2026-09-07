@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Autumnal Equinox Gong Bath w/ Gregg Wilkins
+BEGIN:VEVENT
+UID:autumnal-equinox-gong-bath-w-gregg-wilkins-2026-09-19-unity-on-the-aven
+ ue-spiritual-center@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260920T010000Z
+DTEND:20260920T021500Z
+SUMMARY:Autumnal Equinox Gong Bath w/ Gregg Wilkins
+LOCATION:Unity On the Avenue Spiritual Center\, 4670 E 17th Ave\, Denver\, 
+ CO 80220
+DESCRIPTION:An equinox gong bath on a Paiste Earth Gong and other sound ins
+ truments\, led by Gregg Wilkins at Unity On the Avenue Spiritual Center in
+  Park Hill\, Denver\, Saturday evening\; $20 in advance\, $25 at the door.
+ \n\nTickets: https://www.eventbrite.com/e/autumnal-equinox-gong-bath-w-gre
+ gg-wilkins-tickets-1997481406658
+URL:https://soundbathcalendar.com/event/autumnal-equinox-gong-bath-w-gregg-
+ wilkins-2026-09-19-unity-on-the-avenue-spiritual-center/
+END:VEVENT
+END:VCALENDAR

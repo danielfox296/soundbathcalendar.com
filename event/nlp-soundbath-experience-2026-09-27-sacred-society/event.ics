@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:NLP Soundbath Experience
+BEGIN:VEVENT
+UID:nlp-soundbath-experience-2026-09-27-sacred-society@soundbathcalendar.co
+ m
+DTSTAMP:20260907T162543Z
+DTSTART:20260927T180000Z
+DTEND:20260927T191500Z
+SUMMARY:NLP Soundbath Experience
+LOCATION:Sacred Society\, 3410 W 38th Ave
+DESCRIPTION:Aromatherapy\, NLP-guided meditation\, breathwork and sound ses
+ sion led by Ray Ringsel at Sacred Society\, Highlands\, Sunday midday\, $6
+ 0.\n\nTickets: https://momence.com/s/138113599
+URL:https://soundbathcalendar.com/event/nlp-soundbath-experience-2026-09-27
+ -sacred-society/
+END:VEVENT
+END:VCALENDAR

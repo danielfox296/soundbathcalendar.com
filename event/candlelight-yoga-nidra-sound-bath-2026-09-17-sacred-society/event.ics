@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Candlelight Yoga Nidra & Sound Bath
+BEGIN:VEVENT
+UID:candlelight-yoga-nidra-sound-bath-2026-09-17-sacred-society@soundbathca
+ lendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260918T000000Z
+DTEND:20260918T011500Z
+SUMMARY:Candlelight Yoga Nidra & Sound Bath
+LOCATION:Sacred Society\, 3410 W 38th Ave
+DESCRIPTION:Candlelit Yoga Nidra class with sound accompaniment led by Jana
+ e Bell at Sacred Society\, Highlands\, Thursday evening\, $30.\n\nTickets:
+  https://momence.com/s/138559646
+URL:https://soundbathcalendar.com/event/candlelight-yoga-nidra-sound-bath-2
+ 026-09-17-sacred-society/
+END:VEVENT
+END:VCALENDAR

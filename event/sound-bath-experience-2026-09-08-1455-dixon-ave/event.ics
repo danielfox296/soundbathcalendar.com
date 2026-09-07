@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath Experience
+BEGIN:VEVENT
+UID:sound-bath-experience-2026-09-08-1455-dixon-ave@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260909T003000Z
+DTEND:20260909T014500Z
+SUMMARY:Sound Bath Experience
+LOCATION:1455 Dixon Ave\, 1455 Dixon Ave\, Lafayette\, CO 80026
+DESCRIPTION:A sound bath on crystal singing bowls\, chimes and drums facili
+ tated by Terri Slezak at 1455 Dixon Ave in Lafayette\, Tuesday evening\; f
+ ree to attend\, donations accepted\, adults 18 and over.\n\nTickets: https
+ ://www.eventbrite.com/e/sound-bath-experience-tickets-1997497264088
+URL:https://soundbathcalendar.com/event/sound-bath-experience-2026-09-08-14
+ 55-dixon-ave/
+END:VEVENT
+END:VCALENDAR

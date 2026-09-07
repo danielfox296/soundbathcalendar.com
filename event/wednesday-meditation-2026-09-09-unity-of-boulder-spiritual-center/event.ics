@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Wednesday Meditation
+BEGIN:VEVENT
+UID:wednesday-meditation-2026-09-09-unity-of-boulder-spiritual-center@sound
+ bathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260910T010000Z
+DTEND:20260910T021500Z
+SUMMARY:Wednesday Meditation
+LOCATION:Unity of Boulder Spiritual Center\, 2855 Folsom St\, Boulder\, CO 
+ 80304
+DESCRIPTION:Norma leads a weekly Wednesday sound bath at Unity of Boulder S
+ piritual Center combining live crystal and Tibetan singing bowls with nati
+ ve flute and chanting\; free with donations appreciated\, 7:00-8:00 PM.\n\
+ nTickets: https://unityofboulder.com/events/wednesday-meditation/
+URL:https://soundbathcalendar.com/event/wednesday-meditation-2026-09-09-uni
+ ty-of-boulder-spiritual-center/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:In-Person Sum Faht Taoist Qigong\, Meditation and Singing Plan
+ t Sound Bath
+BEGIN:VEVENT
+UID:inperson-sum-faht-taoist-qigong-meditation-and-singing-plant-sound-bath
+ -2026-09-19-people-house@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260919T200000Z
+DTEND:20260919T211500Z
+SUMMARY:In-Person Sum Faht Taoist Qigong\, Meditation and Singing Plant Sou
+ nd Bath
+LOCATION:People House\, 3035 W 25th Ave\, Denver\, CO 80211
+DESCRIPTION:A class on Taoist breathing and qigong movement that closes wit
+ h a sound bath played on singing plants\, led by Tiffany A. Lynch at Peopl
+ e House\, 3035 W 25th Ave in Sloan Lake\, Denver\, Saturday afternoon\; $2
+ 1-40.\n\nTickets: https://www.eventbrite.com/e/in-person-sum-faht-taoist-q
+ igong-meditation-and-singing-plant-sound-bath-tickets-1994372975256
+URL:https://soundbathcalendar.com/event/inperson-sum-faht-taoist-qigong-med
+ itation-and-singing-plant-sound-bath-2026-09-19-people-house/
+END:VEVENT
+END:VCALENDAR

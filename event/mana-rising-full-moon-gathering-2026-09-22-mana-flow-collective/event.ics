@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Mana Rising Full Moon Gathering
+BEGIN:VEVENT
+UID:mana-rising-full-moon-gathering-2026-09-22-mana-flow-collective@soundba
+ thcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260923T000000Z
+DTEND:20260923T011500Z
+SUMMARY:Mana Rising Full Moon Gathering
+LOCATION:Mana Flow Collective\, Golden\, CO 80403
+DESCRIPTION:A full-moon evening gathering at Mana Flow Collective in Golden
+  that includes sound healing alongside release ritual\, movement and medit
+ ation\; doors at 6pm\, circle opens at 6:30pm.\n\nTickets: https://www.eve
+ ntbrite.com/e/mana-rising-full-moon-gathering-tickets-1998338083000
+URL:https://soundbathcalendar.com/event/mana-rising-full-moon-gathering-202
+ 6-09-22-mana-flow-collective/
+END:VEVENT
+END:VCALENDAR

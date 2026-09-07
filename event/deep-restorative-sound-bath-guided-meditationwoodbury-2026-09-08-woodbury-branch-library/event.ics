@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Deep Restorative Sound Bath Guided Meditation-Woodbury
+BEGIN:VEVENT
+UID:deep-restorative-sound-bath-guided-meditationwoodbury-2026-09-08-woodbu
+ ry-branch-library@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260909T010000Z
+DTEND:20260909T021500Z
+SUMMARY:Deep Restorative Sound Bath Guided Meditation-Woodbury
+LOCATION:Woodbury Branch Library\, 3265 Federal Boulevard\, Denver\, CO
+DESCRIPTION:A midweek restorative sound bath in the basement meeting room o
+ f Woodbury Branch Library\, pairing Reiki-guided relaxation with crystal s
+ inging bowls on a $15-$40 sliding scale.\n\nTickets: https://www.meetup.co
+ m/denver-sound-bath-collective/events/316089473/
+URL:https://soundbathcalendar.com/event/deep-restorative-sound-bath-guided-
+ meditationwoodbury-2026-09-08-woodbury-branch-library/
+END:VEVENT
+END:VCALENDAR

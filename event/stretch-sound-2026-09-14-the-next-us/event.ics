@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Stretch & Sound
+BEGIN:VEVENT
+UID:stretch-sound-2026-09-14-the-next-us@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260914T160000Z
+DTEND:20260914T171500Z
+SUMMARY:Stretch & Sound
+LOCATION:The Next Us\, 525 North Cascade Avenue\, Colorado Springs\, CO 809
+ 03
+DESCRIPTION:A recurring hour-long class at The Next Us pairing gentle resto
+ rative stretching with soothing sound to release tension and calm the mind
+ .\n\nTickets: https://www.eventbrite.com/e/stretch-sound-tickets-199941523
+ 5793
+URL:https://soundbathcalendar.com/event/stretch-sound-2026-09-14-the-next-u
+ s/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Full Moon Sound Bath
+BEGIN:VEVENT
+UID:full-moon-sound-bath-2026-09-25-sacred-society@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260925T230000Z
+DTEND:20260926T001500Z
+SUMMARY:Full Moon Sound Bath
+LOCATION:Sacred Society\, 3410 W 38th Ave
+DESCRIPTION:Full-moon sound bath with crystal singing bowls\, chimes and dr
+ ums led by Christina Epps at Sacred Society\, Highlands\, Friday evening\,
+  $60.\n\nTickets: https://momence.com/s/139570501
+URL:https://soundbathcalendar.com/event/full-moon-sound-bath-2026-09-25-sac
+ red-society/
+END:VEVENT
+END:VCALENDAR

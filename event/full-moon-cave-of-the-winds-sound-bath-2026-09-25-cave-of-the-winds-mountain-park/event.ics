@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Full Moon Cave of the Winds Sound Bath
+BEGIN:VEVENT
+UID:full-moon-cave-of-the-winds-sound-bath-2026-09-25-cave-of-the-winds-mou
+ ntain-park@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260926T013000Z
+DTEND:20260926T024500Z
+SUMMARY:Full Moon Cave of the Winds Sound Bath
+LOCATION:Cave of the Winds Mountain Park\, 100 Cave of the Winds Road\, Man
+ itou Springs\, CO 80829
+DESCRIPTION:A sound bath held inside Cave of the Winds' natural cave chambe
+ rs using Tibetan and crystal singing bowls\, gongs\, Native American flute
+ \, guitar\, and handpan. Hosted by Dr. Gigi Turner\, founder of Singing Bo
+ wls of the Rockies.\n\nTickets: https://www.eventbrite.com/e/full-moon-cav
+ e-of-the-winds-sound-bath-tickets-1998125443991
+URL:https://soundbathcalendar.com/event/full-moon-cave-of-the-winds-sound-b
+ ath-2026-09-25-cave-of-the-winds-mountain-park/
+END:VEVENT
+END:VCALENDAR

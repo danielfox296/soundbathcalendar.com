@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Sound Bath for Stress Relief + Energy Clearing
+BEGIN:VEVENT
+UID:sound-bath-for-stress-relief-energy-clearing-2026-09-19-yoga-of-the-min
+ d-is-located-within-the-south-broadway-christian-church-bldg@soundbathcale
+ ndar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260919T160000Z
+DTEND:20260919T171500Z
+SUMMARY:Sound Bath for Stress Relief + Energy Clearing
+LOCATION:Yoga of the Mind is located within the South Broadway Christian Ch
+ urch Bldg.\, 23 N Lincoln St\, #206\, Denver\, CO 80203
+DESCRIPTION:A crystal bowl sound bath for stress relief and energy clearing
+  at Yoga of the Mind in Denver.\n\nTickets: https://www.eventbrite.com/e/s
+ ound-bath-for-stress-relief-energy-clearing-tickets-1998449774071
+URL:https://soundbathcalendar.com/event/sound-bath-for-stress-relief-energy
+ -clearing-2026-09-19-yoga-of-the-mind-is-located-within-the-south-broadway
+ -christian-church-bldg/
+END:VEVENT
+END:VCALENDAR

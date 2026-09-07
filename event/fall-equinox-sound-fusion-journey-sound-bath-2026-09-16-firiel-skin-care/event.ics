@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:FALL EQUINOX : Sound Fusion Journey Sound Bath
+BEGIN:VEVENT
+UID:fall-equinox-sound-fusion-journey-sound-bath-2026-09-16-firiel-skin-car
+ e@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260917T010000Z
+DTEND:20260917T021500Z
+SUMMARY:FALL EQUINOX : Sound Fusion Journey Sound Bath
+LOCATION:Firiel Skin Care\, 193 W South Boulder Rd\, Lafayette\, CO 80026
+DESCRIPTION:A fall-equinox sound bath on crystal singing bowls and chimes w
+ ith essential oils and warming teas at Firiel Skin Care in Lafayette\, Wed
+ nesday evening\; $50.\n\nTickets: https://www.eventbrite.com/e/fall-equino
+ x-sound-fusion-journey-sound-bath-tickets-1997903925423
+URL:https://soundbathcalendar.com/event/fall-equinox-sound-fusion-journey-s
+ ound-bath-2026-09-16-firiel-skin-care/
+END:VEVENT
+END:VCALENDAR

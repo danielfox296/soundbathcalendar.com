@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:A Threshold of Balance
+BEGIN:VEVENT
+UID:a-threshold-of-balance-2026-09-20-the-healing-hive@soundbathcalendar.co
+ m
+DTSTAMP:20260907T162543Z
+DTSTART:20260920T180000Z
+DTEND:20260920T191500Z
+SUMMARY:A Threshold of Balance
+LOCATION:The Healing Hive\, 6545 W 44th Ave\, Wheat Ridge\, CO 80033
+DESCRIPTION:An equinox gathering of tea ceremony\, intention setting\, soun
+ d bath\, Reiki and candle-making led by Andrea Clem with Claudia Milner at
+  The Healing Hive in Wheat Ridge\, Sunday midday\; $56\, limited to twelve
+  guests.\n\nTickets: https://www.meetup.com/healer-within-westminster-area
+ -meditation-yoga-sound-bath/events/316344469/
+URL:https://soundbathcalendar.com/event/a-threshold-of-balance-2026-09-20-t
+ he-healing-hive/
+END:VEVENT
+END:VCALENDAR

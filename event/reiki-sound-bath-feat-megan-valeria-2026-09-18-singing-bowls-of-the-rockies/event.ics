@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Reiki & Sound Bath feat. Megan & Valeria
+BEGIN:VEVENT
+UID:reiki-sound-bath-feat-megan-valeria-2026-09-18-singing-bowls-of-the-roc
+ kies@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260919T010000Z
+DTEND:20260919T021500Z
+SUMMARY:Reiki & Sound Bath feat. Megan & Valeria
+LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
+ rado Springs\, CO 80903
+DESCRIPTION:Megan Odom and Valeria Mendoza combine Reiki healing with a liv
+ e crystal singing bowl sound bath at Singing Bowls of the Rockies on Septe
+ mber 18\, 2026\, priced at $45.\n\nTickets: https://www.singingbowlsofther
+ ockies.com/event-details/reiki-sound-bath-feat-megan-valeria
+URL:https://soundbathcalendar.com/event/reiki-sound-bath-feat-megan-valeria
+ -2026-09-18-singing-bowls-of-the-rockies/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Breath & Sound Journey
+BEGIN:VEVENT
+UID:breath-sound-journey-2026-09-15-sacred-society@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260915T220000Z
+DTEND:20260915T231500Z
+SUMMARY:Breath & Sound Journey
+LOCATION:Sacred Society\, 3410 W 38th Ave
+DESCRIPTION:75-minute breathwork-and-sound class led by Brookelin Barnhill 
+ at Sacred Society\, Highlands\, Tuesday afternoon\, $65.\n\nTickets: https
+ ://momence.com/s/142074779
+URL:https://soundbathcalendar.com/event/breath-sound-journey-2026-09-15-sac
+ red-society/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Listening to Body Wisdom: Building Self-Trust
+BEGIN:VEVENT
+UID:listening-to-body-wisdom-building-selftrust-2026-09-20-singing-bowls-of
+ -the-rockies@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260920T220000Z
+DTEND:20260920T231500Z
+SUMMARY:Listening to Body Wisdom: Building Self-Trust
+LOCATION:Singing Bowls of the Rockies\, 76 S Sierra Madre St Suite C\, Colo
+ rado Springs\, CO 80903
+DESCRIPTION:Megan Odom leads a body-awareness and journaling workshop that 
+ concludes with a live singing bowl sound bath at Singing Bowls of the Rock
+ ies on September 20\, 2026\, priced at $39.\n\nTickets: https://www.singin
+ gbowlsoftherockies.com/event-details/listening-to-body-wisdom-building-sel
+ f-trust
+URL:https://soundbathcalendar.com/event/listening-to-body-wisdom-building-s
+ elftrust-2026-09-20-singing-bowls-of-the-rockies/
+END:VEVENT
+END:VCALENDAR

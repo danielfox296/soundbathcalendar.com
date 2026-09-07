@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Grounding Thursdays @ Rooted Heart
+BEGIN:VEVENT
+UID:grounding-thursdays-rooted-heart-2026-09-10-rooted-heart-yoga-and-welln
+ ess@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260911T010000Z
+DTEND:20260911T021500Z
+SUMMARY:Grounding Thursdays @ Rooted Heart
+LOCATION:Rooted Heart Yoga and Wellness\, 1409 N Ogden St\, Denver\, CO 802
+ 18
+DESCRIPTION:A weekly Thursday sound bath and Reiki meditation on crystal si
+ nging bowls at Rooted Heart Yoga and Wellness\, 1409 N Ogden St in Capitol
+  Hill\, Denver\; sliding-scale donation.\n\nTickets: https://www.eventbrit
+ e.com/e/grounding-thursdays-rooted-heart-tickets-1999111068019
+URL:https://soundbathcalendar.com/event/grounding-thursdays-rooted-heart-20
+ 26-09-10-rooted-heart-yoga-and-wellness/
+END:VEVENT
+END:VCALENDAR

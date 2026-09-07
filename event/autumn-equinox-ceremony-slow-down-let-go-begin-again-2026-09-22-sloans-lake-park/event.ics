@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Autumn Equinox Ceremony: Slow Down • Let Go • Begin Again
+BEGIN:VEVENT
+UID:autumn-equinox-ceremony-slow-down-let-go-begin-again-2026-09-22-sloans-
+ lake-park@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260923T003000Z
+DTEND:20260923T014500Z
+SUMMARY:Autumn Equinox Ceremony: Slow Down • Let Go • Begin Again
+LOCATION:Sloans Lake Park\, 2201 Stuart St\, Denver\, CO 80212
+DESCRIPTION:A grounding Autumn Equinox ceremony with guided reflection\, he
+ rbal tea\, a creative mist-making ritual\, sound healing\, and community.\
+ n\nTickets: https://www.eventbrite.com/e/autumn-equinox-ceremony-slow-down
+ -let-go-begin-again-tickets-1998656193477
+URL:https://soundbathcalendar.com/event/autumn-equinox-ceremony-slow-down-l
+ et-go-begin-again-2026-09-22-sloans-lake-park/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Community Sound Bath\, Drumming & Art
+BEGIN:VEVENT
+UID:community-sound-bath-drumming-art-2026-09-12-venue-tba-see-listing@soun
+ dbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260912T223000Z
+DTEND:20260912T234500Z
+SUMMARY:Community Sound Bath\, Drumming & Art
+LOCATION:Venue TBA (see listing)
+DESCRIPTION:A three-hour outdoor gathering in Brighton on a Saturday aftern
+ oon built around an hour-long sound bath\, with drumming and art-making af
+ terwards\; drums provided\, $12-20 donation. The address is sent to attend
+ ees who RSVP.\n\nTickets: https://www.meetup.com/wellness-activity-events/
+ events/315293801/
+URL:https://soundbathcalendar.com/event/community-sound-bath-drumming-art-2
+ 026-09-12-venue-tba-see-listing/
+END:VEVENT
+END:VCALENDAR

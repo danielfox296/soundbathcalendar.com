@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:A Singing Bowl Workshop for Self-Care and Wellness
+BEGIN:VEVENT
+UID:a-singing-bowl-workshop-for-selfcare-and-wellness-2026-09-23-denver-bot
+ anic-gardens@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260923T233000Z
+DTEND:20260924T004500Z
+SUMMARY:A Singing Bowl Workshop for Self-Care and Wellness
+LOCATION:Denver Botanic Gardens\, 1007 York St\, Denver\, CO 80206 (Gates H
+ all)
+DESCRIPTION:A two-hour evening singing-bowl workshop with Ann Martin in Gat
+ es Hall at Denver Botanic Gardens\, Wednesday 5:30-7:30pm\; $50\, $45 for 
+ members.\n\nTickets: https://tickets.botanicgardens.org/events/f87151ea-96
+ 6c-4f84-1404-88f33ffaa35f
+URL:https://soundbathcalendar.com/event/a-singing-bowl-workshop-for-selfcar
+ e-and-wellness-2026-09-23-denver-botanic-gardens/
+END:VEVENT
+END:VCALENDAR

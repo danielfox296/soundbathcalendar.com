@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Unseen & Rooted
+BEGIN:VEVENT
+UID:unseen-rooted-2026-09-10-617-22nd-st@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260911T003000Z
+DTEND:20260911T014500Z
+SUMMARY:Unseen & Rooted
+LOCATION:617 22nd St\, 617 22nd Street\, Denver\, CO 80205
+DESCRIPTION:Dive deep into hidden stories and roots that shape who we are i
+ n this 4 Part series for BIPOC community.  Using Sound healing and Yoga.\n
+ \nTickets: https://www.eventbrite.com/e/unseen-rooted-tickets-199652533502
+ 2
+URL:https://soundbathcalendar.com/event/unseen-rooted-2026-09-10-617-22nd-s
+ t/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Release & Let Go Sound Bath
+BEGIN:VEVENT
+UID:release-let-go-sound-bath-2026-09-23-green-light-reiki@soundbathcalenda
+ r.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260924T000000Z
+DTEND:20260924T011500Z
+SUMMARY:Release & Let Go Sound Bath
+LOCATION:Green Light Reiki\, 1545 S Pearl St\, Denver\, CO 80210
+DESCRIPTION:An hour-long guided relaxation and 45-minute sound bath with si
+ nging bowls and chimes at Green Light Reiki in Platt Park\, Denver\, Wedne
+ sday evening\; $30. The session opens with an introduction for people new 
+ to sound baths.\n\nTickets: https://www.meetup.com/denver-gong-immersion-c
+ hakra-balancing-vibration-medicine/events/316303504/
+URL:https://soundbathcalendar.com/event/release-let-go-sound-bath-2026-09-2
+ 3-green-light-reiki/
+END:VEVENT
+END:VCALENDAR

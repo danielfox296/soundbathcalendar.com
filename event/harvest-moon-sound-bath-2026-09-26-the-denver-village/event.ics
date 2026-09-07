@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Harvest Moon Sound Bath
+BEGIN:VEVENT
+UID:harvest-moon-sound-bath-2026-09-26-the-denver-village@soundbathcalendar
+ .com
+DTSTAMP:20260907T162543Z
+DTSTART:20260927T000000Z
+DTEND:20260927T011500Z
+SUMMARY:Harvest Moon Sound Bath
+LOCATION:The Denver Village\, 2513 Elmira Street\, Aurora\, CO 80010
+DESCRIPTION:A harvest-moon sound bath hosted by Shelby Moor at The Denver V
+ illage in Aurora\, Saturday evening\; $28.52.\n\nTickets: https://www.even
+ tbrite.com/e/harvest-moon-sound-bath-tickets-1977299549179
+URL:https://soundbathcalendar.com/event/harvest-moon-sound-bath-2026-09-26-
+ the-denver-village/
+END:VEVENT
+END:VCALENDAR

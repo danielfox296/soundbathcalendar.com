@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Healing Cloud of Sound Meditation Concert with Maria Pertile
+BEGIN:VEVENT
+UID:healing-cloud-of-sound-meditation-concert-with-maria-pertile-2026-09-24
+ -atma-buti-sound-vibrational-school@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260925T010000Z
+DTEND:20260925T021500Z
+SUMMARY:Healing Cloud of Sound Meditation Concert with Maria Pertile
+LOCATION:Atma Buti Sound & Vibrational School\, 6395 Gunpark Dr Suite T\, B
+ oulder\, CO 80301
+DESCRIPTION:Maria Pertile leads a sound meditation concert using Himalayan 
+ singing bowls\, gongs\, and bells at Atma Buti Sound & Vibrational School\
+ ; proceeds benefit the Soul Medicine 501c3 orphanage foundation in Nepal.\
+ n\nTickets: https://www.eventbrite.com/e/healing-cloud-of-sound-meditation
+ -concert-with-maria-pertile-tickets-1977744927317
+URL:https://soundbathcalendar.com/event/healing-cloud-of-sound-meditation-c
+ oncert-with-maria-pertile-2026-09-24-atma-buti-sound-vibrational-school/
+END:VEVENT
+END:VCALENDAR

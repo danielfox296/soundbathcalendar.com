@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sound Bath Calendar//soundbathcalendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Soundscape of Light-Slow Down
+BEGIN:VEVENT
+UID:soundscape-of-lightslow-down-2026-09-09-8120-sheridan-blvd-building-c-s
+ uite-208@soundbathcalendar.com
+DTSTAMP:20260907T162543Z
+DTSTART:20260910T010000Z
+DTEND:20260910T021500Z
+SUMMARY:Soundscape of Light-Slow Down
+LOCATION:8120 Sheridan Blvd building c suite 208\, 8120 Sheridan Blvd\, Bui
+ lding C Suite 208\, Westminster\, CO 80031
+DESCRIPTION:A monthly crystal-bowl sound and light journey at 8120 Sheridan
+  Blvd in Westminster\, Wednesday evening\; $34.\n\nTickets: https://www.ev
+ entbrite.com/e/soundscape-of-light-slow-down-tickets-1980775866939
+URL:https://soundbathcalendar.com/event/soundscape-of-lightslow-down-2026-0
+ 9-09-8120-sheridan-blvd-building-c-suite-208/
+END:VEVENT
+END:VCALENDAR
