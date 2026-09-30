@@ -21,6 +21,14 @@ on:
         description: 'Also publish the day carousel to Facebook + Instagram'
         type: boolean
         default: false
+      # For re-posting after one surface failed: the scheduled run posts both,
+      # so re-running it after an Instagram-only failure would double the
+      # Facebook post.
+      social_surfaces:
+        description: 'Which surfaces the carousel goes to (only with the box above)'
+        type: choice
+        options: [both, instagram, facebook]
+        default: both
 
 jobs:
   deploy:
@@ -132,4 +140,9 @@ jobs:
             python3 scripts/post.py
             exit 0
           fi
-          python3 scripts/post.py --live --require-live-image
+          case "${{ inputs.social_surfaces }}" in
+            instagram) only=--skip-facebook ;;
+            facebook)  only=--skip-instagram ;;
+            *)         only= ;;
+          esac
+          python3 scripts/post.py --live --require-live-image $only

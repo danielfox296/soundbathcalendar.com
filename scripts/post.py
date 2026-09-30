@@ -84,10 +84,21 @@ IMAGE_POLL_TRIES = 20
 IMAGE_POLL_SLEEP_S = 15
 CONTAINER_POLL_TRIES = 12
 CONTAINER_POLL_SLEEP_S = 5
+PUBLISH_TRIES = 6
+PUBLISH_SLEEP_S = 10
+
+# Meta's "Media ID is not available — the media is not ready for publishing".
+# It can come back even after the container polled FINISHED (2026-09-30: all
+# ten slides and the parent were FINISHED, media_publish still said not
+# ready), so it is a wait-and-retry, not a failure.
+NOT_READY_SUBCODE = 2207027
 
 
 class PostError(RuntimeError):
-    pass
+    def __init__(self, message, code=None, subcode=None):
+        super().__init__(message)
+        self.code = code
+        self.subcode = subcode
 
 
 # ---------- graph plumbing ----------
@@ -107,14 +118,19 @@ def _graph(path, params, method='GET'):
             return json.loads(resp.read().decode())
     except urllib.error.HTTPError as exc:
         body = exc.read().decode(errors='replace')
+        code = subcode = None
         try:
             err = json.loads(body).get('error', {})
+            code, subcode = err.get('code'), err.get('error_subcode')
             detail = f'{err.get("type", "?")}: {err.get("message", body)}'
             if err.get('error_user_msg'):
                 detail += f' — {err["error_user_msg"]}'
+            if code:
+                detail += f' [code {code}' + (f'/{subcode}' if subcode else '') + ']'
         except ValueError:
             detail = body
-        raise PostError(f'{method} {path} failed ({exc.code}) — {detail}') from None
+        raise PostError(f'{method} {path} failed ({exc.code}) — {detail}',
+                        code=code, subcode=subcode) from None
     except urllib.error.URLError as exc:
         raise PostError(f'{method} {path} unreachable — {exc.reason}') from None
 
@@ -161,6 +177,36 @@ def _await_container(creation_id, token, label):
             raise PostError(f'{label} container stuck at {code} after '
                             f'{CONTAINER_POLL_TRIES} checks')
         time.sleep(CONTAINER_POLL_SLEEP_S)
+
+
+def _is_not_ready(exc):
+    return (exc.subcode == NOT_READY_SUBCODE
+            or 'not ready for publishing' in str(exc))
+
+
+def _publish(ig_user_id, creation_id, token):
+    """media_publish a FINISHED container, retrying only Meta's not-ready
+    refusal. That refusal means nothing went out, so retrying it cannot
+    double-post; every other error still fails on the spot."""
+    for attempt in range(1, PUBLISH_TRIES + 1):
+        try:
+            res = _graph(f'{ig_user_id}/media_publish', {
+                'creation_id': creation_id, 'access_token': token,
+            }, method='POST')
+            break
+        except PostError as exc:
+            if not _is_not_ready(exc) or attempt == PUBLISH_TRIES:
+                raise
+            print(f'  instagram not ready to publish (try {attempt}/{PUBLISH_TRIES}) '
+                  f'— retrying in {PUBLISH_SLEEP_S}s')
+            time.sleep(PUBLISH_SLEEP_S)
+    media_id = res.get('id')
+    if not media_id:
+        raise PostError(f'no media id in publish response: {res}')
+    permalink = _graph(media_id, {
+        'fields': 'permalink', 'access_token': token,
+    }).get('permalink', '')
+    return permalink, media_id
 
 
 def resolve_targets(token):
@@ -239,17 +285,7 @@ def post_instagram_single(manifest, ig_user_id, token):
     if not creation_id:
         raise PostError(f'no container id in response: {res}')
     _await_container(creation_id, token, 'single image')
-
-    res = _graph(f'{ig_user_id}/media_publish', {
-        'creation_id': creation_id, 'access_token': token,
-    }, method='POST')
-    media_id = res.get('id')
-    if not media_id:
-        raise PostError(f'no media id in publish response: {res}')
-    permalink = _graph(media_id, {
-        'fields': 'permalink', 'access_token': token,
-    }).get('permalink', '')
-    return permalink, media_id
+    return _publish(ig_user_id, creation_id, token)
 
 
 def post_instagram(manifest, ig_user_id, token):
@@ -284,17 +320,7 @@ def post_instagram(manifest, ig_user_id, token):
     if not creation_id:
         raise PostError(f'no carousel container id in response: {parent}')
     _await_container(creation_id, token, 'carousel')
-
-    res = _graph(f'{ig_user_id}/media_publish', {
-        'creation_id': creation_id, 'access_token': token,
-    }, method='POST')
-    media_id = res.get('id')
-    if not media_id:
-        raise PostError(f'no media id in publish response: {res}')
-    permalink = _graph(media_id, {
-        'fields': 'permalink', 'access_token': token,
-    }).get('permalink', '')
-    return permalink, media_id
+    return _publish(ig_user_id, creation_id, token)
 
 
 # ---------- driver ----------
