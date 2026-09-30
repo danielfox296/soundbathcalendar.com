@@ -58,21 +58,59 @@ jobs:
             || echo "live sitemap unavailable — IndexNow will submit all URLs"
 
       # Pinned to the version ubuntu-latest already ships, so this changes
-      # nothing about how build.py runs — it is here so the Pillow install in
-      # the next-but-one step lands in a normal, writable environment rather
-      # than a PEP 668 externally-managed system Python.
+      # nothing about how build.py runs — it is here so the Pillow install
+      # below lands in a normal, writable environment rather than a PEP 668
+      # externally-managed system Python.
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
-      # Build itself is stdlib-only.
+      # Pillow is the ONE non-stdlib dependency in this workflow, for the card
+      # art and the social carousel. build.py itself is stdlib-only.
+      - name: Install Pillow
+        run: python3 -m pip install --quiet --disable-pip-version-check Pillow
+
+      # The Program Grid card thumbnails (CAL-28). BEFORE build.py, which
+      # gives a card its image only when img/cards/<slug>-i.jpg exists and
+      # draws a type tile otherwise. The derivatives ride the Actions cache
+      # between deploys, so a run only fetches sessions it hasn't seen yet
+      # and a snapshot outlives its source URL (signed CDN links expire). The
+      # editorial/hero/fig crops are committed files and stay out of the
+      # cache, so an old cache can never overwrite a committed change to them.
+      - name: Restore card art
+        uses: actions/cache/restore@v6
+        with:
+          path: |
+            img/cards/*.jpg
+            !img/cards/editorial-*
+            !img/cards/hero-*
+            !img/cards/fig-*
+          key: card-art-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: card-art-
+
+      # Fetches each new session's listing image. A dead operator CDN already
+      # degrades to a type tile inside treat.py; continue-on-error covers
+      # anything worse, because the site still builds without card art.
+      - name: Treat card art
+        continue-on-error: true
+        run: python3 scripts/treat.py --events-only
+
+      - name: Save card art
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            img/cards/*.jpg
+            !img/cards/editorial-*
+            !img/cards/hero-*
+            !img/cards/fig-*
+          key: card-art-${{ github.run_id }}-${{ github.run_attempt }}
+
       - name: Build site
         run: python3 build.py
 
-      # The day's social carousel (CAL-25). Pillow is the ONE non-stdlib
-      # dependency in this workflow and only this step needs it. Runs after
-      # build.py so it reads the same freshly-fetched feed cache the site did.
+      # The day's social carousel (CAL-25). Runs after build.py so it reads
+      # the same freshly-fetched feed cache the site did.
       #
       # Today only: Meta ingests its own copy of every slide at publish time,
       # so the slides only have to be reachable during the post itself. The
@@ -83,9 +121,7 @@ jobs:
       # failure degrades to a type-only slide inside social.py rather than
       # raising, so a dead operator CDN can never fail a site deploy.
       - name: Render social carousel
-        run: |
-          python3 -m pip install --quiet --disable-pip-version-check Pillow
-          python3 scripts/social.py
+        run: python3 scripts/social.py
 
       - name: Stage site
         run: |

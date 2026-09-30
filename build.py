@@ -340,9 +340,9 @@ def build():
     # distance sort, which attaches data-lat/lng to each row that has one.
     geocode = mapview_lib.load_geocode(REPO)
 
-    # CAL-28: which events have committed card derivatives (scripts/treat.py,
-    # local-only — CI just reads the committed files). Registered BEFORE any
-    # card renders; an event without art renders the designed type tile.
+    # CAL-28: which events have card derivatives (scripts/treat.py, which the
+    # deploy runs just before this). Registered BEFORE any card renders; an
+    # event without art renders the designed type tile.
     _cards_dir = os.path.join(REPO, 'img', 'cards')
     card_art = set()
     if os.path.isdir(_cards_dir):
@@ -350,10 +350,10 @@ def build():
                     if n.endswith('-i.jpg') and not n.endswith('-i280.jpg')
                     and not n.startswith('editorial-')}
     external_events.set_card_art(card_art)
-    print(f'Card art: {len(card_art)} committed derivative pair(s)')
+    print(f'Card art: {len(card_art)} derivative pair(s)')
 
-    # CAL-29: which entities have committed portrait derivatives (same
-    # local-only pipeline). An entity without one renders its type-plate.
+    # CAL-29: which entities have committed portrait derivatives (treat.py's
+    # local-only entity pass). An entity without one renders its type-plate.
     _ent_dir = os.path.join(REPO, 'img', 'entities')
     ent_art = set()
     if os.path.isdir(_ent_dir):

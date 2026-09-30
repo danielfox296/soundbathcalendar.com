@@ -927,20 +927,20 @@ def add_to_calendar_urls(row, site_url, now=None):
 
 # ---------------------------------------------------------------------------
 # Program Grid cards (CAL-28, ratified 2026-07-25 — replaces the list rows).
-# Every session is one card: a committed duotone derivative (scripts/treat.py)
+# Every session is one card: a duotone derivative (scripts/treat.py)
 # when one exists, else a TYPE TILE — a designed poster variant, not a
 # fallback state. Cards keep the .cal-row class + data-* hooks so filters.js
 # binds byte-identical.
 # ---------------------------------------------------------------------------
 
-# Slugs with committed card derivatives (img/cards/<slug>-{i,c}.jpg). Set once
+# Slugs with card derivatives (img/cards/<slug>-{i,c}.jpg). Set once
 # per build (build.py scans img/cards/) — like _LINKED_TAG_PAGES. Empty by
 # default, so a caller that doesn't set it renders every session as a tile.
 _CARD_ART = set()
 
 
 def set_card_art(slugs):
-    """Register the set of event slugs with committed card art (CAL-28)."""
+    """Register the set of event slugs with card art (CAL-28)."""
     global _CARD_ART
     _CARD_ART = set(slugs or ())
 
@@ -1080,7 +1080,7 @@ def _render_row(row, show_date=True, nav_prefix='', geocode=None, now=None,
         # CAL-UX-11: empty alt — the caption carries name/venue, so a
         # descriptive alt would read every event twice. The coral hover layer
         # is a second stacked <img> (pure-CSS crossfade, no JS); both are
-        # committed derivatives, so no external CDN can rot them.
+        # self-hosted derivatives, so no external CDN can rot them.
         loading = 'eager' if eager else 'lazy'
         parts.append(
             f'  <span class="cal-card__im">'

@@ -15,13 +15,13 @@ Source hierarchy per event (imagery law — flyers never stand in for people,
 stock never attaches to a specific session, entity photos are real-only):
 
     1. the event's own image_url from the live feed (~92% coverage) —
-       snapshotted here once; the committed derivative is the rot-proof copy
+       snapshotted here once; the derivative is the rot-proof copy
     2. the linked practitioner's committed photo (img/practitioners/<slug>.jpg)
        — THEIR sessions only
     3. nothing -> the site renders a type tile (a designed poster variant,
        not a fallback state)
 
-Outputs, committed under img/cards/ (CI never runs this — like og.py):
+Outputs, under img/cards/:
 
     <event-slug>-i.jpg      560x560 center-square, the rest layer
     <event-slug>-i280.jpg   280x280, the srcset small variant
@@ -29,13 +29,21 @@ Outputs, committed under img/cards/ (CI never runs this — like og.py):
     editorial-what-to-expect-{i,c}.jpg   1300x406 editorial band (stock,
         generic-editorial only — provenance img/og/SOURCES.md)
 
+The event derivatives are made by CI on every deploy (.github/workflows/
+deploy.yml runs --events-only before build.py) and carried between deploys in
+the Actions cache, not in git. The program changes daily; while this was a
+local-only step it ran once (2026-07-25), and every card turned into a type
+tile as those events passed. The editorial, hero and figure crops and the
+entity portraits come from committed sources and stay committed: regenerate
+those locally.
+
 Derivatives of events no longer in the future row set are pruned each run.
 Existing derivatives are kept (the snapshot survives CDN rot); --force
 regenerates everything.
 
-LOCAL-only: needs Pillow. Run from the repo root:
+Needs Pillow. Run from the repo root:
 
-    python3 scripts/treat.py [--force]
+    python3 scripts/treat.py [--force] [--events-only]
 """
 import io
 import os
@@ -157,6 +165,21 @@ def treat_entities(force=False):
     print(f'  entities: {made} generated, {skipped} kept, {pruned} pruned')
 
 
+def _prune_cards(keep):
+    """Prune derivatives of events that left the future set (past/renamed/
+    dropped) — the directory reflects only the current program + editorial."""
+    pruned = 0
+    for name in os.listdir(CARDS_DIR):
+        if (not name.endswith('.jpg') or name.startswith('editorial-')
+                or name.startswith('hero-') or name.startswith('fig-')):
+            continue
+        stem = name.rsplit('-', 1)[0]
+        if stem not in keep:
+            os.remove(os.path.join(CARDS_DIR, name))
+            pruned += 1
+    return pruned
+
+
 def fetch(url, referer=None):
     headers = {'User-Agent': UA}
     if referer:
@@ -187,7 +210,7 @@ def sources_for(row):
     return out
 
 
-def main(force=False):
+def main(force=False, events_only=False):
     os.makedirs(CARDS_DIR, exist_ok=True)
     feed = external_events.load_feed(REPO)
     now = external_events.current_now()
@@ -224,6 +247,12 @@ def main(force=False):
             print(f'  !! {slug}: {type(err).__name__}: {err} — type tile')
             failed += 1
 
+    if events_only:
+        pruned = _prune_cards(keep)
+        print(f'\ntreat done: {made} generated, {skipped} kept, {tiles} type '
+              f'tiles, {failed} failed, {pruned} pruned (events only)')
+        return
+
     # Editorial band (stock, generic-editorial only): the what-to-expect
     # photograph, treated wide. Regenerated every run (cheap, one file).
     with Image.open(os.path.join(STOCK_DIR, 'pexels-6914822.jpg')) as ed:
@@ -256,17 +285,7 @@ def main(force=False):
                            w=1600, h=762, small=False)
     print(f'  ok hero-what-to-expect ({sizes["i"]}+{sizes["c"]}KB)')
 
-    # Prune derivatives of events that left the future set (past/renamed/
-    # dropped) — the directory reflects only the current program + editorial.
-    pruned = 0
-    for name in os.listdir(CARDS_DIR):
-        if (not name.endswith('.jpg') or name.startswith('editorial-')
-                or name.startswith('hero-') or name.startswith('fig-')):
-            continue
-        stem = name.rsplit('-', 1)[0]
-        if stem not in keep:
-            os.remove(os.path.join(CARDS_DIR, name))
-            pruned += 1
+    pruned = _prune_cards(keep)
 
     # CAL-29: entity portraits, from the repo's own committed photos.
     treat_entities(force=force)
@@ -279,4 +298,5 @@ def main(force=False):
 
 
 if __name__ == '__main__':
-    main(force='--force' in sys.argv[1:])
+    main(force='--force' in sys.argv[1:],
+         events_only='--events-only' in sys.argv[1:])
